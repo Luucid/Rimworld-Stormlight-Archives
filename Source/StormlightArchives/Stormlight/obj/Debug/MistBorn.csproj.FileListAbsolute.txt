@@ -1,0 +1,4 @@
+F:\SteamLibrary\steamapps\common\RimWorld\Mods\MistBorn\Source\MistBorn\MistBorn\obj\Debug\MistBorn.csproj.AssemblyReference.cache
+F:\SteamLibrary\steamapps\common\RimWorld\Mods\MistBorn\Source\MistBorn\MistBorn\obj\Debug\MistBorn.csproj.CoreCompileInputs.cache
+F:\SteamLibrary\steamapps\common\RimWorld\Mods\MistBorn\Assemblies\MistBorn.dll
+F:\SteamLibrary\steamapps\common\RimWorld\Mods\MistBorn\Source\MistBorn\MistBorn\obj\Debug\MistBorn.dll

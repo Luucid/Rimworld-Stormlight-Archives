@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ModMetaData>
+  <name>Rimlight archives</name> <!-- The name of your mod in the mod list -->
+  <author>Lucid</author>
+  <packageId>Lucid.RLA</packageId> <!-- a unique identifier for your mod. Must contain only a-z and periods, no spaces. -->
+  <supportedVersions> <!-- the version(s) your mod supports -->
+    <li>1.5</li>
+  </supportedVersions>
+  <description>Stormlight archives.</description>
+</ModMetaData>

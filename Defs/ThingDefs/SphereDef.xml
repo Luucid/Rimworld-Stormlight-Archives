@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <ThingDef Name="Sphere_Base" ParentName="ResourceBase" Abstract="True">
+    <defName>Sphere_Base</defName>
+    <label>sphere</label>
+    <description>A small gemstone encased in glass, used as currency on Rimshar. Can hold Stormlight.</description>
+    <stackLimit>1</stackLimit>
+	<tickerType>Normal</tickerType>
+    <tradeability>All</tradeability>
+	<statBases>
+		<Mass>0.05</Mass> <!-- Set an appropriate mass value here -->
+    </statBases>
+    <alwaysHaulable>true</alwaysHaulable> 
+    <selectable>true</selectable> 
+
+  </ThingDef>
+
+  <ThingDef ParentName="Sphere_Base">
+    <defName>Sphere_Diamond</defName>
+    <label>diamond sphere</label>
+    <description>A diamond sphere, worth a little more than normal currency. Can be infused with Stormlight.</description>
+	<graphicData>
+      <texPath>Things/Item/Spheres/Sphere_Diamond</texPath>
+	  <graphicClass>Graphic_Single</graphicClass> 
+      <drawSize>0.3</drawSize>
+    </graphicData>
+	  <comps>
+		<li Class="StormlightMod.CompProperties_Stormlight">
+		  <maxStormlight>20</maxStormlight>
+		  <drainRate>0.1</drainRate>
+		</li>
+		  
+	    <li Class="CompProperties_Flickable"/>
+	    <li Class="CompProperties_Glower">
+			<glowRadius>0</glowRadius>
+			<glowColor>(217,112,33,0)</glowColor>
+        </li>
+  </comps>
+  </ThingDef>
+
+  <ThingDef ParentName="Sphere_Base">
+    <defName>Sphere_Garnet</defName>
+    <label>garnet sphere</label>
+    <description>An garnet sphere, highly valuable and useful for soulcasting.</description>
+	<graphicData>
+      <texPath>Things/Item/Spheres/Sphere_Emerald</texPath>
+	   <graphicClass>Graphic_Single</graphicClass> 
+      <drawSize>0.3</drawSize>
+    </graphicData>
+	  <comps>
+		<li Class="StormlightMod.CompProperties_Stormlight">
+		  <maxStormlight>100</maxStormlight>
+		  <drainRate>0.1</drainRate>
+		</li>
+		  
+	    <li Class="CompProperties_Flickable"/>
+	    <li Class="CompProperties_Glower">
+			<glowRadius>0</glowRadius>
+			<glowColor>(214,224,16,0)</glowColor>
+        </li>
+  </comps>
+  </ThingDef>
+
+
+  <ThingDef ParentName="Sphere_Base">
+    <defName>Sphere_Ruby</defName>
+    <label>ruby sphere</label>
+    <description>An emerald sphere, highly valuable and useful for soulcasting.</description>
+	<graphicData>
+      <texPath>Things/Item/Spheres/Sphere_Emerald</texPath>
+	   <graphicClass>Graphic_Single</graphicClass> 
+      <drawSize>0.3</drawSize>
+    </graphicData>
+	  <comps>
+		<li Class="StormlightMod.CompProperties_Stormlight">
+		  <maxStormlight>200</maxStormlight>
+		  <drainRate>0.1</drainRate>
+		</li>
+		  
+	    <li Class="CompProperties_Flickable"/>
+	    <li Class="CompProperties_Glower">
+			<glowRadius>0</glowRadius>
+			<glowColor>(225,16,16,0)</glowColor>
+        </li>
+  </comps>
+  </ThingDef>
+  
+  <ThingDef ParentName="Sphere_Base">
+    <defName>Sphere_Sapphire</defName>
+    <label>sapphire sphere</label>
+    <description>An emerald sphere, highly valuable and useful for soulcasting.</description>
+	<graphicData>
+      <texPath>Things/Item/Spheres/Sphere_Emerald</texPath>
+	   <graphicClass>Graphic_Single</graphicClass> 
+      <drawSize>0.3</drawSize>
+    </graphicData>
+	  <comps>
+		<li Class="StormlightMod.CompProperties_Stormlight">
+		  <maxStormlight>500</maxStormlight>
+		  <drainRate>0.1</drainRate>
+		</li>
+		  
+	    <li Class="CompProperties_Flickable"/>
+	    <li Class="CompProperties_Glower">
+			<glowRadius>0</glowRadius>
+			<glowColor>(16,200,225,0)</glowColor>
+        </li>
+  </comps>
+  </ThingDef>
+
+<ThingDef ParentName="Sphere_Base">
+    <defName>Sphere_Emerald</defName>
+    <label>emerald sphere</label>
+    <description>An emerald sphere, highly valuable and useful for soulcasting.</description>
+	<graphicData>
+      <texPath>Things/Item/Spheres/Sphere_Emerald</texPath>
+	   <graphicClass>Graphic_Single</graphicClass> 
+      <drawSize>0.3</drawSize>
+    </graphicData>
+	  <comps>
+		<li Class="StormlightMod.CompProperties_Stormlight">
+		  <maxStormlight>1000</maxStormlight>
+		  <drainRate>0.1</drainRate>
+		</li>
+		  
+	    <li Class="CompProperties_Flickable"/>
+	    <li Class="CompProperties_Glower">
+			<glowRadius>0</glowRadius>
+			<glowColor>(93,245,66,0)</glowColor>
+        </li>
+  </comps>
+  </ThingDef>
+
+</Defs>

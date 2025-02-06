@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <TraitDef>
+    <defName>Radiant</defName>
+    <label>Radiant</label>
+    <description>{PAWN_nameDef} has been chosen by ancient forces and gifted with mystical abilities.</description>
+    
+    <degreeDatas>
+      <li>
+        <label>Wind Radiant</label>
+        <description>Wind Radiant is the thing this one is.</description>
+        <degree>0</degree>
+        <abilities>
+          <li>SummonShardblade</li> <!-- This links the ability -->
+        </abilities>
+      </li>
+    </degreeDatas>
+    <commonality>0.05</commonality>
+  </TraitDef>
+</Defs>

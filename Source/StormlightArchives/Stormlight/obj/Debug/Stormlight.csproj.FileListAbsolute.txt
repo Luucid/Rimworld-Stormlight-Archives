@@ -1,0 +1,5 @@
+F:\SteamLibrary\steamapps\common\RimWorld\Mods\StormlightArchives\Source\StormlightArchives\Stormlight\obj\Debug\Stormlight.csproj.AssemblyReference.cache
+F:\SteamLibrary\steamapps\common\RimWorld\Mods\StormlightArchives\Source\StormlightArchives\Stormlight\obj\Debug\Stormlight.csproj.CoreCompileInputs.cache
+F:\SteamLibrary\steamapps\common\RimWorld\Mods\StormlightArchives\Assemblies\StormLight.dll
+F:\SteamLibrary\steamapps\common\RimWorld\Mods\StormlightArchives\Source\StormlightArchives\Stormlight\obj\Debug\StormLight.dll
+F:\SteamLibrary\steamapps\common\RimWorld\Mods\StormlightArchives\Source\StormlightArchives\Stormlight\obj\Debug\Stormlight.csproj.Up2Date
