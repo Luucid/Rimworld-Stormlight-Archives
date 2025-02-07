@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+<ThingDef Name="BaseWeaponShard" Abstract="True" ParentName="BaseWeapon">
+  <smeltable>false</smeltable>
+  <burnableByRecipe>true</burnableByRecipe>
+  <techLevel>Animal</techLevel>
+  <thingCategories>
+    <li>WeaponsMelee</li>
+  </thingCategories>
+  <weaponClasses>
+   <li>Melee</li>
+  </weaponClasses>
+  <relicChance>1</relicChance>
+  <inspectorTabs>
+    <li>ITab_Art</li>
+  </inspectorTabs>
+  <tradeTags>
+   <li>WeaponMelee</li>
+  </tradeTags>
+</ThingDef>
+
+<ThingDef ParentName="BaseWeaponShard">
+  <defName>MeleeWeapon_Shardblade</defName>
+  <label>shardblade</label>
+  <description>The ancient weapon of kings, the longsword can be used for slashing or stabbing.</description>
+  <possessionCount>1</possessionCount>
+  <graphicData>
+    <texPath>Things/Weapon/shardblade</texPath>
+    <graphicClass>Graphic_Single</graphicClass>
+    <drawSize>2.0</drawSize>
+  </graphicData>
+  <weaponTags>
+    <li>ShardBlade</li>
+  </weaponTags>
+  <statBases>
+   <Mass>0.5</Mass>
+  </statBases>
+  <equippedAngleOffset>-180</equippedAngleOffset>
+  <stuffCategories>
+    <li>ShardStuff</li>
+  </stuffCategories>
+  <costStuffCount>0</costStuffCount>
+  <tools>
+    <li>
+      <label>point</label>
+      <capacities>
+        <li>SoulStab</li>
+      </capacities>
+      <power>100</power>
+      <cooldownTime>2.6</cooldownTime>
+    </li>
+    <li>
+      <label>edge</label>
+      <capacities>
+      <li>SoulCut</li>
+      </capacities>
+      <power>100</power>
+      <cooldownTime>2.6</cooldownTime>
+    </li>
+  </tools>
+</ThingDef>
+</Defs>
