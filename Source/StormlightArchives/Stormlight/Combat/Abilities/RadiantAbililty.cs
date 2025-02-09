@@ -22,8 +22,7 @@ namespace StormlightMod {
                 if (!base.CanCast) {
                     return false;
                 }
-
-                // Example condition: Ensure pawn has the Radiant trait
+           
                 if (!pawn.story.traits.HasTrait(TraitDef.Named("Radiant"))) {
                     return false;
                 }
@@ -61,6 +60,7 @@ namespace StormlightMod {
 
         private bool CanApplyRadiantEffect(LocalTargetInfo target) {
             // Example logic to ensure the ability can be applied
+
             if (target.Pawn != null && !target.Pawn.health.capacities.CapableOf(PawnCapacityDefOf.Consciousness)) {
                 return false;
             }
@@ -96,11 +96,8 @@ namespace StormlightMod {
         public override void ProcessInput(Event ev) {
             base.ProcessInput(ev);
 
-            if (pawn.Drafted || pawn.story.traits.HasTrait(TraitDef.Named("Radiant"))) {
+            if (pawn.Drafted && pawn.story.traits.HasTrait(TraitDef.Named("Radiant"))) {
                 ability.Activate(new LocalTargetInfo(pawn.Position), new LocalTargetInfo(pawn.Position));
-            }
-            else {
-                Messages.Message("This ability requires the Radiant trait or the pawn to be drafted.", MessageTypeDefOf.RejectInput, historical: false);
             }
         }
 

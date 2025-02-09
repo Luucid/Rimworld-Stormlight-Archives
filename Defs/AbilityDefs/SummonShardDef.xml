@@ -34,19 +34,19 @@
     <label>Summon Shardblade</label>
     <description>Summon a powerful Shardblade from the Spiritual Realm into your hand.</description>
     <level>1</level>
-    <iconPath>Things/Apparel/SpherePouch</iconPath> <!-- You need to add this icon -->
+    <iconPath>Things/Apparel/SpherePouch</iconPath> 
     <hotKey>Misc1</hotKey>
     <hostile>false</hostile>
     <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
     
     <statBases>
-        <Ability_EntropyGain>0</Ability_EntropyGain> <!-- No psychic cost -->
-        <Ability_PsyfocusCost>0</Ability_PsyfocusCost> <!-- No psyfocus required -->
+        <Ability_EntropyGain>0</Ability_EntropyGain> 
+        <Ability_PsyfocusCost>0</Ability_PsyfocusCost> 
     </statBases>
 
     <verbProperties>
         <warmupTime>0.5</warmupTime>
-        <range>0</range> <!-- Self-cast only -->
+        <range>0</range> 
         <targetParams>
             <canTargetSelf>true</canTargetSelf>
         </targetParams>
@@ -57,12 +57,6 @@
         <li Class="StormlightMod.CompProperties_AbilitySpawnEquipment">
             <compClass>StormlightMod.CompAbilityEffect_SpawnEquipment</compClass>
             <thingDef>MeleeWeapon_Shardblade</thingDef> <!-- Ensure this matches your XML weapon defName -->
-            <onlyIfNoWeaponEquipped>true</onlyIfNoWeaponEquipped> <!-- Prevents duplicates -->
-        </li>
-
-        <!-- Effect: Draft the pawn immediately -->
-        <li Class="StormlightMod.CompProperties_AbilityDraft">
-            <compClass>StormlightMod.CompAbilityEffect_Draft</compClass>
         </li>
 
         <!-- Cool visual effect when summoning -->
@@ -72,7 +66,34 @@
     </comps>
 </AbilityDef>
 
+<AbilityDef ParentName="RadiantBase">
+    <defName>unbondBlade</defName>
+    <label>sever bond with Shardblade</label>
+    <description>Sever the bond with the blade.</description>
+    <level>1</level>
+    <iconPath>Things/Apparel/ArmorFront-1</iconPath> 
+    <hotKey>Misc2</hotKey>
+    <hostile>false</hostile>
+    <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
+    
+    <statBases>
+        <Ability_EntropyGain>0</Ability_EntropyGain> 
+        <Ability_PsyfocusCost>0</Ability_PsyfocusCost> 
+    </statBases>
 
+    <verbProperties>
+        <warmupTime>0.5</warmupTime>
+        <range>0</range> 
+        <targetParams>
+            <canTargetSelf>true</canTargetSelf>
+        </targetParams>
+    </verbProperties>
 
-
+    <comps>
+        <li Class="StormlightMod.CompProperties_AbilityBreakBond">
+            <compClass>StormlightMod.CompAbilityEffect_BreakBondWithSword</compClass>
+            <thingDef>MeleeWeapon_Shardblade</thingDef> <!-- Ensure this matches your XML weapon defName -->
+        </li>
+    </comps>
+</AbilityDef>
 </Defs>
