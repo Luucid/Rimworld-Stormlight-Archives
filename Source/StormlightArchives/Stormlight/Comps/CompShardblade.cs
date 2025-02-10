@@ -27,22 +27,25 @@ namespace StormlightMod {
                 return;
             }
             Props.owner.equipment.AddEquipment(Props.thisBladeThing);
+            Props.isSpawned = true;
         }
         
         public void dismissBlade()
         {
             ThingWithComps droppedWeapon;
             pawn.equipment.TryDropEquipment(owner.equipment.Primary, out droppedWeapon, owner.Position, forbid: false); 
+            Props.isSpawned = false;
             //dismissal vs dropping is handled by harmony patch in ShardbladePatches.cs
         }
 
         public void createBlade(ref Pawn pawn) {
             ThingDef stuffDef = DefDatabase<ThingDef>.GetNamed("ShardMaterial", true);
-            ThingWithComps equipment = (ThingWithComps)ThingMaker.MakeThing(Props.thingDef, stuffDef);
-            Props.thisBladeThing = equipment.Primary.GetComp<CompShardblade>();
+            Props.thisBladeThing  = (ThingWithComps)ThingMaker.MakeThing(Props.thingDef, stuffDef);
+           // Props.thisBladeThing = equipment.Primary.GetComp<CompShardblade>();
             Log.Message($"Radiant {pawn.Name} created his shard blade!");
-            if (blade.isBonded() == false) {
-                blade.bondWithPawn(ref pawn);
+            CompShardBlade bladeProps = Props.thisBladeThing.Primary.GetComp<CompShardblade>();
+            if (bladeProps.isBonded() == false) {
+               this.bondWithPawn(ref pawn);
             }
         }
     }
