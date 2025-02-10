@@ -29,23 +29,23 @@
 ## Weapons
 * Shardblade(Only summonable by radiant atm)
 
-### Future work
+# Future work
 
-# Highstorm
+## Highstorm
 * ...
 
-# Spheres
+## Spheres
 * Make them tradable
 * Make chips, marks and broams
 * Minable, and craftable with glass recipe and worker skill in relevant field
 * Can be used as ingredient in various items, for example lamps.
 
-# Radiant
+## Radiant
 * Add more orders
 * Add respective abilities
 * Add progression system toward being radiant, with oath ritual to gain title
 
-# Spren
+## Spren
 * Introduce spren
 * Ability to bond with spren
 * Spren bonding is the way to become radiant
