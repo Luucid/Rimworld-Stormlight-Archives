@@ -10,6 +10,7 @@ namespace StormlightMod {
                 if (eq.def.defName == "MeleeWeapon_Shardblade") {
                     CompShardblade blade = eq.GetComp<CompShardblade>();
                     if (blade != null) {
+                        Log.Message($"dropping sword with ID: {blade.GetHashCode()}, {blade.Props.GetHashCode()}, {eq.thingIDNumber}");
                         if (blade.isBonded()) { eq.DeSpawn(); }
                     }
                 }

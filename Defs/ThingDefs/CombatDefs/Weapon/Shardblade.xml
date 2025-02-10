@@ -60,7 +60,6 @@
   </tools>
   <comps>
       <li Class="StormlightMod.CompProperties_Shardblade">
-        <isBondedByPawn>false</isBondedByPawn> 
       </li>
     </comps>
 </ThingDef>

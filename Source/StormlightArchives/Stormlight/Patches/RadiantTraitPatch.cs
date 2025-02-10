@@ -20,15 +20,13 @@ namespace StormlightMod {
             }
         }
 
-       static private void givePawnShardbladeComp(ref Pawn pawn) {
+        static private void givePawnShardbladeComp(ref Pawn pawn) {
             if (pawn.GetComp<CompShardblade>() == null) {
                 CompShardblade bladeComp = new CompShardblade();
                 pawn.AllComps.Add(bladeComp);
                 bladeComp.parent = pawn;
                 bladeComp.Initialize(new CompProperties_Shardblade {
-                      isSpawned = false,
-                      owner = pawn,
-                      thisBladeThing = null
+                    initiated = true,
                 });
                 bladeComp.createBlade(ref pawn);
                 Log.Message($"{pawn.Name} gained shardbalde storage!");

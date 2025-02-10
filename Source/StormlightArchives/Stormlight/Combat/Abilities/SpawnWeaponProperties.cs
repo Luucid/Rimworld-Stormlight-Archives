@@ -66,9 +66,9 @@ namespace StormlightMod {
         private void toggleBlade(ref Pawn pawn) {
             CompShardblade blade = pawn.GetComp<CompShardblade>(); 
 
-            if (blade != null && blade.Props.isSpawned == false) {
+            if (blade != null && blade.isSpawned == false) {
                 Log.Message($"Radiant {pawn.Name} summoned his shard blade!");
-                Props.blade.summon();
+                blade.summon();
             }
         }
     }

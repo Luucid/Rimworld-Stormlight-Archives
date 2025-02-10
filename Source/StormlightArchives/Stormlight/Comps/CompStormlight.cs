@@ -3,6 +3,7 @@ using Verse;
 using System.Collections.Generic;
 using System.Linq;
 using System;
+
 namespace StormlightMod {
     public class CompStormlight : ThingComp {
         private float m_CurrentStormlight;
@@ -33,7 +34,7 @@ namespace StormlightMod {
                 }
                 CurrentMaxStormlight = MaxStormlightPerItem * StackCount;
             }
-            handleSphereGlow();
+            handleGlow();
             tick = (tick + 1) % 50;
         }
 
@@ -50,7 +51,7 @@ namespace StormlightMod {
                 parent.Map.glowGrid.RegisterGlower(GlowerComp);
             }
         }
-        private void handleSphereGlow() {
+        public void handleGlow() {
             if (GlowerComp != null) {
 
                 if (m_CurrentStormlight == 0) {

@@ -11,39 +11,50 @@ namespace StormlightMod {
             base.PostExposeData();
         }
 
-        public bool isBonded() { return Props.owner != null; }
+        public bool isSpawned = false;
+        public Pawn owner = null;
+        public ThingWithComps thisBladeThing = null;
+
+        public bool isBonded() 
+            {
+            Log.Message($"isBonded check for {owner?.Name}");
+            return owner != null; 
+        }
         public void bondWithPawn(ref Pawn pawn) {
-            Props.owner = pawn;
+            owner = pawn;
             Log.Message($"Shard bonded with {pawn.Name}"); 
         }
+
         public void severBond() {
-            Props.owner = null;
+            owner = null;
         }
 
         public void summon() {
-            if(Props.thisBladeThing == null)
+            if(thisBladeThing == null)
             {
-                Log.Message("thisBladeThing is NULL"); 
+                Log.Message("thisBladeThing is NULL");
                 return;
             }
-            Props.owner.equipment.AddEquipment(Props.thisBladeThing);
-            Props.isSpawned = true;
+            Log.Message($"sword ID: {thisBladeThing.GetHashCode()}");
+
+            owner.equipment.AddEquipment(thisBladeThing);
+            isSpawned = true;
         }
         
         public void dismissBlade()
         {
             ThingWithComps droppedWeapon;
-            pawn.equipment.TryDropEquipment(owner.equipment.Primary, out droppedWeapon, owner.Position, forbid: false); 
-            Props.isSpawned = false;
+           owner.equipment.TryDropEquipment(owner.equipment.Primary, out droppedWeapon, owner.Position, forbid: false); 
+            isSpawned = false;
             //dismissal vs dropping is handled by harmony patch in ShardbladePatches.cs
         }
 
         public void createBlade(ref Pawn pawn) {
             ThingDef stuffDef = DefDatabase<ThingDef>.GetNamed("ShardMaterial", true);
-            Props.thisBladeThing  = (ThingWithComps)ThingMaker.MakeThing(Props.thingDef, stuffDef);
-           // Props.thisBladeThing = equipment.Primary.GetComp<CompShardblade>();
+            ThingDef shardThing = DefDatabase<ThingDef>.GetNamed("MeleeWeapon_Shardblade", true);
+            thisBladeThing  = (ThingWithComps)ThingMaker.MakeThing(shardThing, stuffDef);
             Log.Message($"Radiant {pawn.Name} created his shard blade!");
-            CompShardBlade bladeProps = Props.thisBladeThing.Primary.GetComp<CompShardblade>();
+            CompShardblade bladeProps = thisBladeThing.GetComp<CompShardblade>();
             if (bladeProps.isBonded() == false) {
                bladeProps.bondWithPawn(ref pawn);
             }
@@ -52,9 +63,7 @@ namespace StormlightMod {
 }
 namespace StormlightMod {
     public class CompProperties_Shardblade : CompProperties {
-        public bool isSpawned = false;
-        public Pawn owner = null;
-        public ThingWithComps thisBladeThing = null;
+        public bool initiated;
         public CompProperties_Shardblade() {
             this.compClass = typeof(CompShardblade);
         }
