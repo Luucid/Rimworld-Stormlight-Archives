@@ -21,7 +21,9 @@ namespace StormlightMod {
         }
 
         public void summon(ref ThingWithComps thisBlade) {
-            Props.owner.equipment.AddEquipment(thisBlade);
+            if(thisBladeThing == null)
+                thisBladeThing = thisBlade;
+            Props.owner.equipment.AddEquipment(thisBladeThing);
         }
     }
 }
@@ -30,7 +32,7 @@ namespace StormlightMod {
         public bool isBondedByPawn;
         public bool isSpawned = false;
         public Pawn owner = null;
-
+        public ThingWithComps thisBladeThing = null;
         public CompProperties_Shardblade() {
             this.compClass = typeof(CompShardblade);
         }
