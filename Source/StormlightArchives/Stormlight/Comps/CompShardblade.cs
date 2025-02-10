@@ -28,6 +28,13 @@ namespace StormlightMod {
             }
             Props.owner.equipment.AddEquipment(Props.thisBladeThing);
         }
+        
+        public void dismissBlade()
+        {
+            ThingWithComps droppedWeapon;
+            pawn.equipment.TryDropEquipment(owner.equipment.Primary, out droppedWeapon, owner.Position, forbid: false); 
+            //dismissal vs dropping is handled by harmony patch in ShardbladePatches.cs
+        }
 
         public void createBlade(ref Pawn pawn) {
             ThingDef stuffDef = DefDatabase<ThingDef>.GetNamed("ShardMaterial", true);
