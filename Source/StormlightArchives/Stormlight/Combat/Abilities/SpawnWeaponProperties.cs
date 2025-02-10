@@ -7,8 +7,6 @@ using Verse.AI;
 namespace StormlightMod {
     public class CompProperties_AbilitySpawnEquipment : CompProperties_AbilityEffect {
         public ThingDef thingDef; // The weapon to spawn
-        public CompShardblade blade = null;
-        public ThingWithComps bladeThingComps = null;
 
 
         public CompProperties_AbilitySpawnEquipment() {
@@ -67,25 +65,26 @@ namespace StormlightMod {
                 stuffDef = DefDatabase<ThingDef>.GetNamed("ShardMaterial", true);
             }
             ThingWithComps equipment = (ThingWithComps)ThingMaker.MakeThing(Props.thingDef, stuffDef);
-            pawn.equipment.AddEquipment(equipment);
-            CompShardblade blade = pawn.equipment.Primary.GetComp<CompShardblade>();
+            //pawn.equipment.AddEquipment(equipment);
+            CompShardblade blade = equipment.Primary.GetComp<CompShardblade>();
             Log.Message($"Radiant {pawn.Name} created his shard blade!");
             if (blade.isBonded() == false) {
-                blade.bondWithPawn(ref pawn);
-                Props.blade = blade;
-                Props.bladeThingComps = equipment;
+                blade.bondWithPawn(ref pawn, ref blade);
             }
         }
 
         private void toggleBlade(ref Pawn pawn) {
             // Create the equipment
-            if (Props.blade == null) {
+            
+            ThingWithComps blade = pawn.GetComp<CompShardblade>().Props.thisBladeThing; //add to patch where trait is given.
+            if (blade == null) {
                 createBlade(ref pawn);
             }
 
             else if (Props.blade.Props.isSpawned == false) {
+                ThingWithComps blade = pawn.GetComp<CompShardblade>().Props.thisBladeThing;
                 Log.Message($"Radiant {pawn.Name} summoned his shard blade!");
-                Props.blade.summon(ref Props.bladeThingComps);
+                Props.blade.summon(ref blade);
             }
         }
     }
