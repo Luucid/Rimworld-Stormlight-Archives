@@ -49,12 +49,16 @@ namespace StormlightMod {
 
         private bool checkAndDropWeapon(ref Pawn pawn) {
             if (pawn.equipment.Primary != null) {
+
+                 if (pawn.equipment.Primary.def.defName.Equals("MeleeWeapon_Shardblade")) { 
+                    CompShardblade blade = pawn.GetComp<CompShardblade>(); 
+                    blade.dismissBlade();
+                    return false;
+                }
                 // Drop the existing weapon
                 ThingWithComps droppedWeapon;
                 pawn.equipment.TryDropEquipment(pawn.equipment.Primary, out droppedWeapon, pawn.Position, forbid: false);
-                if (pawn.equipment.Primary.def.defName.Equals("MeleeWeapon_Shardblade")) { //replace check to check droppedWeapon instead.
-                    return false;
-                }
+               
             }
             return true;
         }
