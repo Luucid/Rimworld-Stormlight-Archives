@@ -54,7 +54,7 @@ namespace StormlightMod {
                 // Drop the existing weapon
                 ThingWithComps droppedWeapon;
                 pawn.equipment.TryDropEquipment(pawn.equipment.Primary, out droppedWeapon, pawn.Position, forbid: false);
-                if (pawn.equipment.Primary.def.defName.Equals("MeleeWeapon_Shardblade")) {
+                if (pawn.equipment.Primary.def.defName.Equals("MeleeWeapon_Shardblade")) { //replace check to check droppedWeapon instead.
                     return false;
                 }
             }
