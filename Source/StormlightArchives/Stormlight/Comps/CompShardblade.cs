@@ -20,10 +20,13 @@ namespace StormlightMod {
             Props.owner = null;
         }
 
-        public void summon(ref ThingWithComps thisBlade) {
-            if(thisBladeThing == null)
-                thisBladeThing = thisBlade;
-            Props.owner.equipment.AddEquipment(thisBladeThing);
+        public void summon() {
+            if(Props.thisBladeThing == null)
+            {
+                Log.Message("thisBladeThing is NULL"); 
+                return;
+            }
+            Props.owner.equipment.AddEquipment(Props.thisBladeThing);
         }
 
         public void createBlade(ref Pawn pawn) {
