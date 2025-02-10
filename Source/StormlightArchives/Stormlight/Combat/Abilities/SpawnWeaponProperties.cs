@@ -81,7 +81,7 @@ namespace StormlightMod {
                 createBlade(ref pawn);
             }
 
-            else if (Props.blade.Props.isSpawned == false) {
+            if (Props.blade.Props.isSpawned == false) {
                 ThingWithComps blade = pawn.GetComp<CompShardblade>().Props.thisBladeThing;
                 Log.Message($"Radiant {pawn.Name} summoned his shard blade!");
                 Props.blade.summon(ref blade);
