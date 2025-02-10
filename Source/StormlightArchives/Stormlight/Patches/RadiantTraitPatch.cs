@@ -26,9 +26,10 @@ namespace StormlightMod {
                 pawn.AllComps.Add(bladeComp);
                 bladeComp.parent = pawn;
                 bladeComp.Initialize(new CompProperties_ShardBlade {
-                    some,
-                    correct,
-                    values
+                      isBondedByPawn = false,
+                      isSpawned = false,
+                      owner = pawn,
+                      thisBladeThing = null
                 });
                 Log.Message($"{pawn.Name} gained shardbalde storage!");
             }
