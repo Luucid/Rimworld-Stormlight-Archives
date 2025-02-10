@@ -12,8 +12,9 @@ namespace StormlightMod {
         }
 
         public bool isBonded() { return Props.owner != null; }
-        public void bondWithPawn(ref Pawn pawn) {
+        public void bondWithPawn(ref Pawn pawn, ref CompShardblade blade) {
             Props.owner = pawn;
+            Props.thisBladeThing = blade;
             Log.Message($"Shard bonded with {pawn.Name}"); 
         }
         public void severBond() {
