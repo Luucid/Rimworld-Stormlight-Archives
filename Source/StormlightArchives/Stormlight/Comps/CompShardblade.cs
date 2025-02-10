@@ -45,7 +45,7 @@ namespace StormlightMod {
             Log.Message($"Radiant {pawn.Name} created his shard blade!");
             CompShardBlade bladeProps = Props.thisBladeThing.Primary.GetComp<CompShardblade>();
             if (bladeProps.isBonded() == false) {
-               this.bondWithPawn(ref pawn);
+               bladeProps.bondWithPawn(ref pawn);
             }
         }
     }
