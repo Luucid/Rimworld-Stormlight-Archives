@@ -5,6 +5,8 @@ using Verse;
 using Verse.AI;
 
 namespace StormlightMod {
+
+    /// SUMMON BLADE ABILITY
     public class CompProperties_AbilitySpawnEquipment : CompProperties_AbilityEffect {
         public ThingDef thingDef; // The weapon to spawn
 
@@ -13,16 +15,6 @@ namespace StormlightMod {
             this.compClass = typeof(CompAbilityEffect_SpawnEquipment);
         }
     }
-
-    public class CompProperties_AbilityBreakBond : CompProperties_AbilityEffect {
-        public ThingDef thingDef; // The weapon to spawn
-
-        public CompProperties_AbilityBreakBond() {
-            this.compClass = typeof(CompAbilityEffect_BreakBondWithSword);
-        }
-    }
-
-    ///-----------------------------------------------------------------------///
 
     public class CompAbilityEffect_SpawnEquipment : CompAbilityEffect {
         public new CompProperties_AbilitySpawnEquipment Props => (CompProperties_AbilitySpawnEquipment)this.props;
@@ -74,6 +66,15 @@ namespace StormlightMod {
     }
 
 
+    
+/// BREAK BOND ABILITY
+    public class CompProperties_AbilityBreakBond : CompProperties_AbilityEffect {
+        public ThingDef thingDef; // The weapon to spawn
+
+        public CompProperties_AbilityBreakBond() {
+            this.compClass = typeof(CompAbilityEffect_BreakBondWithSword);
+        }
+    }
     public class CompAbilityEffect_BreakBondWithSword : CompAbilityEffect {
         public new CompProperties_AbilityBreakBond Props => (CompProperties_AbilityBreakBond)this.props;
 
