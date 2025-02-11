@@ -22,13 +22,10 @@ namespace StormlightMod {
 
         static private void givePawnShardbladeComp(ref Pawn pawn) {
             if (pawn.GetComp<CompShardblade>() == null) {
-                /*CompShardblade bladeComp = new CompShardblade();
-                pawn.AllComps.Add(bladeComp);
-                bladeComp.parent = pawn;
-                bladeComp.Initialize(new CompProperties_Shardblade {
-                    initiated = true,
-                });*/
-                bladeComp.createBlade(ref pawn);
+                CompShardblade bladeComp = new CompShardblade(); // Make shardblade memory object
+                pawn.AllComps.Add(bladeComp);                    // Add it to pawn comps
+                bladeComp.parent = pawn;                         // Set pawn as parent of comp, is this necessary?
+                bladeComp.createBlade(ref pawn);                 // Create the actual sword game object.
                 Log.Message($"{pawn.Name} gained shardbalde storage!");
             }
         }
