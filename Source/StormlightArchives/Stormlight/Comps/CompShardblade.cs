@@ -52,14 +52,14 @@ namespace StormlightMod {
         public void createBlade(ref Pawn pawn) {
             ThingDef stuffDef = DefDatabase<ThingDef>.GetNamed("ShardMaterial", true);
             ThingDef shardThing = DefDatabase<ThingDef>.GetNamed("MeleeWeapon_Shardblade", true);
-            this.bladeThing  = (ThingWithComps)ThingMaker.MakeThing(shardThing, stuffDef);
+            bladeThing  = (ThingWithComps)ThingMaker.MakeThing(shardThing, stuffDef);
             Log.Message($"Radiant {pawn.Name} created his shard blade!");
 
-            this.bladeThing.AllComps.Add(this);
-            this.parent = this.bladeThing; 
+            bladeThing.AllComps.Add(this);
+            this.parent = bladeThing; 
            
-            if (this.isBonded() == false) {
-               this.bondWithPawn(ref pawn);
+            if (isBonded() == false) {
+               bondWithPawn(ref pawn);
             }
         }
     }
