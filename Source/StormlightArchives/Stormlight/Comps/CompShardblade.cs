@@ -13,7 +13,7 @@ namespace StormlightMod {
 
         public bool isSpawned = false;
         public Pawn owner = null;
-        public ThingWithComps thisBladeThing = null;
+        public ThingWithComps bladeThing = null;
 
         public bool isBonded() 
             {
@@ -30,14 +30,14 @@ namespace StormlightMod {
         }
 
         public void summon() {
-            if(thisBladeThing == null)
+            if(bladeThing == null)
             {
-                Log.Message("thisBladeThing is NULL");
+                Log.Message("bladeThing is NULL");
                 return;
             }
-            Log.Message($"sword ID: {thisBladeThing.GetHashCode()}");
+            Log.Message($"sword ID: {bladeThing.GetHashCode()}");
 
-            owner.equipment.AddEquipment(thisBladeThing);
+            owner.equipment.AddEquipment(bladeThing);
             isSpawned = true;
         }
         
@@ -52,11 +52,14 @@ namespace StormlightMod {
         public void createBlade(ref Pawn pawn) {
             ThingDef stuffDef = DefDatabase<ThingDef>.GetNamed("ShardMaterial", true);
             ThingDef shardThing = DefDatabase<ThingDef>.GetNamed("MeleeWeapon_Shardblade", true);
-            thisBladeThing  = (ThingWithComps)ThingMaker.MakeThing(shardThing, stuffDef);
+            this.bladeThing  = (ThingWithComps)ThingMaker.MakeThing(shardThing, stuffDef);
             Log.Message($"Radiant {pawn.Name} created his shard blade!");
-            CompShardblade bladeProps = thisBladeThing.GetComp<CompShardblade>();
-            if (bladeProps.isBonded() == false) {
-               bladeProps.bondWithPawn(ref pawn);
+
+            this.bladeThing.AllComps.Add(this);
+            this.parent = this.bladeThing; 
+           
+            if (this.isBonded() == false) {
+               this.bondWithPawn(ref pawn);
             }
         }
     }
