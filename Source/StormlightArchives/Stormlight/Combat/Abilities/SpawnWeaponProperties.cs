@@ -42,7 +42,7 @@ namespace StormlightMod {
         private bool checkAndDropWeapon(ref Pawn pawn) {
             if (pawn.equipment.Primary != null) {
 
-                 if (pawn.equipment.Primary.def.defName.Equals("MeleeWeapon_Shardblade")) { 
+                 if (pawn.equipment.Primary.def.defName.Equals(Props.thingDef)) { 
                     CompShardblade blade = pawn.GetComp<CompShardblade>(); 
                     blade.dismissBlade();
                     return false;
@@ -97,7 +97,7 @@ namespace StormlightMod {
         private void checkAndDropWeapon(ref Pawn pawn) {
             if (pawn.equipment.Primary != null) {
                 ThingWithComps droppedWeapon;
-                if (pawn.equipment.Primary.def.defName.Equals("MeleeWeapon_Shardblade")) {
+                if (pawn.equipment.Primary.def.defName.Equals(Props.thingDef)) {
                     CompShardblade blade = pawn.equipment.Primary.GetComp<CompShardblade>();
                     blade.severBond();
                     pawn.equipment.TryDropEquipment(pawn.equipment.Primary, out droppedWeapon, pawn.Position, forbid: false);
