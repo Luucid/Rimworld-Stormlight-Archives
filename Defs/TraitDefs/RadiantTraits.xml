@@ -12,7 +12,6 @@
         <degree>0</degree>
         <abilities>
           <li>SummonShardblade</li> <!-- This links the ability -->
-          <li>unbondBlade</li> <!-- This links the ability -->
         </abilities>
       </li>
     </degreeDatas>
