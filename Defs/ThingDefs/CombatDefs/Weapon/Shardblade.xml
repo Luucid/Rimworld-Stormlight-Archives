@@ -60,6 +60,7 @@
   </tools>
   <comps>
       <li Class="StormlightMod.CompProperties_Shardblade">
+          <compClass>StormlightMod.CompShardblade</compClass>
       </li>
     </comps>
 </ThingDef>

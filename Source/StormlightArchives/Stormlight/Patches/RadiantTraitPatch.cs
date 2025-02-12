@@ -13,24 +13,29 @@ namespace StormlightMod {
                     Log.Message($"{pawn.Name} has become Radiant!");
 
 
-                    givePawnStormlight(ref pawn);
-                    givePawnGlow(ref pawn);
-                    givePawnShardbladeComp(ref pawn);
+                    givePawnStormlight(pawn);
+                    givePawnGlow(pawn);
+                    givePawnShardbladeComp(pawn);
                 }
             }
         }
 
-        static private void givePawnShardbladeComp(ref Pawn pawn) {
-            if (pawn.GetComp<CompShardblade>() == null) {
-                CompShardblade bladeComp = new CompShardblade(); // Make shardblade memory object
-                pawn.AllComps.Add(bladeComp);                    // Add it to pawn comps
-                bladeComp.parent = pawn;                         // Set pawn as parent of comp, is this necessary?
-                bladeComp.createBlade(ref pawn);                 // Create the actual sword game object.
+        static private void givePawnShardbladeComp(Pawn pawn) {
+
+            ThingDef stuffDef = DefDatabase<ThingDef>.GetNamed("ShardMaterial", true);
+            ThingDef shardThing = DefDatabase<ThingDef>.GetNamed("MeleeWeapon_Shardblade", true);
+            ThingWithComps blade = (ThingWithComps)ThingMaker.MakeThing(shardThing, stuffDef);
+
+            CompShardblade comp = blade.GetComp<CompShardblade>();
+            if (comp != null) {
+                comp.Initialize(new CompProperties_Shardblade {
+                });
+                comp.bondWithPawn(pawn);
                 Log.Message($"{pawn.Name} gained shardbalde storage!");
             }
         }
 
-        static private void givePawnStormlight(ref Pawn pawn) {
+        static private void givePawnStormlight(Pawn pawn) {
             if (pawn.GetComp<CompStormlight>() == null) {
                 CompStormlight stormlightComp = new CompStormlight();
                 pawn.AllComps.Add(stormlightComp);
@@ -44,7 +49,7 @@ namespace StormlightMod {
 
         }
 
-        static private void givePawnGlow(ref Pawn pawn) {
+        static private void givePawnGlow(Pawn pawn) {
             if (pawn.GetComp<CompGlower>() == null) {
                 CompGlower glowerComp = new CompGlower();
                 pawn.AllComps.Add(glowerComp);

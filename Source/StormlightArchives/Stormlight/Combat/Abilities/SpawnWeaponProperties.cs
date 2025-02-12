@@ -19,6 +19,8 @@ namespace StormlightMod {
     public class CompAbilityEffect_SpawnEquipment : CompAbilityEffect {
         public new CompProperties_AbilitySpawnEquipment Props => (CompProperties_AbilitySpawnEquipment)this.props;
 
+        public ThingWithComps bladeObject = null;
+
         public override void Apply(LocalTargetInfo target, LocalTargetInfo dest) {
             if (target == null || target.Cell == null) {
                 Log.Warning("[StormlightMod] SpawnEquipment target is null, defaulting to caster.");
@@ -32,44 +34,45 @@ namespace StormlightMod {
 
             Pawn pawn = parent.pawn;
 
-            if (checkAndDropWeapon(ref pawn) == false) {
-                return;
-            }
-
+            checkAndDropWeapon(ref pawn);
             toggleBlade(ref pawn);
         }
 
-        private bool checkAndDropWeapon(ref Pawn pawn) {
+        private void checkAndDropWeapon(ref Pawn pawn) {
             if (pawn.equipment.Primary != null) {
 
-                 if (pawn.equipment.Primary.def.defName.Equals(Props.thingDef)) { 
-                    CompShardblade blade = pawn.GetComp<CompShardblade>(); 
-                    blade.dismissBlade();
-                    return false;
-                }
+                if (pawn.equipment.Primary.def.defName.Equals(Props.thingDef.ToString())) return;
+
                 // Drop the existing weapon
                 ThingWithComps droppedWeapon;
                 pawn.equipment.TryDropEquipment(pawn.equipment.Primary, out droppedWeapon, pawn.Position, forbid: false);
-               
+
             }
-            return true;
         }
 
         private void toggleBlade(ref Pawn pawn) {
-            CompShardblade blade = pawn.GetComp<CompShardblade>(); 
+            CompAbilityEffect_SpawnEquipment abilityComp = pawn.GetAbilityComp<CompAbilityEffect_SpawnEquipment>("SummonShardblade");
+            if (abilityComp == null) return;
 
-            if (blade != null && blade.isSpawned == false) {
-                Log.Message($"Radiant {pawn.Name} summoned his shard blade!");
+            CompShardblade blade = abilityComp.bladeObject.GetComp<CompShardblade>();
+            if (blade == null) return;
+
+            if (blade.isBladeSpawned() == false) {
+                Log.Message($"[StormlightMod] Radiant {pawn.Name} summoned shard blade!");
                 blade.summon();
+            }
+            else {
+                Log.Message($"[StormlightMod] Radiant {pawn.Name} dismissed the blade");
+                blade.dismissBlade(pawn);
             }
         }
     }
 
 
-    
-/// BREAK BOND ABILITY
+
+    /// BREAK BOND ABILITY
     public class CompProperties_AbilityBreakBond : CompProperties_AbilityEffect {
-        public ThingDef thingDef; // The weapon to spawn
+        public ThingDef thingDef;
 
         public CompProperties_AbilityBreakBond() {
             this.compClass = typeof(CompAbilityEffect_BreakBondWithSword);
@@ -96,11 +99,15 @@ namespace StormlightMod {
 
         private void checkAndDropWeapon(ref Pawn pawn) {
             if (pawn.equipment.Primary != null) {
-                ThingWithComps droppedWeapon;
-                if (pawn.equipment.Primary.def.defName.Equals(Props.thingDef)) {
+                Log.Message("[StormlightMod] try to break bond.");
+
+                if (pawn.equipment.Primary.def.defName.Equals(Props.thingDef.ToString())) {
                     CompShardblade blade = pawn.equipment.Primary.GetComp<CompShardblade>();
-                    blade.severBond();
-                    pawn.equipment.TryDropEquipment(pawn.equipment.Primary, out droppedWeapon, pawn.Position, forbid: false);
+                    Log.Message($"[StormlightMod] {pawn.Name} unbonded its shardblade {blade.GetHashCode()}");
+                    blade.severBond(pawn);
+                }
+                else {
+                    Log.Error($"[StormlightMod] eq name is '{pawn.equipment.Primary.def.defName}', thingDef is '{Props.thingDef.ToString()}'");
                 }
             }
         }

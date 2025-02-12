@@ -3,70 +3,85 @@ using RimWorld;
 using Verse;
 using UnityEngine;
 using System.Reflection;
+using RimWorld.QuestGen;
+using System.Linq;
 
 namespace StormlightMod {
+
+    public static class AbilityExtensions {
+        public static T GetAbilityComp<T>(this Pawn pawn, string abilityDefName) where T : CompAbilityEffect {
+            if (pawn.abilities == null) return null;
+
+            Ability ability = pawn.abilities.GetAbility(DefDatabase<AbilityDef>.GetNamed(abilityDefName));
+            return ability?.comps?.OfType<T>().FirstOrDefault();
+        }
+    }
+
     public class CompShardblade : ThingComp {
-        public CompProperties_Shardblade Props => (CompProperties_Shardblade)props;
+        public CompProperties_Shardblade Props => props as CompProperties_Shardblade;
+        private Pawn swordOwner = null;
         public override void PostExposeData() {
             base.PostExposeData();
         }
-
-        public bool isSpawned = false;
-        public Pawn owner = null;
-        public ThingWithComps bladeThing = null;
-
-        public bool isBonded() 
-            {
-            Log.Message($"isBonded check for {owner?.Name}");
-            return owner != null; 
+        private bool isSpawned = false;
+        public bool isBonded(Pawn pawn) {
+            return swordOwner == pawn;
         }
-        public void bondWithPawn(ref Pawn pawn) {
-            owner = pawn;
-            Log.Message($"Shard bonded with {pawn.Name}"); 
+        public void bondWithPawn(Pawn pawn) {
+            swordOwner = pawn;
+            ThingWithComps blade = this.parent as ThingWithComps;
+            CompAbilityEffect_SpawnEquipment abilityComp = pawn.GetAbilityComp<CompAbilityEffect_SpawnEquipment>("SummonShardblade");
+            if (abilityComp != null) {
+                abilityComp.bladeObject = blade;
+                if (blade != null && pawn != null) {
+                    Log.Message($"{pawn.Name} bonded with {blade.GetHashCode()}");
+                }
+            }
+            //Ability summonAbility = swordOwner.abilities.GetAbility(DefDatabase<AbilityDef>.GetNamed("SummonShardblade"));
+            //if (summonAbility != null) {
+            //    CompAbilityEffect_SpawnEquipment comp = summonAbility.EffectComps.
+            //}
         }
 
-        public void severBond() {
-            owner = null;
+        public void severBond(Pawn pawn) {
+            if (swordOwner == pawn)
+                swordOwner = null;
         }
-
+        public bool isBladeSpawned() {
+            return isSpawned;
+        }
         public void summon() {
-            if(bladeThing == null)
-            {
-                Log.Message("bladeThing is NULL");
+            if (swordOwner == null) {
+                Log.Message("sword owner was null");
                 return;
             }
-            Log.Message($"sword ID: {bladeThing.GetHashCode()}");
+            CompAbilityEffect_SpawnEquipment abilityComp = swordOwner.GetAbilityComp<CompAbilityEffect_SpawnEquipment>("SummonShardblade");
+            if (abilityComp != null && abilityComp.bladeObject != null) {
+                swordOwner.equipment.AddEquipment(abilityComp.bladeObject);
+                isSpawned = true;
+                Log.Message("sword spawned");
+            }
+            else {
+                if (abilityComp == null)
+                    Log.Message("abilityComp is null");
+                else {
+                    Log.Message("abilityComp.bladeObject is null");
+                }
 
-            owner.equipment.AddEquipment(bladeThing);
-            isSpawned = true;
+            }
         }
-        
-        public void dismissBlade()
-        {
+
+        public void dismissBlade(Pawn pawn) {
             ThingWithComps droppedWeapon;
-           owner.equipment.TryDropEquipment(owner.equipment.Primary, out droppedWeapon, owner.Position, forbid: false); 
+            pawn.equipment.TryDropEquipment(pawn.equipment.Primary, out droppedWeapon, pawn.Position, forbid: false);
             isSpawned = false;
             //dismissal vs dropping is handled by harmony patch in ShardbladePatches.cs
         }
 
-        public void createBlade(ref Pawn pawn) {
-            ThingDef stuffDef = DefDatabase<ThingDef>.GetNamed("ShardMaterial", true);
-            ThingDef shardThing = DefDatabase<ThingDef>.GetNamed("MeleeWeapon_Shardblade", true);
-            bladeThing  = (ThingWithComps)ThingMaker.MakeThing(shardThing, stuffDef);
-            Log.Message($"Radiant {pawn.Name} created his shard blade!");
-
-            bladeThing.AllComps.Add(this);
-            this.parent = bladeThing; 
-           
-            if (isBonded() == false) {
-               bondWithPawn(ref pawn);
-            }
-        }
     }
 }
 namespace StormlightMod {
     public class CompProperties_Shardblade : CompProperties {
-        public bool initiated;
         public CompProperties_Shardblade() {
             this.compClass = typeof(CompShardblade);
         }
