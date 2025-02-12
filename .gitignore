@@ -1,1 +1,40 @@
-bin/\nobj/\n*.log\n*.tmp
+# Ignore Visual Studio specific files
+.vs/
+*.suo
+
+# Ignore compiled binaries
+*.dll
+*.exe
+*.pdb
+
+# Ignore build artifacts
+bin/
+obj/
+
+# Ignore backup files
+*.backup.json
+
+# Ignore temporary and user-specific files
+*.user
+*.cache
+*.log
+*.tmp
+*.swp
+*.sln.docstates
+*.ipch
+
+# Ignore Rider / Resharper files (if applicable)
+.idea/
+*.DotSettings.user
+
+# Ignore any Debug/Release folders
+**/Debug/
+**/Release/
+**/x64/
+**/x86/
+**/out/
+**/build/
+
+# Ignore dependency cache
+node_modules/
+packages/
