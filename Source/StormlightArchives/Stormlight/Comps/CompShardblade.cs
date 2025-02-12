@@ -27,25 +27,60 @@ namespace StormlightMod {
         public bool isBonded(Pawn pawn) {
             return swordOwner == pawn;
         }
-        public void bondWithPawn(Pawn pawn) {
+
+        private void handleSwordAbility(Pawn pawn, CompAbilityEffect_SpawnEquipment abilityComp) {
+            if (abilityComp == null) {
+                pawn.abilities.GainAbility(DefDatabase<AbilityDef>.GetNamed("SummonShardblade"));
+                pawn.abilities.GainAbility(DefDatabase<AbilityDef>.GetNamed("unbondBlade"));
+            }
+        }
+
+        public void bondWithPawn(Pawn pawn, bool isBladeSpawned) {
             swordOwner = pawn;
             ThingWithComps blade = this.parent as ThingWithComps;
             CompAbilityEffect_SpawnEquipment abilityComp = pawn.GetAbilityComp<CompAbilityEffect_SpawnEquipment>("SummonShardblade");
-            if (abilityComp != null) {
-                abilityComp.bladeObject = blade;
-                if (blade != null && pawn != null) {
-                    Log.Message($"{pawn.Name} bonded with {blade.GetHashCode()}");
-                }
+            handleSwordAbility(pawn, abilityComp);
+            if (abilityComp == null) {
+                Log.Message("Abilitycomp still null!");
+                abilityComp = pawn.GetAbilityComp<CompAbilityEffect_SpawnEquipment>("SummonShardblade");
             }
-            //Ability summonAbility = swordOwner.abilities.GetAbility(DefDatabase<AbilityDef>.GetNamed("SummonShardblade"));
-            //if (summonAbility != null) {
-            //    CompAbilityEffect_SpawnEquipment comp = summonAbility.EffectComps.
-            //}
+            abilityComp.bladeObject = blade;
+            isSpawned = isBladeSpawned;
         }
 
+
+        private static void removeRadiantStuff(Pawn pawn) {
+            if (pawn?.story?.traits == null) {
+                Log.Error("[stormlight mod] Pawn has no traits system!");
+                return;
+            }
+
+            Trait trait = pawn.story.traits.allTraits.FirstOrDefault(t => t.def.defName == "Radiant");
+
+            if (trait != null) {
+                pawn.story.traits.allTraits.Remove(trait);
+                Log.Message($"[stormlight mod] {pawn.Name} broke an oath and lost its Radiant trait.");
+
+                CompStormlight comp = pawn.GetComp<CompStormlight>();
+                if (comp != null) {
+                    pawn.AllComps.Remove(comp);
+                }
+
+                CompGlower glowComp = pawn.GetComp<CompGlower>();
+                if (glowComp != null) {
+                    pawn.AllComps.Remove(glowComp);
+                }
+            }
+            pawn.abilities.RemoveAbility(DefDatabase<AbilityDef>.GetNamed("SummonShardblade"));
+            pawn.abilities.RemoveAbility(DefDatabase<AbilityDef>.GetNamed("unbondBlade"));
+        }
+
+
         public void severBond(Pawn pawn) {
-            if (swordOwner == pawn)
+            if (swordOwner == pawn) {
+                removeRadiantStuff(pawn);
                 swordOwner = null;
+            }
         }
         public bool isBladeSpawned() {
             return isSpawned;

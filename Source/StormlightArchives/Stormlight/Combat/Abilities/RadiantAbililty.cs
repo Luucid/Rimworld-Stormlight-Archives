@@ -17,16 +17,25 @@ namespace StormlightMod {
         public RadiantAbility(Pawn pawn, AbilityDef def) : base(pawn, def) {
         }
 
-        public override bool CanCast {
+        public override bool CanCast { //maybe remove if unused
             get {
+                Log.Message("CanCast test");
                 if (!base.CanCast) {
                     return false;
                 }
-           
+
                 if (!pawn.story.traits.HasTrait(TraitDef.Named("Radiant"))) {
+                    CompAbilityEffect_SpawnEquipment abilityComp = pawn.GetAbilityComp<CompAbilityEffect_SpawnEquipment>("SummonShardblade");
+                    if (abilityComp != null) {
+                        Log.Message("CanCast true");
+                        return true;
+                    }
+                    Log.Message("CanCast false");
+
                     return false;
                 }
 
+                Log.Message("CanCast true");
                 return true;
             }
         }
@@ -96,7 +105,7 @@ namespace StormlightMod {
         public override void ProcessInput(Event ev) {
             base.ProcessInput(ev);
 
-            if (pawn.Drafted && pawn.story.traits.HasTrait(TraitDef.Named("Radiant"))) {
+            if (pawn.Drafted && (pawn.story.traits.HasTrait(TraitDef.Named("Radiant")) || pawn.GetAbilityComp<CompAbilityEffect_SpawnEquipment>("SummonShardblade") != null)) {
                 ability.Activate(new LocalTargetInfo(pawn.Position), new LocalTargetInfo(pawn.Position));
             }
         }

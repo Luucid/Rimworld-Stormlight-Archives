@@ -4,18 +4,18 @@ using Verse;
 
 namespace StormlightMod {
     [HarmonyPatch(typeof(TraitSet), "GainTrait")]
-    public static class RadiantTraitPatch {
-        static void Postfix(TraitSet __instance, Trait trait) {
+    public static class RadiantGainTraitPatch {
+        static void Postfix(Pawn ___pawn, Trait trait) {
             if (trait.def.defName == "Radiant") {
-                Pawn pawn = Traverse.Create(__instance).Field("pawn").GetValue<Pawn>();
+                //Pawn pawn = Traverse.Create(__instance).Field("pawn").GetValue<Pawn>();
 
-                if (pawn != null && pawn.RaceProps.Humanlike) {
-                    Log.Message($"{pawn.Name} has become Radiant!");
+                if (___pawn != null && ___pawn.RaceProps.Humanlike) {
+                    Log.Message($"{___pawn.Name} has become Radiant!");
 
 
-                    givePawnStormlight(pawn);
-                    givePawnGlow(pawn);
-                    givePawnShardbladeComp(pawn);
+                    givePawnStormlight(___pawn);
+                    givePawnGlow(___pawn);
+                    givePawnShardbladeComp(___pawn);
                 }
             }
         }
@@ -30,7 +30,7 @@ namespace StormlightMod {
             if (comp != null) {
                 comp.Initialize(new CompProperties_Shardblade {
                 });
-                comp.bondWithPawn(pawn);
+                comp.bondWithPawn(pawn, false);
                 Log.Message($"{pawn.Name} gained shardbalde storage!");
             }
         }
