@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <NeedDef>
+    <defName>RadiantProgress</defName>
+    <needClass>StormlightMod.Need_RadiantProgress</needClass>
+    <label>radiant progression</label>
+    <description>This tracks a pawn's progression towards becoming a full Radiant.</description>
+    <baseLevel>0</baseLevel>
+    <listPriority>500</listPriority>
+    <major>true</major>
+    <minIntelligence>ToolUser</minIntelligence>
+    <colonistAndPrisonersOnly>true</colonistAndPrisonersOnly>
+    <showOnNeedList>true</showOnNeedList>
+    <freezeWhileSleeping>true</freezeWhileSleeping>
+  </NeedDef>
+</Defs>

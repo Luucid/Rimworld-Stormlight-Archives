@@ -14,17 +14,13 @@ namespace StormLight {
             /// <summary>
             /// The three settings our mod has.
             /// </summary>
-            public bool exampleBool;
-            public float exampleFloat = 200f;
-            public List<Pawn> exampleListOfPawns = new List<Pawn>();
+            public bool enableHighstormPushing;
 
             /// <summary>
             /// The part that writes our settings to file. Note that saving is by ref.
             /// </summary>
             public override void ExposeData() {
-                Scribe_Values.Look(ref exampleBool, "exampleBool");
-                Scribe_Values.Look(ref exampleFloat, "exampleFloat", 200f);
-                Scribe_Collections.Look(ref exampleListOfPawns, "exampleListOfPawns", LookMode.Reference);
+                Scribe_Values.Look(ref enableHighstormPushing, "enableHighstormPushing", true);
                 base.ExposeData();
             }
         }
@@ -50,9 +46,8 @@ namespace StormLight {
             public override void DoSettingsWindowContents(Rect inRect) {
                 Listing_Standard listingStandard = new Listing_Standard();
                 listingStandard.Begin(inRect);
-                listingStandard.CheckboxLabeled("exampleBoolExplanation", ref settings.exampleBool, "exampleBoolToolTip");
-                listingStandard.Label("exampleFloatExplanation");
-                settings.exampleFloat = listingStandard.Slider(settings.exampleFloat, 100f, 300f);
+                listingStandard.CheckboxLabeled("Highstorms will move items and pawns", ref settings.enableHighstormPushing, "this will cost more cpu");
+                //settings.exampleFloat = listingStandard.Slider(settings.exampleFloat, 100f, 300f);
                 listingStandard.End();
                 base.DoSettingsWindowContents(inRect);
             }
@@ -63,7 +58,7 @@ namespace StormLight {
             /// </summary>
             /// <returns>The (translated) mod name.</returns>
             public override string SettingsCategory() {
-                return "MyExampleModName".Translate();
+                return "StormlightArchives";
             }
         }
     }

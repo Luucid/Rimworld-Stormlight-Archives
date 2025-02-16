@@ -9,13 +9,9 @@
 		<letterText>The highstorm is upon us!</letterText>
 		<letterLabel>Highstorm</letterLabel>
 		<letterDef>ThreatBig</letterDef>
-		<minRefireDays>8</minRefireDays>
+		<minRefireDays>1</minRefireDays>
 	</IncidentDef>
 	
-
-
-
-
 	<GameConditionDef>
 		<defName>HighstormCondition</defName>
 		<conditionClass>StormlightMod.GameCondition_Highstorm</conditionClass>

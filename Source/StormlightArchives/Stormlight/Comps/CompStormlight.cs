@@ -93,6 +93,7 @@ namespace StormlightMod {
 
                 injury.Heal(10.0f);  // Heal by 1 point
                 m_CurrentStormlight -= cost;
+                RadiantUtility.GiveRadiantXP(pawn, 10.0f);
             }
 
             // HEAL INJURIES
@@ -104,6 +105,7 @@ namespace StormlightMod {
 
                 injury.Heal(10.0f);  // Heal by 1 point
                 m_CurrentStormlight -= cost;
+                RadiantUtility.GiveRadiantXP(pawn, 10.0f);
             }
         }
 

@@ -7,6 +7,7 @@ namespace StormlightMod {
     [HarmonyPatch(typeof(Pawn))]
     [HarmonyPatch("Tick")]
     public static class Pawn_HighstormPushPatch {
+
         static void Postfix(Pawn __instance) {
             if (Find.TickManager.TicksGame % 20 != 0) return;
 
@@ -58,6 +59,7 @@ namespace StormlightMod {
 
 
         private static void damageAndMovePawn(Pawn __instance) {
+
             // Storm always blows from east → pushes pawns west
             IntVec3 newPos = __instance.Position + IntVec3.West;
 
@@ -81,7 +83,7 @@ namespace StormlightMod {
                 __instance.Position = newPos;
             }
             else {
-                var stormlightComp = __instance.TryGetComp<CompStormlight>(); 
+                var stormlightComp = __instance.TryGetComp<CompStormlight>();
                 if (stormlightComp != null) {
                     stormlightComp.infuseStormlight(25f); // 25 units per check
                 }

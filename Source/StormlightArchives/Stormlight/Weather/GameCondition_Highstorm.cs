@@ -14,6 +14,12 @@ namespace StormlightMod {
     public class GameCondition_Highstorm : GameCondition {
 
         private Random m_Rand = new Random();
+        private bool enableHighstormPushing = true;
+        public override void ExposeData() {
+
+            Scribe_Values.Look(ref enableHighstormPushing, "enableHighstormPushing");
+            base.ExposeData();
+        }
 
         public override void GameConditionTick() {
             base.GameConditionTick();
@@ -23,7 +29,8 @@ namespace StormlightMod {
             if (Find.TickManager.TicksGame % 8 == 0) {
                 // Grab extension fields
                 tryToInfuseGems();
-                moveItem();
+                if (enableHighstormPushing)
+                    moveItem();
             }
         }
         public void tryToInfuseGems() {
@@ -112,7 +119,7 @@ namespace StormlightMod {
                 if (itemMap == null) continue;
 
                 // push logic
-                IntVec3 newPos = item.Position + (IntVec3.West*m_Rand.Next(1, 2));
+                IntVec3 newPos = item.Position + (IntVec3.West * m_Rand.Next(1, 2));
                 destoyIfCollide(item, itemMap, newPos);
 
                 if (!newPos.Walkable(itemMap))
