@@ -12,6 +12,8 @@
         <degree>0</degree>
         <abilities>
           <li>SummonShardblade</li> <!-- This links the ability -->
+          <li>lucidLashingUpward</li>
+          <li>lucidWindRunnerFlight</li>
         </abilities>
       </li>
     </degreeDatas>

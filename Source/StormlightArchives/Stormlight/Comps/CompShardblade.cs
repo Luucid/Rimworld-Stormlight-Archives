@@ -31,7 +31,10 @@ namespace StormlightMod {
         private void handleSwordAbility(Pawn pawn, CompAbilityEffect_SpawnEquipment abilityComp) {
             if (abilityComp == null) {
                 pawn.abilities.GainAbility(DefDatabase<AbilityDef>.GetNamed("SummonShardblade"));
-                pawn.abilities.GainAbility(DefDatabase<AbilityDef>.GetNamed("unbondBlade"));
+                Trait trait = pawn.story.traits.allTraits.FirstOrDefault(t => t.def.defName == "Radiant");
+                if (trait == null) { //radiants does not get this ability
+                    pawn.abilities.GainAbility(DefDatabase<AbilityDef>.GetNamed("unbondBlade"));
+                }
             }
         }
 
@@ -86,8 +89,8 @@ namespace StormlightMod {
             return isSpawned;
         }
         public void summon() {
-            if (swordOwner == null) {
-                Log.Message("sword owner was null");
+            if (swordOwner == null || isSpawned == true) {
+                Log.Message("sword owner was null or blade was already summoned");
                 return;
             }
             CompAbilityEffect_SpawnEquipment abilityComp = swordOwner.GetAbilityComp<CompAbilityEffect_SpawnEquipment>("SummonShardblade");

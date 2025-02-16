@@ -2,6 +2,11 @@
 using RimWorld;
 using Verse;
 using UnityEngine;
+using Verse.AI;
+using System;
+using static UnityEngine.GraphicsBuffer;
+using System.Security.Cryptography;
+using static HarmonyLib.Code;
 
 namespace StormlightMod {
     public class RadiantAbility : Ability {
@@ -17,28 +22,6 @@ namespace StormlightMod {
         public RadiantAbility(Pawn pawn, AbilityDef def) : base(pawn, def) {
         }
 
-        public override bool CanCast { //maybe remove if unused
-            get {
-                Log.Message("CanCast test");
-                if (!base.CanCast) {
-                    return false;
-                }
-
-                if (!pawn.story.traits.HasTrait(TraitDef.Named("Radiant"))) {
-                    CompAbilityEffect_SpawnEquipment abilityComp = pawn.GetAbilityComp<CompAbilityEffect_SpawnEquipment>("SummonShardblade");
-                    if (abilityComp != null) {
-                        Log.Message("CanCast true");
-                        return true;
-                    }
-                    Log.Message("CanCast false");
-
-                    return false;
-                }
-
-                Log.Message("CanCast true");
-                return true;
-            }
-        }
 
         public override IEnumerable<Command> GetGizmos() {
             if (gizmo == null) {
@@ -106,9 +89,127 @@ namespace StormlightMod {
             base.ProcessInput(ev);
 
             if (pawn.Drafted && (pawn.story.traits.HasTrait(TraitDef.Named("Radiant")) || pawn.GetAbilityComp<CompAbilityEffect_SpawnEquipment>("SummonShardblade") != null)) {
-                ability.Activate(new LocalTargetInfo(pawn.Position), new LocalTargetInfo(pawn.Position));
+
+                if (ability.def.defName.Equals("SummonShardblade")) {
+                    ability.Activate(pawn, pawn);
+                }
+                else if (ability.def.defName.Equals("lucidLashingUpward")) {
+
+                    TargetingParameters tp = new TargetingParameters {
+                        canTargetPawns = true,
+                        canTargetAnimals = false,
+                        canTargetItems = false,
+                        canTargetBuildings = false,
+                        canTargetLocations = false,
+                        validator = (TargetInfo info) => {
+                            return info.IsValid &&
+                                   pawn != null &&
+                                   pawn.Spawned &&
+                                   pawn.Position.InHorDistOf(info.Cell, ability.verb.EffectiveRange);
+                        }
+                    };
+                    StartCustomTargeting(pawn, ability.verb.EffectiveRange);
+                }
+                else if (ability.def.defName.Equals("lucidWindRunnerFlight")) {
+                    float cost = pawn.GetAbilityComp<CompAbilityEffect_AbilityWindRunnerFlight>("lucidWindRunnerFlight").Props.stormLightCost; 
+                    float distance = pawn.GetComp<CompStormlight>().Stormlight / cost; 
+                    TargetingParameters tp = new TargetingParameters {
+                        canTargetPawns = true,
+                        canTargetAnimals = true,
+                        canTargetItems = true,
+                        canTargetBuildings = true,
+                        canTargetLocations = true,
+                        mustBeSelectable = false,
+                        validator = (TargetInfo info) => {
+                            return info.IsValid &&
+                            pawn != null &&
+                                   pawn.Spawned &&
+                                   pawn.Position.InHorDistOf(info.Cell, distance);
+                        }
+                    };
+                    StartCustomTargeting(pawn, distance);
+                }
             }
         }
+
+        private void DrawCustomCircle(Pawn caster, float radius, Color color) {
+
+            color.a = 0.15f;
+            Vector3 center = caster.DrawPos;
+            center.y = AltitudeLayer.MetaOverlays.AltitudeFor();
+
+            Material mat = SolidColorMaterials.SimpleSolidColorMaterial(color);
+
+            // Build a matrix for position/rotation/scale
+            Matrix4x4 matrix = default;
+            matrix.SetTRS(
+                pos: center,
+                q: Quaternion.identity,
+                s: new Vector3(radius, 1f, radius)
+            );
+
+            Mesh circleMesh = MeshPool.circle;
+            Graphics.DrawMesh(circleMesh, matrix, mat, -1);
+        }
+
+        public void StartCustomTargeting(Pawn caster, float maxDistance) {
+
+            var tp = new TargetingParameters {
+                canTargetPawns = true,
+                canTargetItems = true,
+                canTargetLocations = true,
+                validator = null // passing a separate 'targetValidator' argument below
+            };
+
+            // The main action to do once a valid target is chosen
+            Action<LocalTargetInfo> mainAction = (LocalTargetInfo chosenTarget) => {
+                ability.Activate(chosenTarget, chosenTarget);
+
+            };
+
+            // This runs each frame to highlight the hovered cell/thing
+            Action<LocalTargetInfo> highlightAction = (LocalTargetInfo info) => {
+                // If it's valid, highlight it in green
+                if (info.IsValid)
+                    GenDraw.DrawTargetHighlight(info);
+            };
+
+            // This function checks if the user is allowed to pick 'info'
+            // Return 'true' if valid, 'false' if not
+            Func<LocalTargetInfo, bool> targetValidator = (LocalTargetInfo info) => {
+                // Must be valid and within maxDistance
+                return info.IsValid &&
+                       caster.Spawned &&
+                       caster.Position.InHorDistOf(info.Cell, maxDistance);
+            };
+
+            // Called each GUI frame after the default crosshair is drawn
+            // e.g. you can add a label if out of range
+            Action<LocalTargetInfo> onGuiAction = (LocalTargetInfo info) => {
+                if (info.IsValid && !targetValidator(info)) {
+                    Widgets.MouseAttachedLabel("Out of range");
+                }
+            };
+
+            // Called each frame. We’ll draw a radius ring to show the cast range
+            Action<LocalTargetInfo> onUpdateAction = (LocalTargetInfo info) => {
+                DrawCustomCircle(caster, maxDistance, Color.cyan);
+            };
+
+            Find.Targeter.BeginTargeting(
+                targetParams: tp,
+                action: mainAction,
+                highlightAction: highlightAction,
+                targetValidator: targetValidator,
+                caster: caster,
+                actionWhenFinished: null,     // optional cleanup
+                mouseAttachment: null,        // or use a custom icon
+                playSoundOnAction: true,
+                onGuiAction: onGuiAction,
+                onUpdateAction: onUpdateAction
+            );
+        }
+
 
         public override bool InheritInteractionsFrom(Gizmo other) {
             return false;

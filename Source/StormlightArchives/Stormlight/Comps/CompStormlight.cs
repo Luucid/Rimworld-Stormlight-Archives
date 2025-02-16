@@ -71,7 +71,6 @@ namespace StormlightMod {
 
             if (!HasStormlight || pawn.health == null) return;
             if (GlowerComp != null) {
-                Log.Message($"Current radiant glow radius: {GlowerComp.Props.glowRadius}");
                 if (m_CurrentStormlight == 0) {
                     GlowerComp.Props.glowRadius = 0;
                 }
@@ -122,7 +121,6 @@ namespace StormlightMod {
             if (pouchComp != null && pouchComp.GetTotalStoredStormlight() > 0) {
                 float drawn = pouchComp.DrawStormlight(absorbAmount);
                 infuseStormlight(drawn);
-                Log.Message($"{pawn.Name} absorbed {drawn} Stormlight from a pouch! Remaining in pouch: {pouchComp.GetTotalStoredStormlight()}");
                 return;
             }
 
@@ -138,7 +136,6 @@ namespace StormlightMod {
                         float drawn = Math.Min(absorbAmount, sphereComp.Stormlight);
                         sphereComp.infuseStormlight(-drawn); // Remove from sphere
                         infuseStormlight(drawn); // Add to Radiant
-                        Log.Message($"{pawn.Name} absorbed {drawn} Stormlight from an inventory sphere!");
                         return; // Absorb from only one at a time
                     }
                 }
@@ -196,7 +193,6 @@ namespace StormlightMod {
 
         // Infuse from code when highstorm is active
         public void infuseStormlight(float amount) {
-            Log.Message($"infused spere, {m_CurrentStormlight}/{CurrentMaxStormlight}");
             m_CurrentStormlight += amount;
             if (m_CurrentStormlight > CurrentMaxStormlight)
                 m_CurrentStormlight = CurrentMaxStormlight;
