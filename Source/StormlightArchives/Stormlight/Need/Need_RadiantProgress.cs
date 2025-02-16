@@ -7,7 +7,7 @@ using Verse;
 namespace StormlightMod {
     public class Need_RadiantProgress : Need {
         private const float MaxXP = 3000f; // XP required for full progress
-
+        private float currentXp = 0f;
         public Need_RadiantProgress(Pawn pawn) : base(pawn) {
             //this.threshPercents = new List<float> { 0.2f, 0.4f, 0.6f, 0.8f }; // Visual bar markers
         }
@@ -17,11 +17,11 @@ namespace StormlightMod {
         }
 
         public void GainXP(float amount) {
-            CurLevel += amount;
-            if (CurLevel > MaxXP) {
-                CurLevel = MaxXP; // Cap at full progress
+            currentXp += amount;
+            if (currentXp > MaxXP) {
+                currentXp = MaxXP; // Cap at full progress
             }
-            Log.Message($"current level: {CurLevel}");
+            Log.Message($"current level: {currentXp}");
         }
 
         public void UpdateRadiantTrait(Pawn pawn) {
@@ -29,7 +29,7 @@ namespace StormlightMod {
 
             if (radiantTrait != null) {
                 int currentDegree = radiantTrait.Degree;
-                int newDegree = GetDegreeFromXP(CurLevel);
+                int newDegree = GetDegreeFromXP(currentXp);
 
                 if (newDegree > currentDegree) {
                     // Remove old trait and add the upgraded one
