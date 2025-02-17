@@ -6,7 +6,10 @@ using Verse;
 
 namespace StormlightMod {
     public class Need_RadiantProgress : Need {
-        private const float MaxXP = 3000f; // XP required for full progress
+        private const float LEVEL_NEW_SQUIRE = 3000f;
+        private const float LEVEL_EXPERIENCED_SQUIRE = LEVEL_NEW_SQUIRE*2f;
+        private const float LEVEL_KNIGHT_RADIANT = LEVEL_EXPERIENCED_SQUIRE*2f;
+        
         private float currentXp = 0f;
         public Need_RadiantProgress(Pawn pawn) : base(pawn) {
             //this.threshPercents = new List<float> { 0.2f, 0.4f, 0.6f, 0.8f }; // Visual bar markers
@@ -18,10 +21,6 @@ namespace StormlightMod {
 
         public void GainXP(float amount) {
             currentXp += amount;
-            if (currentXp > MaxXP) {
-                currentXp = MaxXP; // Cap at full progress
-            }
-            Log.Message($"current level: {currentXp}");
         }
 
         public void UpdateRadiantTrait(Pawn pawn) {
@@ -42,9 +41,9 @@ namespace StormlightMod {
         }
 
         private int GetDegreeFromXP(float xp) {
-            if (xp >= 3000f) return 3; // Knight Radiant
-            if (xp >= 1500f) return 2; // Experienced Squire
-            if (xp >= 500f) return 1;  // New Squire
+            if (xp >= LEVEL_KNIGHT_RADIANT) return 3;     // Knight Radiant
+            if (xp >= LEVEL_EXPERIENCED_SQUIRE) return 2; // Experienced Squire
+            if (xp >= LEVEL_NEW_SQUIRE) return 1;         // New Squire
             return 0; // Bonded (Base Level)
         }
 
