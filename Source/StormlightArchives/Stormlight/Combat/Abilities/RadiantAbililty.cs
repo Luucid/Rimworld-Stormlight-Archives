@@ -89,11 +89,27 @@ namespace StormlightMod {
             base.ProcessInput(ev);
 
             if (pawn.Drafted && (pawn.story.traits.HasTrait(TraitDef.Named("Radiant")) || pawn.GetAbilityComp<CompAbilityEffect_SpawnEquipment>("SummonShardblade") != null)) {
+                if(abilitySummonShardblade())
+                    return;
+               if(abilityLashingUpward())
+                    return;
+                if(abilityWindRunnerFlight())
+                    return;
+            }
+        }
 
-                if (ability.def.defName.Equals("SummonShardblade")) {
-                    ability.Activate(pawn, pawn);
+        private bool abilitySummonShardblade()
+        {
+             if (ability.def.defName.Equals("SummonShardblade")) {
+                ability.Activate(pawn, pawn);
+                return true;
                 }
-                else if (ability.def.defName.Equals("lucidLashingUpward")) {
+            return false;
+        }
+
+        private bool abilityLashingUpward()
+        {
+             if (ability.def.defName.Equals("lucidLashingUpward")) {
 
                     TargetingParameters tp = new TargetingParameters {
                         canTargetPawns = true,
@@ -109,8 +125,14 @@ namespace StormlightMod {
                         }
                     };
                     StartCustomTargeting(pawn, ability.verb.EffectiveRange);
+                    return true;
                 }
-                else if (ability.def.defName.Equals("lucidWindRunnerFlight")) {
+            return false;
+        }
+
+            private bool abilityWindRunnerFlight()
+        {
+            if (ability.def.defName.Equals("lucidWindRunnerFlight")) {
                     float cost = pawn.GetAbilityComp<CompAbilityEffect_AbilityWindRunnerFlight>("lucidWindRunnerFlight").Props.stormLightCost; 
                     float distance = pawn.GetComp<CompStormlight>().Stormlight / cost; 
                     TargetingParameters tp = new TargetingParameters {
@@ -128,10 +150,11 @@ namespace StormlightMod {
                         }
                     };
                     StartCustomTargeting(pawn, distance);
+                return true;
                 }
-            }
+            return false;
         }
-
+        
         private void DrawCustomCircle(Pawn caster, float radius, Color color) {
 
             color.a = 0.15f;
