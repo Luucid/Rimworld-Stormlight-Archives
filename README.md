@@ -7,6 +7,7 @@
 * Pawns can hide behind walls and other structures to shelter from the storm
 * Spheres left outside during a storm will be infused with stormlight
 * Radiants standing outside during storm will be infused with stormlight
+* Will arrive every 8 days, with a warning system that alerts the player before the storm hits.
 
 ## Spheres
 * Spheres of 5 variants
