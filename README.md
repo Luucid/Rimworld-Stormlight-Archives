@@ -23,11 +23,19 @@
 ## Radiant
 * Wind runners order is the only one implemented right now
 * Can draw in stormlight, which is the fuel for their powers
-* Will automatically heal all injuries at the cost of stormlight
-* Can summon shardblade as an ability
+* radiants have a custom xp system with ability unlocks throught the journey towards knight radiant
+### abilities
+* passive healing
+* shardblade summon and dismissal
+* lashing other pawns(damage not yet implemented)
+* flight
+* custom range circle drawn around caster
 
 ## Weapons
-* Shardblade(Only summonable by radiant atm)
+### Shardblade
+* summonable
+* bondable
+
 
 # Future work
 
