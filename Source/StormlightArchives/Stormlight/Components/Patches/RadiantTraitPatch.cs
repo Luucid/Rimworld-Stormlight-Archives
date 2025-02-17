@@ -19,6 +19,14 @@ namespace StormlightMod {
 
                         givePawnShardbladeComp(___pawn);
                     }
+                    if (trait.Degree == 0) {
+                        ___pawn.needs.AddOrRemoveNeedsAsAppropriate();
+                        Need_RadiantProgress progress = ___pawn.needs?.TryGetNeed<Need_RadiantProgress>();
+                        if (progress != null) {
+                            Log.Message("init xp");
+                            progress.GainXP(0);
+                        }
+                    }
                 }
             }
         }

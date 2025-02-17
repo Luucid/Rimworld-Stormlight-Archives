@@ -10,9 +10,8 @@ namespace StormlightMod {
         private const float LEVEL_EXPERIENCED_SQUIRE = LEVEL_NEW_SQUIRE*6f;
         private const float LEVEL_KNIGHT_RADIANT = LEVEL_EXPERIENCED_SQUIRE*2f;
         private const float MAX_XP = LEVEL_KNIGHT_RADIANT + 10f;
-
-
         private float currentXp = 0f;
+
         public Need_RadiantProgress(Pawn pawn) : base(pawn) {
             this.threshPercents = new List<float> { 0.083f, 0.5f}; // Visual bar markers
         }
@@ -67,8 +66,12 @@ namespace StormlightMod {
     [HarmonyPatch(typeof(Pawn_NeedsTracker), "ShouldHaveNeed")]
     public static class Patch_RadiantProgress_Need {
         public static void Postfix(Pawn_NeedsTracker __instance, NeedDef nd, ref bool __result, Pawn ___pawn) {
-            if (nd == StormlightModDefs.RadiantProgress && ___pawn.story?.traits?.HasTrait(StormlightModDefs.Radiant) ==true) { 
-                __result = true;
+            if (nd == StormlightModDefs.RadiantProgress && ___pawn.story?.traits?.HasTrait(StormlightModDefs.Radiant) == true) {
+                __result = true;       
+            }
+            else if(nd == StormlightModDefs.RadiantProgress && ___pawn.story?.traits?.HasTrait(StormlightModDefs.Radiant) == false)
+            {
+                __result = false;
             }
         }
     }
