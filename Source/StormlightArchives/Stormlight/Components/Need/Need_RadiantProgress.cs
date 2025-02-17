@@ -6,13 +6,15 @@ using Verse;
 
 namespace StormlightMod {
     public class Need_RadiantProgress : Need {
-        private const float LEVEL_NEW_SQUIRE = 3000f;
-        private const float LEVEL_EXPERIENCED_SQUIRE = LEVEL_NEW_SQUIRE*2f;
+        private const float LEVEL_NEW_SQUIRE = 500f;
+        private const float LEVEL_EXPERIENCED_SQUIRE = LEVEL_NEW_SQUIRE*6f;
         private const float LEVEL_KNIGHT_RADIANT = LEVEL_EXPERIENCED_SQUIRE*2f;
-        
+        private const float MAX_XP = LEVEL_KNIGHT_RADIANT + 10f;
+
+
         private float currentXp = 0f;
         public Need_RadiantProgress(Pawn pawn) : base(pawn) {
-            //this.threshPercents = new List<float> { 0.2f, 0.4f, 0.6f, 0.8f }; // Visual bar markers
+            this.threshPercents = new List<float> { 0.083f, 0.5f}; // Visual bar markers
         }
 
         public override void NeedInterval() {
@@ -21,6 +23,7 @@ namespace StormlightMod {
 
         public void GainXP(float amount) {
             currentXp += amount;
+            CurLevel = Mathf.Max(0f, Mathf.Min(1f, (currentXp/ MAX_XP))); 
         }
 
         public void UpdateRadiantTrait(Pawn pawn) {
@@ -48,7 +51,7 @@ namespace StormlightMod {
         }
 
 
-        public override int GUIChangeArrow => 0; // No arrow (need doesn’t decay)
+        public override int GUIChangeArrow => 1; // No arrow (need doesn’t decay)
     }
 
     [DefOf]

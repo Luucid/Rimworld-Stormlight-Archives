@@ -3,8 +3,8 @@
   <NeedDef>
     <defName>RadiantProgress</defName>
     <needClass>StormlightMod.Need_RadiantProgress</needClass>
-    <label>radiant progression</label>
-    <description>This tracks a pawn's progression towards becoming a full Radiant.</description>
+    <label>Spren Bond Quality</label>
+    <description>This need represents the pawn's connection to their bonded spren and their journey toward becoming a full Knight Radiant. As they progress, they unlock greater abilities and deepen their bond, ultimately reaching their full potential.</description>
     <baseLevel>0</baseLevel>
     <listPriority>500</listPriority>
     <major>true</major>

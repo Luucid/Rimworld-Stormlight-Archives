@@ -91,9 +91,9 @@ namespace StormlightMod {
                 if (m_CurrentStormlight < cost)
                     break;
 
-                injury.Heal(10.0f);  // Heal by 1 point
+                injury.Heal(10.0f);
                 m_CurrentStormlight -= cost;
-                RadiantUtility.GiveRadiantXP(pawn, 10.0f);
+                RadiantUtility.GiveRadiantXP(pawn, 2f);
             }
 
             // HEAL INJURIES
@@ -103,9 +103,9 @@ namespace StormlightMod {
                 if (m_CurrentStormlight < cost)
                     break;
 
-                injury.Heal(10.0f);  // Heal by 1 point
+                injury.Heal(10.0f);
                 m_CurrentStormlight -= cost;
-                RadiantUtility.GiveRadiantXP(pawn, 10.0f);
+                RadiantUtility.GiveRadiantXP(pawn, 0.5f);
             }
         }
 
@@ -123,6 +123,7 @@ namespace StormlightMod {
             if (pouchComp != null && pouchComp.GetTotalStoredStormlight() > 0) {
                 float drawn = pouchComp.DrawStormlight(absorbAmount);
                 infuseStormlight(drawn);
+                RadiantUtility.GiveRadiantXP(pawn, 0.1f);
                 return;
             }
 
@@ -138,6 +139,7 @@ namespace StormlightMod {
                         float drawn = Math.Min(absorbAmount, sphereComp.Stormlight);
                         sphereComp.infuseStormlight(-drawn); // Remove from sphere
                         infuseStormlight(drawn); // Add to Radiant
+                        RadiantUtility.GiveRadiantXP(pawn, 0.1f);
                         return; // Absorb from only one at a time
                     }
                 }
@@ -155,6 +157,7 @@ namespace StormlightMod {
                         float drawn = Math.Min(absorbAmount, sphereComp.Stormlight);
                         sphereComp.infuseStormlight(-drawn); // Remove from sphere
                         infuseStormlight(drawn); // Add to Radiant
+                        RadiantUtility.GiveRadiantXP(pawn, 0.1f);
                         return; // Absorb from only one at a time
                     }
                 }

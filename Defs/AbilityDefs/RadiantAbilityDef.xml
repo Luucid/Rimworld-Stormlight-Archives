@@ -129,7 +129,7 @@
         <li Class="StormlightMod.CompProperties_AbilityLashUpward">
             <compClass>StormlightMod.CompAbilityEffect_AbilityLashUpward</compClass>
             <thingDef>lucid_lashingUp</thingDef> <!-- Ensure this matches your XML weapon defName -->
-            <stormLightCost>0</stormLightCost>
+            <stormLightCost>100</stormLightCost>
         </li>
     </comps>
 </AbilityDef>
@@ -161,7 +161,7 @@
     <label>Fly to location</label>
     <description>windrunner flight.</description>
     <level>1</level>
-    <iconPath>Things/Ability/lucid_flight3</iconPath> 
+    <iconPath>Things/Ability/lucid_flight</iconPath> 
     <hotKey>Misc4</hotKey>
     <hostile>false</hostile>
     <casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>

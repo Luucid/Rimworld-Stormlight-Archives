@@ -32,7 +32,28 @@ namespace StormlightMod {
                 if (enableHighstormPushing)
                     moveItem();
             }
+            //if (Find.TickManager.TicksGame % 100 == 0) //100 rolls to try to bond at 1/1000 chance 
+            //   {
+            //    tryToBondPawn();
+            //}
         }
+        //private void tryToBondPawn() {
+
+        //    IReadOnlyList<Pawn> pawns = this.SingleMap.mapPawns.AllPawnsSpawned;
+        //    //Log.Message($"pawns size: {pawns.Count()}");
+        //    foreach (Pawn pawn in pawns) {
+        //        if (pawn != null && pawn.RaceProps.Humanlike) {
+        //            int number = m_Rand.Next(1, 1000);
+        //            if (number == 1) {
+        //                Trait radiantTrait = pawn.story.traits.GetTrait(StormlightModDefs.Radiant);
+        //                if (radiantTrait == null) {
+        //                    pawn.story.traits.GainTrait(new Trait(StormlightModDefs.Radiant, 0));
+        //                }
+        //            }
+
+        //        }
+        //    }
+        //}
         public void tryToInfuseGems() {
             List<Thing> things = this.SingleMap.listerThings.ThingsInGroup(ThingRequestGroup.HaulableEver);
             foreach (Thing thing in things) {

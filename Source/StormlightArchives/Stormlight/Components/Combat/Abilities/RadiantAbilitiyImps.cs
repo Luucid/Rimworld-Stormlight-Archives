@@ -183,8 +183,8 @@ namespace StormlightMod {
 
             // Finally, spawn the flyer in the same position
             GenSpawn.Spawn(flyer, cell, map);
+            RadiantUtility.GiveRadiantXP(targetPawn, 1000f);
         }
-
     }
 
 
@@ -229,12 +229,12 @@ namespace StormlightMod {
             caster.GetComp<CompStormlight>().drawStormlight(totalCost);
 
             // 3) Fling the target
-            flightFunction(caster.Map, target.Cell);
+            flightFunction(caster.Map, target.Cell, distance);
         }
 
 
 
-        private void flightFunction(Map map, IntVec3 cell) {
+        private void flightFunction(Map map, IntVec3 cell, double distance) {
 
             Pawn targetPawn = this.parent.pawn as Pawn;
             if (targetPawn == null) {
@@ -255,6 +255,7 @@ namespace StormlightMod {
 
             // Finally, spawn the flyer in the same position
             GenSpawn.Spawn(flyer, cell, map);
+            RadiantUtility.GiveRadiantXP(targetPawn, (float)distance/10f);
         }
 
     }

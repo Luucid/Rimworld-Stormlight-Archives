@@ -3,11 +3,13 @@ using RimWorld;
 using Verse;
 using System.Collections.Generic;
 using System.Linq;
+using System;
+
 namespace StormlightMod {
     [HarmonyPatch(typeof(Pawn))]
     [HarmonyPatch("Tick")]
     public static class Pawn_HighstormPushPatch {
-
+        private static Random m_Rand = new Random();
         static void Postfix(Pawn __instance) {
             if (Find.TickManager.TicksGame % 20 != 0) return;
 
@@ -18,6 +20,26 @@ namespace StormlightMod {
                 return;
 
             damageAndMovePawn(__instance);
+            if (Find.TickManager.TicksGame % 100 == 0) {  //100 rolls to try to bond at 1/1000 chance 
+                tryToBondPawn(__instance);
+            }
+        }
+
+        private static void tryToBondPawn(Pawn pawn) {
+
+            if (pawn != null && pawn.RaceProps.Humanlike) {
+                int number = m_Rand.Next(1, 1000);
+                if (number == 1) {
+                    Trait radiantTrait = pawn.story.traits.GetTrait(StormlightModDefs.Radiant);
+                    if (radiantTrait == null) {
+                        pawn.story.traits.GainTrait(new Trait(StormlightModDefs.Radiant, 0));
+                    }
+                }
+                else {
+                    Log.Message($"{pawn.Name} rolled {number}");
+                }
+
+            }
         }
 
         private static bool IsHighstormActive(Map map) {

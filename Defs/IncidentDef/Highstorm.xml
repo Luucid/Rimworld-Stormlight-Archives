@@ -45,7 +45,7 @@
 		  <li>Ambient_Wind_Storm</li>
 		  <li>Ambient_Rain</li>
 		</ambientSounds>
-		<durationRange>15000~40000</durationRange>
+		<durationRange>9999~10001</durationRange>
 		<eventMakers>
 		  <li>
 			<averageInterval>100</averageInterval>
