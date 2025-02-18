@@ -14,6 +14,7 @@ namespace StormlightMod {
         public int StackCount => parent.stackCount;
         public float MaxStormlightPerItem => Props.maxStormlight;
         public float CurrentMaxStormlight = 0;
+        public bool m_BreathStormlight = false;
 
         private int tick = 0;
 
@@ -23,6 +24,9 @@ namespace StormlightMod {
             Scribe_Values.Look(ref m_CurrentStormlight, "currentStormlight", 0f);
         }
 
+        public void toggleBreathStormlight() {
+            m_BreathStormlight = !m_BreathStormlight;
+        }
 
         public override void CompTick() {
 
@@ -115,8 +119,14 @@ namespace StormlightMod {
             if (pawn == null || !pawn.Spawned || !pawn.RaceProps.Humanlike)
                 return;
 
-            float absorbAmount = 5f; // How much Stormlight is drawn per tick
+            float absorbAmount = 100f; // How much Stormlight is drawn per tick
             float maxDrawDistance = 3.0f; // Range to absorb from nearby spheres
+
+            if ((MaxStormlightPerItem - Stormlight) < absorbAmount)
+                absorbAmount = (MaxStormlightPerItem - Stormlight);
+
+            if (m_BreathStormlight == false)
+                return;
 
             //  Absorb Stormlight from pouch
             CompSpherePouch pouchComp = pawn.apparel?.WornApparel?.Find(a => a.GetComp<CompSpherePouch>() != null)?.GetComp<CompSpherePouch>();

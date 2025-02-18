@@ -14,7 +14,7 @@ namespace StormlightMod {
 
 
                     givePawnStormlight(___pawn);
-                    givePawnGlow(___pawn);
+                    //givePawnGlow(___pawn);
                     if (trait.Degree >= 3) {
 
                         givePawnShardbladeComp(___pawn);

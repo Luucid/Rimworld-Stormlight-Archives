@@ -81,7 +81,7 @@ namespace StormlightMod {
             Rect addButtonRect = new Rect(0f, rect.height - 35f, rect.width, 30f);
             if (Widgets.ButtonText(addButtonRect, "Add Sphere")) {
                 ThingDef matchingSphereDef = PouchSpheres.Props.allowedSpheres.Select(name => ThingDef.Named(name.defName)).FirstOrDefault(def => SelPawn.Map.listerThings.ThingsOfDef(def).Any());
-                Thing sphere = GenClosest.ClosestThing_Global(SelPawn.Position, SelPawn.Map.listerThings.ThingsOfDef(matchingSphereDef));
+                Thing sphere = GenClosest.ClosestThing_Global(SelPawn.Position, SelPawn.Map.listerThings.ThingsOfDef(matchingSphereDef), 50f);
                 if (sphere != null && PouchSpheres.AddSphereToPouch(sphere as ThingWithComps)) {
                     sphere.DeSpawn();
                 }

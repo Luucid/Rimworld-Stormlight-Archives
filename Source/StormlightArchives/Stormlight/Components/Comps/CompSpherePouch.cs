@@ -28,8 +28,6 @@ namespace StormlightMod {
 
 
         public void InfuseStormlight(float amount) {
-            Log.Message("try to infuse spheres!");
-
             foreach (ThingWithComps sphere in storedSpheres) {
                 CompStormlight comp = sphere.GetComp<CompStormlight>();
                 if (comp != null) {
@@ -56,13 +54,11 @@ namespace StormlightMod {
 
         public void RemoveSphereFromPouch(int index, Pawn pawn) {
             if (index < 0 || index >= storedSpheres.Count) {
-                Log.Error("[StormlightMod] Attempted to remove a sphere at an invalid index.");
                 return;
             }
 
             ThingWithComps sphere = storedSpheres[index] as ThingWithComps; 
 
-            Log.Message($"[StormlightMod] sphere {sphere.LabelCap}: max {sphere.GetComp<CompStormlight>().MaxStormlightPerItem}.");
             storedSpheres.RemoveAt(index);
 
             if (sphere != null && pawn != null && pawn.Map != null) {
@@ -70,24 +66,19 @@ namespace StormlightMod {
                 GenPlace.TryPlaceThing(sphere, dropPosition, pawn.Map, ThingPlaceMode.Near);
                 //Log.Message($"[StormlightMod] Removed sphere: {sphere.LabelCap} from pouch and placed it at {dropPosition}.");
             }
-            else {
-                Log.Error("[StormlightMod] Failed to spawn the sphere on the map.");
-            }
+       
         }
 
         public bool AddSphereToPouch(ThingWithComps sphere) {  
             if (sphere == null) {
-                Log.Error("[StormlightMod] Tried to add a null sphere to the pouch.");
                 return false;
             }
 
             if (storedSpheres.Count >= Props.maxCapacity) { // Adjust max capacity as needed
-                Log.Message("[StormlightMod] The pouch is full. Cannot add more spheres.");
                 return false;
             }
 
             storedSpheres.Add(sphere);
-            Log.Message($"[StormlightMod] Added sphere: {sphere.LabelCap} to the pouch.");
             return true;
         }
     }

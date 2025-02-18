@@ -20,7 +20,6 @@ namespace StormlightMod {
 
             if (tick == 0) {
                 base.CompTick();
-                Log.Message("ticktack");
                 Props.stormlightComp.handleGlow(); 
             }
             tick = (tick + 1) % 50;

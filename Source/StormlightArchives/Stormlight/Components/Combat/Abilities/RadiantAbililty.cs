@@ -89,6 +89,8 @@ namespace StormlightMod {
             base.ProcessInput(ev);
 
             if (pawn.Drafted && (pawn.story.traits.HasTrait(TraitDef.Named("Radiant")) || pawn.GetAbilityComp<CompAbilityEffect_SpawnEquipment>("SummonShardblade") != null)) {
+                if (abilityToggleStormlight())
+                    return;
                 if(abilitySummonShardblade())
                     return;
                if(abilityLashingUpward())
@@ -98,6 +100,14 @@ namespace StormlightMod {
             }
         }
 
+
+        private bool abilityToggleStormlight() {
+            if (ability.def.defName.Equals("BreathStormLight")) {
+                ability.Activate(pawn, pawn);
+                return true;
+            }
+            return false;
+        }
         private bool abilitySummonShardblade()
         {
              if (ability.def.defName.Equals("SummonShardblade")) {
@@ -155,25 +165,6 @@ namespace StormlightMod {
             return false;
         }
         
-        private void DrawCustomCircle(Pawn caster, float radius, Color color) {
-
-            color.a = 0.15f;
-            Vector3 center = caster.DrawPos;
-            center.y = AltitudeLayer.MetaOverlays.AltitudeFor();
-
-            Material mat = SolidColorMaterials.SimpleSolidColorMaterial(color);
-
-            // Build a matrix for position/rotation/scale
-            Matrix4x4 matrix = default;
-            matrix.SetTRS(
-                pos: center,
-                q: Quaternion.identity,
-                s: new Vector3(radius, 1f, radius)
-            );
-
-            Mesh circleMesh = MeshPool.circle;
-            Graphics.DrawMesh(circleMesh, matrix, mat, -1);
-        }
 
         public void StartCustomTargeting(Pawn caster, float maxDistance) {
 
@@ -216,7 +207,7 @@ namespace StormlightMod {
 
             // Called each frame. We’ll draw a radius ring to show the cast range
             Action<LocalTargetInfo> onUpdateAction = (LocalTargetInfo info) => {
-                DrawCustomCircle(caster, maxDistance, Color.cyan);
+                GlowCircleRenderer.DrawCustomCircle(caster, maxDistance, Color.cyan);
             };
 
             Find.Targeter.BeginTargeting(

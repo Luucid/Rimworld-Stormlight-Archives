@@ -3,6 +3,8 @@ using Verse;
 using System.Collections.Generic;
 using System.Linq;
 using System;
+using static HarmonyLib.Code;
+using StormLight.MyExampleMod;
 
 namespace StormlightMod {
     public class HighstormExtension : DefModExtension {
@@ -14,46 +16,28 @@ namespace StormlightMod {
     public class GameCondition_Highstorm : GameCondition {
 
         private Random m_Rand = new Random();
-        private bool enableHighstormPushing = true;
-        public override void ExposeData() {
+        public override void End() {
+            base.End(); 
 
-            Scribe_Values.Look(ref enableHighstormPushing, "enableHighstormPushing");
-            base.ExposeData();
+            if (SingleMap != null) {
+                Log.Message("Highstorm ended. Forcing weather to clear.");
+                SingleMap.weatherManager.TransitionTo(WeatherDefOf.Clear);
+            }
         }
+
 
         public override void GameConditionTick() {
             base.GameConditionTick();
             var ext = def.GetModExtension<HighstormExtension>();
-            if (ext == null) return; // if no extension, skip
+            if (ext == null) return; 
 
             if (Find.TickManager.TicksGame % 8 == 0) {
-                // Grab extension fields
                 tryToInfuseGems();
-                if (enableHighstormPushing)
+                if (ExampleMod.settings.enableHighstormPushing)
                     moveItem();
             }
-            //if (Find.TickManager.TicksGame % 100 == 0) //100 rolls to try to bond at 1/1000 chance 
-            //   {
-            //    tryToBondPawn();
-            //}
         }
-        //private void tryToBondPawn() {
 
-        //    IReadOnlyList<Pawn> pawns = this.SingleMap.mapPawns.AllPawnsSpawned;
-        //    //Log.Message($"pawns size: {pawns.Count()}");
-        //    foreach (Pawn pawn in pawns) {
-        //        if (pawn != null && pawn.RaceProps.Humanlike) {
-        //            int number = m_Rand.Next(1, 1000);
-        //            if (number == 1) {
-        //                Trait radiantTrait = pawn.story.traits.GetTrait(StormlightModDefs.Radiant);
-        //                if (radiantTrait == null) {
-        //                    pawn.story.traits.GainTrait(new Trait(StormlightModDefs.Radiant, 0));
-        //                }
-        //            }
-
-        //        }
-        //    }
-        //}
         public void tryToInfuseGems() {
             List<Thing> things = this.SingleMap.listerThings.ThingsInGroup(ThingRequestGroup.HaulableEver);
             foreach (Thing thing in things) {
@@ -61,11 +45,11 @@ namespace StormlightMod {
                     var stormlightComp = thing.TryGetComp<CompStormlight>();
                     if (stormlightComp != null) {
                         stormlightComp.infuseStormlight(5f); // 5 units per check
-                        Log.Message($"Infused {thing.LabelCap} with stormlight! Now {stormlightComp.Stormlight} / {stormlightComp.Props.maxStormlight}");
+                        //Log.Message($"Infused {thing.LabelCap} with stormlight! Now {stormlightComp.Stormlight} / {stormlightComp.Props.maxStormlight}");
                     }
                 }
                 else if (thing.def.defName.Equals("Apparel_SpherePouch") && !thing.Position.Roofed(thing.Map)) {
-                    Log.Message("try to infuse pouch!");
+                    //Log.Message("try to infuse pouch!");
                     var pouch = thing.TryGetComp<CompSpherePouch>();
                     if (pouch != null) {
                         pouch.InfuseStormlight(5f);

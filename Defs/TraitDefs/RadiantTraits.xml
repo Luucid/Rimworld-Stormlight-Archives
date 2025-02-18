@@ -13,6 +13,9 @@
         <description>{PAWN_nameDef} has formed a bond with a spren, a mysterious entity from the Cognitive Realm. The path to knighthood has begun.</description>
         <degree>0</degree>
         <commonality>0</commonality> <!-- Ensures it is not assigned randomly -->
+        <abilities>
+          <li>BreathStormLight</li>
+        </abilities>
       </li>
       <li>
         <label>Sworn Protector</label>
@@ -20,6 +23,7 @@
         <degree>1</degree>
         <commonality>0</commonality>
         <abilities>
+          <li>BreathStormLight</li>
           <li>lucidLashingUpward</li>
         </abilities>
       </li>
@@ -29,6 +33,7 @@
         <degree>2</degree>
         <commonality>0</commonality>
         <abilities>
+          <li>BreathStormLight</li>
           <li>lucidLashingUpward</li>
           <li>lucidWindRunnerFlight</li>
         </abilities>
@@ -39,6 +44,7 @@
         <degree>3</degree>
         <commonality>0</commonality>
         <abilities>
+          <li>BreathStormLight</li>
           <li>SummonShardblade</li>
           <li>lucidLashingUpward</li>
           <li>lucidWindRunnerFlight</li>

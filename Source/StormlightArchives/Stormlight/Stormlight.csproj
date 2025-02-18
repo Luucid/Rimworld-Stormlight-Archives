@@ -67,6 +67,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Components\Combat\Abilities\CustomPawnFlyer.cs" />
+    <Compile Include="Components\Combat\Abilities\Implementations\SummonBlade.cs" />
+    <Compile Include="Components\Combat\Abilities\Implementations\SurgeFlight.cs" />
+    <Compile Include="Components\Combat\Abilities\Implementations\ToggleStormlight.cs" />
     <Compile Include="Components\Combat\Abilities\Verb_castRadiant.cs" />
     <Compile Include="Components\Comps\CompShardblade.cs" />
     <Compile Include="Components\Comps\CompSphere.cs" />
@@ -82,9 +85,10 @@
     <Compile Include="Components\Patches\PawnPatches.cs" />
     <Compile Include="Components\Patches\ShardbladePatches.cs" />
     <Compile Include="Components\Patches\RadiantTraitPatch.cs" />
+    <Compile Include="Components\Utility\CustomGlow.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Components\Combat\Abilities\RadiantAbililty.cs" />
-    <Compile Include="Components\Combat\Abilities\RadiantAbilitiyImps.cs" />
+    <Compile Include="Components\Combat\Abilities\Implementations\Lashing.cs" />
     <Compile Include="Components\Weather\GameCondition_Highstorm.cs" />
     <Compile Include="Components\Weather\IncidentWorker_Highstorm.cs" />
   </ItemGroup>

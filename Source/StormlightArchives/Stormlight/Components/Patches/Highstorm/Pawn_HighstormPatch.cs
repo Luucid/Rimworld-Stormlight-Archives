@@ -35,10 +35,6 @@ namespace StormlightMod {
                         pawn.story.traits.GainTrait(new Trait(StormlightModDefs.Radiant, 0));
                     }
                 }
-                else {
-                    Log.Message($"{pawn.Name} rolled {number}");
-                }
-
             }
         }
 

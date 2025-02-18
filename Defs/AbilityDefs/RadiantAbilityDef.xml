@@ -26,6 +26,29 @@
   </AbilityDef>
 
 
+<AbilityDef ParentName="RadiantBase">
+    <defName>BreathStormLight</defName>
+    <label>Breath Stormlight</label>
+    <description>breath stormlight</description>
+    <level>1</level>
+    <iconPath>Things/Ability/lucid_summon_blade</iconPath> 
+    <hotKey>Misc5</hotKey>
+    <hostile>false</hostile>
+    <casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>
+    <verbProperties>
+        <warmupTime>0.5</warmupTime>
+        <range>0</range> 
+        <targetParams>
+            <canTargetSelf>true</canTargetSelf>
+        </targetParams>
+    </verbProperties>
+    <comps>
+        <li Class="StormlightMod.CompProperties_AbilityToggleStormlight">
+            <compClass>StormlightMod.CompAbilityEffect_AbilityToggleStormlight</compClass>
+        </li>
+    </comps>
+</AbilityDef>
+
 
 <AbilityDef ParentName="RadiantBase">
     <defName>SummonShardblade</defName>
@@ -102,7 +125,6 @@
 
     </pawnFlyer>
 </ThingDef>
-
 
 <AbilityDef ParentName="RadiantBase">
     <defName>lucidLashingUpward</defName>
