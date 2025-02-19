@@ -8,43 +8,39 @@ using Verse;
 using UnityEngine;
 
 
-namespace StormLight {
-    namespace MyExampleMod {
-        public class ExampleSettings : ModSettings {
-            /// <summary>
-            /// The three settings our mod has.
-            /// </summary>
-            public bool enableHighstormPushing;
+namespace StormlightMod {
 
-            /// <summary>
-            /// The part that writes our settings to file. Note that saving is by ref.
-            /// </summary>
-            public override void ExposeData() {
-                Scribe_Values.Look(ref enableHighstormPushing, "enableHighstormPushing", true);
-                base.ExposeData();
-            }
-        }
+    public class StormlightModSettings : ModSettings {
+        public bool enableHighstormPushing;
+        public bool enablePawnGlow;
 
-        public class ExampleMod : Mod {
-
-            static public ExampleSettings settings;
-
-
-            public ExampleMod(ModContentPack content) : base(content) {
-                settings = GetSettings<ExampleSettings>();
-            }
-            public override void DoSettingsWindowContents(Rect inRect) {
-                Listing_Standard listingStandard = new Listing_Standard();
-                listingStandard.Begin(inRect);
-                listingStandard.CheckboxLabeled("Highstorms will move items and pawns", ref settings.enableHighstormPushing, "expensive stuff");
-                //settings.exampleFloat = listingStandard.Slider(settings.exampleFloat, 100f, 300f);
-                listingStandard.End();
-                base.DoSettingsWindowContents(inRect);
-            }
-
-            public override string SettingsCategory() {
-                return "StormlightArchives";
-            }
+        public override void ExposeData() {
+            Scribe_Values.Look(ref enableHighstormPushing, "enableHighstormPushing", true); 
+            Scribe_Values.Look(ref enablePawnGlow, "enablePawnGlow", true); 
+            base.ExposeData();
         }
     }
+
+    public class StormlightMod : Mod {
+
+        static public StormlightModSettings settings;
+
+
+        public StormlightMod(ModContentPack content) : base(content) {
+            settings = GetSettings<StormlightModSettings>();
+        }
+        public override void DoSettingsWindowContents(Rect inRect) {
+            Listing_Standard listingStandard = new Listing_Standard();
+            listingStandard.Begin(inRect);
+            listingStandard.CheckboxLabeled("Highstorms will move items and pawns", ref settings.enableHighstormPushing, "expensive stuff");
+            listingStandard.CheckboxLabeled("Pawns will glow when infused with stormlight", ref settings.enablePawnGlow, "expensive stuff");
+            listingStandard.End();
+            base.DoSettingsWindowContents(inRect);
+        }
+
+        public override string SettingsCategory() {
+            return "Stormlight Archives";
+        }
+    }
+
 }

@@ -22,6 +22,7 @@ namespace StormlightMod {
         public override void PostExposeData() {
             base.PostExposeData();
             Scribe_Values.Look(ref m_CurrentStormlight, "currentStormlight", 0f);
+            Scribe_Values.Look(ref m_BreathStormlight, "breathStormlight", false); 
         }
 
         public void toggleBreathStormlight() {
@@ -56,6 +57,14 @@ namespace StormlightMod {
             }
         }
         public void handleGlow() {
+            if (parent is Pawn pawn) {
+                if (!StormlightMod.settings.enablePawnGlow) {
+                    GlowerComp.Props.glowRadius = 0;
+                    GlowerComp.Props.overlightRadius = 0;
+                    parent.Map.glowGrid.DeRegisterGlower(GlowerComp);
+                    return;
+                }
+            }
             if (GlowerComp != null) {
 
                 if (m_CurrentStormlight == 0) {
@@ -70,21 +79,6 @@ namespace StormlightMod {
                 fixGlowIssue();
             }
         }
-
-        private void radiantGlow(Pawn pawn) {
-
-            if (!HasStormlight || pawn.health == null) return;
-            if (GlowerComp != null) {
-                if (m_CurrentStormlight == 0) {
-                    GlowerComp.Props.glowRadius = 0;
-                }
-                else {
-                    GlowerComp.Props.glowRadius = m_CurrentStormlight * 0.01f;
-                }
-                fixGlowIssue();
-            }
-        }
-
 
 
         private void radiantHeal(Pawn pawn) {
@@ -110,7 +104,7 @@ namespace StormlightMod {
                 injury.Heal(10.0f);
                 m_CurrentStormlight -= cost;
                 RadiantUtility.GiveRadiantXP(pawn, 0.5f);
-            }
+            } 
         }
 
 
@@ -177,7 +171,6 @@ namespace StormlightMod {
 
 
         private void handleRadiantStuff(Pawn pawn) {
-            radiantGlow(pawn);
             radiantHeal(pawn);
             radiantAbsorbStormlight(pawn);
         }

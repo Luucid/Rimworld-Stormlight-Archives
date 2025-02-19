@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System;
 using static HarmonyLib.Code;
-using StormLight.MyExampleMod;
 
 namespace StormlightMod {
     public class HighstormExtension : DefModExtension {
@@ -33,7 +32,7 @@ namespace StormlightMod {
 
             if (Find.TickManager.TicksGame % 8 == 0) {
                 tryToInfuseGems();
-                if (ExampleMod.settings.enableHighstormPushing)
+                if (StormlightMod.settings.enableHighstormPushing)
                     moveItem();
             }
         }

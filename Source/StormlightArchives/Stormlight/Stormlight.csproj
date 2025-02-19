@@ -76,6 +76,7 @@
     <Compile Include="Components\Comps\CompStormlight.cs" />
     <Compile Include="Components\Comps\CompSpherePouch.cs" />
     <Compile Include="Components\Combat\Weapon\DamageWorker_SoulDamage.cs" />
+    <Compile Include="Components\Comps\StormlightLamps.cs" />
     <Compile Include="Components\ITabs\ITab_SpherePouch.cs" />
     <Compile Include="Components\MyModSettings.cs" />
     <Compile Include="Components\Need\Need_RadiantProgress.cs" />
