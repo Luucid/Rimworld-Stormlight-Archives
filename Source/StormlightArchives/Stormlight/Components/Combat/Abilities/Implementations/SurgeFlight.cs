@@ -23,13 +23,13 @@ namespace StormlightMod {
         public override void Apply(LocalTargetInfo target, LocalTargetInfo dest) {
             // 1) Validate target
             if (target == null || target.Cell == null) {
-                Log.Warning("[LashUpward] Invalid target.");
+                Log.Warning("[flight] Invalid target.");
                 return;
             }
 
             // 2) Validate the "flyer" ThingDef
             if (Props.thingDef == null) {
-                Log.Error("[LashUpward] No valid flyer ThingDef to spawn!");
+                Log.Error("[flight] No valid flyer ThingDef to spawn!");
                 return;
             }
 
@@ -43,7 +43,7 @@ namespace StormlightMod {
 
             Log.Message($"totalcost: {totalCost}, distance: {distance}, stormlight cost per tile: {Props.stormLightCost}");
             if (caster.GetComp<CompStormlight>() == null || caster.GetComp<CompStormlight>().Stormlight < totalCost) {
-                Log.Message($"[LashUpward] not enough stormlight!");
+                Log.Message($"[flight] not enough stormlight!");
                 return;
             }
             caster.GetComp<CompStormlight>().drawStormlight(totalCost);
@@ -60,6 +60,7 @@ namespace StormlightMod {
             if (targetPawn == null) {
                 return;
             }
+
             Log.Message($"TargetPawn: {targetPawn.Name}");
             PawnFlyer flyer = PawnFlyer.MakeFlyer(
               flyingDef: Props.thingDef,    // must have the <pawnFlyer> XML extension
@@ -69,11 +70,9 @@ namespace StormlightMod {
               landingSound: null,           // optional landing sound
               flyWithCarriedThing: false,   // whether the pawn’s carried item should come along
               overrideStartVec: null,       // or a custom Vector3 start pos
-              triggeringAbility: null,      // pass an Ability if relevant
+              triggeringAbility: this.parent,
               target: LocalTargetInfo.Invalid
           );
-
-            // Finally, spawn the flyer in the same position
             GenSpawn.Spawn(flyer, cell, map);
             RadiantUtility.GiveRadiantXP(targetPawn, (float)distance / 10f);
         }

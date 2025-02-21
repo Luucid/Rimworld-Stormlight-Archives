@@ -151,7 +151,7 @@
         <li Class="StormlightMod.CompProperties_AbilityLashUpward">
             <compClass>StormlightMod.CompAbilityEffect_AbilityLashUpward</compClass>
             <thingDef>lucid_lashingUp</thingDef> <!-- Ensure this matches your XML weapon defName -->
-            <stormLightCost>100</stormLightCost>
+            <stormLightCost>0</stormLightCost>
         </li>
     </comps>
 </AbilityDef>

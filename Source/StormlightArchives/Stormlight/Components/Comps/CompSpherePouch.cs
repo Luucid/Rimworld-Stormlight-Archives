@@ -8,7 +8,6 @@ namespace StormlightMod {
         public List<Thing> storedSpheres = new List<Thing>(); //  List of sphere stacks inside the pouch
 
         public CompProperties_SpherePouch Props => (CompProperties_SpherePouch)props;
-
         public override void PostExposeData() {
             base.PostExposeData();
             Scribe_Collections.Look(ref storedSpheres, "storedSpheres", LookMode.Deep);
@@ -26,6 +25,20 @@ namespace StormlightMod {
             return total;
         }
 
+        public float GetTotalMaximumStormlight() { 
+            float total = 0;
+            foreach (ThingWithComps sphere in storedSpheres) {
+                CompStormlight comp = sphere.GetComp<CompStormlight>();
+                if (comp != null) {
+                    total += comp.MaxStormlightPerItem;
+                }
+            }
+            return total;
+        }
+
+        public override string CompInspectStringExtra() {
+            return "Stormlight: " + GetTotalStoredStormlight().ToString("F0") + " / " + GetTotalMaximumStormlight().ToString("F0");
+        }
 
         public void InfuseStormlight(float amount) {
             foreach (ThingWithComps sphere in storedSpheres) {

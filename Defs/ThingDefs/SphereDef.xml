@@ -27,7 +27,7 @@
 	  <comps>
 		<li Class="StormlightMod.CompProperties_Stormlight">
 		  <maxStormlight>20</maxStormlight>
-		  <drainRate>0.1</drainRate>
+		  <drainRate>0.01</drainRate>
 		</li>
 		  
 	    <li Class="CompProperties_Flickable"/>

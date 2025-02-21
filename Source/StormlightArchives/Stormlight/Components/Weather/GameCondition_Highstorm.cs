@@ -16,7 +16,7 @@ namespace StormlightMod {
 
         private Random m_Rand = new Random();
         public override void End() {
-            base.End(); 
+            base.End();
 
             if (SingleMap != null) {
                 Log.Message("Highstorm ended. Forcing weather to clear.");
@@ -28,7 +28,7 @@ namespace StormlightMod {
         public override void GameConditionTick() {
             base.GameConditionTick();
             var ext = def.GetModExtension<HighstormExtension>();
-            if (ext == null) return; 
+            if (ext == null) return;
 
             if (Find.TickManager.TicksGame % 8 == 0) {
                 tryToInfuseGems();
@@ -38,20 +38,24 @@ namespace StormlightMod {
         }
 
         public void tryToInfuseGems() {
-            List<Thing> things = this.SingleMap.listerThings.ThingsInGroup(ThingRequestGroup.HaulableEver);
+            List<Thing> things = this.SingleMap.listerThings.ThingsInGroup(ThingRequestGroup.Everything);
             foreach (Thing thing in things) {
                 if (thing.def.defName.StartsWith("Sphere_") && !thing.Position.Roofed(thing.Map)) {
                     var stormlightComp = thing.TryGetComp<CompStormlight>();
                     if (stormlightComp != null) {
-                        stormlightComp.infuseStormlight(5f); // 5 units per check
-                        //Log.Message($"Infused {thing.LabelCap} with stormlight! Now {stormlightComp.Stormlight} / {stormlightComp.Props.maxStormlight}");
+                        stormlightComp.infuseStormlight(5f);
                     }
                 }
                 else if (thing.def.defName.Equals("Apparel_SpherePouch") && !thing.Position.Roofed(thing.Map)) {
-                    //Log.Message("try to infuse pouch!");
                     var pouch = thing.TryGetComp<CompSpherePouch>();
                     if (pouch != null) {
                         pouch.InfuseStormlight(5f);
+                    }
+                }
+                else if (thing.def.defName.Equals("SphereLamp") && !thing.Position.Roofed(thing.Map)) {
+                    var lamp = thing.TryGetComp<StormlightLamps>();
+                    if (lamp != null) {
+                        lamp.InfuseStormlight(5f);
                     }
                 }
             }

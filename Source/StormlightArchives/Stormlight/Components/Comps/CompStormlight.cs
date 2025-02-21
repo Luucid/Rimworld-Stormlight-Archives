@@ -3,6 +3,7 @@ using Verse;
 using System.Collections.Generic;
 using System.Linq;
 using System;
+using HarmonyLib;
 
 namespace StormlightMod {
     public class CompStormlight : ThingComp {
@@ -22,7 +23,7 @@ namespace StormlightMod {
         public override void PostExposeData() {
             base.PostExposeData();
             Scribe_Values.Look(ref m_CurrentStormlight, "currentStormlight", 0f);
-            Scribe_Values.Look(ref m_BreathStormlight, "breathStormlight", false); 
+            Scribe_Values.Look(ref m_BreathStormlight, "breathStormlight", false);
         }
 
         public void toggleBreathStormlight() {
@@ -30,7 +31,7 @@ namespace StormlightMod {
         }
 
         public override void CompTick() {
-
+          
             if (tick == 0) {
                 base.CompTick();
                 drainStormLight();
@@ -57,7 +58,7 @@ namespace StormlightMod {
             }
         }
         public void handleGlow() {
-            if (parent is Pawn pawn) {
+            if (parent is Pawn pawn && pawn.Spawned) {
                 if (!StormlightMod.settings.enablePawnGlow) {
                     GlowerComp.Props.glowRadius = 0;
                     GlowerComp.Props.overlightRadius = 0;
@@ -104,7 +105,7 @@ namespace StormlightMod {
                 injury.Heal(10.0f);
                 m_CurrentStormlight -= cost;
                 RadiantUtility.GiveRadiantXP(pawn, 0.5f);
-            } 
+            }
         }
 
 
@@ -113,7 +114,7 @@ namespace StormlightMod {
             if (pawn == null || !pawn.Spawned || !pawn.RaceProps.Humanlike)
                 return;
 
-            float absorbAmount = 100f; // How much Stormlight is drawn per tick
+            float absorbAmount = 25f; // How much Stormlight is drawn per tick
             float maxDrawDistance = 3.0f; // Range to absorb from nearby spheres
 
             if ((MaxStormlightPerItem - Stormlight) < absorbAmount)
@@ -150,19 +151,34 @@ namespace StormlightMod {
             }
 
             //  Absorb Stormlight from nearby spheres
-            List<Thing> nearbyThings = pawn.Map.listerThings.ThingsInGroup(ThingRequestGroup.HaulableEver);
+            List<Thing> nearbyThings = pawn.Map.listerThings.ThingsInGroup(ThingRequestGroup.Everything);
             foreach (Thing thing in nearbyThings) {
-                if (thing.Position.DistanceTo(pawn.Position) <= maxDrawDistance) {
-                    ThingWithComps thingWithComps = thing as ThingWithComps;
-                    if (thingWithComps == null) continue; // Skip non-comp objects
-
-                    CompStormlight sphereComp = thingWithComps.GetComp<CompStormlight>();
-                    if (sphereComp != null && sphereComp.Stormlight > 0) {
-                        float drawn = Math.Min(absorbAmount, sphereComp.Stormlight);
-                        sphereComp.infuseStormlight(-drawn); // Remove from sphere
-                        infuseStormlight(drawn); // Add to Radiant
+                if (thing.def.defName.StartsWith("Sphere_") && !thing.Position.Roofed(thing.Map)) {
+                    var stormlightComp = thing.TryGetComp<CompStormlight>();
+                    if (stormlightComp != null) {
+                        float drawnLight = stormlightComp.drawStormlight(absorbAmount);
+                        infuseStormlight(drawnLight); 
                         RadiantUtility.GiveRadiantXP(pawn, 0.1f);
-                        return; // Absorb from only one at a time
+                        return; 
+                    }
+                }
+                else if (thing.def.defName.Equals("Apparel_SpherePouch") && !thing.Position.Roofed(thing.Map)) {
+                    var pouch = thing.TryGetComp<CompSpherePouch>();
+                    if (pouch != null) {
+                        absorbAmount = Math.Min(absorbAmount, pouch.GetTotalStoredStormlight()); 
+                        float drawnLight = pouch.DrawStormlight(absorbAmount); 
+                        infuseStormlight(drawnLight);
+                        RadiantUtility.GiveRadiantXP(pawn, 0.1f);
+                        return;
+                    }
+                }
+                else if (thing.def.defName.Equals("SphereLamp") && !thing.Position.Roofed(thing.Map)) {
+                    var lamp = thing.TryGetComp<StormlightLamps>();
+                    if (lamp != null) {
+                        float drawnLight = lamp.DrawStormlight(absorbAmount);
+                        infuseStormlight(drawnLight);
+                        RadiantUtility.GiveRadiantXP(pawn, 0.1f);
+                        return;
                     }
                 }
             }
@@ -178,7 +194,6 @@ namespace StormlightMod {
 
 
         private void drainStormLight() {
-
             if (m_CurrentStormlight > 0) {
                 m_CurrentStormlight -= Props.drainRate;
                 if (m_CurrentStormlight < 0)
@@ -202,8 +217,8 @@ namespace StormlightMod {
         // Infuse from code when highstorm is active
         public void infuseStormlight(float amount) {
             m_CurrentStormlight += amount;
-            if (m_CurrentStormlight > CurrentMaxStormlight)
-                m_CurrentStormlight = CurrentMaxStormlight;
+            if (m_CurrentStormlight > MaxStormlightPerItem)
+                m_CurrentStormlight = MaxStormlightPerItem;
         }
     }
 }

@@ -37,7 +37,7 @@
       <li>PlaceWorker_GlowRadius</li>
     </placeWorkers>
     <drawPlaceWorkersWhileSelected>true</drawPlaceWorkersWhileSelected>
-    <!-- <comps>
+    <comps>
     <li Class="CompProperties_Styleable" />
     <li Class="CompProperties_Glower">
         <glowRadius>11</glowRadius>
@@ -45,7 +45,7 @@
         <colorPickerEnabled>true</colorPickerEnabled>
         <darklightToggle>false</darklightToggle>
       </li>
-    </comps> -->
+    </comps>
   </ThingDef>
 
 
@@ -93,7 +93,7 @@
     <comps>
       <li Class="StormlightMod.CompProperties_SphereLamp">
         <compClass>StormlightMod.StormlightLamps</compClass>
-        <maxCapacity>10</maxCapacity>
+        <maxCapacity>1</maxCapacity>
         <allowedSpheres>
           <li>Sphere_Diamond</li>
           <li>Sphere_Garnet</li>

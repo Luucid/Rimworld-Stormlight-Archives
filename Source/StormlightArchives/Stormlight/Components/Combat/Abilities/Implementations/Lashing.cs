@@ -60,20 +60,22 @@ namespace StormlightMod {
             Log.Message($"TargetPawn: {targetPawn.Name}");
             // Create the custom flyer
             PawnFlyer flyer = PawnFlyer.MakeFlyer(
-              flyingDef: Props.thingDef,    // must have the <pawnFlyer> XML extension
-              pawn: targetPawn,             // the Pawn to fly
-              destCell: cell,               // an IntVec3 on the same map
-              flightEffecterDef: null,      // optional visual effect
-              landingSound: null,           // optional landing sound
-              flyWithCarriedThing: false,   // whether the pawn’s carried item should come along
-              overrideStartVec: null,       // or a custom Vector3 start pos
-              triggeringAbility: null,      // pass an Ability if relevant
+              flyingDef: Props.thingDef,           // must have the <pawnFlyer> XML extension
+              pawn: targetPawn,                    // the Pawn to fly
+              destCell: cell,                      // an IntVec3 on the same map
+              flightEffecterDef: null,             // optional visual effect
+              landingSound: null,                  // optional landing sound
+              flyWithCarriedThing: false,          // whether the pawn’s carried item should come along
+              overrideStartVec: null,              // or a custom Vector3 start pos
+              triggeringAbility: this.parent,      // pass an Ability if relevant
               target: LocalTargetInfo.Invalid
           );
 
-            // Finally, spawn the flyer in the same position
             GenSpawn.Spawn(flyer, cell, map);
-            RadiantUtility.GiveRadiantXP(targetPawn, 50f);
+            Pawn caster = this.parent.pawn as Pawn;
+            if (caster != null) {
+                RadiantUtility.GiveRadiantXP(caster, 50f);
+            }
         }
     }
 
