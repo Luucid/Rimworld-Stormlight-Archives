@@ -30,9 +30,9 @@ namespace StormlightMod {
             if (pawn != null && pawn.RaceProps.Humanlike) {
                 int number = m_Rand.Next(1, 1000);
                 if (number == 1) {
-                    Trait radiantTrait = pawn.story.traits.GetTrait(StormlightModDefs.Radiant);
+                    Trait radiantTrait = pawn.story.traits.GetTrait(StormlightModDefs.whtwl_Radiant);
                     if (radiantTrait == null) {
-                        pawn.story.traits.GainTrait(new Trait(StormlightModDefs.Radiant, 0));
+                        pawn.story.traits.GainTrait(new Trait(StormlightModDefs.whtwl_Radiant, 0));
                     }
                 }
             }
@@ -91,7 +91,8 @@ namespace StormlightMod {
             bool isRadiant = false;
             if (__instance.story != null && __instance.RaceProps.Humanlike) {
                 foreach (Trait t in __instance.story.traits.allTraits) {
-                    if (t.def.defName.StartsWith("Radiant")) { isRadiant = true; }
+                    //if (t.def.defName.StartsWith("Radiant")) { isRadiant = true; }
+                    if (t.def == StormlightModDefs.whtwl_Radiant) { isRadiant = true; } 
                 }
             }
 

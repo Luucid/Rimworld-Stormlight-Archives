@@ -6,7 +6,7 @@ namespace StormlightMod {
     [HarmonyPatch(typeof(TraitSet), "GainTrait")]
     public static class RadiantGainTraitPatch {
         static void Postfix(Pawn ___pawn, Trait trait) {
-            if (trait.def.defName == "Radiant") {
+            if (trait.def == StormlightModDefs.whtwl_Radiant) {
                 //Pawn pawn = Traverse.Create(__instance).Field("pawn").GetValue<Pawn>();
 
                 if (___pawn != null && ___pawn.RaceProps.Humanlike) {

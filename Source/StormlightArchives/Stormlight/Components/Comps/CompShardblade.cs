@@ -30,10 +30,10 @@ namespace StormlightMod {
 
         private void handleSwordAbility(Pawn pawn, CompAbilityEffect_SpawnEquipment abilityComp) {
             if (abilityComp == null) {
-                pawn.abilities.GainAbility(DefDatabase<AbilityDef>.GetNamed("SummonShardblade"));
-                Trait trait = pawn.story.traits.allTraits.FirstOrDefault(t => t.def.defName == "Radiant");
+                pawn.abilities.GainAbility(StormlightModDefs.whtwl_SummonShardblade);
+                Trait trait = pawn.story.traits.allTraits.FirstOrDefault(t => t.def == StormlightModDefs.whtwl_Radiant);
                 if (trait == null) { //radiants does not get this ability
-                    pawn.abilities.GainAbility(DefDatabase<AbilityDef>.GetNamed("unbondBlade"));
+                    pawn.abilities.GainAbility(StormlightModDefs.whtwl_UnbondBlade);
                 }
             }
         }
@@ -41,11 +41,11 @@ namespace StormlightMod {
         public void bondWithPawn(Pawn pawn, bool isBladeSpawned) {
             swordOwner = pawn;
             ThingWithComps blade = this.parent as ThingWithComps;
-            CompAbilityEffect_SpawnEquipment abilityComp = pawn.GetAbilityComp<CompAbilityEffect_SpawnEquipment>("SummonShardblade");
+            CompAbilityEffect_SpawnEquipment abilityComp = pawn.GetAbilityComp<CompAbilityEffect_SpawnEquipment>(StormlightModDefs.whtwl_SummonShardblade.defName);
             handleSwordAbility(pawn, abilityComp);
             if (abilityComp == null) {
                 Log.Message("Abilitycomp still null!");
-                abilityComp = pawn.GetAbilityComp<CompAbilityEffect_SpawnEquipment>("SummonShardblade");
+                abilityComp = pawn.GetAbilityComp<CompAbilityEffect_SpawnEquipment>(StormlightModDefs.whtwl_SummonShardblade.defName);
             }
             abilityComp.bladeObject = blade;
             isSpawned = isBladeSpawned;
@@ -58,7 +58,7 @@ namespace StormlightMod {
                 return;
             }
 
-            Trait trait = pawn.story.traits.allTraits.FirstOrDefault(t => t.def.defName == "Radiant");
+            Trait trait = pawn.story.traits.allTraits.FirstOrDefault(t => t.def == StormlightModDefs.whtwl_Radiant);
 
             if (trait != null) {
                 pawn.story.traits.allTraits.Remove(trait);
@@ -74,8 +74,8 @@ namespace StormlightMod {
                     pawn.AllComps.Remove(glowComp);
                 }
             }
-            pawn.abilities.RemoveAbility(DefDatabase<AbilityDef>.GetNamed("SummonShardblade"));
-            pawn.abilities.RemoveAbility(DefDatabase<AbilityDef>.GetNamed("unbondBlade"));
+            pawn.abilities.RemoveAbility(StormlightModDefs.whtwl_SummonShardblade);
+            pawn.abilities.RemoveAbility(StormlightModDefs.whtwl_UnbondBlade); 
         }
 
 
@@ -93,7 +93,7 @@ namespace StormlightMod {
                 Log.Message("sword owner was null or blade was already summoned");
                 return;
             }
-            CompAbilityEffect_SpawnEquipment abilityComp = swordOwner.GetAbilityComp<CompAbilityEffect_SpawnEquipment>("SummonShardblade");
+            CompAbilityEffect_SpawnEquipment abilityComp = swordOwner.GetAbilityComp<CompAbilityEffect_SpawnEquipment>(StormlightModDefs.whtwl_SummonShardblade.defName);
             if (abilityComp != null && abilityComp.bladeObject != null) {
                 swordOwner.equipment.AddEquipment(abilityComp.bladeObject);
                 isSpawned = true;

@@ -27,7 +27,7 @@
 
 
 <AbilityDef ParentName="RadiantBase">
-    <defName>BreathStormLight</defName>
+    <defName>whtwl_BreathStormlight</defName>
     <label>Breath Stormlight</label>
     <description>breath stormlight</description>
     <level>1</level>
@@ -51,7 +51,7 @@
 
 
 <AbilityDef ParentName="RadiantBase">
-    <defName>SummonShardblade</defName>
+    <defName>whtwl_SummonShardblade</defName>
     <label>Summon Shardblade</label>
     <description>Summon a powerful Shardblade from the Spiritual Realm into your hand.</description>
     <level>1</level>
@@ -78,7 +78,7 @@
 </AbilityDef>
 
 <AbilityDef ParentName="RadiantBase">
-    <defName>unbondBlade</defName>
+    <defName>whtwl_UnbondBlade</defName>
     <label>sever bond with Shardblade</label>
     <description>Sever the bond with the blade.</description>
     <level>1</level>

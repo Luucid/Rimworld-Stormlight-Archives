@@ -51,7 +51,7 @@ namespace StormlightMod {
         }
 
         private void toggleBlade(ref Pawn pawn) {
-            CompAbilityEffect_SpawnEquipment abilityComp = pawn.GetAbilityComp<CompAbilityEffect_SpawnEquipment>("SummonShardblade");
+            CompAbilityEffect_SpawnEquipment abilityComp = pawn.GetAbilityComp<CompAbilityEffect_SpawnEquipment>(StormlightModDefs.whtwl_SummonShardblade.defName);
             if (abilityComp == null) return;
 
             CompShardblade blade = abilityComp.bladeObject.GetComp<CompShardblade>();

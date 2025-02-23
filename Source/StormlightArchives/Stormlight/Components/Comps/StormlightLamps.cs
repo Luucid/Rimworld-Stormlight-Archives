@@ -3,6 +3,8 @@ using Verse;
 using System.Collections.Generic;
 using System.Linq;
 using System;
+using Verse.AI;
+using Unity.Jobs;
 
 namespace StormlightMod {
     public class StormlightLamps : ThingComp {
@@ -17,6 +19,30 @@ namespace StormlightMod {
             Scribe_Collections.Look(ref storedSpheres, "storedSpheres", LookMode.Deep);
         }
 
+        public bool IsFull() {
+            ThingWithComps sphere = storedSpheres.ElementAt(0) as ThingWithComps;
+            CompStormlight comp = sphere.GetComp<CompStormlight>();
+            return storedSpheres.Count() >= Props.maxCapacity && comp.HasStormlight;
+        }
+
+
+        public override IEnumerable<FloatMenuOption> CompFloatMenuOptions(Pawn selPawn) {
+            //foreach (FloatMenuOption option in base.CompFloatMenuOptions(selPawn))
+            //    yield return option;
+
+            //// Ensure the pawn has a sphere to add
+            //bool hasSphere = selPawn.inventory.innerContainer.Any(s =>
+            //    Props.allowedSpheres.Contains(s.def));
+            yield return new FloatMenuOption("Add Stormlight Sphere", () => {
+                Job job = JobMaker.MakeJob(StormlightModDefs.whtwl_RefuelSphereLamp, parent);
+                if (!job.TryMakePreToilReservations(selPawn, errorOnFailed: true)) {
+                    Log.Message("It failed");
+                }
+                else {
+                    selPawn.jobs.TryTakeOrderedJob(job);
+                }
+            });
+        }
 
 
         public override void CompTick() {
@@ -88,7 +114,7 @@ namespace StormlightMod {
             }
             Log.Message("added sphere");
             storedSpheres.Add(sphere);
-            GlowerComp.GlowColor = sphere.GetComp<CompStormlight>().GlowerComp.GlowColor; 
+            GlowerComp.GlowColor = sphere.GetComp<CompStormlight>().GlowerComp.GlowColor;
             return true;
         }
 

@@ -26,7 +26,7 @@ namespace StormlightMod {
         }
 
         public void UpdateRadiantTrait(Pawn pawn) {
-            Trait radiantTrait = pawn.story.traits.GetTrait(StormlightModDefs.Radiant);
+            Trait radiantTrait = pawn.story.traits.GetTrait(StormlightModDefs.whtwl_Radiant);
 
             if (radiantTrait != null) {
                 int currentDegree = radiantTrait.Degree;
@@ -35,7 +35,7 @@ namespace StormlightMod {
                 if (newDegree > currentDegree) {
                     // Remove old trait and add the upgraded one
                     pawn.story.traits.RemoveTrait(radiantTrait);
-                    pawn.story.traits.GainTrait(new Trait(StormlightModDefs.Radiant, newDegree));
+                    pawn.story.traits.GainTrait(new Trait(StormlightModDefs.whtwl_Radiant, newDegree));
 
                     Messages.Message($"{pawn.Name} has grown stronger as a Radiant!", pawn, MessageTypeDefOf.PositiveEvent);
                 }
@@ -53,23 +53,15 @@ namespace StormlightMod {
         public override int GUIChangeArrow => 1; // No arrow (need doesn’t decay)
     }
 
-    [DefOf]
-    public static class StormlightModDefs {
-        public static NeedDef RadiantProgress;
-        public static TraitDef Radiant; 
-
-        static StormlightModDefs() {
-            DefOfHelper.EnsureInitializedInCtor(typeof(StormlightModDefs));
-        }
-    }
+   
 
     [HarmonyPatch(typeof(Pawn_NeedsTracker), "ShouldHaveNeed")]
     public static class Patch_RadiantProgress_Need {
         public static void Postfix(Pawn_NeedsTracker __instance, NeedDef nd, ref bool __result, Pawn ___pawn) {
-            if (nd == StormlightModDefs.RadiantProgress && ___pawn.story?.traits?.HasTrait(StormlightModDefs.Radiant) == true) {
+            if (nd == StormlightModDefs.whtwl_RadiantProgress && ___pawn.story?.traits?.HasTrait(StormlightModDefs.whtwl_Radiant) == true) {
                 __result = true;       
             }
-            else if(nd == StormlightModDefs.RadiantProgress && ___pawn.story?.traits?.HasTrait(StormlightModDefs.Radiant) == false)
+            else if(nd == StormlightModDefs.whtwl_RadiantProgress && ___pawn.story?.traits?.HasTrait(StormlightModDefs.whtwl_Radiant) == false)
             {
                 __result = false;
             }

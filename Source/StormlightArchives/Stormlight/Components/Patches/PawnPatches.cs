@@ -13,7 +13,7 @@ namespace StormLight.Patches {
         static void Prefix(Pawn __instance, DamageInfo? dinfo) {
             if (__instance != null && __instance.RaceProps.Humanlike) {
                 Log.Message($"[DEBUG] {__instance.Name} is dying!");
-                CompAbilityEffect_SpawnEquipment abilityComp = __instance.GetAbilityComp<CompAbilityEffect_SpawnEquipment>("SummonShardblade");
+                CompAbilityEffect_SpawnEquipment abilityComp = __instance.GetAbilityComp<CompAbilityEffect_SpawnEquipment>(StormlightModDefs.whtwl_SummonShardblade.defName);
                 if (abilityComp == null) return;
                 if (abilityComp.bladeObject != null) {
                     {

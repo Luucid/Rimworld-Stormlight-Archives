@@ -10,11 +10,11 @@ namespace StormlightMod {
         private float m_CurrentStormlight;
         public CompProperties_Stormlight Props => (CompProperties_Stormlight)props;
         public CompGlower GlowerComp => parent.GetComp<CompGlower>();
-        public bool HasStormlight => m_CurrentStormlight > 0;
+        public bool HasStormlight => m_CurrentStormlight > 0f;
         public float Stormlight => m_CurrentStormlight;
         public int StackCount => parent.stackCount;
         public float MaxStormlightPerItem => Props.maxStormlight;
-        public float CurrentMaxStormlight = 0;
+        public float CurrentMaxStormlight = 0f;
         public bool m_BreathStormlight = false;
 
         private int tick = 0;
@@ -23,7 +23,7 @@ namespace StormlightMod {
         public override void PostExposeData() {
             base.PostExposeData();
             Scribe_Values.Look(ref m_CurrentStormlight, "currentStormlight", 0f);
-            Scribe_Values.Look(ref m_BreathStormlight, "breathStormlight", false);
+            Scribe_Values.Look(ref m_BreathStormlight, StormlightModDefs.whtwl_BreathStormlight.defName, false);
         }
 
         public void toggleBreathStormlight() {

@@ -3,7 +3,7 @@
 
 
 <TraitDef>
-    <defName>Radiant</defName>
+    <defName>whtwl_Radiant</defName>
     <label>Radiant</label>
     <description>{PAWN_nameDef} has been chosen by ancient forces and gifted with mystical abilities.</description>
     
@@ -14,7 +14,7 @@
         <degree>0</degree>
         <commonality>0</commonality> <!-- Ensures it is not assigned randomly -->
         <abilities>
-          <li>BreathStormLight</li>
+          <li>whtwl_BreathStormlight</li>
         </abilities>
       </li>
       <li>
@@ -23,7 +23,7 @@
         <degree>1</degree>
         <commonality>0</commonality>
         <abilities>
-          <li>BreathStormLight</li>
+          <li>whtwl_BreathStormlight</li>
           <li>lucidLashingUpward</li>
         </abilities>
       </li>
@@ -33,7 +33,7 @@
         <degree>2</degree>
         <commonality>0</commonality>
         <abilities>
-          <li>BreathStormLight</li>
+          <li>whtwl_BreathStormlight</li>
           <li>lucidLashingUpward</li>
           <li>lucidWindRunnerFlight</li>
         </abilities>
@@ -44,8 +44,8 @@
         <degree>3</degree>
         <commonality>0</commonality>
         <abilities>
-          <li>BreathStormLight</li>
-          <li>SummonShardblade</li>
+          <li>whtwl_BreathStormlight</li>
+          <li>whtwl_SummonShardblade</li>
           <li>lucidLashingUpward</li>
           <li>lucidWindRunnerFlight</li>
         </abilities>

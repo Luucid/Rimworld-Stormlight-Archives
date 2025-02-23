@@ -88,7 +88,7 @@ namespace StormlightMod {
         public override void ProcessInput(Event ev) {
             base.ProcessInput(ev);
 
-            if (pawn.Drafted && (pawn.story.traits.HasTrait(TraitDef.Named("Radiant")) || pawn.GetAbilityComp<CompAbilityEffect_SpawnEquipment>("SummonShardblade") != null)) {
+            if (pawn.Drafted && (pawn.story.traits.HasTrait(StormlightModDefs.whtwl_Radiant) || pawn.GetAbilityComp<CompAbilityEffect_SpawnEquipment>(StormlightModDefs.whtwl_SummonShardblade.defName) != null)) {
                 if (abilityToggleStormlight())
                     return;
                 if(abilitySummonShardblade())
@@ -102,7 +102,7 @@ namespace StormlightMod {
 
 
         private bool abilityToggleStormlight() {
-            if (ability.def.defName.Equals("BreathStormLight")) {
+            if (ability.def == StormlightModDefs.whtwl_BreathStormlight) {
                 ability.Activate(pawn, pawn);
                 return true;
             }
@@ -110,7 +110,7 @@ namespace StormlightMod {
         }
         private bool abilitySummonShardblade()
         {
-             if (ability.def.defName.Equals("SummonShardblade")) {
+             if (ability.def == StormlightModDefs.whtwl_SummonShardblade) {
                 ability.Activate(pawn, pawn);
                 return true;
                 }

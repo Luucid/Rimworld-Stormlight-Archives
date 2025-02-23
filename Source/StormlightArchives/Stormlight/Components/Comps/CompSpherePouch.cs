@@ -77,7 +77,6 @@ namespace StormlightMod {
             if (sphere != null && pawn != null && pawn.Map != null) {
                 IntVec3 dropPosition = pawn.Position; // Drop at the pawn's current position
                 GenPlace.TryPlaceThing(sphere, dropPosition, pawn.Map, ThingPlaceMode.Near);
-                //Log.Message($"[StormlightMod] Removed sphere: {sphere.LabelCap} from pouch and placed it at {dropPosition}.");
             }
        
         }
