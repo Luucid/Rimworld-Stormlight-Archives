@@ -12,15 +12,25 @@ namespace StormlightMod {
             toil.initAction = delegate {
                 Job curJob = toil.actor.CurJob;
                 StormlightLamps lampComp = lamp.TryGetComp<StormlightLamps>();
+                CompSpherePouch spherePouch = CompSpherePouch.GetWornSpherePouch(pawn);
+                bool dropOnGround = (spherePouch == null);
                 if (lampComp != null) {
-                    ThingWithComps removedSphere = lampComp.RemoveSphereFromLamp(0, false);
+
+                    ThingWithComps removedSphere = lampComp.RemoveSphereFromLamp(0, dropOnGround);
                     lampComp.AddSphereToLamp(sphere as ThingWithComps);
-                    CompSpherePouch spherePouch = CompSpherePouch.GetWornSpherePouch(pawn);
+
 
                     if (spherePouch != null) {
                         spherePouch.removeSpheresFromRemoveList();
                         spherePouch.AddSphereToPouch(removedSphere);
-                        Log.Message("Sphere is not null!");
+                    }
+                    if (pawn.carryTracker.CarriedThing == sphere) {
+                        Thing carriedThing;
+                        pawn.carryTracker.TryDropCarriedThing(pawn.Position, ThingPlaceMode.Near, out carriedThing);
+                        if (carriedThing != null && carriedThing.Spawned) {
+                            carriedThing.DeSpawn();
+                            Log.Message("Despawned carried thing");
+                        }
                     }
                 }
             };
@@ -49,22 +59,21 @@ namespace StormlightMod {
 
         protected override IEnumerable<Toil> MakeNewToils() {
             this.FailOnDespawnedNullOrForbidden(LampIndex);
-            AddEndCondition(() => (!LampComp.IsFull()) ? JobCondition.Ongoing : JobCondition.Succeeded);
+            //AddEndCondition(() => (!LampComp.IsFull()) ? JobCondition.Ongoing : JobCondition.Succeeded);
             AddFailCondition(() => Sphere == null);
             //AddFailCondition(() => !LampComp.allowAutoRefuel && !job.playerForced);
             yield return Toils_General.DoAtomic(delegate {
                 job.count = LampComp.GetDunSphereCount();
             });
+            CompSpherePouch spherePouch = CompSpherePouch.GetWornSpherePouch(pawn);
+            if (spherePouch == null || (spherePouch != null && spherePouch.Empty)) { //pawn has no pouch or it is empty
+                Toil reserveFuel = Toils_Reserve.Reserve(SphereIndex);
+                yield return reserveFuel;
 
-            //if pawn does not have spheres in inventory or pouch -> DO section A
-            //section A BEGIN//
-            //Toil reserveFuel = Toils_Reserve.Reserve(SphereIndex);
-            //yield return reserveFuel;
-
-            //yield return Toils_Goto.GotoThing(SphereIndex, PathEndMode.ClosestTouch).FailOnDespawnedNullOrForbidden(SphereIndex).FailOnSomeonePhysicallyInteracting(SphereIndex);
-            //yield return Toils_Haul.StartCarryThing(SphereIndex, putRemainderInQueue: false, subtractNumTakenFromJobCount: true).FailOnDestroyedNullOrForbidden(SphereIndex);
-            //yield return Toils_Haul.CheckForGetOpportunityDuplicate(reserveFuel, SphereIndex, TargetIndex.None, takeFromValidStorage: true);
-            //section A END//
+                yield return Toils_Goto.GotoThing(SphereIndex, PathEndMode.ClosestTouch).FailOnDespawnedNullOrForbidden(SphereIndex).FailOnSomeonePhysicallyInteracting(SphereIndex);
+                yield return Toils_Haul.StartCarryThing(SphereIndex, putRemainderInQueue: false, subtractNumTakenFromJobCount: true).FailOnDestroyedNullOrForbidden(SphereIndex);
+                yield return Toils_Haul.CheckForGetOpportunityDuplicate(reserveFuel, SphereIndex, TargetIndex.None, takeFromValidStorage: true);
+            }
 
             yield return Toils_Goto.GotoThing(LampIndex, PathEndMode.Touch);
             yield return Toils_General.Wait(RespheringDuration).FailOnDestroyedNullOrForbidden(SphereIndex).FailOnDestroyedNullOrForbidden(LampIndex)

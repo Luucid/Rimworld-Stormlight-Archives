@@ -5,21 +5,36 @@ using System.Linq;
 using System;
 using Verse.AI;
 using Unity.Jobs;
+using UnityEngine;
 
 namespace StormlightMod {
     public class StormlightLamps : ThingComp {
         public CompProperties_SphereLamp Props => (CompProperties_SphereLamp)props;
         public CompGlower GlowerComp => parent.GetComp<CompGlower>();
         public List<Thing> storedSpheres = new List<Thing>(); //  List of sphere stacks inside the pouch
+        public List<ThingDef> ThisFilterList;
+
+
         bool lightEnabled = true;
         bool initSphereAdded = false;
+        public bool Empty => storedSpheres.Count == 0;
         private float m_CurrentStormlight = 0f;
+
+        public override void PostSpawnSetup(bool respawningAfterLoad) {
+            base.PostSpawnSetup(respawningAfterLoad);
+            // Initialize ThisFilterList only after props is guaranteed to be available.
+            if (ThisFilterList == null && Props.allowedSpheres != null) {
+                ThisFilterList = Props.allowedSpheres.ToList();
+            }
+        }
         public override void PostExposeData() {
             base.PostExposeData();
             Scribe_Collections.Look(ref storedSpheres, "storedSpheres", LookMode.Deep);
         }
 
         public bool IsFull() {
+            if (Empty)
+                return false;
             ThingWithComps sphere = storedSpheres.ElementAt(0) as ThingWithComps;
             CompStormlight comp = sphere.GetComp<CompStormlight>();
             return storedSpheres.Count() >= Props.maxCapacity && comp.HasStormlight;
@@ -28,28 +43,52 @@ namespace StormlightMod {
         public int GetDunSphereCount() {
             return storedSpheres.Count(); //make more advanced later
         }
-       
 
-        public override IEnumerable<FloatMenuOption> CompFloatMenuOptions(Pawn selPawn) {
-            //foreach (FloatMenuOption option in base.CompFloatMenuOptions(selPawn))
-            //    yield return option;
-
-
-            Thing sphere = null;
-            CompSpherePouch spherePouch = CompSpherePouch.GetWornSpherePouch(selPawn);
-            if (spherePouch != null) {
-                sphere = spherePouch.GetSphereWithMostStormlight(true);
+        public override IEnumerable<Gizmo> CompGetGizmosExtra() {
+            foreach (Gizmo gizmo in base.CompGetGizmosExtra()) {
+                yield return gizmo;
             }
 
+            yield return new Command_Action {
+                defaultLabel = "Set Sphere Filters",
+                defaultDesc = "Click to choose which spheres are allowed in this lamp.",
+                icon = ContentFinder<Texture2D>.Get("UI/Icons/SomeIcon"), 
+                action = () =>
+                {
+                    // Opens the custom dialog for filtering spheres.
+                    Find.WindowStack.Add(new Dialog_SphereFilter(this));
+                }
+            };
+            Log.Message($"filter: {ThisFilterList}");
+        }
 
-            yield return new FloatMenuOption("Add Stormlight Sphere", () => {
-                Job job = JobMaker.MakeJob(StormlightModDefs.whtwl_RefuelSphereLamp, parent, sphere);
-                if (!job.TryMakePreToilReservations(selPawn, errorOnFailed: true)) {
-                    Log.Message("It failed");
-                }
-                else {
-                    selPawn.jobs.TryTakeOrderedJob(job);
-                }
+
+        public override IEnumerable<FloatMenuOption> CompFloatMenuOptions(Pawn selPawn) {
+            Thing sphere = null;
+            CompSpherePouch spherePouch = CompSpherePouch.GetWornSpherePouch(selPawn);
+            ThingDef matchingSphereDef = ThisFilterList.Find(def => selPawn.Map.listerThings.ThingsOfDef(def).Any());
+
+            if (spherePouch != null && !spherePouch.Empty) {
+                sphere = spherePouch.GetSphereWithMostStormlight(true);
+            }
+            else if (matchingSphereDef != null && GenClosest.ClosestThing_Global(selPawn.Position, selPawn.Map.listerThings.ThingsOfDef(matchingSphereDef), 500f) != null) {
+                sphere = GenClosest.ClosestThing_Global(selPawn.Position, selPawn.Map.listerThings.ThingsOfDef(matchingSphereDef), 500f);
+            }
+
+            if (sphere != null) {
+
+                yield return new FloatMenuOption("Replace sphere", () => {
+                    Job job = JobMaker.MakeJob(StormlightModDefs.whtwl_RefuelSphereLamp, parent, sphere);
+                    if (!job.TryMakePreToilReservations(selPawn, errorOnFailed: true)) {
+                        Log.Message("It failed");
+                    }
+                    else {
+                        selPawn.jobs.TryTakeOrderedJob(job);
+                    }
+                });
+            }
+            yield return new FloatMenuOption("Remove Sphere", () => {
+                if (storedSpheres.Count() > 0) { RemoveSphereFromLamp(0); }; //make job later
             });
         }
 
@@ -75,7 +114,7 @@ namespace StormlightMod {
 
         public float DrawStormlight(float amount) {
             float absorbed = 0;
-
+            Log.Message("absorb stuff");
             foreach (ThingWithComps sphere in storedSpheres) {
                 CompStormlight comp = sphere.GetComp<CompStormlight>();
                 if (comp != null && comp.HasStormlight) {
@@ -156,6 +195,7 @@ namespace StormlightMod {
 
             storedSpheres.RemoveAt(index);
 
+            Log.Message($"removed sphere, size of lamp content: {storedSpheres.Count}");
             if (dropOnGround && sphere != null && parent.Map != null) {
                 IntVec3 dropPosition = parent.Position;
                 GenPlace.TryPlaceThing(sphere, dropPosition, parent.Map, ThingPlaceMode.Near);

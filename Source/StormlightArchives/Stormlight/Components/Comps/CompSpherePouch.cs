@@ -8,6 +8,9 @@ namespace StormlightMod {
         public List<Thing> storedSpheres = new List<Thing>(); //  List of sphere stacks inside the pouch
         private List<int> spheresToRemove = new List<int>();  //  spheres to remove
 
+        public bool Empty => storedSpheres.Count == 0; 
+
+
         public CompProperties_SpherePouch Props => (CompProperties_SpherePouch)props;
         public override void PostExposeData() {
             base.PostExposeData();
@@ -108,6 +111,7 @@ namespace StormlightMod {
             }
 
         }
+
 
         public bool AddSphereToPouch(ThingWithComps sphere) {
             if (sphere == null) {
