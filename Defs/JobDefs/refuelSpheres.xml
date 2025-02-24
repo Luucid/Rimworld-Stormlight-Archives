@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Defs>
-    <WorkGiverDef>
+    <!-- <WorkGiverDef>
         <defName>whtwl_RefuelSphereLamp</defName>
         <label>add stormlight sphere to lamp</label>
         <giverClass>StormlightMod.WorkGiver_AddSphereToLamp</giverClass>
@@ -11,7 +11,7 @@
         <requiredCapacities>
             <li>Manipulation</li>
         </requiredCapacities>
-    </WorkGiverDef>
+    </WorkGiverDef> -->
 
     <JobDef>
         <defName>whtwl_RefuelSphereLamp</defName>

@@ -6,6 +6,7 @@ using UnityEngine;
 namespace StormlightMod {
     public class CompSpherePouch : ThingComp {
         public List<Thing> storedSpheres = new List<Thing>(); //  List of sphere stacks inside the pouch
+        private List<int> spheresToRemove = new List<int>();  //  spheres to remove
 
         public CompProperties_SpherePouch Props => (CompProperties_SpherePouch)props;
         public override void PostExposeData() {
@@ -25,7 +26,7 @@ namespace StormlightMod {
             return total;
         }
 
-        public float GetTotalMaximumStormlight() { 
+        public float GetTotalMaximumStormlight() {
             float total = 0;
             foreach (ThingWithComps sphere in storedSpheres) {
                 CompStormlight comp = sphere.GetComp<CompStormlight>();
@@ -34,6 +35,33 @@ namespace StormlightMod {
                 }
             }
             return total;
+        }
+
+        public Thing GetSphereWithMostStormlight(bool addToRemoveList = false) {
+            Thing sphere = null;
+            int selectedIndex = 0;
+            for (int i = 0; i < storedSpheres.Count; i++) {
+                if (sphere == null || (storedSpheres[i].TryGetComp<CompStormlight>().Stormlight > sphere.TryGetComp<CompStormlight>().Stormlight)) {
+                    sphere = storedSpheres[i];
+                    selectedIndex = i;
+                }
+            }
+            if (addToRemoveList && !spheresToRemove.Any(i => i == selectedIndex)) {
+                Log.Message("added sphere to removelist");
+                spheresToRemove.Add(selectedIndex);
+            }
+            return sphere;
+        }
+
+        public void removeSpheresFromRemoveList() {
+            spheresToRemove.Sort();
+            spheresToRemove.Reverse();
+            foreach (int i in spheresToRemove) {
+                if (i < storedSpheres.Count) {
+                    storedSpheres.RemoveAt(i);
+                }
+            }
+            spheresToRemove.Clear();
         }
 
         public override string CompInspectStringExtra() {
@@ -70,7 +98,7 @@ namespace StormlightMod {
                 return;
             }
 
-            ThingWithComps sphere = storedSpheres[index] as ThingWithComps; 
+            ThingWithComps sphere = storedSpheres[index] as ThingWithComps;
 
             storedSpheres.RemoveAt(index);
 
@@ -78,10 +106,10 @@ namespace StormlightMod {
                 IntVec3 dropPosition = pawn.Position; // Drop at the pawn's current position
                 GenPlace.TryPlaceThing(sphere, dropPosition, pawn.Map, ThingPlaceMode.Near);
             }
-       
+
         }
 
-        public bool AddSphereToPouch(ThingWithComps sphere) {  
+        public bool AddSphereToPouch(ThingWithComps sphere) {
             if (sphere == null) {
                 return false;
             }
@@ -92,6 +120,17 @@ namespace StormlightMod {
 
             storedSpheres.Add(sphere);
             return true;
+        }
+        public static CompSpherePouch GetWornSpherePouch(Pawn pawn) {
+            if (pawn.apparel == null) return null;
+
+            foreach (Apparel apparel in pawn.apparel.WornApparel) {
+                CompSpherePouch pouch = apparel.TryGetComp<CompSpherePouch>();
+                if (pouch != null) {
+                    return pouch; // Found a Sphere Pouch!
+                }
+            }
+            return null; // Pawn is not wearing a Sphere Pouch
         }
     }
 }

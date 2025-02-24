@@ -25,16 +25,25 @@ namespace StormlightMod {
             return storedSpheres.Count() >= Props.maxCapacity && comp.HasStormlight;
         }
 
+        public int GetDunSphereCount() {
+            return storedSpheres.Count(); //make more advanced later
+        }
+       
 
         public override IEnumerable<FloatMenuOption> CompFloatMenuOptions(Pawn selPawn) {
             //foreach (FloatMenuOption option in base.CompFloatMenuOptions(selPawn))
             //    yield return option;
 
-            //// Ensure the pawn has a sphere to add
-            //bool hasSphere = selPawn.inventory.innerContainer.Any(s =>
-            //    Props.allowedSpheres.Contains(s.def));
+
+            Thing sphere = null;
+            CompSpherePouch spherePouch = CompSpherePouch.GetWornSpherePouch(selPawn);
+            if (spherePouch != null) {
+                sphere = spherePouch.GetSphereWithMostStormlight(true);
+            }
+
+
             yield return new FloatMenuOption("Add Stormlight Sphere", () => {
-                Job job = JobMaker.MakeJob(StormlightModDefs.whtwl_RefuelSphereLamp, parent);
+                Job job = JobMaker.MakeJob(StormlightModDefs.whtwl_RefuelSphereLamp, parent, sphere);
                 if (!job.TryMakePreToilReservations(selPawn, errorOnFailed: true)) {
                     Log.Message("It failed");
                 }
@@ -92,7 +101,12 @@ namespace StormlightMod {
         }
 
         public override string CompInspectStringExtra() {
-            return "Stormlight: " + m_CurrentStormlight.ToString("F0");
+            string sphereName = "No sphere in lamp.";
+            if (storedSpheres.Count > 0) {
+                ThingWithComps sphere = storedSpheres.First() as ThingWithComps;
+                sphereName = sphere.def.label + "(" + m_CurrentStormlight.ToString("F0") + ")";
+            }
+            return sphereName;
         }
 
         public void InfuseStormlight(float amount) {
@@ -133,20 +147,20 @@ namespace StormlightMod {
             }
         }
 
-        public void RemoveSphereFromLamp(int index) {
+        public ThingWithComps RemoveSphereFromLamp(int index, bool dropOnGround = true) {
             if (index < 0 || index >= storedSpheres.Count) {
-                return;
+                return null;
             }
 
             ThingWithComps sphere = storedSpheres[index] as ThingWithComps;
 
             storedSpheres.RemoveAt(index);
 
-            if (sphere != null && parent.Map != null) {
+            if (dropOnGround && sphere != null && parent.Map != null) {
                 IntVec3 dropPosition = parent.Position;
                 GenPlace.TryPlaceThing(sphere, dropPosition, parent.Map, ThingPlaceMode.Near);
             }
-
+            return sphere;
         }
         private void toggleGlow(bool toggleOn) {
             if (parent.Map != null && lightEnabled != toggleOn) {

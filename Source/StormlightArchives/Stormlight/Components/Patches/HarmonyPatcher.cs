@@ -17,13 +17,9 @@ namespace StormlightMod {
             public static void Postfix(ThingWithComps __instance) {
                 if (__instance.TryGetComp<CompSpherePouch>() is CompSpherePouch pouchComp) {
                     Log.Message("[StormlightMod] Debug: Populating newly spawned Sphere Pouch with spheres.");
-                    for (int i = 0; i < 5; i++) { // Adjust number of spheres as needed
-                        Thing sphere = ThingMaker.MakeThing(ThingDef.Named("Sphere_Garnet"));
-                        Thing sphere2 = ThingMaker.MakeThing(ThingDef.Named("Sphere_Diamond"));
-                        sphere.stackCount = 1;
-                        pouchComp.storedSpheres.Add(sphere);
-                        pouchComp.storedSpheres.Add(sphere2);
-                    }
+                    Thing sphere = ThingMaker.MakeThing(ThingDef.Named("Sphere_Garnet"));
+                    pouchComp.storedSpheres.Add(sphere); 
+                    pouchComp.InfuseStormlight(500f);
                 }
             }
         }

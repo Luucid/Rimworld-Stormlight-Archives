@@ -80,8 +80,6 @@
     <Compile Include="Components\DefOfs.cs" />
     <Compile Include="Components\ITabs\ITab_SpherePouch.cs" />
     <Compile Include="Components\Jobs\JobDriver_RefuelStormlightLamp.cs" />
-    <Compile Include="Components\Jobs\Utility_RefuelStormlightLamp.cs" />
-    <Compile Include="Components\Jobs\WorkGiver_RefuelStormlightLamp.cs" />
     <Compile Include="Components\MyModSettings.cs" />
     <Compile Include="Components\Need\Need_RadiantProgress.cs" />
     <Compile Include="Components\Patches\HarmonyPatcher.cs" />

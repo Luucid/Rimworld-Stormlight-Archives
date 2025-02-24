@@ -5,51 +5,72 @@ using RimWorld;
 using System.Linq;
 
 namespace StormlightMod {
-    public class JobDriver_AddSphereToLamp : JobDriver {
-        private const TargetIndex RefuelableInd = TargetIndex.A;
 
-        private const TargetIndex FuelInd = TargetIndex.B;
+    public class Toils_Resphere_Lamp {
+        public static Toil SwapInNewSpheres(Pawn pawn, Thing lamp, Thing sphere) {
+            Toil toil = ToilMaker.MakeToil("SwapInNewSpheres");
+            toil.initAction = delegate {
+                Job curJob = toil.actor.CurJob;
+                StormlightLamps lampComp = lamp.TryGetComp<StormlightLamps>();
+                if (lampComp != null) {
+                    ThingWithComps removedSphere = lampComp.RemoveSphereFromLamp(0, false);
+                    lampComp.AddSphereToLamp(sphere as ThingWithComps);
+                    CompSpherePouch spherePouch = CompSpherePouch.GetWornSpherePouch(pawn);
 
-        public const int RefuelingDuration = 240;
+                    if (spherePouch != null) {
+                        spherePouch.removeSpheresFromRemoveList();
+                        spherePouch.AddSphereToPouch(removedSphere);
+                        Log.Message("Sphere is not null!");
+                    }
+                }
+            };
+            toil.defaultCompleteMode = ToilCompleteMode.Instant;
+            return toil;
+        }
+    }
 
-        protected Thing Lamp => job.GetTarget(TargetIndex.A).Thing;
+    public class JobDriver_AddSphereToLamp : JobDriver_Refuel {
+        private const TargetIndex LampIndex = TargetIndex.A;
+        private const TargetIndex SphereIndex = TargetIndex.B;
+
+        public const int RespheringDuration = 240;
 
         protected StormlightLamps LampComp => Lamp.TryGetComp<StormlightLamps>();
 
-        protected Thing Sphere => job.GetTarget(TargetIndex.B).Thing;
+        protected Thing Lamp => job.GetTarget(LampIndex).Thing;
+        protected Thing Sphere => job.GetTarget(SphereIndex).Thing;
+
+
 
         public override bool TryMakePreToilReservations(bool errorOnFailed) {
-            //if (pawn.Reserve(Lamp, job, 1, -1, null, errorOnFailed)) {
-            //    return pawn.Reserve(Sphere, job, 1, -1, null, errorOnFailed);
-            //}
-            return pawn.Reserve(Lamp, job, 1, -1, null, errorOnFailed);
-            return false;
+            Log.Message("TryMakePreToilReservations");
+            return pawn.Reserve(Lamp, job, 1, -1, null, errorOnFailed) && pawn.Reserve(Sphere, job, 1, -1, null, errorOnFailed);
         }
 
         protected override IEnumerable<Toil> MakeNewToils() {
-            this.FailOnDespawnedNullOrForbidden(TargetIndex.A);
+            this.FailOnDespawnedNullOrForbidden(LampIndex);
             AddEndCondition(() => (!LampComp.IsFull()) ? JobCondition.Ongoing : JobCondition.Succeeded);
-            //AddFailCondition(() => !job.playerForced && !LampComp.ShouldAutoRefuelNowIgnoringFuelPct);
+            AddFailCondition(() => Sphere == null);
             //AddFailCondition(() => !LampComp.allowAutoRefuel && !job.playerForced);
             yield return Toils_General.DoAtomic(delegate {
                 job.count = LampComp.GetDunSphereCount();
             });
-            
+
             //if pawn does not have spheres in inventory or pouch -> DO section A
             //section A BEGIN//
-            Toil reserveFuel = Toils_Reserve.Reserve(TargetIndex.B);
-            yield return reserveFuel;
-            yield return Toils_Goto.GotoThing(TargetIndex.B, PathEndMode.ClosestTouch).FailOnDespawnedNullOrForbidden(TargetIndex.B).FailOnSomeonePhysicallyInteracting(TargetIndex.B);
-            yield return Toils_Haul.StartCarryThing(TargetIndex.B, putRemainderInQueue: false, subtractNumTakenFromJobCount: true).FailOnDestroyedNullOrForbidden(TargetIndex.B);
-            yield return Toils_Haul.CheckForGetOpportunityDuplicate(reserveFuel, TargetIndex.B, TargetIndex.None, takeFromValidStorage: true);
+            //Toil reserveFuel = Toils_Reserve.Reserve(SphereIndex);
+            //yield return reserveFuel;
+
+            //yield return Toils_Goto.GotoThing(SphereIndex, PathEndMode.ClosestTouch).FailOnDespawnedNullOrForbidden(SphereIndex).FailOnSomeonePhysicallyInteracting(SphereIndex);
+            //yield return Toils_Haul.StartCarryThing(SphereIndex, putRemainderInQueue: false, subtractNumTakenFromJobCount: true).FailOnDestroyedNullOrForbidden(SphereIndex);
+            //yield return Toils_Haul.CheckForGetOpportunityDuplicate(reserveFuel, SphereIndex, TargetIndex.None, takeFromValidStorage: true);
             //section A END//
-            
-            yield return Toils_Goto.GotoThing(TargetIndex.A, PathEndMode.Touch);
-            yield return Toils_General.Wait(240).FailOnDestroyedNullOrForbidden(TargetIndex.B).FailOnDestroyedNullOrForbidden(TargetIndex.A)
-                .FailOnCannotTouch(TargetIndex.A, PathEndMode.Touch)
-                .WithProgressBarToilDelay(TargetIndex.A);
-             yield return Toils_Resphere_Lamp.FinalizeResphering(TargetIndex.A, TargetIndex.B);  //custom toil
-            //yield return Toils_Refuel.FinalizeRefueling(TargetIndex.A, TargetIndex.B); //original toil
+
+            yield return Toils_Goto.GotoThing(LampIndex, PathEndMode.Touch);
+            yield return Toils_General.Wait(RespheringDuration).FailOnDestroyedNullOrForbidden(SphereIndex).FailOnDestroyedNullOrForbidden(LampIndex)
+                .FailOnCannotTouch(LampIndex, PathEndMode.Touch)
+                .WithProgressBarToilDelay(LampIndex);
+            yield return Toils_Resphere_Lamp.SwapInNewSpheres(pawn, Lamp, Sphere);  //custom toil
         }
     }
 }
