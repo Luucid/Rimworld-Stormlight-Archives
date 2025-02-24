@@ -32,19 +32,24 @@ namespace StormlightMod {
             //AddFailCondition(() => !job.playerForced && !LampComp.ShouldAutoRefuelNowIgnoringFuelPct);
             //AddFailCondition(() => !LampComp.allowAutoRefuel && !job.playerForced);
             yield return Toils_General.DoAtomic(delegate {
-                //job.count = LampComp.GetFuelCountToFullyRefuel();
-                job.count = 1;
+                job.count = LampComp.GetDunSphereCount();
             });
+            
+            //if pawn does not have spheres in inventory or pouch -> DO section A
+            //section A BEGIN//
             Toil reserveFuel = Toils_Reserve.Reserve(TargetIndex.B);
             yield return reserveFuel;
             yield return Toils_Goto.GotoThing(TargetIndex.B, PathEndMode.ClosestTouch).FailOnDespawnedNullOrForbidden(TargetIndex.B).FailOnSomeonePhysicallyInteracting(TargetIndex.B);
             yield return Toils_Haul.StartCarryThing(TargetIndex.B, putRemainderInQueue: false, subtractNumTakenFromJobCount: true).FailOnDestroyedNullOrForbidden(TargetIndex.B);
             yield return Toils_Haul.CheckForGetOpportunityDuplicate(reserveFuel, TargetIndex.B, TargetIndex.None, takeFromValidStorage: true);
+            //section A END//
+            
             yield return Toils_Goto.GotoThing(TargetIndex.A, PathEndMode.Touch);
             yield return Toils_General.Wait(240).FailOnDestroyedNullOrForbidden(TargetIndex.B).FailOnDestroyedNullOrForbidden(TargetIndex.A)
                 .FailOnCannotTouch(TargetIndex.A, PathEndMode.Touch)
                 .WithProgressBarToilDelay(TargetIndex.A);
-            //yield return Toils_Refuel.FinalizeRefueling(TargetIndex.A, TargetIndex.B);
+             yield return Toils_Resphere_Lamp.FinalizeResphering(TargetIndex.A, TargetIndex.B);  //custom toil
+            //yield return Toils_Refuel.FinalizeRefueling(TargetIndex.A, TargetIndex.B); //original toil
         }
     }
 }
