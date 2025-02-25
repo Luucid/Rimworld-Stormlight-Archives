@@ -49,7 +49,7 @@
     </comps>
 </AbilityDef>
 
-
+<!-- SUMMON BLADE -->
 <AbilityDef ParentName="RadiantBase">
     <defName>whtwl_SummonShardblade</defName>
     <label>Summon Shardblade</label>
@@ -77,6 +77,7 @@
     </comps>
 </AbilityDef>
 
+<!-- UNBOND BLADE -->
 <AbilityDef ParentName="RadiantBase">
     <defName>whtwl_UnbondBlade</defName>
     <label>sever bond with Shardblade</label>
@@ -105,7 +106,6 @@
 </AbilityDef>
 
 <!-- LASHING -->
-
 <ThingDef ParentName="PawnFlyerBase">
   <defName>lucid_lashingUp</defName>
   <label>custom upward flyer</label>
@@ -175,7 +175,6 @@
 
       <!-- Forward offset factor if you want a 3D effect (set to 0 if not) -->
       <heightFactor>1</heightFactor>
-
     </pawnFlyer>
 </ThingDef>
 <AbilityDef ParentName="RadiantBase">
@@ -197,11 +196,60 @@
             <canTargetItems>false</canTargetItems>
         </targetParams>
     </verbProperties>
-
     <comps>
         <li Class="StormlightMod.CompProperties_AbilityWindRunnerFlight">
             <compClass>StormlightMod.CompAbilityEffect_AbilityWindRunnerFlight</compClass>
             <thingDef>lucid_WindRunnerFlight</thingDef> <!-- Ensure this matches your XML weapon defName -->
+            <stormLightCost>100</stormLightCost>
+        </li>
+    </comps>
+</AbilityDef>
+
+<!-- PLANT GROWTH -->
+<AbilityDef ParentName="RadiantBase">
+    <defName>whtwl_SurgeOfGrowth</defName>
+    <label>boost plantgrowth</label>
+    <description>boost the speed of plantgrowth.</description>
+    <level>1</level>
+    <iconPath>Things/Apparel/ArmorFront-1</iconPath> 
+    <hotKey>Misc3</hotKey>
+    <hostile>false</hostile>
+    <casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>
+    <verbProperties>
+        <warmupTime>0.5</warmupTime>
+        <range>4</range> 
+        <targetParams>
+            <canTargetSelf>true</canTargetSelf>
+        </targetParams>
+    </verbProperties>
+    <comps>
+        <li Class="StormlightMod.CompProperties_AbilitySurgePlantGrowth">
+            <compClass>StormlightMod.CompAbilityEffect_SurgePlantGrowth</compClass>
+            <stormLightCost>0</stormLightCost>
+        </li>
+    </comps>
+</AbilityDef>
+
+<!-- HEALING -->
+<AbilityDef ParentName="RadiantBase">
+    <defName>whtwl_SurgeOfHealing</defName>
+    <label>heal</label>
+    <description>this will heal any wound.</description>
+    <level>1</level>
+    <iconPath>Things/Apparel/ArmorFront-1</iconPath> 
+    <hotKey>Misc4</hotKey>
+    <hostile>false</hostile>
+    <casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>
+    <verbProperties>
+        <warmupTime>0.5</warmupTime>
+        <range>2</range> 
+        <targetParams>
+            <canTargetSelf>true</canTargetSelf>
+        </targetParams>
+    </verbProperties>
+    <comps>
+        <li Class="StormlightMod.CompProperties_AbilitySurgeHeal">
+            <compClass>StormlightMod.CompAbilityEffect_SurgeHeal</compClass>
             <stormLightCost>100</stormLightCost>
         </li>
     </comps>

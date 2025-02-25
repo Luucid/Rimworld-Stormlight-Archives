@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Defs>
 
-
+<!-- WIND RUNNER -->
 <TraitDef>
-    <defName>whtwl_Radiant</defName>
+    <defName>whtwl_Radiant_Windrunner</defName>
     <label>Radiant</label>
     <description>{PAWN_nameDef} has been chosen by ancient forces and gifted with mystical abilities.</description>
     
@@ -54,5 +54,56 @@
     <commonality>0.05</commonality>
 </TraitDef>
 
-  
+<!-- TRUTHWATCHER -->
+<TraitDef>
+    <defName>whtwl_Radiant_Truthwatcher</defName>
+    <label>Radiant</label>
+    <description>{PAWN_nameDef} has been chosen by ancient forces and gifted with mystical abilities.</description>
+    
+    <degreeDatas>
+      <li>
+        <label>Bonded Initiate</label>
+        <description>{PAWN_nameDef} has formed a bond with a spren, a mysterious entity from the Cognitive Realm. The path to knighthood has begun.</description>
+        <degree>0</degree>
+        <commonality>0</commonality> <!-- Ensures it is not assigned randomly -->
+        <abilities>
+          <li>whtwl_BreathStormlight</li>
+        </abilities>
+      </li>
+      <li>
+        <label>Sworn Protector</label>
+        <description>{PAWN_nameDef} has begun to understand their connection with the spren. Their ability to manipulate Stormlight grows.</description>
+        <degree>1</degree>
+        <commonality>0</commonality>
+        <abilities>
+          <li>whtwl_BreathStormlight</li>
+          <li>whtwl_SurgeOfGrowth</li>
+        </abilities>
+      </li>
+      <li>
+        <label>Healing master</label>
+        <description>{PAWN_nameDef} has deepened their bond, gaining increased control over Stormlight and the ability to move through the air.</description>
+        <degree>2</degree>
+        <commonality>0</commonality>
+        <abilities>
+          <li>whtwl_BreathStormlight</li>
+          <li>whtwl_SurgeOfGrowth</li>
+          <li>whtwl_SurgeOfHealing</li>
+        </abilities>
+      </li>
+      <li>
+        <label>Knight Radiant - Truthwatcher</label>
+        <description>{PAWN_nameDef} has spoken their final oath and become a true Knight Radiant. Their mastery over Stormlight allows them to summon a Shardblade at will.</description>
+        <degree>3</degree>
+        <commonality>0</commonality>
+        <abilities>
+          <li>whtwl_BreathStormlight</li>
+          <li>whtwl_SurgeOfGrowth</li>
+          <li>whtwl_SurgeOfHealing</li>
+          <li>whtwl_SummonShardblade</li>
+        </abilities>
+      </li>
+    </degreeDatas>
+    <commonality>0.05</commonality>
+</TraitDef>
 </Defs>

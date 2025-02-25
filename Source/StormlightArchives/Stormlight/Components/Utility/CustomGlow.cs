@@ -25,5 +25,23 @@ namespace StormlightMod {
             Graphics.DrawMesh(circleMesh, matrix, mat, -1);
 
         }
+        public static void DrawCustomCircle(Vector3 center, float radius, Color color) {
+            color.a = 0.15f;
+            center.y = AltitudeLayer.MetaOverlays.AltitudeFor();
+
+            Material mat = SolidColorMaterials.SimpleSolidColorMaterial(color);
+
+            // Build a matrix for position/rotation/scale
+            Matrix4x4 matrix = default;
+            matrix.SetTRS(
+                pos: center,
+                q: Quaternion.identity,
+                s: new Vector3(radius, 1f, radius)
+            );
+
+            Mesh circleMesh = MeshPool.circle;
+            Graphics.DrawMesh(circleMesh, matrix, mat, -1);
+
+        }
     }
 }

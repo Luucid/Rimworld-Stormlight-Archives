@@ -7,6 +7,7 @@ using System;
 using static UnityEngine.GraphicsBuffer;
 using System.Security.Cryptography;
 using static HarmonyLib.Code;
+using Verse.Noise;
 
 namespace StormlightMod {
     public class RadiantAbility : Ability {
@@ -87,19 +88,67 @@ namespace StormlightMod {
 
         public override void ProcessInput(Event ev) {
             base.ProcessInput(ev);
+            bool hasRadiantTrait = pawn.story.traits.HasTrait(StormlightModDefs.whtwl_Radiant_Windrunner) || pawn.story.traits.HasTrait(StormlightModDefs.whtwl_Radiant_Truthwatcher);
 
-            if (pawn.Drafted && (pawn.story.traits.HasTrait(StormlightModDefs.whtwl_Radiant) || pawn.GetAbilityComp<CompAbilityEffect_SpawnEquipment>(StormlightModDefs.whtwl_SummonShardblade.defName) != null)) {
+            if (pawn.Drafted && (hasRadiantTrait || pawn.GetAbilityComp<CompAbilityEffect_SpawnEquipment>(StormlightModDefs.whtwl_SummonShardblade.defName) != null)) {
                 if (abilityToggleStormlight())
                     return;
-                if(abilitySummonShardblade())
+                if (abilitySummonShardblade())
                     return;
-               if(abilityLashingUpward())
+                if (abilityLashingUpward())
                     return;
-                if(abilityWindRunnerFlight())
+                if (abilityWindRunnerFlight())
+                    return;
+                if (abilityHealSurge())
+                    return;
+                if (abilityPlantGrowSurge())
                     return;
             }
         }
 
+        private bool abilityPlantGrowSurge() {
+            if (ability.def == StormlightModDefs.whtwl_SurgeOfGrowth) {
+                TargetingParameters tp = new TargetingParameters {
+                    canTargetPawns = false,
+                    canTargetAnimals = false,
+                    canTargetItems = false,
+                    canTargetBuildings = false,
+                    canTargetLocations = true,
+                    canTargetPlants = true,
+                    validator = (TargetInfo info) => {
+                        return info.IsValid &&
+                               pawn != null &&
+                               pawn.Spawned &&
+                               pawn.Position.InHorDistOf(info.Cell, ability.verb.EffectiveRange);
+                    }
+                };
+
+                StartCustomTargeting(pawn, ability.verb.EffectiveRange, tp, Color.green);
+                return true;
+            }
+            return false;
+        }
+
+        private bool abilityHealSurge() {
+            if (ability.def == StormlightModDefs.whtwl_SurgeOfHealing) {
+                TargetingParameters tp = new TargetingParameters {
+                    canTargetPawns = true,
+                    canTargetAnimals = false,
+                    canTargetItems = false,
+                    canTargetBuildings = false,
+                    canTargetLocations = false,
+                    validator = (TargetInfo info) => {
+                        return info.IsValid &&
+                               pawn != null &&
+                               pawn.Spawned &&
+                               pawn.Position.InHorDistOf(info.Cell, ability.verb.EffectiveRange);
+                    }
+                };
+                StartCustomTargeting(pawn, ability.verb.EffectiveRange);
+                return true;
+            }
+            return false;
+        }
 
         private bool abilityToggleStormlight() {
             if (ability.def == StormlightModDefs.whtwl_BreathStormlight) {
@@ -108,63 +157,60 @@ namespace StormlightMod {
             }
             return false;
         }
-        private bool abilitySummonShardblade()
-        {
-             if (ability.def == StormlightModDefs.whtwl_SummonShardblade) {
+        private bool abilitySummonShardblade() {
+            if (ability.def == StormlightModDefs.whtwl_SummonShardblade) {
                 ability.Activate(pawn, pawn);
                 return true;
-                }
+            }
             return false;
         }
 
-        private bool abilityLashingUpward()
-        {
-             if (ability.def.defName.Equals("lucidLashingUpward")) {
+        private bool abilityLashingUpward() {
+            if (ability.def.defName.Equals("lucidLashingUpward")) {
 
-                    TargetingParameters tp = new TargetingParameters {
-                        canTargetPawns = true,
-                        canTargetAnimals = false,
-                        canTargetItems = false,
-                        canTargetBuildings = false,
-                        canTargetLocations = false,
-                        validator = (TargetInfo info) => {
-                            return info.IsValid &&
-                                   pawn != null &&
-                                   pawn.Spawned &&
-                                   pawn.Position.InHorDistOf(info.Cell, ability.verb.EffectiveRange);
-                        }
-                    };
-                    StartCustomTargeting(pawn, ability.verb.EffectiveRange);
-                    return true;
-                }
-            return false;
-        }
-
-            private bool abilityWindRunnerFlight()
-        {
-            if (ability.def.defName.Equals("lucidWindRunnerFlight")) {
-                    float cost = pawn.GetAbilityComp<CompAbilityEffect_AbilityWindRunnerFlight>("lucidWindRunnerFlight").Props.stormLightCost; 
-                    float distance = pawn.GetComp<CompStormlight>().Stormlight / cost; 
-                    TargetingParameters tp = new TargetingParameters {
-                        canTargetPawns = true,
-                        canTargetAnimals = true,
-                        canTargetItems = true,
-                        canTargetBuildings = true,
-                        canTargetLocations = true,
-                        mustBeSelectable = false,
-                        validator = (TargetInfo info) => {
-                            return info.IsValid &&
-                            pawn != null &&
-                                   pawn.Spawned &&
-                                   pawn.Position.InHorDistOf(info.Cell, distance);
-                        }
-                    };
-                    StartCustomTargeting(pawn, distance);
+                TargetingParameters tp = new TargetingParameters {
+                    canTargetPawns = true,
+                    canTargetAnimals = false,
+                    canTargetItems = false,
+                    canTargetBuildings = false,
+                    canTargetLocations = false,
+                    validator = (TargetInfo info) => {
+                        return info.IsValid &&
+                               pawn != null &&
+                               pawn.Spawned &&
+                               pawn.Position.InHorDistOf(info.Cell, ability.verb.EffectiveRange);
+                    }
+                };
+                StartCustomTargeting(pawn, ability.verb.EffectiveRange);
                 return true;
-                }
+            }
             return false;
         }
-        
+
+        private bool abilityWindRunnerFlight() {
+            if (ability.def.defName.Equals("lucidWindRunnerFlight")) {
+                float cost = pawn.GetAbilityComp<CompAbilityEffect_AbilityWindRunnerFlight>("lucidWindRunnerFlight").Props.stormLightCost;
+                float distance = pawn.GetComp<CompStormlight>().Stormlight / cost;
+                TargetingParameters tp = new TargetingParameters {
+                    canTargetPawns = true,
+                    canTargetAnimals = true,
+                    canTargetItems = true,
+                    canTargetBuildings = true,
+                    canTargetLocations = true,
+                    mustBeSelectable = false,
+                    validator = (TargetInfo info) => {
+                        return info.IsValid &&
+                        pawn != null &&
+                               pawn.Spawned &&
+                               pawn.Position.InHorDistOf(info.Cell, distance);
+                    }
+                };
+                StartCustomTargeting(pawn, distance);
+                return true;
+            }
+            return false;
+        }
+
 
         public void StartCustomTargeting(Pawn caster, float maxDistance) {
 
@@ -223,7 +269,79 @@ namespace StormlightMod {
                 onUpdateAction: onUpdateAction
             );
         }
+        public void StartCustomTargeting(Pawn caster, float maxDistance, TargetingParameters tp, Color color) {
 
+
+            // The main action to do once a valid target is chosen
+            Action<LocalTargetInfo> mainAction = (LocalTargetInfo chosenTarget) => {
+                Vector3 mouseMapPos = UI.MouseMapPosition();
+                IntVec3 centerCell = mouseMapPos.ToIntVec3();
+                List<Plant> plantsInRadius = new List<Plant>();
+
+                foreach (IntVec3 cell in GenRadial.RadialCellsAround(centerCell, maxDistance, true)) {
+                    if (cell.InBounds(pawn.Map)) {
+                        foreach (Thing thing in cell.GetThingList(pawn.Map)) {
+                            // Check if the Thing is a Plant
+                            if (thing is Plant plant) {
+                                ability.Activate(plant, plant);
+                            }
+                        }
+                    }
+                }
+
+            };
+
+            // This runs each frame to highlight the hovered cell/thing
+            Action<LocalTargetInfo> highlightAction = (LocalTargetInfo info) => {
+                // If it's valid, highlight it in green
+                if (info.IsValid)
+                    GenDraw.DrawTargetHighlight(info);
+            };
+
+            // This function checks if the user is allowed to pick 'info'
+            // Return 'true' if valid, 'false' if not
+            Func<LocalTargetInfo, bool> targetValidator = (LocalTargetInfo info) => {
+                // Must be valid and within maxDistance
+                return info.IsValid &&
+                       caster.Spawned &&
+                       caster.Position.InHorDistOf(info.Cell, maxDistance);
+            };
+
+            // Called each GUI frame after the default crosshair is drawn
+            // e.g. you can add a label if out of range
+            Action<LocalTargetInfo> onGuiAction = (LocalTargetInfo info) => {
+                if (info.IsValid && !targetValidator(info)) {
+                    Widgets.MouseAttachedLabel("Out of range");
+                }
+            };
+
+            // Called each frame. We’ll draw a radius ring to show the cast range
+            Action<LocalTargetInfo> onUpdateAction = (LocalTargetInfo info) => {
+                Vector3 mousePos = UI.MouseMapPosition();
+                double distance = Math.Sqrt(Math.Pow(mousePos.x - caster.Position.x, 2) + Math.Pow(mousePos.y - caster.Position.y, 2));
+                Log.Message($"Distance: {distance}");
+                if (distance+1f > maxDistance)
+                    color = Color.red;
+                else 
+                {
+                    color = Color.green;
+                }
+                GlowCircleRenderer.DrawCustomCircle(UI.MouseMapPosition(), maxDistance, color);
+            };
+
+            Find.Targeter.BeginTargeting(
+                targetParams: tp,
+                action: mainAction,
+                highlightAction: highlightAction,
+                targetValidator: targetValidator,
+                caster: caster,
+                actionWhenFinished: null,     // optional cleanup
+                mouseAttachment: null,        // or use a custom icon
+                playSoundOnAction: true,
+                onGuiAction: onGuiAction,
+                onUpdateAction: onUpdateAction
+            );
+        }
 
         public override bool InheritInteractionsFrom(Gizmo other) {
             return false;

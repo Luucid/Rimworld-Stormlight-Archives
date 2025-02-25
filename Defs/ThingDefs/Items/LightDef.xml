@@ -41,7 +41,7 @@
     <li Class="CompProperties_Glower">
         <glowRadius>11</glowRadius>
         <glowColor>(214,148,94,0)</glowColor>
-        <colorPickerEnabled>true</colorPickerEnabled>
+        <colorPickerEnabled>false</colorPickerEnabled>
         <darklightToggle>false</darklightToggle>
       </li>
     </comps>
