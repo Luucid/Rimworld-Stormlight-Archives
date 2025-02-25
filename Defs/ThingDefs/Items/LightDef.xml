@@ -38,7 +38,6 @@
     </placeWorkers>
     <drawPlaceWorkersWhileSelected>true</drawPlaceWorkersWhileSelected>
     <comps>
-    <li Class="CompProperties_Styleable" />
     <li Class="CompProperties_Glower">
         <glowRadius>11</glowRadius>
         <glowColor>(214,148,94,0)</glowColor>
@@ -56,18 +55,18 @@
     <rotatable>true</rotatable>
     <tickerType>Normal</tickerType>
     <graphicData>
-      <texPath>Things/Item/Spheres/Sphere_Emerald</texPath>
+      <texPath>Things/Item/SphereLampWall-1</texPath>
       <graphicClass>Graphic_Multi</graphicClass>
-      <drawOffsetNorth>(0,0,0.9)</drawOffsetNorth>
-      <drawOffsetSouth>(0,0,-0.9)</drawOffsetSouth>
-      <drawOffsetWest>(-0.9,0,0)</drawOffsetWest>
-      <drawOffsetEast>(0.9,0,0)</drawOffsetEast>
-      <drawSize>0.3</drawSize>
+      <drawOffsetNorth>(0,0,1.2)</drawOffsetNorth>
+      <drawOffsetSouth>(0,0,0)</drawOffsetSouth>
+      <drawOffsetWest>(0,0,0)</drawOffsetWest>
+      <drawOffsetEast>(0,0,0)</drawOffsetEast>
+      <drawSize>1</drawSize>
       <damageData>
         <enabled>false</enabled>
       </damageData>
     </graphicData>
-    <uiIconPath>Things/Item/Spheres/Sphere_Emerald</uiIconPath>
+    <uiIconPath>Things/Item/SphereLampWall-1</uiIconPath>
     <altitudeLayer>BuildingOnTop</altitudeLayer>
     <costList>
       <Steel>15</Steel>

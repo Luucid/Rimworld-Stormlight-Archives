@@ -7,14 +7,13 @@ namespace StormlightMod {
     public class Dialog_SphereFilter : Window {
         private StormlightLamps lamp;
         private Vector2 scrollPosition;
-
         // You can adjust the size of the window as needed.
         public override Vector2 InitialSize => new Vector2(400f, 300f);
 
         public Dialog_SphereFilter(StormlightLamps lamp) {
             this.lamp = lamp;
-            forcePause = true;
-            absorbInputAroundWindow = true;
+            forcePause = false;
+            //absorbInputAroundWindow = true;
         }
 
         public override void DoWindowContents(Rect inRect) {
@@ -48,8 +47,14 @@ namespace StormlightMod {
                     else {
                         lamp.ThisFilterList.Remove(sphereDef);
                     }
+                    foreach (ThingDef thingDef in lamp.ThisFilterList) {
+                        Log.Message($"allowed: {thingDef.label}");
+                    }
+
                 }
             }
+            Rect sliderRect = new Rect(0, lamp.Props.allowedSpheres.Count * 30, viewRect.width, 30);
+            Widgets.HorizontalSlider(sliderRect, ref this.lamp.stormlightThresholdForRefuel, new FloatRange(0f, 1000f), label: $"Minimum Stormlight threshold: {this.lamp.stormlightThresholdForRefuel}", roundTo: 1);
             Widgets.EndScrollView();
 
             // Optionally, add a close button.

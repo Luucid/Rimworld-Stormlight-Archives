@@ -17,8 +17,10 @@ namespace StormlightMod {
 
         bool lightEnabled = true;
         bool initSphereAdded = false;
+        public float stormlightThresholdForRefuel = 0f;
         public bool Empty => storedSpheres.Count == 0;
         private float m_CurrentStormlight = 0f;
+        private bool deregisterAfterNewSphere = true;
 
         public override void PostSpawnSetup(bool respawningAfterLoad) {
             base.PostSpawnSetup(respawningAfterLoad);
@@ -52,18 +54,28 @@ namespace StormlightMod {
             yield return new Command_Action {
                 defaultLabel = "Set Sphere Filters",
                 defaultDesc = "Click to choose which spheres are allowed in this lamp.",
-                icon = ContentFinder<Texture2D>.Get("UI/Icons/SomeIcon"), 
-                action = () =>
-                {
+                //icon = ContentFinder<Texture2D>.Get("UI/Icons/SomeIcon"), 
+                icon = TexCommand.DesirePower,
+                action = () => {
                     // Opens the custom dialog for filtering spheres.
                     Find.WindowStack.Add(new Dialog_SphereFilter(this));
                 }
             };
-            Log.Message($"filter: {ThisFilterList}");
         }
 
 
         public override IEnumerable<FloatMenuOption> CompFloatMenuOptions(Pawn selPawn) {
+
+            Action removeSphereAction = null;
+
+            if (storedSpheres.Count() > 0) {
+                removeSphereAction = () => {
+                    RemoveSphereFromLamp(0);
+                };
+            }
+            yield return new FloatMenuOption("Remove Sphere", removeSphereAction);
+
+
             Thing sphere = null;
             CompSpherePouch spherePouch = CompSpherePouch.GetWornSpherePouch(selPawn);
             ThingDef matchingSphereDef = ThisFilterList.Find(def => selPawn.Map.listerThings.ThingsOfDef(def).Any());
@@ -75,21 +87,33 @@ namespace StormlightMod {
                 sphere = GenClosest.ClosestThing_Global(selPawn.Position, selPawn.Map.listerThings.ThingsOfDef(matchingSphereDef), 500f);
             }
 
+            Action replaceSphereAction = null;
+            string replaceSphereText = "No suitable sphere available";
             if (sphere != null) {
+                CompStormlight sphereComp = sphere.TryGetComp<CompStormlight>();
 
-                yield return new FloatMenuOption("Replace sphere", () => {
-                    Job job = JobMaker.MakeJob(StormlightModDefs.whtwl_RefuelSphereLamp, parent, sphere);
-                    if (!job.TryMakePreToilReservations(selPawn, errorOnFailed: true)) {
-                        Log.Message("It failed");
-                    }
-                    else {
-                        selPawn.jobs.TryTakeOrderedJob(job);
-                    }
-                });
+                if (sphereComp.Stormlight < stormlightThresholdForRefuel) {
+                    replaceSphereText = $"Your available spheres is below the minimum stormlight threshold";
+                }
+                else if (ThisFilterList.Count == 0) {
+                    replaceSphereText = $"No available spheres in list filter";
+                }
+                else {
+                    replaceSphereAction = () => {
+                        Job job = JobMaker.MakeJob(StormlightModDefs.whtwl_RefuelSphereLamp, parent, sphere);
+                        if (!job.TryMakePreToilReservations(selPawn, errorOnFailed: true)) {
+                            Log.Message("It failed");
+                        }
+                        else {
+                            selPawn.jobs.TryTakeOrderedJob(job);
+                        }
+                    };
+                    replaceSphereText = $"Replace with {sphere.Label}";
+                }
             }
-            yield return new FloatMenuOption("Remove Sphere", () => {
-                if (storedSpheres.Count() > 0) { RemoveSphereFromLamp(0); }; //make job later
-            });
+            yield return new FloatMenuOption(replaceSphereText, replaceSphereAction);
+
+
         }
 
 
@@ -168,6 +192,7 @@ namespace StormlightMod {
             Log.Message("added sphere");
             storedSpheres.Add(sphere);
             GlowerComp.GlowColor = sphere.GetComp<CompStormlight>().GlowerComp.GlowColor;
+            deregisterAfterNewSphere = true;
             return true;
         }
 
@@ -204,6 +229,7 @@ namespace StormlightMod {
         }
         private void toggleGlow(bool toggleOn) {
             if (parent.Map != null && lightEnabled != toggleOn) {
+                Log.Message($"toggle glow: {toggleOn}");
                 lightEnabled = toggleOn;
                 if (toggleOn) {
                     parent.Map.glowGrid.RegisterGlower(GlowerComp);
@@ -211,6 +237,11 @@ namespace StormlightMod {
                 else {
                     parent.Map.glowGrid.DeRegisterGlower(GlowerComp);
                 }
+            }
+            if (!lightEnabled && deregisterAfterNewSphere) {
+                deregisterAfterNewSphere = false;
+                parent.Map.glowGrid.DeRegisterGlower(GlowerComp);
+
             }
         }
     }

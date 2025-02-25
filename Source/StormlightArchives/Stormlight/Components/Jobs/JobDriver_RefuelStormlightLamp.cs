@@ -18,7 +18,7 @@ namespace StormlightMod {
 
                     ThingWithComps removedSphere = lampComp.RemoveSphereFromLamp(0, dropOnGround);
                     lampComp.AddSphereToLamp(sphere as ThingWithComps);
-
+                    lampComp.CheckStormlightFuel();
 
                     if (spherePouch != null) {
                         spherePouch.removeSpheresFromRemoveList();
