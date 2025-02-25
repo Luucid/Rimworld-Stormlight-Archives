@@ -86,13 +86,24 @@ namespace StormlightMod {
             // HEAL MISSING PARTS
             var missingParts = pawn.health.hediffSet.hediffs.OfType<Hediff_MissingPart>().OrderByDescending(h => h.Severity).ToList();
             foreach (var injury in missingParts) {
-                float cost = injury.Severity * 6f;  // More severe wounds cost more stormlight
+                float cost = 250f;  // More severe wounds cost more stormlight
                 if (m_CurrentStormlight < cost)
                     break;
-
-                injury.Heal(10.0f);
+                pawn.health.hediffSet.hediffs.Remove(injury);
                 m_CurrentStormlight -= cost;
-                RadiantUtility.GiveRadiantXP(pawn, 2f);
+                RadiantUtility.GiveRadiantXP(pawn, 20f);
+            }
+
+
+            // HEAL ADDICTIONS
+            var addictions = pawn.health.hediffSet.hediffs.OfType<Hediff_Addiction>().OrderByDescending(h => h.Severity).ToList();
+            foreach (var addiction in addictions) {
+                float cost = 1000f;  
+                if (m_CurrentStormlight < cost)
+                    break;
+                pawn.health.hediffSet.hediffs.Remove(addiction);
+                m_CurrentStormlight -= cost;
+                RadiantUtility.GiveRadiantXP(pawn, 12f);
             }
 
             // HEAL INJURIES

@@ -57,10 +57,10 @@
     <graphicData>
       <texPath>Things/Item/SphereLampWall-1</texPath>
       <graphicClass>Graphic_Multi</graphicClass>
-      <drawOffsetNorth>(0,0,1.2)</drawOffsetNorth>
-      <drawOffsetSouth>(0,0,0)</drawOffsetSouth>
-      <drawOffsetWest>(0,0,0)</drawOffsetWest>
-      <drawOffsetEast>(0,0,0)</drawOffsetEast>
+      <drawOffsetNorth>(0,0,0.7)</drawOffsetNorth>
+      <drawOffsetSouth>(0,0,-0.55)</drawOffsetSouth>
+      <drawOffsetWest>(-0.5,0, 0.1)</drawOffsetWest>
+      <drawOffsetEast>(0.5,0, 0.1)</drawOffsetEast>
       <drawSize>1</drawSize>
       <damageData>
         <enabled>false</enabled>
