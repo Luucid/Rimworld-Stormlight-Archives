@@ -29,7 +29,6 @@ namespace StormlightMod {
                 Log.Error($"[Toggle Stormlight] caster is null!");
                 return;
             }
-            //|| caster.GetComp<CompStormlight>().Stormlight < Props.stormLightCost
             if (caster.GetComp<CompStormlight>() == null) {
                 Log.Error($"[Toggle Stormlight] no stormlight comp!");
                 return;

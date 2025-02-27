@@ -133,7 +133,7 @@ namespace StormlightMod {
             if (ability.def == StormlightModDefs.whtwl_SurgeOfHealing) {
                 TargetingParameters tp = new TargetingParameters {
                     canTargetPawns = true,
-                    canTargetAnimals = false,
+                    canTargetAnimals = true,
                     canTargetItems = false,
                     canTargetBuildings = false,
                     canTargetLocations = false,
@@ -144,7 +144,7 @@ namespace StormlightMod {
                                pawn.Position.InHorDistOf(info.Cell, ability.verb.EffectiveRange);
                     }
                 };
-                StartCustomTargeting(pawn, ability.verb.EffectiveRange);
+                StartCustomTargeting(pawn, ability.verb.EffectiveRange, tp);
                 return true;
             }
             return false;
@@ -166,7 +166,7 @@ namespace StormlightMod {
         }
 
         private bool abilityLashingUpward() {
-            if (ability.def.defName.Equals("lucidLashingUpward")) {
+            if (ability.def == StormlightModDefs.whtwl_LashingUpward) {
 
                 TargetingParameters tp = new TargetingParameters {
                     canTargetPawns = true,
@@ -181,15 +181,15 @@ namespace StormlightMod {
                                pawn.Position.InHorDistOf(info.Cell, ability.verb.EffectiveRange);
                     }
                 };
-                StartCustomTargeting(pawn, ability.verb.EffectiveRange);
+                StartCustomTargeting(pawn, ability.verb.EffectiveRange, tp);
                 return true;
             }
             return false;
         }
 
         private bool abilityWindRunnerFlight() {
-            if (ability.def.defName.Equals("lucidWindRunnerFlight")) {
-                float cost = pawn.GetAbilityComp<CompAbilityEffect_AbilityWindRunnerFlight>("lucidWindRunnerFlight").Props.stormLightCost;
+            if (ability.def == StormlightModDefs.whtwl_WindRunnerFlight) {
+                float cost = pawn.GetAbilityComp<CompAbilityEffect_AbilityWindRunnerFlight>(StormlightModDefs.whtwl_WindRunnerFlight.defName).Props.stormLightCost;
                 float distance = pawn.GetComp<CompStormlight>().Stormlight / cost;
                 TargetingParameters tp = new TargetingParameters {
                     canTargetPawns = true,
@@ -205,21 +205,21 @@ namespace StormlightMod {
                                pawn.Position.InHorDistOf(info.Cell, distance);
                     }
                 };
-                StartCustomTargeting(pawn, distance);
+                StartCustomTargeting(pawn, distance, tp);
                 return true;
             }
             return false;
         }
 
 
-        public void StartCustomTargeting(Pawn caster, float maxDistance) {
+        public void StartCustomTargeting(Pawn caster, float maxDistance, TargetingParameters tp) {
 
-            var tp = new TargetingParameters {
-                canTargetPawns = true,
-                canTargetItems = true,
-                canTargetLocations = true,
-                validator = null // passing a separate 'targetValidator' argument below
-            };
+            //var tp = new TargetingParameters {
+            //    canTargetPawns = true,
+            //    canTargetItems = true,
+            //    canTargetLocations = true,
+            //    validator = null // passing a separate 'targetValidator' argument below
+            //};
 
             // The main action to do once a valid target is chosen
             Action<LocalTargetInfo> mainAction = (LocalTargetInfo chosenTarget) => {
@@ -318,9 +318,9 @@ namespace StormlightMod {
             // Called each frame. We’ll draw a radius ring to show the cast range
             Action<LocalTargetInfo> onUpdateAction = (LocalTargetInfo info) => {
                 Vector3 mousePos = UI.MouseMapPosition();
-                double distance = Math.Sqrt(Math.Pow(mousePos.x - caster.Position.x, 2) + Math.Pow(mousePos.y - caster.Position.y, 2));
+                double distance = Math.Sqrt(Math.Pow(mousePos.x - caster.Position.x, 2) + Math.Pow(mousePos.z - caster.Position.z, 2));
                 Log.Message($"Distance: {distance}");
-                if (distance+1f > maxDistance)
+                if (distance-0.5f > maxDistance)
                     color = Color.red;
                 else 
                 {

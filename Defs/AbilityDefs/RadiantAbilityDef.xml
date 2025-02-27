@@ -3,7 +3,7 @@
   <AbilityCategoryDef>
     <defName>Radiant</defName>
     <label>Radiant</label>
-    <description>Abilities granted to Radiants, powered by their connection to the ancient forces.</description>
+    <description>Abilities granted to those who have bonded a spren, allowing them to wield the fundamental forces of Roshar. These abilities are fueled by Stormlight.</description>
   </AbilityCategoryDef>
 
   <AbilityDef Name="RadiantBase" Abstract="True">
@@ -25,13 +25,13 @@
     </verbProperties>
   </AbilityDef>
 
-
+<!-- TOGGLE STORMLIGHT -->
 <AbilityDef ParentName="RadiantBase">
     <defName>whtwl_BreathStormlight</defName>
     <label>Breath Stormlight</label>
-    <description>breath stormlight</description>
+    <description>Draw Stormlight into your body, fueling your Radiant powers and enhancing your physical abilities. While infused, you move faster, heal quickly, and feel an unnatural surge of energy.</description>
     <level>1</level>
-    <iconPath>Things/Ability/lucid_summon_blade</iconPath> 
+    <iconPath>Things/Ability/lucid_inhale_sl</iconPath> 
     <hotKey>Misc5</hotKey>
     <hostile>false</hostile>
     <casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>
@@ -53,7 +53,7 @@
 <AbilityDef ParentName="RadiantBase">
     <defName>whtwl_SummonShardblade</defName>
     <label>Summon Shardblade</label>
-    <description>Summon a powerful Shardblade from the Spiritual Realm into your hand.</description>
+    <description>Call forth a mighty Shardblade from the Spiritual Realm, a weapon capable of cutting through anything except living beings. It severs the soul upon contact.</description>
     <level>1</level>
     <iconPath>Things/Ability/lucid_summon_blade</iconPath> 
     <hotKey>Misc1</hotKey>
@@ -81,7 +81,7 @@
 <AbilityDef ParentName="RadiantBase">
     <defName>whtwl_UnbondBlade</defName>
     <label>sever bond with Shardblade</label>
-    <description>Sever the bond with the blade.</description>
+    <description>Release your bond with the Shardblade. Once severed, the Blade will no longer respond to your summons.</description>
     <level>1</level>
     <iconPath>Things/Apparel/ArmorFront-1</iconPath> 
     <hotKey>Misc2</hotKey>
@@ -107,7 +107,7 @@
 
 <!-- LASHING -->
 <ThingDef ParentName="PawnFlyerBase">
-  <defName>lucid_lashingUp</defName>
+  <defName>whtwl_lashingUp</defName>
   <label>custom upward flyer</label>
   <thingClass>PawnFlyer</thingClass>
     <pawnFlyer>
@@ -127,9 +127,9 @@
 </ThingDef>
 
 <AbilityDef ParentName="RadiantBase">
-    <defName>lucidLashingUpward</defName>
+    <defName>whtwl_LashingUpward</defName>
     <label>lash up</label>
-    <description>lash something to fall upwards.</description>
+    <description>Temporarily alter an object's gravitational pull, causing it to fall toward the sky instead of the ground.</description>
     <level>1</level>
     <iconPath>Things/Ability/lucid_lashing</iconPath> 
     <hotKey>Misc3</hotKey>
@@ -150,7 +150,7 @@
     <comps>
         <li Class="StormlightMod.CompProperties_AbilityLashUpward">
             <compClass>StormlightMod.CompAbilityEffect_AbilityLashUpward</compClass>
-            <thingDef>lucid_lashingUp</thingDef> <!-- Ensure this matches your XML weapon defName -->
+            <thingDef>whtwl_lashingUp</thingDef> <!-- Ensure this matches your XML weapon defName -->
             <stormLightCost>0</stormLightCost>
         </li>
     </comps>
@@ -160,7 +160,7 @@
 
 <!-- FLIGHT -->
 <ThingDef ParentName="PawnFlyerBase">
-  <defName>lucid_WindRunnerFlight</defName>
+  <defName>whtwl_WindRunnerFlight</defName>
   <label>custom upward flyer</label>
   <thingClass>PawnFlyer</thingClass>
     <pawnFlyer>
@@ -178,9 +178,9 @@
     </pawnFlyer>
 </ThingDef>
 <AbilityDef ParentName="RadiantBase">
-    <defName>lucidWindRunnerFlight</defName>
+    <defName>whtwl_WindRunnerFlight</defName>
     <label>Fly to location</label>
-    <description>windrunner flight.</description>
+    <description>Use Stormlight to manipulate gravity, launching yourself into the air and soaring toward your target destination at high speed.</description>
     <level>1</level>
     <iconPath>Things/Ability/lucid_flight</iconPath> 
     <hotKey>Misc4</hotKey>
@@ -199,7 +199,7 @@
     <comps>
         <li Class="StormlightMod.CompProperties_AbilityWindRunnerFlight">
             <compClass>StormlightMod.CompAbilityEffect_AbilityWindRunnerFlight</compClass>
-            <thingDef>lucid_WindRunnerFlight</thingDef> <!-- Ensure this matches your XML weapon defName -->
+            <thingDef>whtwl_WindRunnerFlight</thingDef> <!-- Ensure this matches your XML weapon defName -->
             <stormLightCost>100</stormLightCost>
         </li>
     </comps>
@@ -209,9 +209,9 @@
 <AbilityDef ParentName="RadiantBase">
     <defName>whtwl_SurgeOfGrowth</defName>
     <label>boost plantgrowth</label>
-    <description>boost the speed of plantgrowth.</description>
+    <description>Encourage rapid plant growth using Stormlight, causing vegetation to flourish in moments.</description>
     <level>1</level>
-    <iconPath>Things/Apparel/ArmorFront-1</iconPath> 
+    <iconPath>Things/Ability/lucid_grow_plant</iconPath> 
     <hotKey>Misc3</hotKey>
     <hostile>false</hostile>
     <casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>
@@ -225,7 +225,7 @@
     <comps>
         <li Class="StormlightMod.CompProperties_AbilitySurgePlantGrowth">
             <compClass>StormlightMod.CompAbilityEffect_SurgePlantGrowth</compClass>
-            <stormLightCost>0</stormLightCost>
+            <stormLightCost>25</stormLightCost>
         </li>
     </comps>
 </AbilityDef>
@@ -234,9 +234,9 @@
 <AbilityDef ParentName="RadiantBase">
     <defName>whtwl_SurgeOfHealing</defName>
     <label>heal</label>
-    <description>this will heal any wound.</description>
+    <description>Channel Stormlight into a wounded creature, accelerating natural healing and even restoring severe injuries. Does not restore severed limbs unless wielded by a master Knight-Radiant.</description>
     <level>1</level>
-    <iconPath>Things/Apparel/ArmorFront-1</iconPath> 
+    <iconPath>Things/Ability/lucid_heal</iconPath> 
     <hotKey>Misc4</hotKey>
     <hostile>false</hostile>
     <casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>

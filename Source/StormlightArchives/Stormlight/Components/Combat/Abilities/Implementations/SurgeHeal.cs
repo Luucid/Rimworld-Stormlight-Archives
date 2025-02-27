@@ -60,6 +60,7 @@ namespace StormlightMod {
             CompStormlight casterComp = caster.GetComp<CompStormlight>();
             if (casterComp != null) {
                 
+                //add check for being stage 3 knight radiant!
                 // HEAL MISSING PARTS
                 var missingParts = pawn.health.hediffSet.hediffs.OfType<Hediff_MissingPart>().OrderByDescending(h => h.Severity).ToList();
                 foreach (var injury in missingParts) {
@@ -88,7 +89,7 @@ namespace StormlightMod {
                 // HEAL INJURIES
                 var injuries = pawn.health.hediffSet.hediffs.OfType<Hediff_Injury>().OrderByDescending(h => h.Severity).ToList();
                 foreach (var injury in injuries) {
-                    float cost = injury.Severity * 3f;  // More severe wounds cost more stormlight
+                    float cost = injury.Severity * 10f;  // More severe wounds cost more stormlight
                     if (casterComp.Stormlight < cost)
                         break;
 

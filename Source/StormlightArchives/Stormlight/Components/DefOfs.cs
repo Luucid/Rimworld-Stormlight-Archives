@@ -19,6 +19,8 @@ namespace StormlightMod {
         public static AbilityDef whtwl_BreathStormlight;
         public static AbilityDef whtwl_SurgeOfHealing;
         public static AbilityDef whtwl_SurgeOfGrowth;
+        public static AbilityDef whtwl_LashingUpward;
+        public static AbilityDef whtwl_WindRunnerFlight;
 
         static StormlightModDefs() {
             DefOfHelper.EnsureInitializedInCtor(typeof(StormlightModDefs));

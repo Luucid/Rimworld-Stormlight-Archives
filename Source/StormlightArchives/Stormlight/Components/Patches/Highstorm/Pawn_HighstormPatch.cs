@@ -4,6 +4,7 @@ using Verse;
 using System.Collections.Generic;
 using System.Linq;
 using System;
+using Verse.Noise;
 
 namespace StormlightMod {
     [HarmonyPatch(typeof(Pawn))]
@@ -16,23 +17,34 @@ namespace StormlightMod {
             if (!IsPawnValidForStorm(__instance))
                 return;
 
-            if (!IsHighstormActive(__instance.Map))
-                return;
+            if (IsHighstormActive(__instance.Map)) {
 
-            damageAndMovePawn(__instance);
-            if (Find.TickManager.TicksGame % 100 == 0) {  //100 rolls to try to bond at 1/1000 chance 
-                tryToBondPawn(__instance);
+                damageAndMovePawn(__instance);
+                if (Find.TickManager.TicksGame % 100 == 0) {  //100 rolls to try to bond at 1/1000 chance 
+                    tryToBondPawn(__instance, StormlightModDefs.whtwl_Radiant_Windrunner);
+                }
+                return;
+            }
+            if (__instance.Map.weatherManager.curWeather.defName == "Fog") {
+                if (Find.TickManager.TicksGame % 100 == 0) {  //100 rolls to try to bond at 1/1000 chance 
+                    tryToBondPawn(__instance, StormlightModDefs.whtwl_Radiant_Truthwatcher);
+                }
             }
         }
 
-        private static void tryToBondPawn(Pawn pawn) {
+        private static void tryToBondPawn(Pawn pawn, TraitDef traitDef) {
 
             if (pawn != null && pawn.RaceProps.Humanlike) {
                 int number = m_Rand.Next(1, 1000);
                 if (number == 1) {
-                    Trait radiantTrait = pawn.story.traits.GetTrait(StormlightModDefs.whtwl_Radiant_Windrunner);
+                    Trait anyRadiantTrait = pawn.story.traits.allTraits.FirstOrDefault(t => StormlightModUtilities.RadiantTraits.Contains(t.def));
+                    if (anyRadiantTrait != null) {
+                        return;
+                    }
+
+                    Trait radiantTrait = pawn.story.traits.GetTrait(traitDef);
                     if (radiantTrait == null) {
-                        pawn.story.traits.GainTrait(new Trait(StormlightModDefs.whtwl_Radiant_Windrunner, 0));
+                        pawn.story.traits.GainTrait(new Trait(traitDef, 0));
                     }
                 }
             }
@@ -92,7 +104,7 @@ namespace StormlightMod {
             if (__instance.story != null && __instance.RaceProps.Humanlike) {
                 foreach (Trait t in __instance.story.traits.allTraits) {
                     //if (t.def.defName.StartsWith("Radiant")) { isRadiant = true; }
-                    if (t.def == StormlightModDefs.whtwl_Radiant_Windrunner || t.def == StormlightModDefs.whtwl_Radiant_Truthwatcher) { isRadiant = true; } 
+                    if (t.def == StormlightModDefs.whtwl_Radiant_Windrunner || t.def == StormlightModDefs.whtwl_Radiant_Truthwatcher) { isRadiant = true; }
                 }
             }
 

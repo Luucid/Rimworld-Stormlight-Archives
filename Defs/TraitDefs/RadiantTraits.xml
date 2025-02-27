@@ -9,8 +9,8 @@
     
     <degreeDatas>
       <li>
-        <label>Bonded Initiate</label>
-        <description>{PAWN_nameDef} has formed a bond with a spren, a mysterious entity from the Cognitive Realm. The path to knighthood has begun.</description>
+        <label>Nahel-Touched</label>
+        <description>{PAWN_nameDef} has unknowingly begun walking the path of the Knights Radiant. A mysterious presence watches over them. </description>
         <degree>0</degree>
         <commonality>0</commonality> <!-- Ensures it is not assigned randomly -->
         <abilities>
@@ -18,36 +18,48 @@
         </abilities>
       </li>
       <li>
-        <label>Sworn Protector</label>
-        <description>{PAWN_nameDef} has begun to understand their connection with the spren. Their ability to manipulate Stormlight grows.</description>
+        <label>Oathbound Protector</label>
+        <description>{PAWN_nameDef} has spoken the Second Ideal, vowing to protect those who cannot protect themselves. Their bond with their spren strengthens, and their control over Stormlight grows.</description>
         <degree>1</degree>
         <commonality>0</commonality>
         <abilities>
           <li>whtwl_BreathStormlight</li>
-          <li>lucidLashingUpward</li>
+          <li>whtwl_LashingUpward</li>
         </abilities>
       </li>
       <li>
-        <label>Skybound Windrunner</label>
-        <description>{PAWN_nameDef} has deepened their bond, gaining increased control over Stormlight and the ability to move through the air.</description>
+        <label>Windsworn Knight</label>
+        <description>{PAWN_nameDef} has sworn to protect even those they despise, solidifying their Radiant path. They now wield full control over Gravitation, soaring freely through the air.</description>
         <degree>2</degree>
         <commonality>0</commonality>
         <abilities>
           <li>whtwl_BreathStormlight</li>
-          <li>lucidLashingUpward</li>
-          <li>lucidWindRunnerFlight</li>
+          <li>whtwl_LashingUpward</li>
+          <li>whtwl_WindRunnerFlight</li>
         </abilities>
       </li>
       <li>
-        <label>Knight Radiant - Windrunner</label>
-        <description>{PAWN_nameDef} has spoken their final oath and become a true Knight Radiant. Their mastery over Stormlight allows them to summon a Shardblade at will.</description>
+        <label>Stormforged Guardian</label>
+        <description>{PAWN_nameDef} has confronted the limits of their protection, realizing they cannot save everyone. They now wield a living Shardblade, a weapon of pure Investiture tied to their soul.</description>
         <degree>3</degree>
         <commonality>0</commonality>
         <abilities>
           <li>whtwl_BreathStormlight</li>
           <li>whtwl_SummonShardblade</li>
-          <li>lucidLashingUpward</li>
-          <li>lucidWindRunnerFlight</li>
+          <li>whtwl_LashingUpward</li>
+          <li>whtwl_WindRunnerFlight</li>
+        </abilities>
+      </li>
+      <li>
+        <label>Beacon of Honor</label>
+        <description>{PAWN_nameDef} has embraced the final Ideal of the Windrunners, becoming a true master of protection and leadership. Their bond grants them the ability to manifest Shardplate.</description>
+        <degree>4</degree>
+        <commonality>0</commonality>
+        <abilities>
+          <li>whtwl_BreathStormlight</li>
+          <li>whtwl_SummonShardblade</li>
+          <li>whtwl_LashingUpward</li>
+          <li>whtwl_WindRunnerFlight</li>
         </abilities>
       </li>
     </degreeDatas>

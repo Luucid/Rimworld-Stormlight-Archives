@@ -6,31 +6,6 @@ using Verse;
 
 namespace StormlightMod {
 
-
-
-    [HarmonyPatch(typeof(PawnFlyer))]
-    [HarmonyPatch("RespawnPawn")]
-    public class Patch_PP {
-        static private Pawn flyingPawn = null;
-        static void Prefix(ThingOwner<Thing> ___innerContainer) {
-            if (___innerContainer.InnerListForReading.Count <= 0) {
-                Log.Message("It was null");
-                return;
-            }
-            flyingPawn = ___innerContainer.InnerListForReading[0] as Pawn; 
-        }
-        static void Postfix(AbilityDef ___triggeringAbility) {
-            if (___triggeringAbility != null && flyingPawn != null) {
-                Log.Message($"respawn pawn, ability: {___triggeringAbility.defName}");
-                if (___triggeringAbility.defName == "lucidLashingUpward") {
-
-                    flyingPawn.TakeDamage(new DamageInfo(DamageDefOf.Blunt, 100));
-                }
-            }
-        }
-    }
-
-
     public class PawnFlyerWorker_LashUp : PawnFlyerWorker {
         public PawnFlyerWorker_LashUp(PawnFlyerProperties props) : base(props) { }
         static public float maxHeight = 20f;

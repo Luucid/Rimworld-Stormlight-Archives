@@ -89,6 +89,7 @@
     <Compile Include="Components\Patches\HarmonyPatch_PawnSpherePouchITab.cs" />
     <Compile Include="Components\Patches\Highstorm\Pawn_HighstormPatch.cs" />
     <Compile Include="Components\Patches\PawnPatches.cs" />
+    <Compile Include="Components\Patches\RadiantLevelPatcher.cs" />
     <Compile Include="Components\Patches\ShardbladePatches.cs" />
     <Compile Include="Components\Patches\RadiantTraitPatch.cs" />
     <Compile Include="Components\Utility\CustomGlow.cs" />

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+    <Operation Class="PatchOperationAdd">
+    <xpath>Defs/ThingDef[defName="Human"]/comps</xpath>
+    <value>
+        <li Class="StormlightMod.CompProperties_PawnStats">
+        <compClass>StormlightMod.PawnStats</compClass>
+        <ExperiencedPersonalCrisis>ExperiencedPersonalCrisis</ExperiencedPersonalCrisis>
+        <ProtectedSomeoneInNeed>ProtectedSomeoneInNeed</ProtectedSomeoneInNeed>
+        </li>
+    </value>
+    </Operation>
+</Patch>

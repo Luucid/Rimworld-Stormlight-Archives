@@ -7,6 +7,28 @@ using Verse.AI;
 
 namespace StormlightMod {
 
+    [HarmonyPatch(typeof(PawnFlyer))]
+    [HarmonyPatch("RespawnPawn")]
+    public class Patch_PP {
+        static private Pawn flyingPawn = null;
+        static void Prefix(ThingOwner<Thing> ___innerContainer) {
+            if (___innerContainer.InnerListForReading.Count <= 0) {
+                Log.Message("It was null");
+                return;
+            }
+            flyingPawn = ___innerContainer.InnerListForReading[0] as Pawn;
+        }
+        static void Postfix(AbilityDef ___triggeringAbility) {
+            if (___triggeringAbility != null && flyingPawn != null) {
+                Log.Message($"respawn pawn, ability: {___triggeringAbility.defName}");
+                if (___triggeringAbility.defName == StormlightModDefs.whtwl_LashingUpward.defName) {
+
+                    flyingPawn.TakeDamage(new DamageInfo(DamageDefOf.Blunt, 75));
+                }
+            }
+        }
+    }
+
     /// LASH UP ABILITY
     public class CompProperties_AbilityLashUpward : CompProperties_AbilityEffect {
         public ThingDef thingDef;

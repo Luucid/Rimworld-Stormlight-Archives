@@ -5,16 +5,30 @@ using UnityEngine;
 using Verse;
 
 namespace StormlightMod {
+    public class Radiant_Requirements 
+        {
+        public bool IsSatisfied = false;
+        public float Value = 0f;
+        public int Count = 0; 
+        }
+
     public class Need_RadiantProgress : Need {
         private const float LEVEL_NEW_SQUIRE = 500f;
         private const float LEVEL_EXPERIENCED_SQUIRE = LEVEL_NEW_SQUIRE * 6f;
         private const float LEVEL_KNIGHT_RADIANT = LEVEL_EXPERIENCED_SQUIRE * 2f;
-        private const float MAX_XP = LEVEL_KNIGHT_RADIANT + 10f;
+        private const float LEVEL_KNIGHT_RADIANT_MASTER = LEVEL_KNIGHT_RADIANT * 2f;
+        private const float MAX_XP = LEVEL_KNIGHT_RADIANT_MASTER + 10f;
         private float currentXp = 0f;
+        public int CurrentDegree = 0;
+
+
+ 
+
 
         public Need_RadiantProgress(Pawn pawn) : base(pawn) {
-            this.threshPercents = new List<float> { 0.083f, 0.5f }; // Visual bar markers
-        }
+            this.threshPercents = new List<float> { 0.083f, 0.5f, 0.75f }; // Visual bar markers
+
+        } 
 
         public override void NeedInterval() {
             // **No passive decay**, since XP should only increase when events happen
@@ -38,7 +52,7 @@ namespace StormlightMod {
                         // Remove old trait and add the upgraded one
                         pawn.story.traits.RemoveTrait(radiantTrait);
                         pawn.story.traits.GainTrait(new Trait(trait.def, newDegree));
-
+                        CurrentDegree = newDegree;
                         Messages.Message($"{pawn.Name} has grown stronger as a Radiant!", pawn, MessageTypeDefOf.PositiveEvent);
                     }
                 }
@@ -46,14 +60,14 @@ namespace StormlightMod {
         }
 
         private int GetDegreeFromXP(float xp) {
-            if (xp >= LEVEL_KNIGHT_RADIANT) return 3;     // Knight Radiant
-            if (xp >= LEVEL_EXPERIENCED_SQUIRE) return 2; // Experienced Squire
-            if (xp >= LEVEL_NEW_SQUIRE) return 1;         // New Squire
-            return 0; // Bonded (Base Level)
+            if (xp >= LEVEL_KNIGHT_RADIANT_MASTER) return 4;     // Knight Radiant Master
+            if (xp >= LEVEL_KNIGHT_RADIANT) return 3;            // Knight Radiant
+            if (xp >= LEVEL_EXPERIENCED_SQUIRE) return 2;        // Experienced Squire
+            if (xp >= LEVEL_NEW_SQUIRE) return 1;                // New Squire
+            return 0;                                            // Bonded (Base Level)
         }
 
-
-        public override int GUIChangeArrow => 1; // No arrow (need doesn’t decay)
+        public override int GUIChangeArrow => 0; // No arrow (need doesn’t decay)
     }
 
 
@@ -61,6 +75,10 @@ namespace StormlightMod {
     [HarmonyPatch(typeof(Pawn_NeedsTracker), "ShouldHaveNeed")]
     public static class Patch_RadiantProgress_Need {
         public static void Postfix(Pawn_NeedsTracker __instance, NeedDef nd, ref bool __result, Pawn ___pawn) {
+
+            //if (nd == StormlightModDefs.whtwl_RadiantProgress) {
+            //    __result = ___pawn.story.traits.allTraits.FirstOrDefault(t => StormlightModUtilities.RadiantTraits.Contains(t.def)) != null; 
+            //}
 
             if (nd == StormlightModDefs.whtwl_RadiantProgress && ___pawn.story?.traits?.HasTrait(StormlightModDefs.whtwl_Radiant_Windrunner) == true) {
                 __result = true;
