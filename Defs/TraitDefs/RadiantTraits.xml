@@ -51,7 +51,7 @@
         </abilities>
       </li>
       <li>
-        <label>Beacon of Honor</label>
+        <label>Master Windrunner</label>
         <description>{PAWN_nameDef} has embraced the final Ideal of the Windrunners, becoming a true master of protection and leadership. Their bond grants them the ability to manifest Shardplate.</description>
         <degree>4</degree>
         <commonality>0</commonality>
@@ -63,7 +63,7 @@
         </abilities>
       </li>
     </degreeDatas>
-    <commonality>0.05</commonality>
+    <commonality>0.0</commonality>
 </TraitDef>
 
 <!-- TRUTHWATCHER -->
@@ -74,8 +74,8 @@
     
     <degreeDatas>
       <li>
-        <label>Bonded Initiate</label>
-        <description>{PAWN_nameDef} has formed a bond with a spren, a mysterious entity from the Cognitive Realm. The path to knighthood has begun.</description>
+        <label>Nahel-Touched</label>
+        <description>{PAWN_nameDef} has begun to glimpse hidden truths. Strange visions and whispers dance at the edges of their perception, but they do not yet understand their purpose.</description>
         <degree>0</degree>
         <commonality>0</commonality> <!-- Ensures it is not assigned randomly -->
         <abilities>
@@ -83,8 +83,8 @@
         </abilities>
       </li>
       <li>
-        <label>Sworn Protector</label>
-        <description>{PAWN_nameDef} has begun to understand their connection with the spren. Their ability to manipulate Stormlight grows.</description>
+        <label>Oathbound Seer</label>
+        <description>{PAWN_nameDef} has sworn their first true Ideal, deepening their connection to the hidden fabric of the world. They begin to see truths others overlook and can now heal wounds with the power of Stormlight.</description>
         <degree>1</degree>
         <commonality>0</commonality>
         <abilities>
@@ -93,8 +93,8 @@
         </abilities>
       </li>
       <li>
-        <label>Healing master</label>
-        <description>{PAWN_nameDef} has deepened their bond, gaining increased control over Stormlight and the ability to move through the air.</description>
+        <label>Watcher of Truths</label>
+        <description>{PAWN_nameDef} has accepted the responsibility of uncovering the unknown. Their visions sharpen, allowing them to glimpse possible futures.</description>
         <degree>2</degree>
         <commonality>0</commonality>
         <abilities>
@@ -104,8 +104,8 @@
         </abilities>
       </li>
       <li>
-        <label>Knight Radiant - Truthwatcher</label>
-        <description>{PAWN_nameDef} has spoken their final oath and become a true Knight Radiant. Their mastery over Stormlight allows them to summon a Shardblade at will.</description>
+        <label>Illuminated Scholar</label>
+        <description>{PAWN_nameDef} has sworn to reveal truth even when painful. Their bond strengthens, allowing them to heal even the gravely wounded with incredible speed.</description>
         <degree>3</degree>
         <commonality>0</commonality>
         <abilities>
@@ -115,7 +115,19 @@
           <li>whtwl_SummonShardblade</li>
         </abilities>
       </li>
+       <li>
+        <label>Master Truthwatcher</label>
+        <description>{PAWN_nameDef} has embraced their final Ideal, becoming a true master of growth. Their visions expand beyond mortal limits and their healing touches the very soul.</description>
+        <degree>4</degree>
+        <commonality>0</commonality>
+        <abilities>
+          <li>whtwl_BreathStormlight</li>
+          <li>whtwl_SurgeOfGrowth</li>
+          <li>whtwl_SurgeOfHealing</li>
+          <li>whtwl_SummonShardblade</li>
+        </abilities>
+      </li>
     </degreeDatas>
-    <commonality>0.05</commonality>
+    <commonality>0.0</commonality>
 </TraitDef>
 </Defs>

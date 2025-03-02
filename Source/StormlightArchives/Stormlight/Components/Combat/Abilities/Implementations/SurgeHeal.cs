@@ -48,20 +48,11 @@ namespace StormlightMod {
             if (targetPawn == null) {
                 return;
             }
-
-            Log.Message($"Target: {targetPawn.Name}");
-
             radiantHeal(targetPawn);
         }
 
-
-        private void radiantHeal(Pawn pawn) {
-            Pawn caster = this.parent.pawn as Pawn;
-            CompStormlight casterComp = caster.GetComp<CompStormlight>();
-            if (casterComp != null) {
-                
-                //add check for being stage 3 knight radiant!
-                // HEAL MISSING PARTS
+        private void healMissingParts(Pawn pawn, Need_RadiantProgress radiantNeed, CompStormlight casterComp, Pawn caster) {
+            if (radiantNeed != null && radiantNeed.IdealLevel >= 3) {
                 var missingParts = pawn.health.hediffSet.hediffs.OfType<Hediff_MissingPart>().OrderByDescending(h => h.Severity).ToList();
                 foreach (var injury in missingParts) {
                     float cost = 175f;  // More severe wounds cost more stormlight
@@ -72,9 +63,12 @@ namespace StormlightMod {
 
                     RadiantUtility.GiveRadiantXP(caster, 20f);
                 }
+            }
+        }
 
-
-                // HEAL ADDICTIONS
+        private void healAddictions(Pawn pawn, Need_RadiantProgress radiantNeed, CompStormlight casterComp, Pawn caster) 
+            {
+            if (radiantNeed != null && radiantNeed.IdealLevel >= 4) {
                 var addictions = pawn.health.hediffSet.hediffs.OfType<Hediff_Addiction>().OrderByDescending(h => h.Severity).ToList();
                 foreach (var addiction in addictions) {
                     float cost = 500f;
@@ -85,18 +79,32 @@ namespace StormlightMod {
 
                     RadiantUtility.GiveRadiantXP(caster, 12f);
                 }
+            }
+        }
 
-                // HEAL INJURIES
-                var injuries = pawn.health.hediffSet.hediffs.OfType<Hediff_Injury>().OrderByDescending(h => h.Severity).ToList();
-                foreach (var injury in injuries) {
-                    float cost = injury.Severity * 10f;  // More severe wounds cost more stormlight
-                    if (casterComp.Stormlight < cost)
-                        break;
+        private void healInjuries(Pawn pawn, Need_RadiantProgress radiantNeed, CompStormlight casterComp, Pawn caster) {
+            var injuries = pawn.health.hediffSet.hediffs.OfType<Hediff_Injury>().OrderByDescending(h => h.Severity).ToList();
+            foreach (var injury in injuries) {
+                float cost = (injury.Severity * 75f) / radiantNeed.IdealLevel;
+                Log.Message($"injury with severity {injury.Severity} cost {cost}, with idealLevel {radiantNeed.IdealLevel}");
+                if (casterComp.Stormlight < cost)
+                    break;
 
-                    injury.Heal(10.0f);
-                    casterComp.drawStormlight(cost);
-                    RadiantUtility.GiveRadiantXP(caster, 0.5f);
-                }
+                injury.Heal(4.0f * radiantNeed.IdealLevel);
+                casterComp.drawStormlight(cost);
+                RadiantUtility.GiveRadiantXP(caster, 0.5f);
+            }
+        }
+        private void radiantHeal(Pawn pawn) {
+            Pawn caster = this.parent.pawn as Pawn;
+            CompStormlight casterComp = caster.GetComp<CompStormlight>();
+            if (casterComp != null) {
+                Need_RadiantProgress radiantNeed = caster.needs.TryGetNeed<Need_RadiantProgress>();
+
+                healMissingParts(pawn, radiantNeed, casterComp, caster);
+                healAddictions(pawn, radiantNeed, casterComp, caster);
+                healInjuries(pawn, radiantNeed, casterComp, caster);
+
             }
         }
     }

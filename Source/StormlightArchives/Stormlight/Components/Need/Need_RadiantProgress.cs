@@ -5,12 +5,7 @@ using UnityEngine;
 using Verse;
 
 namespace StormlightMod {
-    public class Radiant_Requirements 
-        {
-        public bool IsSatisfied = false;
-        public float Value = 0f;
-        public int Count = 0; 
-        }
+
 
     public class Need_RadiantProgress : Need {
         private const float LEVEL_NEW_SQUIRE = 500f;
@@ -19,16 +14,17 @@ namespace StormlightMod {
         private const float LEVEL_KNIGHT_RADIANT_MASTER = LEVEL_KNIGHT_RADIANT * 2f;
         private const float MAX_XP = LEVEL_KNIGHT_RADIANT_MASTER + 10f;
         private float currentXp = 0f;
-        public int CurrentDegree = 0;
+        private int CurrentDegree = 0;
+
+        public int IdealLevel { get { return CurrentDegree + 1; } }
 
 
- 
+
 
 
         public Need_RadiantProgress(Pawn pawn) : base(pawn) {
-            this.threshPercents = new List<float> { 0.083f, 0.5f, 0.75f }; // Visual bar markers
-
-        } 
+            //this.threshPercents = new List<float> { 0.083f, 0.5f, 0.75f }; // Visual bar markers
+        }
 
         public override void NeedInterval() {
             // **No passive decay**, since XP should only increase when events happen
@@ -40,23 +36,57 @@ namespace StormlightMod {
         }
 
         public void UpdateRadiantTrait(Pawn pawn) {
-            Trait trait = pawn.story.traits.allTraits.FirstOrDefault(t => StormlightModUtilities.RadiantTraits.Contains(t.def));
-            if (trait != null) {
-                Trait radiantTrait = pawn.story.traits.GetTrait(trait.def);
+            Trait radiantTrait = StormlightUtilities.GetRadiantTrait(pawn);
+            if (radiantTrait != null) {
+                int currentDegree = radiantTrait.Degree;
+                int newDegree = GetDegreeFromXP(currentXp);
 
-                if (radiantTrait != null) {
-                    int currentDegree = radiantTrait.Degree;
-                    int newDegree = GetDegreeFromXP(currentXp);
-
-                    if (newDegree > currentDegree) {
-                        // Remove old trait and add the upgraded one
-                        pawn.story.traits.RemoveTrait(radiantTrait);
-                        pawn.story.traits.GainTrait(new Trait(trait.def, newDegree));
-                        CurrentDegree = newDegree;
-                        Messages.Message($"{pawn.Name} has grown stronger as a Radiant!", pawn, MessageTypeDefOf.PositiveEvent);
-                    }
+                if (newDegree > currentDegree && isEligibleForRankup(pawn, radiantTrait)) {
+                    // Remove old trait and add the upgraded one
+                    pawn.story.traits.RemoveTrait(radiantTrait);
+                    pawn.story.traits.GainTrait(new Trait(radiantTrait.def, newDegree));
+                    CurrentDegree = newDegree;
+                    Messages.Message($"{pawn.Name} has grown stronger as a Radiant!", pawn, MessageTypeDefOf.PositiveEvent);
+                }
+                else if (newDegree > currentDegree) {
+                    currentXp = GetXpFromDegree(currentDegree);
                 }
             }
+        }
+
+        private bool isEligibleForRankup(Pawn pawn, Trait trait) {
+            bool eligible = false;
+            PawnStats pawnStats = pawn.GetComp<PawnStats>();
+            switch (IdealLevel) {
+                case 1:
+                    eligible = pawnStats.GetRequirements(trait.def, pawnStats.Props.Req_1_2).IsSatisfied;
+                    if(eligible)
+                        Log.Message($"1 satisfied: {eligible}");
+                    break;
+                case 2:
+                    if (trait.def == StormlightModDefs.whtwl_Radiant_Windrunner) {
+                        eligible = pawnStats.GetRequirements(trait.def, pawnStats.Props.Req_2_3_wr).IsSatisfied;
+                    }
+                    else if (trait.def == StormlightModDefs.whtwl_Radiant_Truthwatcher) {
+                        eligible = pawnStats.GetRequirements(trait.def, pawnStats.Props.Req_2_3_tw).IsSatisfied;
+                    }
+                    Log.Message($"2 satisfied: {eligible}");
+                    break;
+                case 3:
+                    if (trait.def == StormlightModDefs.whtwl_Radiant_Windrunner) {
+                        eligible = pawnStats.GetRequirements(trait.def, pawnStats.Props.Req_3_4_wr).IsSatisfied;
+                    }
+                    else if (trait.def == StormlightModDefs.whtwl_Radiant_Truthwatcher) {
+                        eligible = pawnStats.GetRequirements(trait.def, pawnStats.Props.Req_3_4_tw).IsSatisfied;
+                    }
+                    Log.Message($"3 satisfied: {eligible}");
+                    break;
+                default:
+                    eligible = true;
+                    break;
+            }
+
+            return eligible;
         }
 
         private int GetDegreeFromXP(float xp) {
@@ -65,6 +95,15 @@ namespace StormlightMod {
             if (xp >= LEVEL_EXPERIENCED_SQUIRE) return 2;        // Experienced Squire
             if (xp >= LEVEL_NEW_SQUIRE) return 1;                // New Squire
             return 0;                                            // Bonded (Base Level)
+        }
+
+        private float GetXpFromDegree(int degree) {
+            if (degree == 4) return LEVEL_KNIGHT_RADIANT_MASTER;     // Knight Radiant Master
+            if (degree == 3) return LEVEL_KNIGHT_RADIANT_MASTER;     // Knight Radiant Master
+            if (degree == 2) return LEVEL_KNIGHT_RADIANT;            // Knight Radiant
+            if (degree == 1) return LEVEL_EXPERIENCED_SQUIRE;        // Experienced Squire
+            if (degree == 0) return LEVEL_NEW_SQUIRE;                // New Squire
+            return LEVEL_NEW_SQUIRE;                                            // Bonded (Base Level)
         }
 
         public override int GUIChangeArrow => 0; // No arrow (need doesn’t decay)
@@ -77,7 +116,7 @@ namespace StormlightMod {
         public static void Postfix(Pawn_NeedsTracker __instance, NeedDef nd, ref bool __result, Pawn ___pawn) {
 
             //if (nd == StormlightModDefs.whtwl_RadiantProgress) {
-            //    __result = ___pawn.story.traits.allTraits.FirstOrDefault(t => StormlightModUtilities.RadiantTraits.Contains(t.def)) != null; 
+            //    __result = ___pawn.story?.traits?.allTraits.FirstOrDefault(t => StormlightModUtilities.RadiantTraits.Contains(t.def)) != null;
             //}
 
             if (nd == StormlightModDefs.whtwl_RadiantProgress && ___pawn.story?.traits?.HasTrait(StormlightModDefs.whtwl_Radiant_Windrunner) == true) {
@@ -99,7 +138,6 @@ namespace StormlightMod {
     public static class RadiantUtility {
         public static void GiveRadiantXP(Pawn pawn, float amount) {
             if (pawn == null) {
-                Log.Message("pawn was null");
                 return;
             }
 
@@ -107,9 +145,6 @@ namespace StormlightMod {
             if (progress != null) {
                 progress.GainXP(amount);
                 progress.UpdateRadiantTrait(pawn);
-            }
-            else {
-                Log.Message("progress was null");
             }
         }
     }

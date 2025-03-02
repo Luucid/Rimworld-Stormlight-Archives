@@ -4,9 +4,13 @@
     <xpath>Defs/ThingDef[defName="Human"]/comps</xpath>
     <value>
         <li Class="StormlightMod.CompProperties_PawnStats">
-        <compClass>StormlightMod.PawnStats</compClass>
-        <ExperiencedPersonalCrisis>ExperiencedPersonalCrisis</ExperiencedPersonalCrisis>
-        <ProtectedSomeoneInNeed>ProtectedSomeoneInNeed</ProtectedSomeoneInNeed>
+            <compClass>StormlightMod.PawnStats</compClass>
+            <Req_0_1>ExperiencedPersonalCrisis</Req_0_1>
+            <Req_1_2>ProtectedSomeoneInNeed</Req_1_2>
+            <Req_2_3_wr>SparedEnemyLife</Req_2_3_wr>
+            <Req_3_4_wr>StrongBondedPawnDied</Req_3_4_wr>
+            <Req_2_3_tw>somethingA</Req_2_3_tw>
+            <Req_3_4_tw>somethingB</Req_3_4_tw>
         </li>
     </value>
     </Operation>

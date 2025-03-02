@@ -20,13 +20,13 @@ namespace StormlightMod {
             if (IsHighstormActive(__instance.Map)) {
 
                 damageAndMovePawn(__instance);
-                if (Find.TickManager.TicksGame % 100 == 0) {  //100 rolls to try to bond at 1/1000 chance 
+                if (Find.TickManager.TicksGame % 100 == 0) {  
                     tryToBondPawn(__instance, StormlightModDefs.whtwl_Radiant_Windrunner);
                 }
                 return;
             }
             if (__instance.Map.weatherManager.curWeather.defName == "Fog") {
-                if (Find.TickManager.TicksGame % 100 == 0) {  //100 rolls to try to bond at 1/1000 chance 
+                if (Find.TickManager.TicksGame % 100 == 0) {  
                     tryToBondPawn(__instance, StormlightModDefs.whtwl_Radiant_Truthwatcher);
                 }
             }
@@ -35,17 +35,26 @@ namespace StormlightMod {
         private static void tryToBondPawn(Pawn pawn, TraitDef traitDef) {
 
             if (pawn != null && pawn.RaceProps.Humanlike) {
-                int number = m_Rand.Next(1, 1000);
-                if (number == 1) {
-                    Trait anyRadiantTrait = pawn.story.traits.allTraits.FirstOrDefault(t => StormlightModUtilities.RadiantTraits.Contains(t.def));
-                    if (anyRadiantTrait != null) {
-                        return;
-                    }
+                if (StormlightUtilities.GetRadiantTrait(pawn) != null) return;
 
-                    Trait radiantTrait = pawn.story.traits.GetTrait(traitDef);
-                    if (radiantTrait == null) {
-                        pawn.story.traits.GainTrait(new Trait(traitDef, 0));
-                    }
+                PawnStats pawnStats = pawn.GetComp<PawnStats>();
+                float crisisValue = pawnStats.GetRequirements(traitDef, pawnStats.Props.Req_0_1).Value;
+                int upperNumber = 1 - (int)crisisValue;
+                if (upperNumber <= 1) upperNumber = 2;
+                int number = m_Rand.Next(1, upperNumber);
+                if (number == 1) {
+                    Find.WindowStack.Add(new Dialog_MessageBox(
+                        text: $"{pawn.NameShortColored} pauses. A presence lingers at the edge of their awareness—watching, waiting. It has seen their struggles, their moments of strength, their failures. And yet, it remains.\r\n\r\nA faint whisper echoes in the back of their mind, words unbidden yet undeniable:\r\n\"Life before death. Strength before weakness. Journey before destination.\"",
+                        buttonAText: "Speak the words",
+                        buttonAAction: () => {
+                            pawn.story.traits.GainTrait(new Trait(traitDef, 0));
+                            pawnStats.hasFormedBond = true;
+                        },
+                        buttonBText: $"Say nothing",
+                        buttonBAction: () => {
+                        },
+                        title: "A Whisper in the Mind.."
+                    ));
                 }
             }
         }

@@ -33,7 +33,8 @@ namespace StormlightMod {
                 pawn.abilities.GainAbility(StormlightModDefs.whtwl_SummonShardblade);
                 //ThisFilterList.Find(def => selPawn.Map.listerThings.ThingsOfDef(def).Any());
                 //Trait trait = pawn.story.traits.allTraits.Find(t => StormlightModDefs.whtwl_Radiant_Traits.Any()); 
-                Trait trait = pawn.story.traits.allTraits.FirstOrDefault(t => StormlightModUtilities.RadiantTraits.Contains(t.def));
+                //Trait trait = pawn.story.traits.allTraits.FirstOrDefault(t => StormlightModUtilities.RadiantTraits.Contains(t.def));
+                Trait trait = StormlightUtilities.GetRadiantTrait(pawn); 
 
                 if (trait == null) { //radiants does not get this ability
                     pawn.abilities.GainAbility(StormlightModDefs.whtwl_UnbondBlade);
@@ -63,7 +64,8 @@ namespace StormlightMod {
 
             //Trait trait = pawn.story.traits.allTraits.FirstOrDefault(t => t.def == StormlightModDefs.whtwl_Radiant);
             //Trait trait = pawn.story.traits.allTraits.Find(t => StormlightModDefs.whtwl_Radiant_Traits.Any());
-            Trait trait = pawn.story.traits.allTraits.FirstOrDefault(t => StormlightModUtilities.RadiantTraits.Contains(t.def));
+            //Trait trait = pawn.story.traits.allTraits.FirstOrDefault(t => StormlightModUtilities.RadiantTraits.Contains(t.def));
+            Trait trait = StormlightUtilities.GetRadiantTrait(pawn);
 
             if (trait != null) {
                 pawn.story.traits.allTraits.Remove(trait);
