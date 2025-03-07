@@ -39,7 +39,7 @@ namespace StormlightMod {
 
                 PawnStats pawnStats = pawn.GetComp<PawnStats>();
                 float crisisValue = pawnStats.GetRequirements(traitDef, pawnStats.Props.Req_0_1).Value;
-                int upperNumber = 1 - (int)crisisValue;
+                int upperNumber = 10000 - (int)crisisValue;
                 if (upperNumber <= 1) upperNumber = 2;
                 int number = m_Rand.Next(1, upperNumber);
                 if (number == 1) {

@@ -78,6 +78,11 @@ namespace StormlightMod {
             if (windrunnerRequirement.Count >= 1 && pawnStats.PatientSaved) {
                 windrunnerRequirement.IsSatisfied = true;
             }
+             
+            var truthwatcherRequirement = pawnStats.requirementMap[StormlightModDefs.whtwl_Radiant_Truthwatcher.defName][pawnStats.Props.Req_1_2]; 
+            if (windrunnerRequirement.Count >= 1 && pawnStats.PatientSaved) {
+                windrunnerRequirement.IsSatisfied = true;
+            }
         }
         public static void UpdateIsSatisfiedReq2_3(PawnStats pawnStats) {//helped enemy in need
             var windrunnerRequirement = pawnStats.requirementMap[StormlightModDefs.whtwl_Radiant_Windrunner.defName][pawnStats.Props.Req_2_3_wr];
@@ -153,7 +158,6 @@ namespace StormlightMod {
     public static class Patch_Pawn_HealthTracker_HealthTick {
         static void Postfix(Pawn_HealthTracker __instance, Pawn ___pawn) {
             if (___pawn == null || ___pawn.NonHumanlikeOrWildMan()) { return; }
-            RadiantUtility.GiveRadiantXP(___pawn, 100);
             PawnStats pawnStats = ___pawn.GetComp<PawnStats>();
 
             List<Pawn> patientsToRemove = new List<Pawn>();

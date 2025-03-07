@@ -55,7 +55,7 @@ namespace StormlightMod {
             }
 
             Pawn caster = this.parent.pawn as Pawn;
-            if (caster == null) {
+            if (caster == null || caster == target) { 
                 return;
             }
 

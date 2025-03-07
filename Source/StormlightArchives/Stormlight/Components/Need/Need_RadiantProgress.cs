@@ -23,7 +23,7 @@ namespace StormlightMod {
 
 
         public Need_RadiantProgress(Pawn pawn) : base(pawn) {
-            //this.threshPercents = new List<float> { 0.083f, 0.5f, 0.75f }; // Visual bar markers
+            this.threshPercents = new List<float> { 0.0416f, 0.25f, 0.5f }; // Visual bar markers
         }
 
         public override void NeedInterval() {
@@ -71,7 +71,6 @@ namespace StormlightMod {
                     else if (trait.def == StormlightModDefs.whtwl_Radiant_Truthwatcher) {
                         eligible = pawnStats.GetRequirements(trait.def, pawnStats.Props.Req_2_3_tw).IsSatisfied;
                     }
-                    Log.Message($"2 satisfied: {eligible}");
                     break;
                 case 3:
                     Whtwl_RadiantNeedLevelupChecker.UpdateIsSatisfiedReq3_4(pawnStats);
@@ -81,7 +80,6 @@ namespace StormlightMod {
                     else if (trait.def == StormlightModDefs.whtwl_Radiant_Truthwatcher) {
                         eligible = pawnStats.GetRequirements(trait.def, pawnStats.Props.Req_3_4_tw).IsSatisfied;
                     }
-                    Log.Message($"3 satisfied: {eligible}");
                     break;
                 default:
                     eligible = true;

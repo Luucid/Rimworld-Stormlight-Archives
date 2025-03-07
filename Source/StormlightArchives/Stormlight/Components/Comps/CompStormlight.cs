@@ -31,7 +31,7 @@ namespace StormlightMod {
         }
 
         public override void CompTick() {
-          
+
             if (tick == 0) {
                 base.CompTick();
                 drainStormLight();
@@ -98,7 +98,7 @@ namespace StormlightMod {
             // HEAL ADDICTIONS
             var addictions = pawn.health.hediffSet.hediffs.OfType<Hediff_Addiction>().OrderByDescending(h => h.Severity).ToList();
             foreach (var addiction in addictions) {
-                float cost = 1000f;  
+                float cost = 1000f;
                 if (m_CurrentStormlight < cost)
                     break;
                 pawn.health.hediffSet.hediffs.Remove(addiction);
@@ -134,13 +134,14 @@ namespace StormlightMod {
             if (m_BreathStormlight == false)
                 return;
 
+            if (infuseStormlight(0)) return; //check if full.
+
             //  Absorb Stormlight from pouch
             CompSpherePouch pouchComp = pawn.apparel?.WornApparel?.Find(a => a.GetComp<CompSpherePouch>() != null)?.GetComp<CompSpherePouch>();
             if (pouchComp != null && pouchComp.GetTotalStoredStormlight() > 0) {
                 float drawn = pouchComp.DrawStormlight(absorbAmount);
-                infuseStormlight(drawn);
                 RadiantUtility.GiveRadiantXP(pawn, 0.1f);
-                return;
+                if (infuseStormlight(drawn)) return;
             }
 
 
@@ -154,9 +155,8 @@ namespace StormlightMod {
                     if (sphereComp != null && sphereComp.Stormlight > 0) {
                         float drawn = Math.Min(absorbAmount, sphereComp.Stormlight);
                         sphereComp.infuseStormlight(-drawn); // Remove from sphere
-                        infuseStormlight(drawn); // Add to Radiant
                         RadiantUtility.GiveRadiantXP(pawn, 0.1f);
-                        return; // Absorb from only one at a time
+                        if (infuseStormlight(drawn)) return;
                     }
                 }
             }
@@ -168,28 +168,25 @@ namespace StormlightMod {
                     var stormlightComp = thing.TryGetComp<CompStormlight>();
                     if (stormlightComp != null) {
                         float drawnLight = stormlightComp.drawStormlight(absorbAmount);
-                        infuseStormlight(drawnLight); 
                         RadiantUtility.GiveRadiantXP(pawn, 0.1f);
-                        return; 
+                        if (infuseStormlight(drawnLight)) return;
                     }
                 }
                 else if (thing.def.defName.Equals("Apparel_SpherePouch") && !thing.Position.Roofed(thing.Map)) {
                     var pouch = thing.TryGetComp<CompSpherePouch>();
-                    if (pouch != null) {
-                        absorbAmount = Math.Min(absorbAmount, pouch.GetTotalStoredStormlight()); 
-                        float drawnLight = pouch.DrawStormlight(absorbAmount); 
-                        infuseStormlight(drawnLight);
+                    if (pouch != null && pouch.GetTotalStoredStormlight() > 0f) {
+                        absorbAmount = Math.Min(absorbAmount, pouch.GetTotalStoredStormlight());
+                        float drawnLight = pouch.DrawStormlight(absorbAmount);
                         RadiantUtility.GiveRadiantXP(pawn, 0.1f);
-                        return;
+                        if (infuseStormlight(drawnLight)) return;
                     }
                 }
                 else if (thing.def.defName.Equals("SphereLamp") && !thing.Position.Roofed(thing.Map)) {
                     var lamp = thing.TryGetComp<StormlightLamps>();
-                    if (lamp != null) {
+                    if (lamp != null && lamp.m_CurrentStormlight > 0f) {
                         float drawnLight = lamp.DrawStormlight(absorbAmount);
-                        infuseStormlight(drawnLight);
                         RadiantUtility.GiveRadiantXP(pawn, 0.1f);
-                        return;
+                        if (infuseStormlight(drawnLight)) return;
                     }
                 }
             }
@@ -226,10 +223,15 @@ namespace StormlightMod {
         }
 
         // Infuse from code when highstorm is active
-        public void infuseStormlight(float amount) {
+        public bool infuseStormlight(float amount) {
             m_CurrentStormlight += amount;
-            if (m_CurrentStormlight > MaxStormlightPerItem)
+            if (m_CurrentStormlight >= MaxStormlightPerItem) {
                 m_CurrentStormlight = MaxStormlightPerItem;
+                Log.Message("Returning cause full of light");
+                return true;
+            }
+            Log.Message("NOT FULL YET!");
+            return false;
         }
     }
 }

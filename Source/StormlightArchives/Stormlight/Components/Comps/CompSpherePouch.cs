@@ -92,7 +92,7 @@ namespace StormlightMod {
                     if (absorbed >= amount) break; // Stop once fully absorbed
                 }
             }
-
+            Log.Message($"draw from pouch: {absorbed}");
             return absorbed;
         }
 

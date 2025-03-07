@@ -19,8 +19,9 @@ namespace StormlightMod {
         bool initSphereAdded = false;
         public float stormlightThresholdForRefuel = 0f;
         public bool Empty => storedSpheres.Count == 0;
-        private float m_CurrentStormlight = 0f;
+        public float m_CurrentStormlight = 0f;
         private bool deregisterAfterNewSphere = true;
+
 
         public override void PostSpawnSetup(bool respawningAfterLoad) {
             base.PostSpawnSetup(respawningAfterLoad);
@@ -118,27 +119,26 @@ namespace StormlightMod {
 
 
         public override void CompTick() {
-            if (storedSpheres.Count <= 0 && initSphereAdded == false) {
-                Thing sphere = ThingMaker.MakeThing(ThingDef.Named("Sphere_Emerald"));
-                ThingWithComps sphereComp = sphere as ThingWithComps;
+            //if (storedSpheres.Count <= 0 && initSphereAdded == false) {
+            //    Thing sphere = ThingMaker.MakeThing(ThingDef.Named("Sphere_Emerald"));
+            //    ThingWithComps sphereComp = sphere as ThingWithComps;
 
-                CompStormlight comp = sphereComp.GetComp<CompStormlight>();
-                if (comp != null) {
-                    comp.Initialize(new CompProperties_Stormlight {
-                        maxStormlight = 1000f,
-                        drainRate = 0.01f
-                    });
-                }
+            //    CompStormlight comp = sphereComp.GetComp<CompStormlight>();
+            //    if (comp != null) {
+            //        comp.Initialize(new CompProperties_Stormlight {
+            //            maxStormlight = 1000f,
+            //            drainRate = 0.01f
+            //        });
+            //    }
 
-                AddSphereToLamp(sphereComp);
-                initSphereAdded = true;
-            }
+            //    AddSphereToLamp(sphereComp);
+            //    initSphereAdded = true;
+            //}
             CheckStormlightFuel();
         }
 
         public float DrawStormlight(float amount) {
             float absorbed = 0;
-            Log.Message("absorb stuff");
             foreach (ThingWithComps sphere in storedSpheres) {
                 CompStormlight comp = sphere.GetComp<CompStormlight>();
                 if (comp != null && comp.HasStormlight) {

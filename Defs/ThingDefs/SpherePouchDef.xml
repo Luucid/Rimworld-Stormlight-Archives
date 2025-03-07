@@ -10,7 +10,7 @@
       <graphicClass>Graphic_Single</graphicClass>
     </graphicData>
     <tickerType>Normal</tickerType>
-    <techLevel>Spacer</techLevel>
+    <techLevel>Animal</techLevel>
     <statBases>
       <Mass>3</Mass>
       <WorkToMake>14000</WorkToMake>
@@ -23,6 +23,10 @@
     <recipeMaker>
       <researchPrerequisite>ComplexClothing</researchPrerequisite>
       <displayPriority>210</displayPriority>
+      <recipeUsers>
+        <li>ElectricTailoringBench</li>
+        <li>HandTailoringBench</li>
+      </recipeUsers>
     </recipeMaker>
     <costStuffCount>70</costStuffCount>
     <stuffCategories>
