@@ -57,13 +57,14 @@ namespace StormlightMod {
         private bool isEligibleForRankup(Pawn pawn, Trait trait) {
             bool eligible = false;
             PawnStats pawnStats = pawn.GetComp<PawnStats>();
+
             switch (IdealLevel) {
                 case 1:
+                    Whtwl_RadiantNeedLevelupChecker.UpdateIsSatisfiedReq1_2(pawnStats);
                     eligible = pawnStats.GetRequirements(trait.def, pawnStats.Props.Req_1_2).IsSatisfied;
-                    if(eligible)
-                        Log.Message($"1 satisfied: {eligible}");
                     break;
                 case 2:
+                    Whtwl_RadiantNeedLevelupChecker.UpdateIsSatisfiedReq2_3(pawnStats);
                     if (trait.def == StormlightModDefs.whtwl_Radiant_Windrunner) {
                         eligible = pawnStats.GetRequirements(trait.def, pawnStats.Props.Req_2_3_wr).IsSatisfied;
                     }
@@ -73,6 +74,7 @@ namespace StormlightMod {
                     Log.Message($"2 satisfied: {eligible}");
                     break;
                 case 3:
+                    Whtwl_RadiantNeedLevelupChecker.UpdateIsSatisfiedReq3_4(pawnStats);
                     if (trait.def == StormlightModDefs.whtwl_Radiant_Windrunner) {
                         eligible = pawnStats.GetRequirements(trait.def, pawnStats.Props.Req_3_4_wr).IsSatisfied;
                     }

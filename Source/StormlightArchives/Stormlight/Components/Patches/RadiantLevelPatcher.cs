@@ -72,6 +72,26 @@ namespace StormlightMod {
 
 namespace StormlightMod {
 
+    public static class Whtwl_RadiantNeedLevelupChecker {
+        public static void UpdateIsSatisfiedReq1_2(PawnStats pawnStats) {
+            var windrunnerRequirement = pawnStats.requirementMap[StormlightModDefs.whtwl_Radiant_Windrunner.defName][pawnStats.Props.Req_1_2];
+            if (windrunnerRequirement.Count >= 1 && pawnStats.PatientSaved) {
+                windrunnerRequirement.IsSatisfied = true;
+            }
+        }
+        public static void UpdateIsSatisfiedReq2_3(PawnStats pawnStats) {//helped enemy in need
+            var windrunnerRequirement = pawnStats.requirementMap[StormlightModDefs.whtwl_Radiant_Windrunner.defName][pawnStats.Props.Req_2_3_wr];
+            if (windrunnerRequirement.Count >= 1 && pawnStats.EnemyPatientSaved) {
+                windrunnerRequirement.IsSatisfied = true;
+            }
+      
+        }
+        public static void UpdateIsSatisfiedReq3_4(PawnStats pawnStats) { //ally with bond died even tho tried to save
+            var windrunnerRequirement = pawnStats.requirementMap[StormlightModDefs.whtwl_Radiant_Windrunner.defName][pawnStats.Props.Req_3_4_wr];
+            windrunnerRequirement.IsSatisfied = true;
+        }
+    }
+
 
     //Initial requirements, must have suffered crisis
     [HarmonyPatch(typeof(MentalBreaker), nameof(MentalBreaker.MentalBreakerTick))]
@@ -110,19 +130,11 @@ namespace StormlightMod {
                     Log.Message("Patient added to list");
                 }
                 windrunnerRequirement1_2.Count += 1;
-                if (windrunnerRequirement1_2.Count >= 1 && pawnStats.PatientSaved) {
 
-                    windrunnerRequirement1_2.IsSatisfied = true;
-                    Log.Message($"count: {windrunnerRequirement1_2.Count}, PatientSaved: {pawnStats.PatientSaved}");
-                }
-                else {
-                    Log.Message($"count: {windrunnerRequirement1_2.Count}, PatientSaved: {pawnStats.PatientSaved}");
-                }
-
+                //2_3
                 if (patient.IsPrisoner) {
                     var windrunnerRequirement2_3 = pawnStats.requirementMap[StormlightModDefs.whtwl_Radiant_Windrunner.defName][pawnStats.Props.Req_2_3_wr];
-                    if (pawnStats.EnemyPatientSaved)
-                        windrunnerRequirement2_3.IsSatisfied = true;
+                    windrunnerRequirement2_3.Count += 1;
                 }
 
                 // TRUTHWATCHER
@@ -158,7 +170,6 @@ namespace StormlightMod {
                         pawnStats.EnemyPatientSaved = true;
                     }
                     patientsToRemove.Add(patient);
-                    Log.Message("Patient saved!");
                 }
             }
             foreach (var patient in patientsToRemove) {
