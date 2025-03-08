@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Defs>
-<DamageDef Name="Lucid_SoulDamage">
-    <defName>Lucid_SoulDamage</defName>
+<DamageDef Name="whtwl_SoulDamage">
+    <defName>whtwl_SoulDamage</defName>
     <workerClass>DamageWorker_SoulDamage</workerClass>
     <label>soul</label>
     <hasForcefulImpact>false</hasForcefulImpact>
@@ -17,8 +17,8 @@
     <canUseDeflectMetalEffect>false</canUseDeflectMetalEffect>
 </DamageDef>
 	
-<DamageDef ParentName="Lucid_SoulDamage">
-  <defName>Lucid_SoulCut</defName>
+<DamageDef ParentName="whtwl_SoulDamage">
+  <defName>whtwl_SoulCut</defName>
   <label>soul cut</label>
   <workerClass>DamageWorker_SoulDamage</workerClass>
   <hediff>Cut</hediff>  <!-- Applies cut wounds like normal blades -->
@@ -29,8 +29,8 @@
   <harmAllLayersUntilOutside>true</harmAllLayersUntilOutside>  <!-- Cuts through all layers -->
   <overkillPctToDestroyPart>0~0.1</overkillPctToDestroyPart>  <!-- Required to destroy limbs properly -->
 </DamageDef>
-<DamageDef ParentName="Lucid_SoulDamage">
-  <defName>Lucid_SoulStab</defName>
+<DamageDef ParentName="whtwl_SoulDamage">
+  <defName>whtwl_SoulStab</defName>
   <label>soul stab</label>
   <workerClass>DamageWorker_SoulDamage</workerClass>  <!-- Use the correct class -->
   <hediff>Stab</hediff>  <!-- Creates stab wounds -->

@@ -13,14 +13,13 @@ namespace StormlightMod {
         static private Pawn flyingPawn = null;
         static void Prefix(ThingOwner<Thing> ___innerContainer) {
             if (___innerContainer.InnerListForReading.Count <= 0) {
-                Log.Message("It was null");
                 return;
             }
             flyingPawn = ___innerContainer.InnerListForReading[0] as Pawn;
         }
         static void Postfix(AbilityDef ___triggeringAbility) {
             if (___triggeringAbility != null && flyingPawn != null) {
-                Log.Message($"respawn pawn, ability: {___triggeringAbility.defName}");
+                //Log.Message($"respawn pawn, ability: {___triggeringAbility.defName}");
                 if (___triggeringAbility.defName == StormlightModDefs.whtwl_LashingUpward.defName) {
 
                     flyingPawn.TakeDamage(new DamageInfo(DamageDefOf.Blunt, 75));
@@ -60,7 +59,7 @@ namespace StormlightMod {
             }
 
             if (caster.GetComp<CompStormlight>() == null || caster.GetComp<CompStormlight>().Stormlight < Props.stormLightCost) {
-                Log.Message($"[LashUpward] not enough stormlight!");
+                //Log.Message($"[LashUpward] not enough stormlight!");
                 return;
             }
             caster.GetComp<CompStormlight>().drawStormlight(Props.stormLightCost);
@@ -79,7 +78,7 @@ namespace StormlightMod {
             if (targetPawn == null) {
                 return;
             }
-            Log.Message($"TargetPawn: {targetPawn.Name}");
+            //Log.Message($"TargetPawn: {targetPawn.Name}");
             // Create the custom flyer
             PawnFlyer flyer = PawnFlyer.MakeFlyer(
               flyingDef: Props.thingDef,           // must have the <pawnFlyer> XML extension

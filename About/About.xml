@@ -6,5 +6,12 @@
   <supportedVersions> <!-- the version(s) your mod supports -->
     <li>1.5</li>
   </supportedVersions>
-  <description>Stormlight archives.</description>
+  <description>Stormlight archives adaption.</description>
+  <modDependencies>
+  <li>
+    <packageId>brrainz.harmony</packageId>
+    <displayName>Harmony</displayName>
+    <steamWorkshopUrl>steam://url/CommunityFilePage/2009463077</steamWorkshopUrl>
+  </li>
+</modDependencies>
 </ModMetaData>

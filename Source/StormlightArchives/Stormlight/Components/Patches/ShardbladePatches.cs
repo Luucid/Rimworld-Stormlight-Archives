@@ -1,13 +1,14 @@
 ﻿using HarmonyLib;
 using RimWorld;
 using Verse;
+using System;
 
 namespace StormlightMod {
     [HarmonyPatch(typeof(Pawn_EquipmentTracker), nameof(Pawn_EquipmentTracker.TryDropEquipment))]
     public static class ShardbladePatchDrop {
         static void Postfix(Pawn ___pawn, ThingWithComps eq, ThingWithComps resultingEq, IntVec3 pos) {
             if (eq != null) {
-                if (eq.def.defName == "MeleeWeapon_Shardblade") {
+                if (eq.def.defName == "whtwl_MeleeWeapon_Shardblade") {
                     CompShardblade blade = eq.GetComp<CompShardblade>();
                     if (blade != null) {
                         if (blade.isBonded(___pawn)) { eq.DeSpawn(); }
@@ -20,7 +21,7 @@ namespace StormlightMod {
     public static class ShardbladePatchePickup {
         static void Postfix(Pawn ___pawn, ThingWithComps newEq) {
             if (newEq != null) {
-                if (newEq.def.defName == "MeleeWeapon_Shardblade") {
+                if (newEq.def.defName == "whtwl_MeleeWeapon_Shardblade") {
                     CompShardblade blade = newEq.GetComp<CompShardblade>();
                     if (blade != null) {
                         if (blade.isBonded(null)) {
@@ -32,5 +33,23 @@ namespace StormlightMod {
             }
         }
     }
-}
 
+    [HarmonyPatch(typeof(Mineable), "TrySpawnYield")]
+    [HarmonyPatch(new Type[] { typeof(Map), typeof(bool), typeof(Pawn) })]
+    public static class PatchSpawnYieldAfterMining {
+        static void Postfix(Map map, bool moteOnWaste, Pawn pawn) {
+
+            if (map != null) {
+                ThingDef sphereThing = StormlightUtilities.RollForRandomSphereSpawn();
+                if (sphereThing != null) {
+                    Thing sphere = ThingMaker.MakeThing(sphereThing);  
+                    IntVec3 dropPosition = pawn.Position;
+                    GenPlace.TryPlaceThing(sphere, dropPosition, map, ThingPlaceMode.Direct);
+                }
+            }
+
+        }
+
+    }
+
+}

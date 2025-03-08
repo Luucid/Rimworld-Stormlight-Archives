@@ -41,7 +41,6 @@ namespace StormlightMod {
             double distance = Math.Sqrt(Math.Pow(target.Cell.x - caster.Position.x, 2) + Math.Pow(target.Cell.z - caster.Position.z, 2));
             float totalCost = (float)(Props.stormLightCost * distance);
 
-            Log.Message($"totalcost: {totalCost}, distance: {distance}, stormlight cost per tile: {Props.stormLightCost}");
             if (caster.GetComp<CompStormlight>() == null || caster.GetComp<CompStormlight>().Stormlight < totalCost) {
                 Log.Message($"[flight] not enough stormlight!");
                 return;
@@ -61,7 +60,7 @@ namespace StormlightMod {
                 return;
             }
 
-            Log.Message($"TargetPawn: {targetPawn.Name}");
+            //Log.Message($"TargetPawn: {targetPawn.Name}");
             PawnFlyer flyer = PawnFlyer.MakeFlyer(
               flyingDef: Props.thingDef,    // must have the <pawnFlyer> XML extension
               pawn: targetPawn,             // the Pawn to fly

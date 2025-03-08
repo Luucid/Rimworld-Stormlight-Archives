@@ -319,7 +319,6 @@ namespace StormlightMod {
             Action<LocalTargetInfo> onUpdateAction = (LocalTargetInfo info) => {
                 Vector3 mousePos = UI.MouseMapPosition();
                 double distance = Math.Sqrt(Math.Pow(mousePos.x - caster.Position.x, 2) + Math.Pow(mousePos.z - caster.Position.z, 2));
-                Log.Message($"Distance: {distance}");
                 if (distance-0.5f > maxDistance)
                     color = Color.red;
                 else 

@@ -17,7 +17,7 @@ namespace StormlightMod {
             public static void Postfix(ThingWithComps __instance) {
                 if (__instance.TryGetComp<CompSpherePouch>() is CompSpherePouch pouchComp) {
                     Log.Message("[StormlightMod] Debug: Populating newly spawned Sphere Pouch with spheres.");
-                    Thing sphere = ThingMaker.MakeThing(ThingDef.Named("Sphere_Garnet"));
+                    Thing sphere = ThingMaker.MakeThing(ThingDef.Named("whtwl_Sphere_Garnet"));
                     pouchComp.storedSpheres.Add(sphere); 
                     pouchComp.InfuseStormlight(500f);
                 }
@@ -62,7 +62,7 @@ namespace StormlightMod {
                 forced = true // Forces it to trigger even if it has a low chance
             };
 
-            bool success = Find.Storyteller.incidentQueue.Add(DefDatabase<IncidentDef>.GetNamed("HighstormIncident"), Find.TickManager.TicksGame, parms);
+            bool success = Find.Storyteller.incidentQueue.Add(DefDatabase<IncidentDef>.GetNamed("whtwl_HighstormIncident"), Find.TickManager.TicksGame, parms);
 
             if (success) {
                 Log.Message("[StormlightMod] Highstorm triggered every 8 days!");

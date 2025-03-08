@@ -102,11 +102,11 @@ namespace StormlightMod {
                 else {
                     replaceSphereAction = () => {
                         Job job = JobMaker.MakeJob(StormlightModDefs.whtwl_RefuelSphereLamp, parent, sphere);
-                        if (!job.TryMakePreToilReservations(selPawn, errorOnFailed: true)) {
-                            Log.Message("It failed");
+                        if (job.TryMakePreToilReservations(selPawn, errorOnFailed: true)) {
+                            selPawn.jobs.TryTakeOrderedJob(job);
                         }
                         else {
-                            selPawn.jobs.TryTakeOrderedJob(job);
+                            Log.Message("It failed");
                         }
                     };
                     replaceSphereText = $"Replace with {sphere.Label}";

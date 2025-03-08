@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Defs>
-<ThingDef ParentName="ArmorSmithableBase">
+<!-- <ThingDef ParentName="ArmorSmithableBase">
     <defName>Apparel_LucidShardPlate</defName>
     <label>shard plate armor</label>
     <description>epic shardplate.</description>
@@ -64,5 +64,5 @@
       </defaultOutfitTags>
     </apparel>
     <colorGenerator Class="ColorGenerator_StandardApparel" />
-  </ThingDef>
+  </ThingDef> -->
 </Defs>

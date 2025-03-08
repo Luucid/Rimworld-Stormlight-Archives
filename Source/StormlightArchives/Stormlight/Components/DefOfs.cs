@@ -22,6 +22,15 @@ namespace StormlightMod {
         public static AbilityDef whtwl_LashingUpward;
         public static AbilityDef whtwl_WindRunnerFlight;
 
+        //ThingDef
+        public static ThingDef whtwl_Sphere_Diamond;
+        public static ThingDef whtwl_Sphere_Garnet;
+        public static ThingDef whtwl_Sphere_Ruby;
+        public static ThingDef whtwl_Sphere_Sapphire;
+        public static ThingDef whtwl_Sphere_Emerald; 
+        public static ThingDef whtwl_Apparel_SpherePouch; 
+        public static ThingDef whtwl_SphereLamp;  
+
         static StormlightModDefs() {
             DefOfHelper.EnsureInitializedInCtor(typeof(StormlightModDefs));
         }

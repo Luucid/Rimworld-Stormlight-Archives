@@ -104,7 +104,6 @@ namespace StormlightMod {
             if (abilityComp != null && abilityComp.bladeObject != null) {
                 swordOwner.equipment.AddEquipment(abilityComp.bladeObject);
                 isSpawned = true;
-                Log.Message("sword spawned");
             }
             else {
                 if (abilityComp == null)

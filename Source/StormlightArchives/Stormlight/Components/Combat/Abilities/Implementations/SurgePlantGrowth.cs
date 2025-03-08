@@ -19,7 +19,7 @@ namespace StormlightMod {
         public new CompProperties_AbilitySurgePlantGrowth Props => this.props as CompProperties_AbilitySurgePlantGrowth;
 
         public override void Apply(LocalTargetInfo target, LocalTargetInfo dest) {
-            Log.Message("Found plant!");
+            //Log.Message("Found plant!");
             if (!target.IsValid || target.Thing == null || !target.Thing.Spawned) {
                 Log.Warning("[plant growth] Invalid target.");
                 return;

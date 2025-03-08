@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Defs>
 <ManeuverDef>
-  <defName>Maneuver_SoulCut</defName>
-  <requiredCapacity>SoulCut</requiredCapacity>
+  <defName>whtwl_Maneuver_SoulCut</defName>
+  <requiredCapacity>whtwl_SoulCut</requiredCapacity>
   <verb>
     <verbClass>Verb_MeleeAttackDamage</verbClass>
-    <meleeDamageDef>Lucid_SoulCut</meleeDamageDef>
+    <meleeDamageDef>whtwl_SoulCut</meleeDamageDef>
   </verb>
   <logEntryDef>MeleeAttack</logEntryDef>
   <combatLogRulesHit>Maneuver_Slash_MeleeHit</combatLogRulesHit>
@@ -15,11 +15,11 @@
 </ManeuverDef>
 
 <ManeuverDef>
-  <defName>Maneuver_SoulStab</defName>
-  <requiredCapacity>SoulStab</requiredCapacity>
+  <defName>whtwl_Maneuver_SoulStab</defName>
+  <requiredCapacity>whtwl_SoulStab</requiredCapacity>
   <verb>
     <verbClass>Verb_MeleeAttackDamage</verbClass>
-    <meleeDamageDef>Lucid_SoulStab</meleeDamageDef>
+    <meleeDamageDef>whtwl_SoulStab</meleeDamageDef>
   </verb>
   <logEntryDef>MeleeAttack</logEntryDef>
   <combatLogRulesHit>Maneuver_Stab_MeleeHit</combatLogRulesHit>

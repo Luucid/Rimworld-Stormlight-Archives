@@ -40,26 +40,25 @@ namespace StormlightMod {
         public void tryToInfuseGems() {
             List<Thing> things = this.SingleMap.listerThings.ThingsInGroup(ThingRequestGroup.Everything);
             foreach (Thing thing in things) {
-                if (thing.def.defName.StartsWith("Sphere_") && !thing.Position.Roofed(thing.Map)) {
+                if (thing.def.defName.StartsWith("whtwl_Sphere_") && !thing.Position.Roofed(thing.Map)) {
                     var stormlightComp = thing.TryGetComp<CompStormlight>();
                     if (stormlightComp != null) {
                         stormlightComp.infuseStormlight(5f);
                     }
                 }
-                else if (thing.def.defName.Equals("Apparel_SpherePouch") && !thing.Position.Roofed(thing.Map)) {
+                else if (thing.def == StormlightModDefs.whtwl_Apparel_SpherePouch && !thing.Position.Roofed(thing.Map)) {
                     var pouch = thing.TryGetComp<CompSpherePouch>();
                     if (pouch != null) {
                         pouch.InfuseStormlight(5f);
                     }
                 }
-                else if (thing.def.defName.Equals("SphereLamp") && !thing.Position.Roofed(thing.Map)) {
+                else if (thing.def == StormlightModDefs.whtwl_SphereLamp && !thing.Position.Roofed(thing.Map)) {
                     var lamp = thing.TryGetComp<StormlightLamps>();
                     if (lamp != null) {
                         lamp.InfuseStormlight(5f);
                     }
                 }
             }
-
         }
         public void destoyIfCollide(Thing item, Map itemMap, IntVec3 newPos) {
             List<Thing> thingsHere = itemMap.thingGrid.ThingsListAtFast(newPos).ListFullCopy();

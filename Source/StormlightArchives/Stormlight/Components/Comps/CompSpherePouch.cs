@@ -50,7 +50,6 @@ namespace StormlightMod {
                 }
             }
             if (addToRemoveList && !spheresToRemove.Any(i => i == selectedIndex)) {
-                Log.Message("added sphere to removelist");
                 spheresToRemove.Add(selectedIndex);
             }
             return sphere;
@@ -92,7 +91,6 @@ namespace StormlightMod {
                     if (absorbed >= amount) break; // Stop once fully absorbed
                 }
             }
-            Log.Message($"draw from pouch: {absorbed}");
             return absorbed;
         }
 

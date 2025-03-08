@@ -33,8 +33,8 @@ namespace StormlightMod {
 
         static private void givePawnShardbladeComp(Pawn pawn) {
 
-            ThingDef stuffDef = DefDatabase<ThingDef>.GetNamed("ShardMaterial", true);
-            ThingDef shardThing = DefDatabase<ThingDef>.GetNamed("MeleeWeapon_Shardblade", true);
+            ThingDef stuffDef = DefDatabase<ThingDef>.GetNamed("whtwl_ShardMaterial", true);
+            ThingDef shardThing = DefDatabase<ThingDef>.GetNamed("whtwl_MeleeWeapon_Shardblade", true);
             ThingWithComps blade = (ThingWithComps)ThingMaker.MakeThing(shardThing, stuffDef);
 
             CompShardblade comp = blade.GetComp<CompShardblade>();

@@ -49,7 +49,7 @@
 
 
  <ThingDef ParentName="StormlightLampBase">
-    <defName>SphereLamp</defName>
+    <defName>whtwl_SphereLamp</defName>
     <label>sphere lamp</label>
     <description>A wall-mounted lamp that lights an area using electricity. It is less powerful than a standing lamp, but can be mounted on walls.</description>
     <rotatable>true</rotatable>
@@ -94,11 +94,11 @@
         <compClass>StormlightMod.StormlightLamps</compClass>
         <maxCapacity>1</maxCapacity>
         <allowedSpheres>
-          <li>Sphere_Diamond</li>
-          <li>Sphere_Garnet</li>
-          <li>Sphere_Ruby</li>
-          <li>Sphere_Sapphire</li>
-		  <li>Sphere_Emerald</li>
+          <li>whtwl_Sphere_Diamond</li>
+          <li>whtwl_Sphere_Garnet</li>
+          <li>whtwl_Sphere_Ruby</li>
+          <li>whtwl_Sphere_Sapphire</li>
+		     <li>whtwl_Sphere_Emerald</li>
         </allowedSpheres>
       </li>
     </comps>

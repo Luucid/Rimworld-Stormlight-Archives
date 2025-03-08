@@ -22,14 +22,14 @@ namespace StormlightMod {
             );
 
             // Start the Highstorm condition
-            GameConditionDef stormDef = DefDatabase<GameConditionDef>.GetNamed("HighstormCondition", true);
+            GameConditionDef stormDef = DefDatabase<GameConditionDef>.GetNamed("whtwl_HighstormCondition", true);
             var ext = stormDef.GetModExtension<HighstormExtension>();
             int stormDuration = ext.stormDuration; 
             GameCondition storm = GameConditionMaker.MakeCondition(stormDef, stormDuration);
             map.gameConditionManager.RegisterCondition(storm);
 
             // Transition to the custom weather from XML
-            WeatherDef highstormWeather = DefDatabase<WeatherDef>.GetNamed("HighstormWeather", false);
+            WeatherDef highstormWeather = DefDatabase<WeatherDef>.GetNamed("whtwl_HighstormWeather", false);
             if (highstormWeather != null)
                 map.weatherManager.TransitionTo(highstormWeather);
 

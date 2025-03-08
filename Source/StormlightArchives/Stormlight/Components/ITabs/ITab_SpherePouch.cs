@@ -11,7 +11,7 @@ namespace StormlightMod {
 
         public ITab_SpherePouch() {
             size = WinSize;
-            labelKey = "TabSpherePouch"; // Localization key
+            labelKey = "whtwl_TabSpherePouch"; // Localization key
         }
 
 

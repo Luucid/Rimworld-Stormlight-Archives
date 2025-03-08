@@ -164,7 +164,7 @@ namespace StormlightMod {
             //  Absorb Stormlight from nearby spheres
             List<Thing> nearbyThings = pawn.Map.listerThings.ThingsInGroup(ThingRequestGroup.Everything);
             foreach (Thing thing in nearbyThings) {
-                if (thing.def.defName.StartsWith("Sphere_") && !thing.Position.Roofed(thing.Map)) {
+                if (thing.def.defName.StartsWith("whtwl_Sphere_") && !thing.Position.Roofed(thing.Map)) {
                     var stormlightComp = thing.TryGetComp<CompStormlight>();
                     if (stormlightComp != null) {
                         float drawnLight = stormlightComp.drawStormlight(absorbAmount);
@@ -172,7 +172,7 @@ namespace StormlightMod {
                         if (infuseStormlight(drawnLight)) return;
                     }
                 }
-                else if (thing.def.defName.Equals("Apparel_SpherePouch") && !thing.Position.Roofed(thing.Map)) {
+                else if (thing.def == StormlightModDefs.whtwl_Apparel_SpherePouch && !thing.Position.Roofed(thing.Map)) {
                     var pouch = thing.TryGetComp<CompSpherePouch>();
                     if (pouch != null && pouch.GetTotalStoredStormlight() > 0f) {
                         absorbAmount = Math.Min(absorbAmount, pouch.GetTotalStoredStormlight());
@@ -181,7 +181,7 @@ namespace StormlightMod {
                         if (infuseStormlight(drawnLight)) return;
                     }
                 }
-                else if (thing.def.defName.Equals("SphereLamp") && !thing.Position.Roofed(thing.Map)) {
+                else if (thing.def == StormlightModDefs.whtwl_SphereLamp && !thing.Position.Roofed(thing.Map)) {
                     var lamp = thing.TryGetComp<StormlightLamps>();
                     if (lamp != null && lamp.m_CurrentStormlight > 0f) {
                         float drawnLight = lamp.DrawStormlight(absorbAmount);
@@ -230,7 +230,6 @@ namespace StormlightMod {
                 Log.Message("Returning cause full of light");
                 return true;
             }
-            Log.Message("NOT FULL YET!");
             return false;
         }
     }

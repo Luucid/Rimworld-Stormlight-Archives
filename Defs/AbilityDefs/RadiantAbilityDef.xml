@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Defs>
   <AbilityCategoryDef>
-    <defName>Radiant</defName>
+    <defName>whtwl_Radiant</defName>
     <label>Radiant</label>
     <description>Abilities granted to those who have bonded a spren, allowing them to wield the fundamental forces of Roshar. These abilities are fueled by Stormlight.</description>
   </AbilityCategoryDef>
 
   <AbilityDef Name="RadiantBase" Abstract="True">
     <abilityClass>StormlightMod.RadiantAbility</abilityClass> <!-- Custom ability class -->
-    <category>Radiant</category> <!-- Custom category for Radiant abilities -->
+    <category>whtwl_Radiant</category> <!-- Custom category for Radiant abilities -->
     <statBases>
       <Ability_Duration>0</Ability_Duration> <!-- Base duration -->
     </statBases>
@@ -69,7 +69,7 @@
     <comps>
         <li Class="StormlightMod.CompProperties_AbilitySpawnEquipment">
             <compClass>StormlightMod.CompAbilityEffect_SpawnEquipment</compClass>
-            <thingDef>MeleeWeapon_Shardblade</thingDef> <!-- Ensure this matches your XML weapon defName -->
+            <thingDef>whtwl_MeleeWeapon_Shardblade</thingDef> <!-- Ensure this matches your XML weapon defName -->
         </li>
         <li Class="CompProperties_AbilityFleckOnTarget">
             <fleckDef>PsycastPsychicEffect</fleckDef>
@@ -100,7 +100,7 @@
     <comps>
         <li Class="StormlightMod.CompProperties_AbilityBreakBond">
             <compClass>StormlightMod.CompAbilityEffect_BreakBondWithSword</compClass>
-            <thingDef>MeleeWeapon_Shardblade</thingDef> <!-- Ensure this matches your XML weapon defName -->
+            <thingDef>whtwl_MeleeWeapon_Shardblade</thingDef> <!-- Ensure this matches your XML weapon defName -->
         </li>
     </comps>
 </AbilityDef>
@@ -200,7 +200,7 @@
         <li Class="StormlightMod.CompProperties_AbilityWindRunnerFlight">
             <compClass>StormlightMod.CompAbilityEffect_AbilityWindRunnerFlight</compClass>
             <thingDef>whtwl_WindRunnerFlight</thingDef> <!-- Ensure this matches your XML weapon defName -->
-            <stormLightCost>100</stormLightCost>
+            <stormLightCost>15</stormLightCost>
         </li>
     </comps>
 </AbilityDef>

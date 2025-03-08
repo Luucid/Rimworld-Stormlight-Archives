@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Defs>
 	<ThingDef ParentName="ResourceBase">
-		<defName>ShardMaterial</defName>
+		<defName>whtwl_ShardMaterial</defName>
 		<label>shard material</label>
 		<stuffProps>
 			<categories>
-				<li>ShardStuff</li>
+				<li>whtwl_ShardStuff</li>
 			</categories>
 			<statOffsets>
 				<SharpDamageMultiplier>1.5</SharpDamageMultiplier>
@@ -21,7 +21,7 @@
 	</ThingDef>
 
 	<StuffCategoryDef>
-		<defName>ShardStuff</defName>
+		<defName>whtwl_ShardStuff</defName>
 		<label>shard stuff</label>
 		<noun>shard stuff</noun>
 		<destroySoundSmall>BuildingDestroyed_Metal_Small</destroySoundSmall>

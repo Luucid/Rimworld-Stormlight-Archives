@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
   <ThingDef ParentName="ApparelBase">
-    <defName>Apparel_SpherePouch</defName>
+    <defName>whtwl_Apparel_SpherePouch</defName>
     <label>sphere pouch</label>
     <description>A leather pouch used to carry infused spheres, allowing Radiants to easily draw Stormlight.</description>
     <thingClass>Apparel</thingClass>
@@ -56,11 +56,11 @@
       <li Class="StormlightMod.CompProperties_SpherePouch">
         <maxCapacity>100</maxCapacity>
         <allowedSpheres>
-          <li>Sphere_Diamond</li>
-          <li>Sphere_Garnet</li>
-          <li>Sphere_Ruby</li>
-          <li>Sphere_Sapphire</li>
-		  <li>Sphere_Emerald</li>
+          <li>whtwl_Sphere_Diamond</li>
+          <li>whtwl_Sphere_Garnet</li>
+          <li>whtwl_Sphere_Ruby</li>
+          <li>whtwl_Sphere_Sapphire</li>
+		      <li>whtwl_Sphere_Emerald</li>
         </allowedSpheres>
       </li>
     </comps>

@@ -21,7 +21,7 @@ namespace StormlightMod {
         public override void Apply(LocalTargetInfo target, LocalTargetInfo dest) {
             // 1) Validate target
             if (!target.IsValid || target.Thing == null || !target.Thing.Spawned) {
-                Log.Warning("[LashUpward] Invalid target.");
+                Log.Warning("[HealSurge] Invalid target.");
                 return;
             }
 
@@ -31,9 +31,10 @@ namespace StormlightMod {
             }
 
             if (caster.GetComp<CompStormlight>() == null) {
-                Log.Message($"[heal] null!");
+                Log.Warning($"[heal] CompStormlight is null!");
                 return;
             }
+
 
             // 3) heal target
             healFunction(target.Thing);
@@ -48,6 +49,7 @@ namespace StormlightMod {
             if (targetPawn == null) {
                 return;
             }
+
             radiantHeal(targetPawn);
         }
 
@@ -60,39 +62,31 @@ namespace StormlightMod {
                         break;
                     pawn.health.hediffSet.hediffs.Remove(injury);
                     casterComp.drawStormlight(cost);
-
                     RadiantUtility.GiveRadiantXP(caster, 20f);
                 }
             }
-        }
-
-        private void healAddictions(Pawn pawn, Need_RadiantProgress radiantNeed, CompStormlight casterComp, Pawn caster) 
-            {
-            if (radiantNeed != null && radiantNeed.IdealLevel >= 4) {
-                var addictions = pawn.health.hediffSet.hediffs.OfType<Hediff_Addiction>().OrderByDescending(h => h.Severity).ToList();
-                foreach (var addiction in addictions) {
-                    float cost = 500f;
-                    if (casterComp.Stormlight < cost)
-                        break;
-                    pawn.health.hediffSet.hediffs.Remove(addiction);
-                    casterComp.drawStormlight(cost);
-
-                    RadiantUtility.GiveRadiantXP(caster, 12f);
-                }
+            else {
+                Log.Message("Too low ideal level for heal missing parts");
             }
         }
 
         private void healInjuries(Pawn pawn, Need_RadiantProgress radiantNeed, CompStormlight casterComp, Pawn caster) {
             var injuries = pawn.health.hediffSet.hediffs.OfType<Hediff_Injury>().OrderByDescending(h => h.Severity).ToList();
-            foreach (var injury in injuries) {
-                float cost = (injury.Severity * 75f) / radiantNeed.IdealLevel;
-                Log.Message($"injury with severity {injury.Severity} cost {cost}, with idealLevel {radiantNeed.IdealLevel}");
-                if (casterComp.Stormlight < cost)
-                    break;
+            bool stillInjured = true;
+            while (stillInjured && casterComp.HasStormlight) {
+                stillInjured = false;
+                foreach (var injury in injuries) {
+                    float cost = 1f;
+                    if (casterComp.Stormlight < cost)
+                        break;
 
-                injury.Heal(4.0f * radiantNeed.IdealLevel);
-                casterComp.drawStormlight(cost);
-                RadiantUtility.GiveRadiantXP(caster, 0.5f);
+                    float healAmount = (0.008f) + ((float)radiantNeed.IdealLevel * 2f)/10f;
+                    Log.Message($"HealAmount: {healAmount}");
+                    injury.Heal(healAmount);
+                    casterComp.drawStormlight(cost);
+                    RadiantUtility.GiveRadiantXP(caster, 5f);
+                    if (injury.Severity > 0) stillInjured = true;
+                }
             }
         }
         private void radiantHeal(Pawn pawn) {
@@ -100,11 +94,13 @@ namespace StormlightMod {
             CompStormlight casterComp = caster.GetComp<CompStormlight>();
             if (casterComp != null) {
                 Need_RadiantProgress radiantNeed = caster.needs.TryGetNeed<Need_RadiantProgress>();
+                if (radiantNeed == null) {
+                    Log.Error("[HealSurge] need was null");
+                    return;
+                }
 
                 healMissingParts(pawn, radiantNeed, casterComp, caster);
-                healAddictions(pawn, radiantNeed, casterComp, caster);
                 healInjuries(pawn, radiantNeed, casterComp, caster);
-
             }
         }
     }

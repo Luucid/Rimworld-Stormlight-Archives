@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Defs>
   <ThingDef Name="Sphere_Base" ParentName="ResourceBase" Abstract="True">
-    <defName>Sphere_Base</defName>
+    <defName>whtwl_Sphere_Base</defName>
     <label>sphere</label>
     <description>A small gemstone encased in glass, used as currency on Rimshar. Can hold Stormlight.</description>
     <stackLimit>1</stackLimit>
@@ -16,7 +16,7 @@
   </ThingDef>
 
   <ThingDef ParentName="Sphere_Base">
-    <defName>Sphere_Diamond</defName>
+    <defName>whtwl_Sphere_Diamond</defName>
     <label>diamond sphere</label>
     <description>A diamond sphere, worth a little more than normal currency. Can be infused with Stormlight.</description>
 	<graphicData>
@@ -39,7 +39,7 @@
   </ThingDef>
 
   <ThingDef ParentName="Sphere_Base">
-    <defName>Sphere_Garnet</defName>
+    <defName>whtwl_Sphere_Garnet</defName>
     <label>garnet sphere</label>
     <description>An garnet sphere, highly valuable and useful for soulcasting.</description>
 	<graphicData>
@@ -63,7 +63,7 @@
 
 
   <ThingDef ParentName="Sphere_Base">
-    <defName>Sphere_Ruby</defName>
+    <defName>whtwl_Sphere_Ruby</defName>
     <label>ruby sphere</label>
     <description>An emerald sphere, highly valuable and useful for soulcasting.</description>
 	<graphicData>
@@ -86,7 +86,7 @@
   </ThingDef>
   
   <ThingDef ParentName="Sphere_Base">
-    <defName>Sphere_Sapphire</defName>
+    <defName>whtwl_Sphere_Sapphire</defName>
     <label>sapphire sphere</label>
     <description>An emerald sphere, highly valuable and useful for soulcasting.</description>
 	<graphicData>
@@ -109,7 +109,7 @@
   </ThingDef>
 
 <ThingDef ParentName="Sphere_Base">
-    <defName>Sphere_Emerald</defName>
+    <defName>whtwl_Sphere_Emerald</defName>
     <label>emerald sphere</label>
     <description>An emerald sphere, highly valuable and useful for soulcasting.</description>
 	<graphicData>
