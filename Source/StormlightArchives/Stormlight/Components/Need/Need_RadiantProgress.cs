@@ -19,7 +19,15 @@ namespace StormlightMod {
         public int IdealLevel { get { return CurrentDegree + 1; } }
 
 
+        // Called after loading or on spawn
+        public override void ExposeData() {
+            base.ExposeData();
+            Scribe_Values.Look(ref currentXp, "currentXp", 0f);
+            Scribe_Values.Look(ref CurrentDegree, "CurrentDegree", 0);
 
+            // Save/load a reference to a Pawn with Scribe_References:
+            //Scribe_References.Look(ref pawnOwnerOfComp, "pawnOwnerOfComp");
+        }
 
 
         public Need_RadiantProgress(Pawn pawn) : base(pawn) {

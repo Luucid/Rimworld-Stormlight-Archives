@@ -7,6 +7,8 @@ using HarmonyLib;
 
 namespace StormlightMod {
     public class CompStormlight : ThingComp {
+        public bool isActivatedOnPawn = false;
+
         private float m_CurrentStormlight;
         public CompProperties_Stormlight Props => (CompProperties_Stormlight)props;
         public CompGlower GlowerComp => parent.GetComp<CompGlower>();
@@ -17,20 +19,27 @@ namespace StormlightMod {
         public float CurrentMaxStormlight = 0f;
         public bool m_BreathStormlight = false;
 
+        //private Pawn pawnOwnerOfComp = null;
+
         private int tick = 0;
+
+
+        public void toggleBreathStormlight() {
+            m_BreathStormlight = !m_BreathStormlight;
+        }
 
         // Called after loading or on spawn
         public override void PostExposeData() {
             base.PostExposeData();
             Scribe_Values.Look(ref m_CurrentStormlight, "currentStormlight", 0f);
             Scribe_Values.Look(ref m_BreathStormlight, StormlightModDefs.whtwl_BreathStormlight.defName, false);
-        }
-
-        public void toggleBreathStormlight() {
-            m_BreathStormlight = !m_BreathStormlight;
+            Scribe_Values.Look(ref isActivatedOnPawn, "isActivatedOnPawn", false);
         }
 
         public override void CompTick() {
+            if (isActivatedOnPawn == false && this.parent is Pawn _pawn) {
+                return;
+            }
 
             if (tick == 0) {
                 base.CompTick();
@@ -48,6 +57,9 @@ namespace StormlightMod {
         // This method adds additional text to the inspect pane.
         public override string CompInspectStringExtra() {
             // You can format the stormlight value as you like.
+            if (isActivatedOnPawn == false && this.parent is Pawn _pawn) {
+                return "";
+            }
             return "Stormlight: " + m_CurrentStormlight.ToString("F0") + " / " + CurrentMaxStormlight.ToString("F0");
         }
 
@@ -58,15 +70,15 @@ namespace StormlightMod {
             }
         }
         public void handleGlow() {
-            if (parent is Pawn pawn && pawn.Spawned) {
-                if (!StormlightMod.settings.enablePawnGlow) {
-                    GlowerComp.Props.glowRadius = 0;
-                    GlowerComp.Props.overlightRadius = 0;
-                    parent.Map.glowGrid.DeRegisterGlower(GlowerComp);
-                    return;
-                }
-            }
             if (GlowerComp != null) {
+                if (parent is Pawn pawn && pawn.Spawned) {
+                    if (!StormlightMod.settings.enablePawnGlow) {
+                        GlowerComp.Props.glowRadius = 0;
+                        GlowerComp.Props.overlightRadius = 0;
+                        parent.Map.glowGrid.DeRegisterGlower(GlowerComp);
+                        return;
+                    }
+                }
 
                 if (m_CurrentStormlight == 0) {
                     GlowerComp.Props.glowRadius = 0;

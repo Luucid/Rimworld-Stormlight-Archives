@@ -47,14 +47,17 @@ namespace StormlightMod {
         }
 
         static private void givePawnStormlight(Pawn pawn) {
-            if (pawn.GetComp<CompStormlight>() == null) {
-                CompStormlight stormlightComp = new CompStormlight();
-                pawn.AllComps.Add(stormlightComp);
-                stormlightComp.parent = pawn;
-                stormlightComp.Initialize(new CompProperties_Stormlight {
-                    maxStormlight = 3000f,
-                    drainRate = 1.0f
-                });
+            CompStormlight stormlightComp = pawn.GetComp<CompStormlight>();
+            if (stormlightComp != null && stormlightComp.isActivatedOnPawn == false) {
+                //CompStormlight stormlightComp = new CompStormlight();
+                //pawn.AllComps.Add(stormlightComp);
+                //stormlightComp.parent = pawn;
+                //stormlightComp.Initialize(new CompProperties_Stormlight {
+                //    maxStormlight = 3000f,
+                //    drainRate = 1.0f
+                //});
+                stormlightComp.isActivatedOnPawn = true;
+                stormlightComp.CompInspectStringExtra(); 
                 Log.Message($"{pawn.Name} gained Stormlight storage!");
             }
 
