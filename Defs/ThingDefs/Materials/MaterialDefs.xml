@@ -35,11 +35,11 @@
 
 
   <ThingDef ParentName="ResourceBase">
-    <defName>whtwl_Ruby</defName>
-    <label>Ruby</label>
+    <defName>whtwl_RawRuby</defName>
+    <label>Raw Ruby</label>
     <description>Something about rubys.</description>
     <graphicData>
-      <texPath>Things/Item/Resource/Gold</texPath>
+      <texPath>Things/Item/Resource/RawRuby</texPath>
       <graphicClass>Graphic_StackCount</graphicClass>
     </graphicData>
     <soundInteract>Silver_Drop</soundInteract>
@@ -48,34 +48,27 @@
     <healthAffectsPrice>false</healthAffectsPrice>
     <statBases>
       <MarketValue>10</MarketValue>
-      <Mass>0.008</Mass>
-      <StuffPower_Armor_Sharp>0.72</StuffPower_Armor_Sharp>
-      <StuffPower_Armor_Blunt>0.36</StuffPower_Armor_Blunt>
-      <StuffPower_Armor_Heat>0.36</StuffPower_Armor_Heat>
-      <StuffPower_Insulation_Cold>3</StuffPower_Insulation_Cold>
-      <StuffPower_Insulation_Heat>0</StuffPower_Insulation_Heat>
-      <SharpDamageMultiplier>0.75</SharpDamageMultiplier>
-      <BluntDamageMultiplier>1.0</BluntDamageMultiplier>
+      <Mass>1.0</Mass> <!--this is just the base mass, the lowest possible mass, it will scale with some custom property in c# code-->
     </statBases>
     <thingCategories>
       <li>ResourcesRaw</li>
     </thingCategories>
-    <stackLimit>500</stackLimit>
+    <stackLimit>10</stackLimit>
     <smallVolume>true</smallVolume>
     <deepCommonality>0.5</deepCommonality>
     <deepCountPerPortion>8</deepCountPerPortion>
     <deepLumpSizeRange>1~4</deepLumpSizeRange>
     <burnableByRecipe>false</burnableByRecipe>
-    <smeltable>true</smeltable>
-    <possessionCount>5</possessionCount>
+    <smeltable>false</smeltable>
+    <possessionCount>1</possessionCount>
     <stuffProps>
-      <stuffAdjective>golden</stuffAdjective>
+      <stuffAdjective>golden</stuffAdjective>  <!-- find out how this works and make it better suiting-->
       <categories>
-        <li>Metallic</li>
+        <li>Metallic</li>                      <!-- make custom category -->
       </categories>
-      <appearance>Metal</appearance>
-      <commonality>0.02</commonality>
-      <color>(255,235,122)</color>
+      <appearance>Metal</appearance>           <!-- change -->
+      <commonality>0.02</commonality>          <!-- change -->
+      <color>(255,235,122)</color>             <!-- change -->
       <constructEffect>ConstructMetal</constructEffect>
       <soundImpactBullet>BulletImpact_Metal</soundImpactBullet>
       <soundMeleeHitSharp>MeleeHit_Metal_Sharp</soundMeleeHitSharp>
@@ -90,11 +83,10 @@
         <Beauty>4</Beauty>
         <WorkToMake>0.9</WorkToMake>
         <WorkToBuild>0.9</WorkToBuild>
-        <MeleeWeapon_CooldownMultiplier>1.0</MeleeWeapon_CooldownMultiplier>
       </statFactors>
     </stuffProps>
     <terrainAffordanceNeeded>Medium</terrainAffordanceNeeded>
-    <allowedArchonexusCount>100</allowedArchonexusCount>
+    <allowedArchonexusCount>100</allowedArchonexusCount>  <!-- what is this? -->
   </ThingDef>
 
 </Defs>
