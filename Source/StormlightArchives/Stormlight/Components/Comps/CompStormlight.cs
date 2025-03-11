@@ -19,7 +19,10 @@ namespace StormlightMod {
         public float CurrentMaxStormlight = 0f;
         public bool m_BreathStormlight = false;
 
-        //private Pawn pawnOwnerOfComp = null;
+        // Modifiers
+        public float StormlightContainerSize = 1f;
+        public float StormlightContainerQuality = 1f;
+
 
         private int tick = 0;
 
@@ -36,6 +39,13 @@ namespace StormlightMod {
             Scribe_Values.Look(ref isActivatedOnPawn, "isActivatedOnPawn", false);
         }
 
+        private void adjustMaximumStormlight() {
+            float qualityFactor = 25f;
+            CurrentMaxStormlight = (MaxStormlightPerItem * StormlightContainerSize) - qualityFactor;
+            CurrentMaxStormlight += StormlightContainerQuality * qualityFactor;
+            CurrentMaxStormlight *= StackCount;
+        }
+
         public override void CompTick() {
             if (isActivatedOnPawn == false && this.parent is Pawn _pawn) {
                 return;
@@ -47,7 +57,7 @@ namespace StormlightMod {
                 if (parent is Pawn pawn && pawn.RaceProps.Humanlike) {
                     handleRadiantStuff(pawn);
                 }
-                CurrentMaxStormlight = MaxStormlightPerItem * StackCount;
+                adjustMaximumStormlight();
             }
             handleGlow();
             tick = (tick + 1) % 50;
@@ -215,7 +225,7 @@ namespace StormlightMod {
 
         private void drainStormLight() {
             if (m_CurrentStormlight > 0) {
-                m_CurrentStormlight -= Props.drainRate;
+                m_CurrentStormlight -= (Props.drainRate / StormlightContainerQuality);
                 if (m_CurrentStormlight < 0)
                     m_CurrentStormlight = 0;
             }
@@ -239,7 +249,6 @@ namespace StormlightMod {
             m_CurrentStormlight += amount;
             if (m_CurrentStormlight >= MaxStormlightPerItem) {
                 m_CurrentStormlight = MaxStormlightPerItem;
-                Log.Message("Returning cause full of light");
                 return true;
             }
             return false;

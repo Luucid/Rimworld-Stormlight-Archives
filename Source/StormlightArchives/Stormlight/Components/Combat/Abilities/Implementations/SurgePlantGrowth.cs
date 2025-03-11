@@ -49,7 +49,6 @@ namespace StormlightMod {
             }
 
 
-            Log.Message($"Target: {targetPlant.Label}");
 
             Pawn caster = this.parent.pawn as Pawn;
             if (caster != null) {

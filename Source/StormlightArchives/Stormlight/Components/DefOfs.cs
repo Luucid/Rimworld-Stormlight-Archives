@@ -29,7 +29,12 @@ namespace StormlightMod {
         public static ThingDef whtwl_Sphere_Sapphire;
         public static ThingDef whtwl_Sphere_Emerald; 
         public static ThingDef whtwl_Apparel_SpherePouch; 
-        public static ThingDef whtwl_SphereLamp;  
+        public static ThingDef whtwl_SphereLamp;
+        public static ThingDef whtwl_RawDiamond;
+        public static ThingDef whtwl_RawGarnet;
+        public static ThingDef whtwl_RawRuby;
+        public static ThingDef whtwl_RawSapphire;
+        public static ThingDef whtwl_RawEmerald;
 
         static StormlightModDefs() {
             DefOfHelper.EnsureInitializedInCtor(typeof(StormlightModDefs));

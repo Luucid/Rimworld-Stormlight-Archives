@@ -40,7 +40,7 @@ namespace StormlightMod {
         static void Postfix(Map map, bool moteOnWaste, Pawn pawn) {
 
             if (map != null) {
-                ThingDef sphereThing = StormlightUtilities.RollForRandomSphereSpawn();
+                ThingDef sphereThing = StormlightUtilities.RollForRandomGemSpawn();
                 if (sphereThing != null) {
                     Thing sphere = ThingMaker.MakeThing(sphereThing);  
                     IntVec3 dropPosition = pawn.Position;

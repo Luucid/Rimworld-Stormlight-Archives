@@ -1,18 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Defs>
-    <!-- <WorkGiverDef>
-        <defName>whtwl_RefuelSphereLamp</defName>
-        <label>add stormlight sphere to lamp</label>
-        <giverClass>StormlightMod.WorkGiver_AddSphereToLamp</giverClass>
-        <workType>Hauling</workType>
-        <verb>add sphere</verb>
-        <gerund>adding a sphere</gerund>
-        <priorityInType>90</priorityInType>
-        <requiredCapacities>
-            <li>Manipulation</li>
-        </requiredCapacities>
-    </WorkGiverDef> -->
-
     <JobDef>
         <defName>whtwl_RefuelSphereLamp</defName>
         <label>Add Stormlight Sphere</label>

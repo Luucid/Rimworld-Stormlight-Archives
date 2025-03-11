@@ -81,7 +81,6 @@ namespace StormlightMod {
                         break;
 
                     float healAmount = (0.008f) + ((float)radiantNeed.IdealLevel * 2f)/10f;
-                    Log.Message($"HealAmount: {healAmount}");
                     injury.Heal(healAmount);
                     casterComp.drawStormlight(cost);
                     RadiantUtility.GiveRadiantXP(caster, 5f);

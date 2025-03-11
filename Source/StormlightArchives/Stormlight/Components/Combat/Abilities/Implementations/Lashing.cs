@@ -19,7 +19,6 @@ namespace StormlightMod {
         }
         static void Postfix(AbilityDef ___triggeringAbility) {
             if (___triggeringAbility != null && flyingPawn != null) {
-                //Log.Message($"respawn pawn, ability: {___triggeringAbility.defName}");
                 if (___triggeringAbility.defName == StormlightModDefs.whtwl_LashingUpward.defName) {
 
                     flyingPawn.TakeDamage(new DamageInfo(DamageDefOf.Blunt, 75));

@@ -31,20 +31,20 @@ namespace StormlightMod {
             if (ext == null) return;
 
             if (Find.TickManager.TicksGame % 8 == 0) {
-                tryToInfuseGems();
+                tryToInfuseThings();
                 if (StormlightMod.settings.enableHighstormPushing)
                     moveItem();
             }
         }
 
-        public void tryToInfuseGems() {
+        public void tryToInfuseThings() {
             List<Thing> things = this.SingleMap.listerThings.ThingsInGroup(ThingRequestGroup.Everything);
             foreach (Thing thing in things) {
-                if (thing.def.defName.StartsWith("whtwl_Sphere_") && !thing.Position.Roofed(thing.Map)) {
-                    var stormlightComp = thing.TryGetComp<CompStormlight>();
-                    if (stormlightComp != null) {
-                        stormlightComp.infuseStormlight(5f);
-                    }
+                if (thing.Position.Roofed(thing.Map))
+                    continue;
+
+                if (thing.TryGetComp<CompStormlight>() is CompStormlight stormlightComp) {
+                    stormlightComp.infuseStormlight(5f);
                 }
                 else if (thing.def == StormlightModDefs.whtwl_Apparel_SpherePouch && !thing.Position.Roofed(thing.Map)) {
                     var pouch = thing.TryGetComp<CompSpherePouch>();

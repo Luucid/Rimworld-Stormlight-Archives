@@ -73,6 +73,9 @@
     <Compile Include="Components\Combat\Abilities\Implementations\SurgePlantGrowth.cs" />
     <Compile Include="Components\Combat\Abilities\Implementations\ToggleStormlight.cs" />
     <Compile Include="Components\Combat\Abilities\Verb_castRadiant.cs" />
+    <Compile Include="Components\Comps\CompGemSphere.cs" />
+    <Compile Include="Components\Comps\CompCutGemstone.cs" />
+    <Compile Include="Components\Comps\CompRawGemstone.cs" />
     <Compile Include="Components\Comps\CompShardblade.cs" />
     <Compile Include="Components\Comps\CompSphere.cs" />
     <Compile Include="Components\Comps\CompStormlight.cs" />
