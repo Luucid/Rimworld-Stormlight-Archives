@@ -9,22 +9,35 @@
 * Radiants standing outside during storm will be infused with stormlight
 * Will arrive every 8 days, with a warning system that alerts the player before the storm hits.
 
+#Gemstones
+Gemstone handling as a research field is under development.
+
+## Raw Gemstones
+* Raw gemstone clusters of 5 unique variants can be found as unique blocks, but this is rare.
+* When mining any kind of block, there is a small chance for a gemstone to drop
+
+## Cut Gemstones
+* Raw gemstones can be processed into cut gemstones, the quality and size of the cut will affect what the stone can be used for, and how much stormlight it can hold.
+
 ## Spheres
+* Made from Cut gemstones, might introduce glassblowing later
 * Spheres of 5 variants
 * Spheres can be infused with stormlight
 * Glow hen infused with stormlight
 * Sphere bag to hold spheres
 * Can add and remove spheres to bag
 * Bag is wearable like a belt
-
+* Fuel for custom stormlight lamp
+  
 ## Stormlight
 * Heals radiants when radiant is infused with it
 * Obtained through highstorm exposure
 
 ## Radiant
-* Wind runners order is the only one implemented right now
+* Two orders is implemented right now
 * Can draw in stormlight, which is the fuel for their powers
 * radiants have a custom xp system with ability unlocks throught the journey towards knight radiant
+* 
 ### abilities
 * passive healing
 * shardblade summon and dismissal
@@ -45,9 +58,6 @@
 
 ## Spheres
 * Make them tradable
-* Make chips, marks and broams
-* Minable, and craftable with glass recipe and worker skill in relevant field
-* Can be used as ingredient in various items, for example lamps.
 
 ## Radiant
 * Add more orders
