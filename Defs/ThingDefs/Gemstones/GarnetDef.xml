@@ -28,7 +28,7 @@
         <defName>whtwl_RawGarnet</defName>
         <label>Raw Garnet</label>
         <description>Something about Garnet.</description>
-          <graphicData>
+        <graphicData>
             <texPath>Things/Item/Spheres/RawGarnet</texPath>
             <graphicClass>Graphic_Single</graphicClass>
             <drawSize>1</drawSize>
@@ -77,13 +77,16 @@
         <products>
             <whtwl_CutGarnet>1</whtwl_CutGarnet>
         </products>
+        <researchPrerequisites>
+            <li>whtwl_GemCutting</li>
+        </researchPrerequisites>
     </RecipeDef>
 
     <ThingDef ParentName="whtwl_GemstoneBase">
         <defName>whtwl_CutGarnet</defName>
         <label>Cut Garnet</label>
         <description>Something about Cut Garnet.</description>
-           <graphicData>
+        <graphicData>
             <texPath>Things/Item/Spheres/CutGarnet</texPath>
             <graphicClass>Graphic_Single</graphicClass>
             <drawSize>0.7</drawSize>
@@ -131,6 +134,9 @@
         <products>
             <whtwl_Sphere_Garnet>1</whtwl_Sphere_Garnet>
         </products>
+          <researchPrerequisites>
+            <li>whtwl_SphereProduction</li>
+        </researchPrerequisites>
     </RecipeDef>
 
     <ThingDef ParentName="Sphere_Base">
@@ -147,7 +153,7 @@
                 <maxStormlight>5</maxStormlight>
                 <drainRate>0.01</drainRate>
             </li>
-              <li Class="StormlightMod.CompProperties_GemSphere">
+            <li Class="StormlightMod.CompProperties_GemSphere">
                 <compClass>StormlightMod.CompGemSphere</compClass>
             </li>
             <li Class="CompProperties_Glower">

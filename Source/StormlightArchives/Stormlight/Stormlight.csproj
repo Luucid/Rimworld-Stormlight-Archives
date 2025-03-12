@@ -88,6 +88,7 @@
     <Compile Include="Components\Jobs\JobDriver_RefuelStormlightLamp.cs" />
     <Compile Include="Components\MyModSettings.cs" />
     <Compile Include="Components\Need\Need_RadiantProgress.cs" />
+    <Compile Include="Components\Patches\GemPatching.cs" />
     <Compile Include="Components\Patches\HarmonyPatcher.cs" />
     <Compile Include="Components\Patches\HarmonyPatch_PawnSpherePouchITab.cs" />
     <Compile Include="Components\Patches\Highstorm\Pawn_HighstormPatch.cs" />

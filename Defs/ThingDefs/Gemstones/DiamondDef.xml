@@ -78,13 +78,16 @@
         <products>
             <whtwl_CutDiamond>1</whtwl_CutDiamond>
         </products>
+        <researchPrerequisites>
+            <li>whtwl_GemCutting</li>
+        </researchPrerequisites>
     </RecipeDef>
 
     <ThingDef ParentName="whtwl_GemstoneBase">
         <defName>whtwl_CutDiamond</defName>
         <label>Cut Diamond</label>
         <description>Something about Cut Diamond.</description>
-         <graphicData>
+        <graphicData>
             <texPath>Things/Item/Spheres/CutDiamond</texPath>
             <graphicClass>Graphic_Single</graphicClass>
             <drawSize>0.7</drawSize>
@@ -115,7 +118,6 @@
         <defName>whtwl_Make_DiamondSphere</defName>
         <label>make diamond sphere</label>
         <description>make diamond sphere out of cut diamond.</description>
-        <workerCounterClass>RecipeWorkerCounter_MakeStoneBlocks</workerCounterClass> <!-- make my own -->
         <ingredients>
             <li>
                 <filter>
@@ -131,12 +133,12 @@
                 <li>whtwl_CutDiamond</li>
             </thingDefs>
         </fixedIngredientFilter>
-        <specialProducts>
-            <li>Butchery</li> <!-- find out how this is -->
-        </specialProducts>
-        <!-- <products>
+        <products>
             <whtwl_Sphere_Diamond>1</whtwl_Sphere_Diamond>
-        </products> -->
+        </products>
+        <researchPrerequisites>
+            <li>whtwl_SphereProduction</li>
+        </researchPrerequisites>
     </RecipeDef>
 
     <ThingDef ParentName="Sphere_Base">

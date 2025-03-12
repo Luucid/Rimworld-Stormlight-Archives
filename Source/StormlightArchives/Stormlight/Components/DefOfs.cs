@@ -23,18 +23,27 @@ namespace StormlightMod {
         public static AbilityDef whtwl_WindRunnerFlight;
 
         //ThingDef
-        public static ThingDef whtwl_Sphere_Diamond;
-        public static ThingDef whtwl_Sphere_Garnet;
-        public static ThingDef whtwl_Sphere_Ruby;
-        public static ThingDef whtwl_Sphere_Sapphire;
-        public static ThingDef whtwl_Sphere_Emerald; 
-        public static ThingDef whtwl_Apparel_SpherePouch; 
+        public static ThingDef whtwl_Apparel_SpherePouch;
         public static ThingDef whtwl_SphereLamp;
+    
         public static ThingDef whtwl_RawDiamond;
         public static ThingDef whtwl_RawGarnet;
         public static ThingDef whtwl_RawRuby;
         public static ThingDef whtwl_RawSapphire;
         public static ThingDef whtwl_RawEmerald;
+
+        public static ThingDef whtwl_CutDiamond;
+        public static ThingDef whtwl_CutGarnet;
+        public static ThingDef whtwl_CutRuby;
+        public static ThingDef whtwl_CutSapphire;
+        public static ThingDef whtwl_CutEmerald;
+
+        public static ThingDef whtwl_Sphere_Diamond;
+        public static ThingDef whtwl_Sphere_Garnet;
+        public static ThingDef whtwl_Sphere_Ruby;
+        public static ThingDef whtwl_Sphere_Sapphire;
+        public static ThingDef whtwl_Sphere_Emerald;
+
 
         static StormlightModDefs() {
             DefOfHelper.EnsureInitializedInCtor(typeof(StormlightModDefs));
@@ -48,6 +57,30 @@ namespace StormlightMod {
                 {
                 StormlightModDefs.whtwl_Radiant_Windrunner,
                 StormlightModDefs.whtwl_Radiant_Truthwatcher
+            };
+            }
+        }
+        public static List<ThingDef> RawGems {
+            get {
+                return new List<ThingDef>
+                {
+                StormlightModDefs.whtwl_RawDiamond,
+                StormlightModDefs.whtwl_RawGarnet,
+                StormlightModDefs.whtwl_RawRuby,
+                StormlightModDefs.whtwl_RawSapphire,
+                StormlightModDefs.whtwl_RawEmerald
+            };
+            }
+        }
+        public static List<ThingDef> CutGems {
+            get {
+                return new List<ThingDef>
+                {
+                StormlightModDefs.whtwl_CutDiamond,
+                StormlightModDefs.whtwl_CutGarnet,
+                StormlightModDefs.whtwl_CutRuby,
+                StormlightModDefs.whtwl_CutSapphire,
+                StormlightModDefs.whtwl_CutEmerald
             };
             }
         }

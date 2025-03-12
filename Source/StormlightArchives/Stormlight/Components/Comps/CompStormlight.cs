@@ -37,6 +37,7 @@ namespace StormlightMod {
             Scribe_Values.Look(ref m_CurrentStormlight, "currentStormlight", 0f);
             Scribe_Values.Look(ref m_BreathStormlight, StormlightModDefs.whtwl_BreathStormlight.defName, false);
             Scribe_Values.Look(ref isActivatedOnPawn, "isActivatedOnPawn", false);
+            Scribe_Values.Look(ref CurrentMaxStormlight, "isActivatedOnPawn", 0f);
         }
 
         private void adjustMaximumStormlight() {
@@ -247,8 +248,8 @@ namespace StormlightMod {
         // Infuse from code when highstorm is active
         public bool infuseStormlight(float amount) {
             m_CurrentStormlight += amount;
-            if (m_CurrentStormlight >= MaxStormlightPerItem) {
-                m_CurrentStormlight = MaxStormlightPerItem;
+            if (m_CurrentStormlight >= CurrentMaxStormlight) {
+                m_CurrentStormlight = CurrentMaxStormlight;
                 return true;
             }
             return false;

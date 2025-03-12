@@ -13,8 +13,8 @@ namespace StormlightMod {
 
         static public Trait GetRadiantTrait(Pawn pawn) {
             return pawn.story.traits.allTraits.FirstOrDefault(t => StormlightModUtilities.RadiantTraits.Contains(t.def));
-
         }
+
         private static readonly List<ThingDef> gems = new List<ThingDef>
         {
         StormlightModDefs. whtwl_RawDiamond,

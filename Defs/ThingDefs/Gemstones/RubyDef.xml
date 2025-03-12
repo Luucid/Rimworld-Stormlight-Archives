@@ -77,13 +77,16 @@
         <products>
             <whtwl_CutRuby>1</whtwl_CutRuby>
         </products>
+        <researchPrerequisites>
+            <li>whtwl_GemCutting</li>
+        </researchPrerequisites>
     </RecipeDef>
 
     <ThingDef ParentName="whtwl_GemstoneBase">
         <defName>whtwl_CutRuby</defName>
         <label>Cut Ruby</label>
         <description>Something about Cut Ruby.</description>
-            <graphicData>
+        <graphicData>
             <texPath>Things/Item/Spheres/CutRuby</texPath>
             <graphicClass>Graphic_Single</graphicClass>
             <drawSize>0.7</drawSize>
@@ -131,6 +134,9 @@
         <products>
             <whtwl_Sphere_Ruby>1</whtwl_Sphere_Ruby>
         </products>
+          <researchPrerequisites>
+            <li>whtwl_SphereProduction</li>
+        </researchPrerequisites>
     </RecipeDef>
 
     <ThingDef ParentName="Sphere_Base">

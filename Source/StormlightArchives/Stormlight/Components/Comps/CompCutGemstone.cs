@@ -9,15 +9,17 @@ namespace StormlightMod {
         public CompProperties_CutGemstone GemstoneProps => (CompProperties_CutGemstone)props;
         public CompProperties_Stormlight StormlightProps => (CompProperties_Stormlight)props;
         private CompStormlight stormlightComp;
-        private int gemstoneQuality;
-        private int gemstoneSize;
+        public int gemstoneQuality;
+        public int gemstoneSize;
+        public int maximumGemstoneSize = 20;
 
         public override void Initialize(CompProperties props) {
             base.Initialize(props);
             stormlightComp = parent.GetComp<CompStormlight>();
-
-            gemstoneQuality = StormlightUtilities.RollTheDice(1, 5); //make better roller later with lower prob for higher quality
-            gemstoneSize = StormlightUtilities.RollTheDice(1, 3);    //make better roller later with lower prob for bigger size
+            List<int> sizeList = new List<int>() { 1, 5, 20 };
+            sizeList.RemoveAll(n => n > maximumGemstoneSize);
+            gemstoneQuality = StormlightUtilities.RollTheDice(1, 5);
+            gemstoneSize = StormlightUtilities.RollForRandomIntFromList(sizeList);   //make better roller later with lower prob for bigger size
 
             if (stormlightComp != null) {
                 stormlightComp.StormlightContainerQuality = gemstoneQuality;
@@ -28,7 +30,44 @@ namespace StormlightMod {
                 Log.Error("CompRawGemstone requires CompStormlight, but none was found on parent.");
             }
         }
+        public override string TransformLabel(string label) {
+            string sizeLabel = "";
+            string qualityLabel = "";
+            switch (gemstoneSize) {
+                case 1:
+                    sizeLabel = " chip";
+                    break;
+                case 5:
+                    sizeLabel = " mark";
+                    break;
+                case 20:
+                    sizeLabel = " broam";
+                    break;
+                default:
+                    break;
+            }
+            switch (gemstoneQuality) {
+                case 1:
+                    qualityLabel = "flawed ";
+                    break;
+                case 2:
+                    qualityLabel = "imperfect ";
+                    break;
+                case 3:
+                    qualityLabel = "standard ";
+                    break;
+                case 4:
+                    qualityLabel = "flawless ";
+                    break;
+                case 5:
+                    qualityLabel = "perfect ";
+                    break;
 
+                default:
+                    break;
+            }
+            return qualityLabel + label + sizeLabel;
+        }
         // Called after loading or on spawn
         public override void PostExposeData() {
             base.PostExposeData();

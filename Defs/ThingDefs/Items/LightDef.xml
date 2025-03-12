@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Defs>
 
- <ThingDef Abstract="True" Name="StormlightLampBase" ParentName="BuildingBase">
+  <ThingDef Abstract="True" Name="StormlightLampBase" ParentName="BuildingBase">
     <thingClass>Building</thingClass>
     <category>Building</category>
     <minifiedDef>MinifiedThing</minifiedDef>
@@ -38,7 +38,7 @@
     </placeWorkers>
     <drawPlaceWorkersWhileSelected>true</drawPlaceWorkersWhileSelected>
     <comps>
-    <li Class="CompProperties_Glower">
+      <li Class="CompProperties_Glower">
         <glowRadius>11</glowRadius>
         <glowColor>(214,148,94,0)</glowColor>
         <colorPickerEnabled>false</colorPickerEnabled>
@@ -48,10 +48,11 @@
   </ThingDef>
 
 
- <ThingDef ParentName="StormlightLampBase">
+  <ThingDef ParentName="StormlightLampBase">
     <defName>whtwl_SphereLamp</defName>
     <label>sphere lamp</label>
-    <description>A wall-mounted lamp that lights an area using electricity. It is less powerful than a standing lamp, but can be mounted on walls.</description>
+    <description>A wall-mounted lamp that lights an area using electricity. It is less powerful than
+      a standing lamp, but can be mounted on walls.</description>
     <rotatable>true</rotatable>
     <tickerType>Normal</tickerType>
     <graphicData>
@@ -98,9 +99,12 @@
           <li>whtwl_Sphere_Garnet</li>
           <li>whtwl_Sphere_Ruby</li>
           <li>whtwl_Sphere_Sapphire</li>
-		     <li>whtwl_Sphere_Emerald</li>
+          <li>whtwl_Sphere_Emerald</li>
         </allowedSpheres>
       </li>
     </comps>
+    <researchPrerequisites>
+      <li>whtwl_SphereLamps</li>
+    </researchPrerequisites>
   </ThingDef>
 </Defs>

@@ -13,6 +13,9 @@ namespace StormlightMod {
         private CompStormlight stormlightComp;
         private int gemstoneQuality;
         private int gemstoneSize;
+        public bool inheritGemstone = false;
+        public int inheritGemstoneQuality = 1;
+        public int inheritGemstoneSize = 1;
 
         public override void PostPostMake() {
             base.PostPostMake();
@@ -20,10 +23,17 @@ namespace StormlightMod {
         public override void Initialize(CompProperties props) {
             base.Initialize(props);
             stormlightComp = parent.GetComp<CompStormlight>();
-            List<int> sizeList = new List<int>() { 1, 5, 20 };
-            gemstoneQuality = StormlightUtilities.RollTheDice(1, 5);
-            gemstoneSize = StormlightUtilities.RollForRandomIntFromList(sizeList);   //make better roller later with lower prob for bigger size
+            if (inheritGemstone == false) {
+                List<int> sizeList = new List<int>() { 1, 5, 20 };
+                List<int> qualityList = new List<int>() { 1, 2, 3, 4, 5 };
 
+                gemstoneQuality = StormlightUtilities.RollForRandomIntFromList(qualityList);   //make better roller later with lower prob for bigger size
+                gemstoneSize = StormlightUtilities.RollForRandomIntFromList(sizeList);         //make better roller later with lower prob for bigger size
+            }
+            else {
+                gemstoneQuality = inheritGemstoneQuality;
+                gemstoneSize = inheritGemstoneSize;
+            }
             if (stormlightComp != null) {
                 stormlightComp.StormlightContainerQuality = gemstoneQuality;
                 stormlightComp.StormlightContainerSize = gemstoneSize;
@@ -31,16 +41,42 @@ namespace StormlightMod {
         }
 
         public override string TransformLabel(string label) {
+            string sizeLabel = "";
+            string qualityLabel = "";
             switch (gemstoneSize) {
                 case 1:
-                    return label + " chip";
+                    sizeLabel = " chip";
+                    break;
                 case 5:
-                    return label + " mark";
+                    sizeLabel = " mark";
+                    break;
                 case 20:
-                    return label + " broam";
+                    sizeLabel = " broam";
+                    break;
                 default:
-                    return label;
+                    break;
             }
+            switch (gemstoneQuality) {
+                case 1:
+                    qualityLabel = "flawed ";
+                    break;
+                case 2:
+                    qualityLabel = "imperfect ";
+                    break;
+                case 3:
+                    qualityLabel = "standard ";
+                    break;
+                case 4:
+                    qualityLabel = "flawless ";
+                    break;
+                case 5:
+                    qualityLabel = "perfect ";
+                    break;
+
+                default:
+                    break;
+            }
+            return qualityLabel + label + sizeLabel;
         }
 
         // Called after loading or on spawn

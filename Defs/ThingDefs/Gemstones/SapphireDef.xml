@@ -28,7 +28,7 @@
         <defName>whtwl_RawSapphire</defName>
         <label>Raw Sapphire</label>
         <description>Something about Sapphire.</description>
-          <graphicData>
+        <graphicData>
             <texPath>Things/Item/Spheres/RawSapphire</texPath>
             <graphicClass>Graphic_Single</graphicClass>
             <drawSize>1</drawSize>
@@ -78,13 +78,16 @@
         <products>
             <whtwl_CutSapphire>1</whtwl_CutSapphire>
         </products>
+        <researchPrerequisites>
+            <li>whtwl_GemCutting</li>
+        </researchPrerequisites>
     </RecipeDef>
 
     <ThingDef ParentName="whtwl_GemstoneBase">
         <defName>whtwl_CutSapphire</defName>
         <label>Cut Sapphire</label>
         <description>Something about Cut Sapphire.</description>
-           <graphicData>
+        <graphicData>
             <texPath>Things/Item/Spheres/CutSapphire</texPath>
             <graphicClass>Graphic_Single</graphicClass>
             <drawSize>0.7</drawSize>
@@ -132,6 +135,9 @@
         <products>
             <whtwl_Sphere_Sapphire>1</whtwl_Sphere_Sapphire>
         </products>
+        <researchPrerequisites>
+            <li>whtwl_SphereProduction</li>
+        </researchPrerequisites>
     </RecipeDef>
     <ThingDef ParentName="Sphere_Base">
         <defName>whtwl_Sphere_Sapphire</defName>
