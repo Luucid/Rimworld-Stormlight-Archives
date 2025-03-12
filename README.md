@@ -9,7 +9,7 @@
 * Radiants standing outside during storm will be infused with stormlight
 * Will arrive every 8 days, with a warning system that alerts the player before the storm hits.
 
-#Gemstones
+# Gemstones
 Gemstone handling as a research field is under development.
 
 ## Raw Gemstones
