@@ -108,6 +108,10 @@
             <li Class="StormlightMod.CompProperties_CutGemstone">
                 <compClass>StormlightMod.CompCutGemstone</compClass>
             </li>
+            <li Class="CompProperties_Glower">
+                <glowRadius>0</glowRadius>
+                <glowColor>(214,224,16,0)</glowColor>
+            </li>
         </comps>
     </ThingDef>
 
@@ -134,7 +138,7 @@
         <products>
             <whtwl_Sphere_Garnet>1</whtwl_Sphere_Garnet>
         </products>
-          <researchPrerequisites>
+        <researchPrerequisites>
             <li>whtwl_SphereProduction</li>
         </researchPrerequisites>
     </RecipeDef>

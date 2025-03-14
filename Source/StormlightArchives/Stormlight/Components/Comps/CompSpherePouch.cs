@@ -2,13 +2,14 @@
 using RimWorld;
 using Verse;
 using UnityEngine;
+using System.Reflection;
 
 namespace StormlightMod {
     public class CompSpherePouch : ThingComp {
         public List<Thing> storedSpheres = new List<Thing>(); //  List of sphere stacks inside the pouch
         private List<int> spheresToRemove = new List<int>();  //  spheres to remove
 
-        public bool Empty => storedSpheres.Count == 0; 
+        public bool Empty => storedSpheres.Count == 0;
 
 
         public CompProperties_SpherePouch Props => (CompProperties_SpherePouch)props;
@@ -38,6 +39,10 @@ namespace StormlightMod {
                 }
             }
             return total;
+        }
+
+        public bool PouchContainsSpecificSphere(Thing sphere) {
+            return storedSpheres.Contains(sphere);
         }
 
         public Thing GetSphereWithMostStormlight(bool addToRemoveList = false) {
@@ -108,6 +113,14 @@ namespace StormlightMod {
                 GenPlace.TryPlaceThing(sphere, dropPosition, pawn.Map, ThingPlaceMode.Near);
             }
 
+        }
+
+        public bool RemoveSphereFromPouch(Thing sphere, Map map, IntVec3 dropPosition) {
+            if (storedSpheres.Contains(sphere)) {
+                storedSpheres.Remove(sphere);
+                return GenPlace.TryPlaceThing(sphere, dropPosition, map, ThingPlaceMode.Near);
+            }
+            return false;
         }
 
 

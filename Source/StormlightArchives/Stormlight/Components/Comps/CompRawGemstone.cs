@@ -27,6 +27,17 @@ namespace StormlightMod {
         public override void PostExposeData() {
             base.PostExposeData();
         }
+
+        public override bool AllowStackWith(Thing other) {
+            CompRawGemstone comp = other.TryGetComp<CompRawGemstone>();
+            if (comp != null) {
+                if (comp.gemstoneSize != this.gemstoneSize) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
         public override string TransformLabel(string label) {
             switch (gemstoneSize) {
                 case 1:

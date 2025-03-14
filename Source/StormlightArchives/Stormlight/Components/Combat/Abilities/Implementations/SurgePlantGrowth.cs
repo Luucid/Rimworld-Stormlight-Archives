@@ -48,14 +48,13 @@ namespace StormlightMod {
                 return;
             }
 
-
-
             Pawn caster = this.parent.pawn as Pawn;
             if (caster != null) {
                 CompStormlight casterComp = caster.GetComp<CompStormlight>();
                 if (casterComp != null && casterComp.Stormlight >= Props.stormLightCost) {
                     targetPlant.Growth = 1;
                     RadiantUtility.GiveRadiantXP(caster, 50f);
+                    casterComp.drawStormlight(Props.stormLightCost);
                 }
             }
         }

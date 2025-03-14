@@ -16,10 +16,9 @@ namespace StormlightMod {
         public bool inheritGemstone = false;
         public int inheritGemstoneQuality = 1;
         public int inheritGemstoneSize = 1;
+        public string GetFullLabel => TransformLabel(parent.Label);
+        public enum GemSize { None, Chip, Mark, Broam};
 
-        public override void PostPostMake() {
-            base.PostPostMake();
-        }
         public override void Initialize(CompProperties props) {
             base.Initialize(props);
             stormlightComp = parent.GetComp<CompStormlight>();
@@ -37,7 +36,32 @@ namespace StormlightMod {
             if (stormlightComp != null) {
                 stormlightComp.StormlightContainerQuality = gemstoneQuality;
                 stormlightComp.StormlightContainerSize = gemstoneSize;
+                stormlightComp.calculateMaximumGlowRadius(gemstoneQuality, gemstoneSize);
             }
+        }
+
+        public GemSize GetGemSize() 
+            {
+            switch (gemstoneSize) {
+                case 1:
+                    return GemSize.Chip;
+                case 5:
+                    return GemSize.Mark;
+                case 20:
+                    return GemSize.Broam;
+                default:
+                    return GemSize.Chip;
+            }
+        }
+
+        public override bool AllowStackWith(Thing other) {
+            CompGemSphere comp = other.TryGetComp<CompGemSphere>();
+            if (comp != null) {
+                if (comp.gemstoneQuality != this.gemstoneQuality || comp.gemstoneSize != this.gemstoneSize) {
+                    return false;
+                }
+            }
+            return true;
         }
 
         public override string TransformLabel(string label) {
@@ -88,6 +112,10 @@ namespace StormlightMod {
 
         public override void CompTick() {
             base.CompTick();
+            if(StormlightMod.settings.devOptionAutofillSpheres && stormlightComp != null) 
+            {
+                stormlightComp.infuseStormlight(5f);
+            }
         }
     }
 }

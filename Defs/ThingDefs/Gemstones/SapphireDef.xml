@@ -109,6 +109,10 @@
             <li Class="StormlightMod.CompProperties_CutGemstone">
                 <compClass>StormlightMod.CompCutGemstone</compClass>
             </li>
+            <li Class="CompProperties_Glower">
+                <glowRadius>0</glowRadius>
+                <glowColor>(16,200,225,0)</glowColor>
+            </li>
         </comps>
     </ThingDef>
 

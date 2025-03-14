@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+    <ResearchTabDef>
+        <defName>whtwl_StormlightArchives</defName>
+        <label>Rimlight Archives</label>
+    </ResearchTabDef>
+
+    <ResearchProjectDef>
+        <defName>whtwl_GemCutting</defName>
+        <label>Gem Cutting &amp; Processing</label>
+        <description>By refining raw gemstones, colonists can increase their value and prepare them
+            for use in trade or magical applications.</description>
+        <tab>whtwl_StormlightArchives</tab>
+        <baseCost>1200</baseCost>
+        <techLevel>Medieval</techLevel>
+        <researchViewX>2.00</researchViewX>
+        <researchViewY>3.80</researchViewY>
+        <generalRules>
+            <rulesStrings>
+                <li>subject->gem cutting</li>
+                <li>subject_story->carefully chiseled gemstones under torchlight, dreaming of wealth</li>
+                <li>subject_story->discovered a method to cut gemstones with extreme precision</li>
+                <li>subject_story->was cheated by a noble who claimed the gem was flawed</li>
+                <li>subject_gerund->cutting gemstones</li>
+            </rulesStrings>
+        </generalRules>
+    </ResearchProjectDef>
+
+    <ResearchProjectDef>
+        <defName>whtwl_SphereProduction</defName>
+        <label>Sphere Production</label>
+        <description>By encasing refined gemstones in glass, colonists can produce spheres used for
+            trade, currency, and magical energy storage.</description>
+        <tab>whtwl_StormlightArchives</tab>
+        <baseCost>1500</baseCost>
+        <techLevel>Industrial</techLevel>
+        <prerequisites>
+            <li>whtwl_GemCutting</li>
+        </prerequisites>
+        <researchViewX>3.10</researchViewX>
+        <researchViewY>3.80</researchViewY>
+        <generalRules>
+            <rulesStrings>
+                <li>subject->sphere crafting</li>
+                <li>subject_story->carefully encased gemstones in glass, hoping to capture the storm</li>
+                <li>subject_story->accidentally shattered a valuable sphere</li>
+                <li>subject_story->traded spheres with a merchant</li>
+                <li>subject_gerund->encasing gemstones in spheres</li>
+            </rulesStrings>
+        </generalRules>
+    </ResearchProjectDef>
+
+    <ResearchProjectDef>
+        <defName>whtwl_SphereLamps</defName>
+        <label>Sphere Lamps</label>
+        <description>Custom lamps powered by refuelable by spheres.</description>
+        <tab>whtwl_StormlightArchives</tab>
+        <baseCost>700</baseCost>
+        <techLevel>Industrial</techLevel>
+        <prerequisites>
+            <li>whtwl_GemCutting</li>
+        </prerequisites>
+        <researchViewX>2.00</researchViewX>
+        <researchViewY>1.80</researchViewY>
+    </ResearchProjectDef>
+</Defs>

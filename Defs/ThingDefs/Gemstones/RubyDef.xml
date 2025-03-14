@@ -24,6 +24,7 @@
         </building>
     </ThingDef>
 
+  <!-- RAW GEMS -->
     <ThingDef ParentName="whtwl_GemstoneBase">
         <defName>whtwl_RawRuby</defName>
         <label>Raw Ruby</label>

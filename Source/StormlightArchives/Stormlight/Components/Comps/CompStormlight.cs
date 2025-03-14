@@ -22,7 +22,7 @@ namespace StormlightMod {
         // Modifiers
         public float StormlightContainerSize = 1f;
         public float StormlightContainerQuality = 1f;
-
+        public float MaximumGlowRadius = 8.0f;
 
         private int tick = 0;
 
@@ -37,7 +37,9 @@ namespace StormlightMod {
             Scribe_Values.Look(ref m_CurrentStormlight, "currentStormlight", 0f);
             Scribe_Values.Look(ref m_BreathStormlight, StormlightModDefs.whtwl_BreathStormlight.defName, false);
             Scribe_Values.Look(ref isActivatedOnPawn, "isActivatedOnPawn", false);
-            Scribe_Values.Look(ref CurrentMaxStormlight, "isActivatedOnPawn", 0f);
+            Scribe_Values.Look(ref CurrentMaxStormlight, "CurrentMaxStormlight", 0f);
+            Scribe_Values.Look(ref StormlightContainerSize, "StormlightContainerSize", 1f);
+            Scribe_Values.Look(ref StormlightContainerQuality, "StormlightContainerQuality", 1f);
         }
 
         private void adjustMaximumStormlight() {
@@ -74,10 +76,14 @@ namespace StormlightMod {
             return "Stormlight: " + m_CurrentStormlight.ToString("F0") + " / " + CurrentMaxStormlight.ToString("F0");
         }
 
-        private void fixGlowIssue() {
+        private void toggleGlow(bool on) {
             if (parent.Map != null) {
-                parent.Map.glowGrid.DeRegisterGlower(GlowerComp);
-                parent.Map.glowGrid.RegisterGlower(GlowerComp);
+                if (on) {
+                    parent.Map.glowGrid.RegisterGlower(GlowerComp);
+                }
+                else {
+                    parent.Map.glowGrid.DeRegisterGlower(GlowerComp);
+                }
             }
         }
         public void handleGlow() {
@@ -87,23 +93,29 @@ namespace StormlightMod {
                         GlowerComp.Props.glowRadius = 0;
                         GlowerComp.Props.overlightRadius = 0;
                         parent.Map.glowGrid.DeRegisterGlower(GlowerComp);
+                        toggleGlow(false);
                         return;
                     }
                 }
 
-                if (m_CurrentStormlight == 0) {
-                    GlowerComp.Props.glowRadius = 0;
+                bool glowEnabled = m_CurrentStormlight > 0f;
+                if (glowEnabled) 
+                { 
+                    GlowerComp.Props.glowRadius = MaximumGlowRadius; 
                 }
-                else if (m_CurrentStormlight < 10.0f) {
-                    GlowerComp.Props.glowRadius = 2.0f;
-                }
-                else {
-                    GlowerComp.Props.glowRadius = 5.0f;
-                }
-                fixGlowIssue();
+                toggleGlow(glowEnabled);
             }
         }
 
+        public void calculateMaximumGlowRadius(int quality, int size) 
+            {
+            // Normalize size (1, 5, 20) to range 1-10
+            float normalizedSize = (size - 1f) / (20.0f - 1f) * 9f + 1f;
+
+            MaximumGlowRadius =  (float)Math.Round(normalizedSize, 2) + (quality/5f);
+
+            Log.Message($"Maximum glow radius for q({quality}) and s({size}) = {MaximumGlowRadius}");
+        }
 
         private void radiantHeal(Pawn pawn) {
             // HEAL MISSING PARTS

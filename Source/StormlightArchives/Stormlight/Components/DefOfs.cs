@@ -25,19 +25,22 @@ namespace StormlightMod {
         //ThingDef
         public static ThingDef whtwl_Apparel_SpherePouch;
         public static ThingDef whtwl_SphereLamp;
-    
+
+        //RAW GEMS
         public static ThingDef whtwl_RawDiamond;
         public static ThingDef whtwl_RawGarnet;
         public static ThingDef whtwl_RawRuby;
         public static ThingDef whtwl_RawSapphire;
         public static ThingDef whtwl_RawEmerald;
 
+        //CUT GEMS
         public static ThingDef whtwl_CutDiamond;
         public static ThingDef whtwl_CutGarnet;
         public static ThingDef whtwl_CutRuby;
         public static ThingDef whtwl_CutSapphire;
         public static ThingDef whtwl_CutEmerald;
 
+        //SPHERED GEMS
         public static ThingDef whtwl_Sphere_Diamond;
         public static ThingDef whtwl_Sphere_Garnet;
         public static ThingDef whtwl_Sphere_Ruby;

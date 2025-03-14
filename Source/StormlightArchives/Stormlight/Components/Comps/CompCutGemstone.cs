@@ -24,12 +24,24 @@ namespace StormlightMod {
             if (stormlightComp != null) {
                 stormlightComp.StormlightContainerQuality = gemstoneQuality;
                 stormlightComp.StormlightContainerSize = gemstoneSize;
+                stormlightComp.calculateMaximumGlowRadius(gemstoneQuality, gemstoneSize);
                 Log.Message($"gemstoneQuality: {gemstoneQuality}, gemstoneSize: {gemstoneSize}");
             }
             else {
                 Log.Error("CompRawGemstone requires CompStormlight, but none was found on parent.");
             }
         }
+
+        public override bool AllowStackWith(Thing other) {
+            CompCutGemstone comp = other.TryGetComp<CompCutGemstone>();
+            if (comp != null) {
+                if (comp.gemstoneQuality != this.gemstoneQuality || comp.gemstoneSize != this.gemstoneSize) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
         public override string TransformLabel(string label) {
             string sizeLabel = "";
             string qualityLabel = "";

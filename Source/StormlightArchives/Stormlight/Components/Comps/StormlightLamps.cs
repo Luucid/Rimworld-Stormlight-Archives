@@ -13,6 +13,8 @@ namespace StormlightMod {
         public CompGlower GlowerComp => parent.GetComp<CompGlower>();
         public List<Thing> storedSpheres = new List<Thing>(); //  List of sphere stacks inside the pouch
         public List<ThingDef> ThisFilterList;
+        public List<CompGemSphere.GemSize> SizeFilterList = new List<CompGemSphere.GemSize>() { CompGemSphere.GemSize.Chip, CompGemSphere.GemSize.Mark, CompGemSphere.GemSize.Broam }; 
+        static private List<CompGemSphere.GemSize> possibleSizes = new List<CompGemSphere.GemSize>() { CompGemSphere.GemSize.Chip, CompGemSphere.GemSize.Mark, CompGemSphere.GemSize.Broam };
 
 
         bool lightEnabled = true;
@@ -33,6 +35,7 @@ namespace StormlightMod {
         public override void PostExposeData() {
             base.PostExposeData();
             Scribe_Collections.Look(ref storedSpheres, "storedSpheres", LookMode.Deep);
+            Scribe_Collections.Look(ref SizeFilterList, "SizeFilterList", LookMode.Deep);
         }
 
         public bool IsFull() {
@@ -43,8 +46,11 @@ namespace StormlightMod {
             return storedSpheres.Count() >= Props.maxCapacity && comp.HasStormlight;
         }
 
-        public int GetDunSphereCount() {
-            return storedSpheres.Count(); //make more advanced later
+        public int GetNumberOfSpheresToReplace() {
+            //if (storedSpheres.Count() == 0)
+            //    return 1;
+           
+            return 1; //make more advanced later
         }
 
         public override IEnumerable<Gizmo> CompGetGizmosExtra() {
@@ -58,7 +64,6 @@ namespace StormlightMod {
                 //icon = ContentFinder<Texture2D>.Get("UI/Icons/SomeIcon"), 
                 icon = TexCommand.DesirePower,
                 action = () => {
-                    // Opens the custom dialog for filtering spheres.
                     Find.WindowStack.Add(new Dialog_SphereFilter(this));
                 }
             };
@@ -80,12 +85,19 @@ namespace StormlightMod {
             Thing sphere = null;
             CompSpherePouch spherePouch = CompSpherePouch.GetWornSpherePouch(selPawn);
             ThingDef matchingSphereDef = ThisFilterList.Find(def => selPawn.Map.listerThings.ThingsOfDef(def).Any());
-
+            var closestSphere = GenClosest.ClosestThing_Global(
+                   selPawn.Position,
+                   selPawn.Map.listerThings.AllThings
+                       .Where(thing =>
+                           ThisFilterList.Contains(thing.def) &&  
+                           SizeFilterList.Contains(thing.TryGetComp<CompGemSphere>()?.GetGemSize() ?? CompGemSphere.GemSize.None) 
+                       ),
+                   500f);
             if (spherePouch != null && !spherePouch.Empty) {
                 sphere = spherePouch.GetSphereWithMostStormlight(true);
             }
-            else if (matchingSphereDef != null && GenClosest.ClosestThing_Global(selPawn.Position, selPawn.Map.listerThings.ThingsOfDef(matchingSphereDef), 500f) != null) {
-                sphere = GenClosest.ClosestThing_Global(selPawn.Position, selPawn.Map.listerThings.ThingsOfDef(matchingSphereDef), 500f);
+            else if (matchingSphereDef != null && closestSphere != null) {
+                sphere = closestSphere;
             }
 
             Action replaceSphereAction = null;
@@ -113,8 +125,6 @@ namespace StormlightMod {
                 }
             }
             yield return new FloatMenuOption(replaceSphereText, replaceSphereAction);
-
-
         }
 
 
@@ -167,7 +177,7 @@ namespace StormlightMod {
             string sphereName = "No sphere in lamp.";
             if (storedSpheres.Count > 0) {
                 ThingWithComps sphere = storedSpheres.First() as ThingWithComps;
-                sphereName = sphere.def.label + "(" + m_CurrentStormlight.ToString("F0") + ")";
+                sphereName = sphere.GetComp<CompGemSphere>().GetFullLabel + "(" + m_CurrentStormlight.ToString("F0") + ")";
             }
             return sphereName;
         }
@@ -189,9 +199,13 @@ namespace StormlightMod {
             if (storedSpheres.Count >= Props.maxCapacity) { // Adjust max capacity as needed
                 return false;
             }
-            Log.Message("added sphere");
+            CompStormlight stormlightComp = sphere.GetComp<CompStormlight>();
+            if (stormlightComp == null) return false;
+
             storedSpheres.Add(sphere);
-            GlowerComp.GlowColor = sphere.GetComp<CompStormlight>().GlowerComp.GlowColor;
+            GlowerComp.GlowColor = stormlightComp.GlowerComp.GlowColor;
+            GlowerComp.GlowRadius = stormlightComp.MaximumGlowRadius;
+
             deregisterAfterNewSphere = true;
             return true;
         }
