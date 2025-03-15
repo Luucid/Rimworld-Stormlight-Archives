@@ -13,7 +13,6 @@ namespace StormlightMod {
 
         public static TraitDef whtwl_Radiant_Windrunner;
         public static TraitDef whtwl_Radiant_Truthwatcher;
-        public static JobDef whtwl_RefuelSphereLamp;
         public static AbilityDef whtwl_SummonShardblade;
         public static AbilityDef whtwl_UnbondBlade;
         public static AbilityDef whtwl_BreathStormlight;
@@ -21,6 +20,10 @@ namespace StormlightMod {
         public static AbilityDef whtwl_SurgeOfGrowth;
         public static AbilityDef whtwl_LashingUpward;
         public static AbilityDef whtwl_WindRunnerFlight;
+
+        //JobDef
+        public static JobDef whtwl_RefuelSphereLamp;
+        public static JobDef whtwl_RefuelFabrial;
 
         //ThingDef
         public static ThingDef whtwl_Apparel_SpherePouch;

@@ -5,6 +5,7 @@ using System.Linq;
 using System;
 using System.Reflection.Emit;
 using System.Security.Cryptography;
+using Verse.AI;
 
 namespace StormlightMod {
     public class CompGemSphere : ThingComp {
@@ -17,7 +18,7 @@ namespace StormlightMod {
         public int inheritGemstoneQuality = 1;
         public int inheritGemstoneSize = 1;
         public string GetFullLabel => TransformLabel(parent.Label);
-        public enum GemSize { None, Chip, Mark, Broam};
+        public enum GemSize { None, Chip, Mark, Broam };
 
         public override void Initialize(CompProperties props) {
             base.Initialize(props);
@@ -40,8 +41,7 @@ namespace StormlightMod {
             }
         }
 
-        public GemSize GetGemSize() 
-            {
+        public GemSize GetGemSize() {
             switch (gemstoneSize) {
                 case 1:
                     return GemSize.Chip;
@@ -112,10 +112,42 @@ namespace StormlightMod {
 
         public override void CompTick() {
             base.CompTick();
-            if(StormlightMod.settings.devOptionAutofillSpheres && stormlightComp != null) 
-            {
-                stormlightComp.infuseStormlight(5f);
+        }
+
+        public override IEnumerable<Gizmo> CompGetGizmosExtra() {
+            if (StormlightMod.settings.devOptionAutofillSpheres && stormlightComp != null) {
+
+                yield return new Command_Action {
+                    defaultLabel = "Fill sphere with 10 stormlight",
+                    defaultDesc = "Debug/Dev feature.",
+                    //icon = ContentFinder<Texture2D>.Get("UI/Icons/SomeIcon"), 
+                    icon = TexCommand.DesirePower,
+                    action = () => {
+                        stormlightComp.infuseStormlight(10f);
+                    }
+                };
+
+                yield return new Command_Action {
+                    defaultLabel = "Fill sphere with 100 stormlight",
+                    defaultDesc = "Debug/Dev feature.",
+                    //icon = ContentFinder<Texture2D>.Get("UI/Icons/SomeIcon"), 
+                    icon = TexCommand.DesirePower,
+                    action = () => {
+                        stormlightComp.infuseStormlight(100f);
+                    }
+                };
+
+                yield return new Command_Action {
+                    defaultLabel = "Fill sphere with maximum stormlight",
+                    defaultDesc = "Debug/Dev feature.",
+                    //icon = ContentFinder<Texture2D>.Get("UI/Icons/SomeIcon"), 
+                    icon = TexCommand.DesirePower,
+                    action = () => {
+                        stormlightComp.infuseStormlight(stormlightComp.CurrentMaxStormlight);
+                    }
+                };
             }
+            yield break;
         }
     }
 }

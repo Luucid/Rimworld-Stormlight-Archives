@@ -90,6 +90,39 @@ namespace StormlightMod {
         public override void CompTick() {
             base.CompTick();
         }
+
+        public override IEnumerable<Gizmo> CompGetGizmosExtra() {
+            if (StormlightMod.settings.devOptionAutofillSpheres && stormlightComp != null) {
+
+                yield return new Command_Action {
+                    defaultLabel = "Fill gem with 10 stormlight",
+                    defaultDesc = "Debug/Dev feature.",
+                    icon = TexCommand.DesirePower,
+                    action = () => {
+                        stormlightComp.infuseStormlight(10f);
+                    }
+                };
+
+                yield return new Command_Action {
+                    defaultLabel = "Fill gem with 100 stormlight",
+                    defaultDesc = "Debug/Dev feature.",
+                    icon = TexCommand.DesirePower,
+                    action = () => {
+                        stormlightComp.infuseStormlight(100f);
+                    }
+                };
+
+                yield return new Command_Action {
+                    defaultLabel = "Fill gem with maximum stormlight",
+                    defaultDesc = "Debug/Dev feature.",
+                    icon = TexCommand.DesirePower,
+                    action = () => {
+                        stormlightComp.infuseStormlight(stormlightComp.CurrentMaxStormlight);
+                    }
+                };
+            }
+            yield break;
+        }
     }
 }
 

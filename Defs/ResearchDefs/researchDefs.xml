@@ -63,4 +63,48 @@
         <researchViewX>2.00</researchViewX>
         <researchViewY>1.80</researchViewY>
     </ResearchProjectDef>
+
+
+    <!-- SPRENOLOGY -->
+    <ResearchProjectDef>
+        <defName>whtwl_Research_BasicSprenology</defName>
+        <label>Basic Sprenology</label>
+        <description>The study of spren.</description>
+        <tab>whtwl_StormlightArchives</tab>
+        <baseCost>350</baseCost>
+        <techLevel>Industrial</techLevel>
+        <researchViewX>4.00</researchViewX>
+        <researchViewY>1.80</researchViewY>
+    </ResearchProjectDef>
+
+    <ResearchProjectDef>
+        <defName>whtwl_Research_SprenTrapping</defName>
+        <label>Spren trapping</label>
+        <description>The study of trapping spren in cut gems.</description>
+        <tab>whtwl_StormlightArchives</tab>
+        <baseCost>350</baseCost>
+        <techLevel>Industrial</techLevel>
+        <prerequisites>
+            <li>whtwl_Research_BasicSprenology</li>
+            <li>whtwl_GemCutting</li>
+        </prerequisites>
+        <researchViewX>5.00</researchViewX>
+        <researchViewY>1.80</researchViewY>
+    </ResearchProjectDef>
+
+
+    <!-- ARTIFABRIALS -->
+    <ResearchProjectDef>
+        <defName>whtwl_Research_Heatrial</defName>
+        <label>Heatrials</label>
+        <description>Use trapped sprens to control temperature.</description>
+        <tab>whtwl_StormlightArchives</tab>
+        <baseCost>350</baseCost>
+        <techLevel>Industrial</techLevel>
+        <prerequisites>
+            <li>whtwl_Research_SprenTrapping</li>
+        </prerequisites>
+        <researchViewX>6.00</researchViewX>
+        <researchViewY>1.80</researchViewY>
+    </ResearchProjectDef>
 </Defs>

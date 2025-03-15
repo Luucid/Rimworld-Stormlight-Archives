@@ -39,7 +39,7 @@ namespace StormlightMod {
             listingStandard.Begin(inRect);
             listingStandard.CheckboxLabeled("Highstorms will move items and pawns", ref settings.enableHighstormPushing, "expensive stuff");
             listingStandard.CheckboxLabeled("Pawns will glow when infused with stormlight", ref settings.enablePawnGlow, "expensive stuff");
-            listingStandard.CheckboxLabeled("DEV OPTION: Always fill spheres", ref settings.devOptionAutofillSpheres, "will automatically always fill spheres when set to true");
+            listingStandard.CheckboxLabeled("DEV OPTION: enable dev features", ref settings.devOptionAutofillSpheres, "Will enable various dev features, like filling spheres");
             listingStandard.TextFieldNumericLabeled<float>("bond chance multiplier", ref settings.bondChanceMultiplier, ref settings.bondChanceMultiplierBuffer, 1, 100);
             listingStandard.End();
             base.DoSettingsWindowContents(inRect);

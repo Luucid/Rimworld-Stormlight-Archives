@@ -8,4 +8,13 @@
         <playerInterruptible>true</playerInterruptible>
         <checkOverrideOnDamage>Never</checkOverrideOnDamage>
     </JobDef>
+
+    <JobDef>
+        <defName>whtwl_RefuelFabrial</defName>
+        <label>Refuel fabial</label>
+        <driverClass>StormlightMod.JobDriver_AddGemToFabrial</driverClass>
+        <reportString>Adding gem to fabrial..</reportString>
+        <playerInterruptible>true</playerInterruptible>
+        <checkOverrideOnDamage>Never</checkOverrideOnDamage>
+    </JobDef>
 </Defs>
