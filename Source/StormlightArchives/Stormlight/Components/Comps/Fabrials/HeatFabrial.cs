@@ -9,16 +9,14 @@ using Verse.AI;
 
 namespace StormlightMod {
 
-    public class Building_Heatrial : Building {
+    public class Building_Heatrial_Basic : Building {
         public CompHeatrial compHeatrial;
-        public CompTempControl compTempControl;
         public CompFlickable compFlickerable;
         public CompGlower compGlower;
 
         public override void SpawnSetup(Map map, bool respawningAfterLoad) {
             base.SpawnSetup(map, respawningAfterLoad);
             compHeatrial = GetComp<CompHeatrial>();
-            compTempControl = GetComp<CompTempControl>();
             compFlickerable = GetComp<CompFlickable>();
             compGlower = GetComp<CompGlower>();
         }
@@ -27,13 +25,14 @@ namespace StormlightMod {
             if (compHeatrial.PowerOn) {
                 float ambientTemperature = base.AmbientTemperature;
                 float num = ((ambientTemperature < 20f) ? 1f : ((!(ambientTemperature > 120f)) ? Mathf.InverseLerp(120f, 20f, ambientTemperature) : 0f));
-                float num2 = GenTemperature.ControlTemperatureTempChange(this.Position, this.Map, 15f, compTempControl.targetTemperature);
+                float num2 = GenTemperature.ControlTemperatureTempChange(this.Position, this.Map, 15f, 18f);
                 bool flag = !Mathf.Approximately(num2, 0f);
                 if (flag) {
                     this.GetRoom().Temperature += num2;
                 }
             }
             toggleGlow(compHeatrial.PowerOn);
+            compHeatrial.usePower();
         }
         private void toggleGlow(bool on) {
             if (this.Map != null) {
@@ -41,7 +40,7 @@ namespace StormlightMod {
                     this.Map.glowGrid.RegisterGlower(compGlower);
                 }
                 else {
-                    this.Map.glowGrid.DeRegisterGlower(compGlower); 
+                    this.Map.glowGrid.DeRegisterGlower(compGlower);
                 }
             }
         }
@@ -52,8 +51,6 @@ namespace StormlightMod {
         public CompGlower GlowerComp => parent.GetComp<CompGlower>();
         public Thing insertedGemstone = null;
         public bool PowerOn = false;
-
-
 
         public override void PostSpawnSetup(bool respawningAfterLoad) {
             base.PostSpawnSetup(respawningAfterLoad);
@@ -74,7 +71,13 @@ namespace StormlightMod {
             PowerOn = false;
         }
 
-    
+        public void usePower() {
+            if (PowerOn && insertedGemstone != null && insertedGemstone.TryGetComp<CompStormlight>() is CompStormlight stormlightComp) {
+                stormlightComp.drainStormLight(7f);
+            }
+        }
+
+
         public void AddGemstone(ThingWithComps gemstone) {
             var gemstoneComp = gemstone.GetComp<CompCutGemstone>();
             if (gemstoneComp != null && gemstoneComp.parent.def == StormlightModDefs.whtwl_CutRuby) {
@@ -91,7 +94,15 @@ namespace StormlightMod {
 
             }
         }
+        public override string CompInspectStringExtra() {
+            string gemName = "No gem in fabrial.";
 
+            if (insertedGemstone != null) {
+                ThingWithComps gemstone = insertedGemstone as ThingWithComps;
+                gemName = gemstone.GetComp<CompCutGemstone>().GetFullLabel + "(" + gemstone.GetComp<CompStormlight>().Stormlight.ToString("F0") + ")";
+            }
+            return gemName;
+        }
         public override IEnumerable<FloatMenuOption> CompFloatMenuOptions(Pawn selPawn) {
             var cutGemstone = GenClosest.ClosestThing_Global(
                    selPawn.Position,

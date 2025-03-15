@@ -12,6 +12,7 @@ namespace StormlightMod {
         public int gemstoneQuality;
         public int gemstoneSize;
         public int maximumGemstoneSize = 20;
+        public string GetFullLabel => TransformLabel(parent.Label);
 
         public override void Initialize(CompProperties props) {
             base.Initialize(props);

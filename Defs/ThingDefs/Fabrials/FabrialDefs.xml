@@ -3,9 +3,9 @@
 
   <ThingDef ParentName="BuildingBase">
     <defName>whtwl_Basic_Heatrial</defName>
-    <label>Heatrial</label>
+    <label>Basic Heatrial</label>
     <description>A device that use a trapped spren in a ruby encased in metal to produce heat.</description>
-    <thingClass>StormlightMod.Building_Heatrial</thingClass>
+    <thingClass>StormlightMod.Building_Heatrial_Basic</thingClass>
     <graphicData>
       <texPath>Things/Building/Misc/TempControl/Heater</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -53,9 +53,6 @@
     <drawPlaceWorkersWhileSelected>true</drawPlaceWorkersWhileSelected>
     <comps>
       <li Class="CompProperties_Flickable" />
-      <li Class="CompProperties_TempControl">
-        <energyPerSecond>21</energyPerSecond>
-      </li>
       <li Class="CompProperties_Glower">
         <glowRadius>3</glowRadius>
         <glowColor>(255,150,100,0)</glowColor>

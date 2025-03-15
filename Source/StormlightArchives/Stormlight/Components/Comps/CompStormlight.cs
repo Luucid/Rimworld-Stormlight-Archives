@@ -244,6 +244,14 @@ namespace StormlightMod {
             }
         }
 
+        public void drainStormLight(float factor) {
+            if (m_CurrentStormlight > 0) {
+                m_CurrentStormlight -= (Props.drainRate / StormlightContainerQuality)* factor;
+                if (m_CurrentStormlight < 0)
+                    m_CurrentStormlight = 0;
+            }
+        }
+
         public float drawStormlight(float amount) {
             float drawnAmount = amount;
             if (m_CurrentStormlight > 0) {
