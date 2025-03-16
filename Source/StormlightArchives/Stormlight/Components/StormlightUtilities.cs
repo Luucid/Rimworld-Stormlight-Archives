@@ -11,6 +11,24 @@ namespace StormlightMod {
 
     static public class StormlightUtilities {
 
+        public static bool IsAnyFireNearby(Building building, float radius = 5f) {
+            IntVec3 position = building.Position;
+            Map map = building.Map;
+
+            foreach (IntVec3 cell in GenRadial.RadialCellsAround(position, radius, true)) {
+                foreach (Thing thing in cell.GetThingList(map)) {
+                    if (thing.def == ThingDefOf.Fire || thing.def.category == ThingCategory.Building && thing.TryGetComp<CompRefuelable>()?.Props.fuelConsumptionPerTickInRain > 0f) {
+                        return true;
+                    }
+                    if (thing.def.defName.Contains("Torch") || thing.def.defName.Contains("Campfire")) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+
         static public Trait GetRadiantTrait(Pawn pawn) {
             return pawn.story.traits.allTraits.FirstOrDefault(t => StormlightModUtilities.RadiantTraits.Contains(t.def));
         }

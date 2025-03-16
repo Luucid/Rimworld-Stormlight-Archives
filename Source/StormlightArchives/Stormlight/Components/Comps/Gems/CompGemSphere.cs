@@ -19,9 +19,9 @@ namespace StormlightMod {
         public int inheritGemstoneSize = 1;
         public string GetFullLabel => TransformLabel(parent.Label);
         public enum GemSize { None, Chip, Mark, Broam };
-
         public override void Initialize(CompProperties props) {
             base.Initialize(props);
+
             stormlightComp = parent.GetComp<CompStormlight>();
             if (inheritGemstone == false) {
                 List<int> sizeList = new List<int>() { 1, 5, 20 };
@@ -34,6 +34,11 @@ namespace StormlightMod {
                 gemstoneQuality = inheritGemstoneQuality;
                 gemstoneSize = inheritGemstoneSize;
             }
+            
+            //parent.def.BaseMarketValue = (parent.def.BaseMarketValue * gemstoneSize) + gemstoneQuality * 5;
+
+
+            Log.Message($"Base Value {parent.def.BaseMarketValue}");
             if (stormlightComp != null) {
                 stormlightComp.StormlightContainerQuality = gemstoneQuality;
                 stormlightComp.StormlightContainerSize = gemstoneSize;

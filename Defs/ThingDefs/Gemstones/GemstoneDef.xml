@@ -85,6 +85,9 @@
         <alwaysHaulable>true</alwaysHaulable>
         <selectable>true</selectable>
         <possessionCount>40</possessionCount>
+        <tradeTags>
+            <li>Currency</li>
+        </tradeTags>
     </ThingDef>
 
 

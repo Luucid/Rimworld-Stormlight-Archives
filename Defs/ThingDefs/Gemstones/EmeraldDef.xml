@@ -166,7 +166,7 @@
             </li>
         </comps>
         <statBases>
-            <MarketValue>1000</MarketValue>
+            <MarketValue>50</MarketValue>
             <Mass>0.008</Mass>
         </statBases>
         <stuffProps>

@@ -15,12 +15,16 @@ namespace StormlightMod {
                 Thing fabrial = pawn.CurJob.GetTarget(fabrialInd).Thing;
                 Thing gemstone = pawn.CurJob.GetTarget(gemInd).Thing;
 
-                CompHeatrial fabComp = fabrial.TryGetComp<CompHeatrial>();
 
-                if (fabComp != null) {
-                    fabComp.RemoveGemstone();
-                    fabComp.AddGemstone(gemstone as ThingWithComps);
+                if (isHeatrial(fabrial)) 
+                {
+                    doReplaceToil(fabrial.TryGetComp<CompHeatrial>(), gemstone);
                 }
+                else if (isSprenTrapper(fabrial)) 
+                {
+                    doReplaceToil(fabrial.TryGetComp<CompSprenTrapper>(), gemstone);
+                }
+
             };
 
             toil.AddFinishAction(delegate {
@@ -35,6 +39,22 @@ namespace StormlightMod {
 
             toil.defaultCompleteMode = ToilCompleteMode.Instant;
             return toil;
+        }
+
+
+        static void doReplaceToil<T>(T fabComp, Thing gemstone) where T : IGemstoneHandler
+        { 
+            fabComp.RemoveGemstone();
+            fabComp.AddGemstone(gemstone as ThingWithComps);
+        }
+
+        static bool isHeatrial(Thing fabrial) {
+            CompHeatrial fabComp = fabrial.TryGetComp<CompHeatrial>();
+            return fabComp != null;
+        }
+        static bool isSprenTrapper(Thing fabrial) {
+            CompSprenTrapper fabComp = fabrial.TryGetComp<CompSprenTrapper>();
+            return fabComp != null;
         }
     }
 

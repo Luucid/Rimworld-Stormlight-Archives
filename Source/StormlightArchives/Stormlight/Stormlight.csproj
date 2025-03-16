@@ -74,6 +74,7 @@
     <Compile Include="Components\Combat\Abilities\Implementations\ToggleStormlight.cs" />
     <Compile Include="Components\Combat\Abilities\Verb_castRadiant.cs" />
     <Compile Include="Components\Comps\Fabrials\HeatFabrial.cs" />
+    <Compile Include="Components\Comps\Fabrials\SprenTrapper.cs" />
     <Compile Include="Components\Comps\Gems\CompGemSphere.cs" />
     <Compile Include="Components\Comps\Gems\CompCutGemstone.cs" />
     <Compile Include="Components\Comps\Gems\CompRawGemstone.cs" />

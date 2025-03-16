@@ -3,8 +3,17 @@ using Verse;
 using System.Collections.Generic;
 using System.Linq;
 using System;
+using UnityEngine;
 
 namespace StormlightMod {
+
+  
+    public class Sphere_ruby : ThingDef {
+       
+    }
+
+    public enum Spren { None, Flame, Cold, Smoke, Pain, Logic};
+
     public class CompCutGemstone : ThingComp {
         public CompProperties_CutGemstone GemstoneProps => (CompProperties_CutGemstone)props;
         public CompProperties_Stormlight StormlightProps => (CompProperties_Stormlight)props;
@@ -12,6 +21,7 @@ namespace StormlightMod {
         public int gemstoneQuality;
         public int gemstoneSize;
         public int maximumGemstoneSize = 20;
+        public Spren capturedSpren = Spren.None; 
         public string GetFullLabel => TransformLabel(parent.Label);
 
         public override void Initialize(CompProperties props) {
@@ -22,10 +32,13 @@ namespace StormlightMod {
             gemstoneQuality = StormlightUtilities.RollTheDice(1, 5);
             gemstoneSize = StormlightUtilities.RollForRandomIntFromList(sizeList);   //make better roller later with lower prob for bigger size
 
+            //parent.def.BaseMarketValue = (parent.def.BaseMarketValue * gemstoneSize) + gemstoneQuality * 5;
+
             if (stormlightComp != null) {
                 stormlightComp.StormlightContainerQuality = gemstoneQuality;
                 stormlightComp.StormlightContainerSize = gemstoneSize;
                 stormlightComp.calculateMaximumGlowRadius(gemstoneQuality, gemstoneSize);
+
                 Log.Message($"gemstoneQuality: {gemstoneQuality}, gemstoneSize: {gemstoneSize}");
             }
             else {

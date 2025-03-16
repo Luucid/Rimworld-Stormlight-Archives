@@ -24,7 +24,7 @@
         </building>
     </ThingDef>
 
-  <!-- RAW GEMS -->
+    <!-- RAW GEMS -->
     <ThingDef ParentName="whtwl_GemstoneBase">
         <defName>whtwl_RawRuby</defName>
         <label>Raw Ruby</label>
@@ -109,6 +109,10 @@
             <li Class="StormlightMod.CompProperties_CutGemstone">
                 <compClass>StormlightMod.CompCutGemstone</compClass>
             </li>
+            <li Class="CompProperties_Glower">
+                <glowRadius>0</glowRadius>
+                <glowColor>(225,16,16,0)</glowColor>
+            </li>
         </comps>
     </ThingDef>
 
@@ -135,7 +139,7 @@
         <products>
             <whtwl_Sphere_Ruby>1</whtwl_Sphere_Ruby>
         </products>
-          <researchPrerequisites>
+        <researchPrerequisites>
             <li>whtwl_SphereProduction</li>
         </researchPrerequisites>
     </RecipeDef>
@@ -163,7 +167,7 @@
             </li>
         </comps>
         <statBases>
-            <MarketValue>200</MarketValue>
+            <MarketValue>10</MarketValue>
             <Mass>0.008</Mass>
         </statBases>
         <stuffProps>
