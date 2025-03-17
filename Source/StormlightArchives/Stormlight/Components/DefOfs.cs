@@ -24,6 +24,7 @@ namespace StormlightMod {
         //JobDef
         public static JobDef whtwl_RefuelSphereLamp;
         public static JobDef whtwl_RefuelFabrial;
+        public static JobDef whtwl_RemoveFromFabrial;
 
         //ThingDef
         public static ThingDef whtwl_Apparel_SpherePouch;

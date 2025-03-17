@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Defs>
+
+    <StuffCategoryDef>
+        <defName>whtwl_gemstuff</defName>
+        <label>gem</label>
+        <noun>gem</noun>
+        <destroySoundSmall>BuildingDestroyed_Metal_Small</destroySoundSmall>
+        <destroySoundMedium>BuildingDestroyed_Metal_Medium</destroySoundMedium>
+        <destroySoundLarge>BuildingDestroyed_Metal_Big</destroySoundLarge>
+    </StuffCategoryDef>
+
     <ThingDef Name="whtwl_GemstoneBase" ParentName="ResourceBase" Abstract="True">
         <defName>whtwl_RawGemstone</defName>
         <label>Raw Gemstone</label>
@@ -26,7 +36,7 @@
         <stuffProps>
             <commonality>0.00</commonality>
             <categories>
-                <li>Metallic</li>                      <!-- make custom category -->
+                <li>whtwl_gemstuff</li>                      <!-- make custom category -->
             </categories>
             <constructEffect>ConstructMetal</constructEffect>
             <soundImpactBullet>BulletImpact_Metal</soundImpactBullet>
@@ -82,6 +92,17 @@
         <statBases>
             <Mass>0.008</Mass>
         </statBases>
+        <stuffProps>
+            <commonality>0.00</commonality>
+            <categories>
+                <li>whtwl_gemstuff</li>                      <!-- make custom category -->
+            </categories>
+            <constructEffect>ConstructMetal</constructEffect>
+            <soundImpactBullet>BulletImpact_Metal</soundImpactBullet>
+            <soundMeleeHitSharp>MeleeHit_Metal_Sharp</soundMeleeHitSharp>
+            <soundMeleeHitBlunt>MeleeHit_Metal_Blunt</soundMeleeHitBlunt>
+            <soundImpactMelee>Pawn_Melee_Punch_HitBuilding_Metal</soundImpactMelee>
+        </stuffProps>
         <alwaysHaulable>true</alwaysHaulable>
         <selectable>true</selectable>
         <possessionCount>40</possessionCount>

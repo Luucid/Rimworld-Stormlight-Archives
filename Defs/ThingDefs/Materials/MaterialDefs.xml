@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Defs>
-
+<!-- 
 	##
 ADD:
 	b_antimony
@@ -19,7 +19,7 @@ ADD:
 
 	Alloy table.
 	
-	##
+	## -->
 	<ThingDef ParentName="ResourceBase">
 		<defName>whtwl_ShardMaterial</defName>
 		<label>shard material</label>

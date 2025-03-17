@@ -9,27 +9,21 @@ using Verse.AI;
 
 namespace StormlightMod {
 
-
-    public interface IGemstoneHandler {
-        void RemoveGemstone();
-        void AddGemstone(ThingWithComps gemstone);
-    }
-
-    //Add super advanced that can be used with two kinds of metals, to switch between heat/cold
-    public class Building_Heatrial_Basic : Building {
-        public CompHeatrial compHeatrial;
+    public class Building_Fabrial_Basic : Building {
+        public CompBasicBuildingFabrial compBasicBuildingFabrial;
         public CompFlickable compFlickerable;
         public CompGlower compGlower;
 
+
         public override void SpawnSetup(Map map, bool respawningAfterLoad) {
             base.SpawnSetup(map, respawningAfterLoad);
-            compHeatrial = GetComp<CompHeatrial>();
+            compBasicBuildingFabrial = GetComp<CompBasicBuildingFabrial>();
             compFlickerable = GetComp<CompFlickable>();
             compGlower = GetComp<CompGlower>();
         }
         public override void TickRare() {
-            compHeatrial.checkPower(compFlickerable.SwitchIsOn);
-            if (compHeatrial.PowerOn) {
+            compBasicBuildingFabrial.checkPower(compFlickerable.SwitchIsOn);
+            if (compBasicBuildingFabrial.PowerOn) {
                 float ambientTemperature = base.AmbientTemperature;
                 float num = ((ambientTemperature < 20f) ? 1f : ((!(ambientTemperature > 120f)) ? Mathf.InverseLerp(120f, 20f, ambientTemperature) : 0f));
                 float num2 = GenTemperature.ControlTemperatureTempChange(this.Position, this.Map, 15f, 18f);
@@ -38,8 +32,8 @@ namespace StormlightMod {
                     this.GetRoom().Temperature += num2;
                 }
             }
-            toggleGlow(compHeatrial.PowerOn);
-            compHeatrial.usePower();
+            toggleGlow(compBasicBuildingFabrial.PowerOn);
+            compBasicBuildingFabrial.usePower();
         }
         private void toggleGlow(bool on) {
             if (this.Map != null) {
@@ -51,54 +45,23 @@ namespace StormlightMod {
                 }
             }
         }
-    }
 
-
-    public class Building_Heatrial_Advanced : Building {
-        public CompHeatrial compHeatrial;
-        public CompFlickable compFlickerable;
-        public CompGlower compGlower;
-
-        public override void SpawnSetup(Map map, bool respawningAfterLoad) {
-            base.SpawnSetup(map, respawningAfterLoad);
-            compHeatrial = GetComp<CompHeatrial>();
-            compFlickerable = GetComp<CompFlickable>();
-            compGlower = GetComp<CompGlower>();
-        }
-        public override void TickRare() {
-            compHeatrial.checkPower(compFlickerable.SwitchIsOn);
-            if (compHeatrial.PowerOn) {
-                float ambientTemperature = base.AmbientTemperature;
-                float num = ((ambientTemperature < 20f) ? 1f : ((!(ambientTemperature > 120f)) ? Mathf.InverseLerp(120f, 20f, ambientTemperature) : 0f));
-                float num2 = GenTemperature.ControlTemperatureTempChange(this.Position, this.Map, 15f, 18f);
-                bool flag = !Mathf.Approximately(num2, 0f);
-                if (flag) {
-                    this.GetRoom().Temperature += num2;
-                }
-            }
-            toggleGlow(compHeatrial.PowerOn);
-            compHeatrial.usePower();
-        }
-        private void toggleGlow(bool on) {
-            if (this.Map != null) {
-                if (on) {
-                    this.Map.glowGrid.RegisterGlower(compGlower);
-                }
-                else {
-                    this.Map.glowGrid.DeRegisterGlower(compGlower);
-                }
+        public override void Print(SectionLayer layer) {
+            base.Print(layer);
+            this.def.graphicData.attachments[0].Graphic.Print(layer, this, 0);
+            if (compBasicBuildingFabrial.HasGemstone) {
+                this.def.graphicData.attachments[1].Graphic.Print(layer, this, 0);
             }
         }
     }
 
-
-
-
-    public class CompHeatrial : ThingComp, IGemstoneHandler {
-        public CompProperties_Heatrial Props => (CompProperties_Heatrial)props;
+    public class CompBasicBuildingFabrial : ThingComp, IGemstoneHandler {
+        public CompProperties_BasicBuildingFabrial Props => (CompProperties_BasicBuildingFabrial)props;
         public CompGlower GlowerComp => parent.GetComp<CompGlower>();
         public Thing insertedGemstone = null;
+        public Thing gemstoneMetalCage = null; //custom def for metal cages
         public bool PowerOn = false;
+        public bool HasGemstone => insertedGemstone != null;
 
         public override void PostSpawnSetup(bool respawningAfterLoad) {
             base.PostSpawnSetup(respawningAfterLoad);
@@ -128,7 +91,7 @@ namespace StormlightMod {
 
         public void AddGemstone(ThingWithComps gemstone) {
             var gemstoneComp = gemstone.GetComp<CompCutGemstone>();
-            if (gemstoneComp != null && gemstoneComp.parent.def == StormlightModDefs.whtwl_CutRuby) {
+            if (gemstoneComp != null) {
                 insertedGemstone = gemstoneComp.parent;
             }
         }
@@ -138,6 +101,7 @@ namespace StormlightMod {
                 var gemstoneToDrop = insertedGemstone;
                 insertedGemstone = null;
                 IntVec3 dropPosition = parent.Position;
+                dropPosition.z -= 1;
                 GenPlace.TryPlaceThing(gemstoneToDrop, dropPosition, parent.Map, ThingPlaceMode.Near);
 
             }
@@ -169,15 +133,26 @@ namespace StormlightMod {
                 replaceGemText = $"Replace with {cutGemstone.Label}";
             }
             yield return new FloatMenuOption(replaceGemText, replaceGemAction);
+
+
+            Action removeGemAction = null;
+            string removeGemText = "Remove Gemstone";
+            if (insertedGemstone != null) {
+
+                removeGemAction = () => {
+                    Job job = JobMaker.MakeJob(StormlightModDefs.whtwl_RemoveFromFabrial, parent);
+                    if (job.TryMakePreToilReservations(selPawn, errorOnFailed: true)) {
+                        selPawn.jobs.TryTakeOrderedJob(job);
+                    }
+                };
+            }
+            yield return new FloatMenuOption(removeGemText, removeGemAction);
         }
     }
 
-    public class CompProperties_Heatrial : CompProperties {
-        public CompProperties_Heatrial() {
-            this.compClass = typeof(CompHeatrial);
+    public class CompProperties_BasicBuildingFabrial : CompProperties {
+        public CompProperties_BasicBuildingFabrial() {
+            this.compClass = typeof(CompBasicBuildingFabrial);
         }
     }
-
-
-
 }

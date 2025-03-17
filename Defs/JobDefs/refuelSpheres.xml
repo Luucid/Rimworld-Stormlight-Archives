@@ -17,4 +17,13 @@
         <playerInterruptible>true</playerInterruptible>
         <checkOverrideOnDamage>Never</checkOverrideOnDamage>
     </JobDef>
+
+      <JobDef>
+        <defName>whtwl_RemoveFromFabrial</defName>
+        <label>Remove gem from fabial</label>
+        <driverClass>StormlightMod.JobDriver_RemoveGemFromFabrial</driverClass>
+        <reportString>Removing gem from fabrial..</reportString>
+        <playerInterruptible>true</playerInterruptible>
+        <checkOverrideOnDamage>Never</checkOverrideOnDamage>
+    </JobDef>
 </Defs>

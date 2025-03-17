@@ -135,22 +135,26 @@
   <ThingDef ParentName="BuildingBase">
     <defName>whtwl_BasicBuildingFabrial</defName>
     <label>Basic Fabrial</label>
-    <description>A device that use a trapped spren in a gemstone encased in metal, the type of metal, spren, and gemstone will alter the effect of this device.</description>
+    <description>A device that use a trapped spren in a gemstone encased in metal, the type of
+      metal, spren, and gemstone will alter the effect of this device.</description>
     <thingClass>StormlightMod.Building_Fabrial_Basic</thingClass>
     <graphicData>
-      <texPath>Things/Building/Misc/TempControl/Heater</texPath>
-      <graphicClass>Graphic_Single</graphicClass>
-      <shadowData>
-        <volume>(0.5,0.3,0.7)</volume>
-        <offset>(0,0,-0.15)</offset>
-      </shadowData>
-      <damageData>
-        <rect>(0.234375,0,0.515625,0.984375)</rect>
-        <cornerTL>Damage/Corner</cornerTL>
-        <cornerTR>Damage/Corner</cornerTR>
-        <cornerBL>Damage/Corner</cornerBL>
-        <cornerBR>Damage/Corner</cornerBR>
-      </damageData>
+      <texPath>Things/Item/Fabrials/Gemholder_base</texPath>
+      <graphicClass>Graphic_Multi</graphicClass>
+      <shaderType>Cutout</shaderType>
+      <drawSize>1.2</drawSize>
+      <attachments>
+        <li>
+          <texPath>Things/Item/Fabrials/Gemholder_top_without_ruby</texPath>
+          <graphicClass>Graphic_Single</graphicClass>
+          <drawSize>1.2</drawSize>
+        </li>
+        <li>
+          <texPath>Things/Item/Fabrials/Gemholder_top_with_ruby</texPath>
+          <graphicClass>Graphic_Single</graphicClass>
+          <drawSize>1.2</drawSize>
+        </li>
+      </attachments>
     </graphicData>
     <minifiedDef>MinifiedThing</minifiedDef>
     <altitudeLayer>Building</altitudeLayer>
@@ -176,6 +180,12 @@
       <Steel>50</Steel>
       <ComponentIndustrial>1</ComponentIndustrial>
     </costList>
+    <costStuffCount>75</costStuffCount>
+    <stuffCategories>
+      <li>Metallic</li>
+      <li>Woody</li>
+      <li>Stony</li>
+    </stuffCategories>
     <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
     <placeWorkers>
       <li>PlaceWorker_Heater</li>
@@ -188,7 +198,7 @@
         <glowColor>(255,150,100,0)</glowColor>
       </li>
       <li Class="StormlightMod.CompProperties_BasicBuildingFabrial">
-        <compClass>StormlightMod.BasicBuildingFabrial</compClass>
+        <compClass>StormlightMod.CompBasicBuildingFabrial</compClass>
       </li>
     </comps>
     <designationCategory>Temperature</designationCategory>
@@ -199,5 +209,35 @@
     <constructionSkillPrerequisite>5</constructionSkillPrerequisite>
   </ThingDef>
 
-  
+
+    <ThingDef>
+        <defName>whtwl_FabrialCage</defName>
+        <label>Fabrial cage</label>
+        <description>The part that holds the gemstone in a fabrial.</description>
+        <graphicData>
+            <texPath>Things/Item/Spheres/RawGarnet</texPath>
+            <graphicClass>Graphic_Single</graphicClass>
+            <drawSize>1</drawSize>
+        </graphicData>
+        <stuffProps>
+            <commonality>0.00</commonality>
+            <appearance>Metal</appearance>  <!-- change -->
+            <color>(214,224,16)</color>
+            <constructEffect>ConstructMetal</constructEffect>
+            <statOffsets>
+                <Beauty>5</Beauty>
+            </statOffsets>
+        </stuffProps>
+        <comps>
+            <li Class="StormlightMod.CompProperties_Stormlight">
+                <maxStormlight>5</maxStormlight>
+                <drainRate>0.5</drainRate>
+            </li>
+            <li Class="StormlightMod.CompProperties_RawGemstone">
+                <compClass>StormlightMod.CompRawGemstone</compClass>
+                <spawnChance>50</spawnChance>
+            </li>
+        </comps>
+    </ThingDef>
+
 </Defs>
