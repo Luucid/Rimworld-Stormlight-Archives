@@ -96,8 +96,8 @@
     <!-- ARTIFABRIALS -->
     <ResearchProjectDef>
         <defName>whtwl_Research_BasicArtifabriary</defName>
-        <label>Basic Artifabrials</label>
-        <description>How metals and gems interact.</description>
+        <label>Basic Fabrials</label>
+        <description>Single metal fabrials.</description>
         <tab>whtwl_StormlightArchives</tab>
         <baseCost>350</baseCost>
         <techLevel>Industrial</techLevel>
@@ -110,8 +110,8 @@
 
     <ResearchProjectDef>
         <defName>whtwl_Research_AdvancedArtifabriary</defName>
-        <label>Advanced Artifabrials</label>
-        <description>Use trapped sprens to control temperature.</description>
+        <label>Advanced Fabrials</label>
+        <description>Combine multiple types of metals to make more advanced fabrials.</description>
         <tab>whtwl_StormlightArchives</tab>
         <baseCost>350</baseCost>
         <techLevel>Industrial</techLevel>
