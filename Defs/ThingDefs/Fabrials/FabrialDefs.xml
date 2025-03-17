@@ -210,34 +210,34 @@
   </ThingDef>
 
 
-    <ThingDef>
-        <defName>whtwl_FabrialCage</defName>
-        <label>Fabrial cage</label>
-        <description>The part that holds the gemstone in a fabrial.</description>
-        <graphicData>
-            <texPath>Things/Item/Spheres/RawGarnet</texPath>
-            <graphicClass>Graphic_Single</graphicClass>
-            <drawSize>1</drawSize>
-        </graphicData>
-        <stuffProps>
-            <commonality>0.00</commonality>
-            <appearance>Metal</appearance>  <!-- change -->
-            <color>(214,224,16)</color>
-            <constructEffect>ConstructMetal</constructEffect>
-            <statOffsets>
-                <Beauty>5</Beauty>
-            </statOffsets>
-        </stuffProps>
-        <comps>
-            <li Class="StormlightMod.CompProperties_Stormlight">
-                <maxStormlight>5</maxStormlight>
-                <drainRate>0.5</drainRate>
-            </li>
-            <li Class="StormlightMod.CompProperties_RawGemstone">
-                <compClass>StormlightMod.CompRawGemstone</compClass>
-                <spawnChance>50</spawnChance>
-            </li>
-        </comps>
-    </ThingDef>
+  <ThingDef>
+    <defName>whtwl_FabrialCage</defName>
+    <label>Fabrial cage</label>
+    <description>The part that holds the gemstone in a fabrial.</description>
+    <graphicData>
+      <texPath>Things/Item/Fabrials/Gemholder_top_without_ruby</texPath>
+      <graphicClass>Graphic_Multi</graphicClass>
+      <shaderType>Cutout</shaderType>
+      <drawSize>1</drawSize>
+    </graphicData>
+    <stuffProps>
+      <commonality>0.00</commonality>
+      <appearance>Metal</appearance>  <!-- change -->
+      <color>(214,224,16)</color>
+      <constructEffect>ConstructMetal</constructEffect>
+      <statOffsets>
+        <Beauty>5</Beauty>
+      </statOffsets>
+    </stuffProps>
+    <costStuffCount>75</costStuffCount>
+    <stuffCategories>
+      <li>whtwl_SpecialMetals</li>
+    </stuffCategories>
+    <comps>
+      <li Class="StormlightMod.CompProperties_FabrialCage">
+        <compClass>StormlightMod.CompFabrialCage</compClass>
+      </li>
+    </comps>
+  </ThingDef>
 
 </Defs>
