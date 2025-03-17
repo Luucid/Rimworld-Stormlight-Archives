@@ -1,5 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Defs>
+
+	##
+ADD:
+	b_antimony
+	b_copper
+	a_pewter: antinomy + copper
+
+	b_zinc
+	a_brass: zinc + copper
+
+	b_tin
+	a_bronze: copper+tin
+
+	b_iron
+	b_carbon
+	a_steel:  iron+carbon
+
+	Alloy table.
+	
+	##
 	<ThingDef ParentName="ResourceBase">
 		<defName>whtwl_ShardMaterial</defName>
 		<label>shard material</label>
