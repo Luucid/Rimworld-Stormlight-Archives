@@ -36,7 +36,7 @@
         <stuffProps>
             <commonality>0.00</commonality>
             <categories>
-                <li>whtwl_gemstuff</li>                      <!-- make custom category -->
+                <li>whtwl_gemstuff</li>  
             </categories>
             <constructEffect>ConstructMetal</constructEffect>
             <soundImpactBullet>BulletImpact_Metal</soundImpactBullet>

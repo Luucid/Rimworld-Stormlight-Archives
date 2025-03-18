@@ -73,6 +73,7 @@
     <Compile Include="Components\Combat\Abilities\Implementations\SurgePlantGrowth.cs" />
     <Compile Include="Components\Combat\Abilities\Implementations\ToggleStormlight.cs" />
     <Compile Include="Components\Combat\Abilities\Verb_castRadiant.cs" />
+    <Compile Include="Components\Comps\Fabrials\FabrialCage.cs" />
     <Compile Include="Components\Comps\Fabrials\GenericFabrial.cs" />
     <Compile Include="Components\Comps\Fabrials\HeatFabrial.cs" />
     <Compile Include="Components\Comps\Fabrials\SprenTrapper.cs" />

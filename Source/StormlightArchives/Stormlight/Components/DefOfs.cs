@@ -29,6 +29,7 @@ namespace StormlightMod {
         //ThingDef
         public static ThingDef whtwl_Apparel_SpherePouch;
         public static ThingDef whtwl_SphereLamp;
+        public static ThingDef whtwl_FabrialCage;
 
         //RAW GEMS
         public static ThingDef whtwl_RawDiamond;

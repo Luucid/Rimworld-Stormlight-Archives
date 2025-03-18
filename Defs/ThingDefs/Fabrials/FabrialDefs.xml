@@ -133,25 +133,21 @@
   </ThingDef>
 
   <ThingDef ParentName="BuildingBase">
-    <defName>whtwl_BasicBuildingFabrial</defName>
+    <defName>whtwl_BasicFabrial_Augmenter</defName>
     <label>Basic Fabrial</label>
     <description>A device that use a trapped spren in a gemstone encased in metal, the type of
       metal, spren, and gemstone will alter the effect of this device.</description>
-    <thingClass>StormlightMod.Building_Fabrial_Basic</thingClass>
+    <thingClass>StormlightMod.Building_Fabrial_Basic_Augmenter</thingClass>
     <graphicData>
-      <texPath>Things/Item/Fabrials/Gemholder_base</texPath>
-      <graphicClass>Graphic_Multi</graphicClass>
-      <shaderType>Cutout</shaderType>
+      <texPath>Things/Item/Fabrials/Gemholder_without_gem</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>CutoutComplex</shaderType>
       <drawSize>1.2</drawSize>
       <attachments>
         <li>
-          <texPath>Things/Item/Fabrials/Gemholder_top_without_ruby</texPath>
-          <graphicClass>Graphic_Single</graphicClass>
-          <drawSize>1.2</drawSize>
-        </li>
-        <li>
           <texPath>Things/Item/Fabrials/Gemholder_top_with_ruby</texPath>
           <graphicClass>Graphic_Single</graphicClass>
+          <shaderType>CutoutComplex</shaderType>
           <drawSize>1.2</drawSize>
         </li>
       </attachments>
@@ -177,8 +173,7 @@
       <destroySound>BuildingDestroyed_Metal_Small</destroySound>
     </building>
     <costList>
-      <Steel>50</Steel>
-      <ComponentIndustrial>1</ComponentIndustrial>
+      <whtwl_FabrialCage>1</whtwl_FabrialCage>
     </costList>
     <costStuffCount>75</costStuffCount>
     <stuffCategories>
@@ -197,8 +192,8 @@
         <glowRadius>3</glowRadius>
         <glowColor>(255,150,100,0)</glowColor>
       </li>
-      <li Class="StormlightMod.CompProperties_BasicBuildingFabrial">
-        <compClass>StormlightMod.CompBasicBuildingFabrial</compClass>
+      <li Class="StormlightMod.CompProperties_BasicFabrialAugmenter">
+        <compClass>StormlightMod.CompBasicFabrialAugumenter</compClass>
       </li>
     </comps>
     <designationCategory>Temperature</designationCategory>
@@ -210,7 +205,7 @@
   </ThingDef>
 
 
-  <ThingDef>
+  <ThingDef ParentName="ResourceBase">
     <defName>whtwl_FabrialCage</defName>
     <label>Fabrial cage</label>
     <description>The part that holds the gemstone in a fabrial.</description>
@@ -220,6 +215,9 @@
       <shaderType>Cutout</shaderType>
       <drawSize>1</drawSize>
     </graphicData>
+    <statBases>
+      <Mass>0.008</Mass>
+    </statBases>
     <stuffProps>
       <commonality>0.00</commonality>
       <appearance>Metal</appearance>  <!-- change -->

@@ -103,6 +103,8 @@ namespace StormlightMod {
             sprenCaptured = false;
         }
 
+        public void InstallCage(ThingWithComps cage) {
+        }
 
         public void AddGemstone(ThingWithComps gemstone) {
             var gemstoneComp = gemstone.GetComp<CompCutGemstone>();

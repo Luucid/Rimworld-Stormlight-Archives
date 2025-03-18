@@ -9,21 +9,21 @@ using Verse.AI;
 
 namespace StormlightMod {
 
-    public class Building_Fabrial_Basic : Building {
-        public CompBasicBuildingFabrial compBasicBuildingFabrial;
+    public class Building_Fabrial_Basic_Augmenter : Building {
+        public CompBasicFabrialAugumenter compBasicFabrialAugumenter;
         public CompFlickable compFlickerable;
         public CompGlower compGlower;
 
 
         public override void SpawnSetup(Map map, bool respawningAfterLoad) {
             base.SpawnSetup(map, respawningAfterLoad);
-            compBasicBuildingFabrial = GetComp<CompBasicBuildingFabrial>();
+            compBasicFabrialAugumenter = GetComp<CompBasicFabrialAugumenter>();
             compFlickerable = GetComp<CompFlickable>();
             compGlower = GetComp<CompGlower>();
         }
         public override void TickRare() {
-            compBasicBuildingFabrial.checkPower(compFlickerable.SwitchIsOn);
-            if (compBasicBuildingFabrial.PowerOn) {
+            compBasicFabrialAugumenter.checkPower(compFlickerable.SwitchIsOn);
+            if (compBasicFabrialAugumenter.PowerOn) {
                 float ambientTemperature = base.AmbientTemperature;
                 float num = ((ambientTemperature < 20f) ? 1f : ((!(ambientTemperature > 120f)) ? Mathf.InverseLerp(120f, 20f, ambientTemperature) : 0f));
                 float num2 = GenTemperature.ControlTemperatureTempChange(this.Position, this.Map, 15f, 18f);
@@ -32,8 +32,8 @@ namespace StormlightMod {
                     this.GetRoom().Temperature += num2;
                 }
             }
-            toggleGlow(compBasicBuildingFabrial.PowerOn);
-            compBasicBuildingFabrial.usePower();
+            toggleGlow(compBasicFabrialAugumenter.PowerOn);
+            compBasicFabrialAugumenter.usePower();
         }
         private void toggleGlow(bool on) {
             if (this.Map != null) {
@@ -48,18 +48,19 @@ namespace StormlightMod {
 
         public override void Print(SectionLayer layer) {
             base.Print(layer);
-            this.def.graphicData.attachments[0].Graphic.Print(layer, this, 0);
-            if (compBasicBuildingFabrial.HasGemstone) {
-                this.def.graphicData.attachments[1].Graphic.Print(layer, this, 0);
+            if (compBasicFabrialAugumenter.HasGemstone) {
+                if (compBasicFabrialAugumenter.insertedGemstone.def == StormlightModDefs.whtwl_CutRuby) {
+                    this.def.graphicData.attachments[0].Graphic.Print(layer, this, 0f);
+                }
+                //else if(...)
             }
         }
     }
 
-    public class CompBasicBuildingFabrial : ThingComp, IGemstoneHandler {
-        public CompProperties_BasicBuildingFabrial Props => (CompProperties_BasicBuildingFabrial)props;
+    public class CompBasicFabrialAugumenter : ThingComp, IGemstoneHandler {
+        public CompProperties_BasicFabrialAugmenter Props => (CompProperties_BasicFabrialAugmenter)props;
         public CompGlower GlowerComp => parent.GetComp<CompGlower>();
         public Thing insertedGemstone = null;
-        public Thing gemstoneMetalCage = null; //custom def for metal cages
         public bool PowerOn = false;
         public bool HasGemstone => insertedGemstone != null;
 
@@ -69,6 +70,7 @@ namespace StormlightMod {
 
         public override void PostExposeData() {
             base.PostExposeData();
+            Scribe_References.Look(ref insertedGemstone, "insertedGemstone");
         }
 
         public void checkPower(bool flickeredOn) {
@@ -85,7 +87,26 @@ namespace StormlightMod {
         public void usePower() {
             if (PowerOn && insertedGemstone != null && insertedGemstone.TryGetComp<CompStormlight>() is CompStormlight stormlightComp) {
                 stormlightComp.drainStormLight(7f);
+                switch (insertedGemstone.TryGetComp<CompCutGemstone>().capturedSpren) {
+                    case Spren.Flame:
+                        doFlameSprenPower();
+                        break;
+                    case Spren.Cold:
+                        doColdSprenPower();
+                        break;
+                    default:
+                        break;
+
+                }
             }
+        }
+
+        private void doFlameSprenPower() 
+        {
+        
+        }
+        private void doColdSprenPower() {
+
         }
 
 
@@ -116,9 +137,15 @@ namespace StormlightMod {
             return gemName;
         }
         public override IEnumerable<FloatMenuOption> CompFloatMenuOptions(Pawn selPawn) {
+
             var cutGemstone = GenClosest.ClosestThing_Global(
                    selPawn.Position,
-                   selPawn.Map.listerThings.AllThings.Where(thing => thing.def == StormlightModDefs.whtwl_CutRuby), 500f);
+                   selPawn.Map.listerThings.AllThings.Where(
+                       thing => (thing.def == StormlightModDefs.whtwl_CutRuby
+                     || thing.def == StormlightModDefs.whtwl_CutEmerald
+                     || thing.def == StormlightModDefs.whtwl_CutDiamond
+                     || thing.def == StormlightModDefs.whtwl_CutSapphire
+                     || thing.def == StormlightModDefs.whtwl_CutGarnet)), 500f);
 
             Action replaceGemAction = null;
             string replaceGemText = "No suitable gem available";
@@ -147,12 +174,16 @@ namespace StormlightMod {
                 };
             }
             yield return new FloatMenuOption(removeGemText, removeGemAction);
+
+
+
+
         }
     }
 
-    public class CompProperties_BasicBuildingFabrial : CompProperties {
-        public CompProperties_BasicBuildingFabrial() {
-            this.compClass = typeof(CompBasicBuildingFabrial);
+    public class CompProperties_BasicFabrialAugmenter : CompProperties {
+        public CompProperties_BasicFabrialAugmenter() {
+            this.compClass = typeof(CompBasicFabrialAugumenter);
         }
     }
 }

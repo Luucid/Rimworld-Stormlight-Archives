@@ -125,7 +125,6 @@ namespace StormlightMod {
             }
         }
 
-
         public void AddGemstone(ThingWithComps gemstone) {
             var gemstoneComp = gemstone.GetComp<CompCutGemstone>();
             if (gemstoneComp != null && gemstoneComp.parent.def == StormlightModDefs.whtwl_CutRuby) {

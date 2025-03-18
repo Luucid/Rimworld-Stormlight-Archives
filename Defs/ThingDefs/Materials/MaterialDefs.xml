@@ -1,25 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Defs>
-	<!-- 
-	##
-ADD:
-	b_antimony
-	b_copper
-	a_pewter: antinomy + copper
-
-	b_zinc
-	a_brass: zinc + copper
-
-	b_tin
-	a_bronze: copper+tin
-
-	b_iron
-	b_carbon
-	a_steel:  iron+carbon
-
-	Alloy table.
-	
-	## -->
 	<ThingDef ParentName="ResourceBase">
 		<defName>whtwl_ShardMaterial</defName>
 		<label>shard material</label>
@@ -48,48 +28,4 @@ ADD:
 		<destroySoundMedium>BuildingDestroyed_Metal_Medium</destroySoundMedium>
 		<destroySoundLarge>BuildingDestroyed_Metal_Big</destroySoundLarge>
 	</StuffCategoryDef>
-
-	<StuffCategoryDef>
-		<defName>whtwl_SpecialMetals</defName>
-		<label>special metals</label>
-		<noun>special metal</noun>
-		<destroySoundSmall>BuildingDestroyed_Metal_Small</destroySoundSmall>
-		<destroySoundMedium>BuildingDestroyed_Metal_Medium</destroySoundMedium>
-		<destroySoundLarge>BuildingDestroyed_Metal_Big</destroySoundLarge>
-	</StuffCategoryDef>
-	<ThingDef Name="whtwl_SpecialMetalBase" ParentName="ResourceBase" Abstract="True">
-		<defName>whtwl_SpecialMetal</defName>
-		<label>Special Metal</label>
-		<description>Something about special metals.</description>
-		<soundInteract>Silver_Drop</soundInteract>
-		<soundDrop>Silver_Drop</soundDrop>
-		<useHitPoints>false</useHitPoints>
-		<healthAffectsPrice>false</healthAffectsPrice>
-		<deepCommonality>0.5</deepCommonality>
-		<deepCountPerPortion>8</deepCountPerPortion>
-		<deepLumpSizeRange>1~4</deepLumpSizeRange>
-		<tickerType>Normal</tickerType>
-		<thingCategories>
-			<li>ResourcesRaw</li>
-		</thingCategories>
-		<statBases>
-			<Mass>0.008</Mass>
-		</statBases>
-		<stackLimit>25</stackLimit>
-		<smallVolume>false</smallVolume>
-		<burnableByRecipe>false</burnableByRecipe>
-		<smeltable>false</smeltable>
-		<possessionCount>1</possessionCount>
-		<stuffProps>
-			<commonality>0.00</commonality>
-			<categories>
-				<li>whtwl_SpecialMetals</li>
-			</categories>
-			<constructEffect>ConstructMetal</constructEffect>
-			<soundImpactBullet>BulletImpact_Metal</soundImpactBullet>
-			<soundMeleeHitSharp>MeleeHit_Metal_Sharp</soundMeleeHitSharp>
-			<soundMeleeHitBlunt>MeleeHit_Metal_Blunt</soundMeleeHitBlunt>
-			<soundImpactMelee>Pawn_Melee_Punch_HitBuilding_Metal</soundImpactMelee>
-		</stuffProps>
-	</ThingDef>
 </Defs>

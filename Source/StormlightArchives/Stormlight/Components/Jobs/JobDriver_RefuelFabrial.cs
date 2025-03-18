@@ -16,19 +16,17 @@ namespace StormlightMod {
                 Thing gemstone = pawn.CurJob.GetTarget(gemInd).Thing;
 
 
-                if (isHeatrial(fabrial)) 
-                {
+                if (isHeatrial(fabrial)) {
                     doRemoveToil(fabrial.TryGetComp<CompHeatrial>());
                     doReplaceToil(fabrial.TryGetComp<CompHeatrial>(), gemstone);
                 }
-                else if (isSprenTrapper(fabrial)) 
-                {
+                else if (isSprenTrapper(fabrial)) {
                     doRemoveToil(fabrial.TryGetComp<CompSprenTrapper>());
                     doReplaceToil(fabrial.TryGetComp<CompSprenTrapper>(), gemstone);
                 }
-                else if (isGenericFabrial(fabrial)) {
-                    doRemoveToil(fabrial.TryGetComp<CompBasicBuildingFabrial>());
-                    doReplaceToil(fabrial.TryGetComp<CompBasicBuildingFabrial>(), gemstone);
+                else if (isBasicAugmenterFabrial(fabrial)) {
+                    doRemoveToil(fabrial.TryGetComp<CompBasicFabrialAugumenter>());
+                    doReplaceToil(fabrial.TryGetComp<CompBasicFabrialAugumenter>(), gemstone);
                 }
 
             };
@@ -59,8 +57,8 @@ namespace StormlightMod {
                 else if (isSprenTrapper(fabrial)) {
                     doRemoveToil(fabrial.TryGetComp<CompSprenTrapper>());
                 }
-                else if (isGenericFabrial(fabrial)) {
-                    doRemoveToil(fabrial.TryGetComp<CompBasicBuildingFabrial>());
+                else if (isBasicAugmenterFabrial(fabrial)) {
+                    doRemoveToil(fabrial.TryGetComp<CompBasicFabrialAugumenter>());
                 }
 
             };
@@ -70,13 +68,22 @@ namespace StormlightMod {
         }
 
 
-        static void doReplaceToil<T>(T fabComp, Thing gemstone) where T : IGemstoneHandler
-        { 
+        static void doReplaceToil<T>(T fabComp, Thing gemstone) where T : IGemstoneHandler {
             fabComp.AddGemstone(gemstone as ThingWithComps);
         }
 
         static void doRemoveToil<T>(T fabComp) where T : IGemstoneHandler {
             fabComp.RemoveGemstone();
+        }
+
+        static bool isGemstone(Thing gemstone) {
+            CompCutGemstone fabComp = gemstone.TryGetComp<CompCutGemstone>();
+            return fabComp != null;
+        }
+
+        static bool isFabrialCage(Thing gemstone) {
+            CompFabrialCage fabComp = gemstone.TryGetComp<CompFabrialCage>();
+            return fabComp != null;
         }
 
         static bool isHeatrial(Thing fabrial) {
@@ -87,8 +94,8 @@ namespace StormlightMod {
             CompSprenTrapper fabComp = fabrial.TryGetComp<CompSprenTrapper>();
             return fabComp != null;
         }
-        static bool isGenericFabrial(Thing fabrial) {
-            CompBasicBuildingFabrial fabComp = fabrial.TryGetComp<CompBasicBuildingFabrial>();
+        static bool isBasicAugmenterFabrial(Thing fabrial) {
+            CompBasicFabrialAugumenter fabComp = fabrial.TryGetComp<CompBasicFabrialAugumenter>();
             return fabComp != null;
         }
     }
@@ -159,7 +166,7 @@ namespace StormlightMod {
             });
 
             yield return Toils_Goto.GotoThing(FabrialIndex, PathEndMode.Touch);
-            yield return Toils_General.Wait(JobDuration).FailOnDestroyedNullOrForbidden(FabrialIndex) 
+            yield return Toils_General.Wait(JobDuration).FailOnDestroyedNullOrForbidden(FabrialIndex)
                 .FailOnCannotTouch(FabrialIndex, PathEndMode.Touch)
                 .WithProgressBarToilDelay(FabrialIndex);
             yield return Toils_Refuel_Fabrial.RemoveGemstone(FabrialIndex);  //custom toil

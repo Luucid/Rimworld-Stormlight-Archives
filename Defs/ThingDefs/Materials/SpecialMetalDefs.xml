@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+    <!-- 
+	##
+ADD:
+	b_antimony
+	b_copper
+	a_pewter: antinomy + copper
+
+	b_zinc
+	a_brass: zinc + copper
+
+	b_tin
+	a_bronze: copper+tin
+
+	b_iron
+	b_carbon
+	a_steel:  iron+carbon
+
+	Alloy table.
+	
+	## -->
+    <StuffCategoryDef>
+        <defName>whtwl_SpecialMetals</defName>
+        <label>special metals</label>
+        <noun>special metal</noun>
+        <destroySoundSmall>BuildingDestroyed_Metal_Small</destroySoundSmall>
+        <destroySoundMedium>BuildingDestroyed_Metal_Medium</destroySoundMedium>
+        <destroySoundLarge>BuildingDestroyed_Metal_Big</destroySoundLarge>
+    </StuffCategoryDef>
+    <ThingDef Name="whtwl_SpecialMetalBase" ParentName="ResourceBase" Abstract="True">
+        <defName>whtwl_SpecialMetal</defName>
+        <label>Special Metal</label>
+        <description>Something about special metals.</description>
+        <soundInteract>Silver_Drop</soundInteract>
+        <soundDrop>Silver_Drop</soundDrop>
+        <useHitPoints>false</useHitPoints>
+        <healthAffectsPrice>false</healthAffectsPrice>
+        <deepCommonality>0.5</deepCommonality>
+        <deepCountPerPortion>8</deepCountPerPortion>
+        <deepLumpSizeRange>1~4</deepLumpSizeRange>
+        <tickerType>Normal</tickerType>
+        <thingCategories>
+            <li>ResourcesRaw</li>
+        </thingCategories>
+        <statBases>
+            <Mass>0.008</Mass>
+        </statBases>
+        <stackLimit>25</stackLimit>
+        <smallVolume>false</smallVolume>
+        <burnableByRecipe>false</burnableByRecipe>
+        <smeltable>false</smeltable>
+        <possessionCount>1</possessionCount>
+        <stuffProps>
+            <commonality>0.00</commonality>
+            <categories>
+                <li>whtwl_SpecialMetals</li>
+            </categories>
+            <constructEffect>ConstructMetal</constructEffect>
+            <soundImpactBullet>BulletImpact_Metal</soundImpactBullet>
+            <soundMeleeHitSharp>MeleeHit_Metal_Sharp</soundMeleeHitSharp>
+            <soundMeleeHitBlunt>MeleeHit_Metal_Blunt</soundMeleeHitBlunt>
+            <soundImpactMelee>Pawn_Melee_Punch_HitBuilding_Metal</soundImpactMelee>
+        </stuffProps>
+    </ThingDef>
+
+    <!-- Minable Antimony -->
+    <ThingDef ParentName="RockBase">
+        <defName>whtwl_MineableAntimony</defName>
+        <label>Raw Antimony</label>
+        <description>Something about Antimony.</description>
+        <graphicData>
+            <texPath>Things/Building/Linked/RockFlecked_Atlas</texPath>
+            <graphicClass>Graphic_Single</graphicClass>
+            <shaderType>CutoutComplex</shaderType>
+            <color>(61, 112, 117)</color>
+            <colorTwo>(220,220,220)</colorTwo>
+        </graphicData>
+        <statBases>
+            <MaxHitPoints>1500</MaxHitPoints>
+        </statBases>
+        <building>
+            <isResourceRock>true</isResourceRock>
+            <mineableThing>whtwl_RawDiamond</mineableThing>
+            <mineableYield>5</mineableYield>
+            <mineableScatterCommonality>0.3</mineableScatterCommonality>
+            <mineableScatterLumpSizeRange>8~16</mineableScatterLumpSizeRange>
+            <veinMineable>true</veinMineable>
+        </building>
+    </ThingDef>
+    <ThingDef ParentName="whtwl_SpecialMetalBase">
+        <defName>whtwl_RawAntimony</defName>
+        <label>Raw Antimony</label>
+        <description>Something about antimony.</description>
+        <graphicData>
+            <texPath>Things/Item/Spheres/RawDiamond</texPath>
+            <graphicClass>Graphic_Single</graphicClass>
+            <drawSize>1</drawSize>
+        </graphicData>
+        <stuffProps>
+            <commonality>0.00</commonality>
+            <appearance>Metal</appearance>  <!-- change -->
+            <color>(225,16,15)</color>
+            <constructEffect>ConstructMetal</constructEffect>
+            <statOffsets>
+                <Beauty>2</Beauty>
+            </statOffsets>
+        </stuffProps>
+    </ThingDef>
+</Defs>
