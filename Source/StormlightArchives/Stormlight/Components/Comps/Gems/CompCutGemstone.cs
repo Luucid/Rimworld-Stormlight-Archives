@@ -7,12 +7,12 @@ using UnityEngine;
 
 namespace StormlightMod {
 
-  
+
     public class Sphere_ruby : ThingDef {
-       
+
     }
 
-    public enum Spren { None, Flame, Cold, Smoke, Pain, Logic};
+    public enum Spren { None, Flame, Cold, Smoke, Pain, Logic };
 
     public class CompCutGemstone : ThingComp {
         public CompProperties_CutGemstone GemstoneProps => (CompProperties_CutGemstone)props;
@@ -21,7 +21,7 @@ namespace StormlightMod {
         public int gemstoneQuality;
         public int gemstoneSize;
         public int maximumGemstoneSize = 20;
-        public Spren capturedSpren = Spren.None; 
+        public Spren capturedSpren = Spren.None;
         public string GetFullLabel => TransformLabel(parent.Label);
 
         public override void Initialize(CompProperties props) {
@@ -99,10 +99,20 @@ namespace StormlightMod {
             base.PostExposeData();
             Scribe_Values.Look(ref gemstoneQuality, "gemstoneQuality", 1);
             Scribe_Values.Look(ref gemstoneSize, "gemstoneSize", 1);
+            Scribe_Values.Look(ref capturedSpren, "capturedSpren", Spren.None);
         }
 
         public override void CompTick() {
             base.CompTick();
+        }
+
+
+
+        public override string CompInspectStringExtra() {
+            if (capturedSpren != Spren.None) {
+                return $"holding: {capturedSpren.ToString()}spren";
+            }
+            return "";
         }
 
         public override IEnumerable<Gizmo> CompGetGizmosExtra() {

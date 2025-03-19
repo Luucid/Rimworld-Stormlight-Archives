@@ -23,15 +23,6 @@ namespace StormlightMod {
         }
         public override void TickRare() {
             compBasicFabrialAugumenter.checkPower(compFlickerable.SwitchIsOn);
-            if (compBasicFabrialAugumenter.PowerOn) {
-                float ambientTemperature = base.AmbientTemperature;
-                float num = ((ambientTemperature < 20f) ? 1f : ((!(ambientTemperature > 120f)) ? Mathf.InverseLerp(120f, 20f, ambientTemperature) : 0f));
-                float num2 = GenTemperature.ControlTemperatureTempChange(this.Position, this.Map, 15f, 18f);
-                bool flag = !Mathf.Approximately(num2, 0f);
-                if (flag) {
-                    this.GetRoom().Temperature += num2;
-                }
-            }
             toggleGlow(compBasicFabrialAugumenter.PowerOn);
             compBasicFabrialAugumenter.usePower();
         }
@@ -101,10 +92,18 @@ namespace StormlightMod {
             }
         }
 
-        private void doFlameSprenPower() 
-        {
-        
+        private void doFlameSprenPower() {
+            if (PowerOn) {
+                float ambientTemperature = parent.AmbientTemperature; 
+                float num = ((ambientTemperature < 20f) ? 1f : ((!(ambientTemperature > 120f)) ? Mathf.InverseLerp(120f, 20f, ambientTemperature) : 0f));
+                float num2 = GenTemperature.ControlTemperatureTempChange(parent.Position, parent.Map, 15f, 18f); 
+                bool flag = !Mathf.Approximately(num2, 0f); 
+                if (flag) {
+                    parent.GetRoom().Temperature += num2;
+                }
+            }
         }
+
         private void doColdSprenPower() {
 
         }
