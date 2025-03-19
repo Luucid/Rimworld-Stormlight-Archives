@@ -20,6 +20,22 @@ ADD:
 	Alloy table.
 	
 	## -->
+
+    <!-- WORK BENCH STUFF -->
+    <RecipeDef Name="whtwl_MakeAlloyBase" Abstract="True">
+        <jobString>Making alloys out of raw material.</jobString>
+        <workAmount>1600</workAmount>
+        <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+        <effectWorking>CutStone</effectWorking>
+        <soundWorking>Recipe_MakeStoneBlocks</soundWorking>
+        <targetCountAdjustment>1</targetCountAdjustment>
+        <workSkill>Crafting</workSkill> <!-- custom skill -->
+        <workSkillLearnFactor>0</workSkillLearnFactor>
+        <recipeUsers>
+            <li>whtwl_TableAlloys</li>
+        </recipeUsers>
+    </RecipeDef>
+
     <StuffCategoryDef>
         <defName>whtwl_SpecialMetals</defName>
         <label>special metals</label>
@@ -64,7 +80,7 @@ ADD:
         </stuffProps>
     </ThingDef>
 
-    <!-- Minable Antimony -->
+    <!-- Antimony -->
     <ThingDef ParentName="RockBase">
         <defName>whtwl_MineableAntimony</defName>
         <label>Raw Antimony</label>
@@ -107,4 +123,374 @@ ADD:
             </statOffsets>
         </stuffProps>
     </ThingDef>
+
+    <!-- Copper -->
+    <ThingDef ParentName="RockBase">
+        <defName>whtwl_MineableCopper</defName>
+        <label>Raw Copper</label>
+        <description>Something about Copper.</description>
+        <graphicData>
+            <texPath>Things/Building/Linked/RockFlecked_Atlas</texPath>
+            <graphicClass>Graphic_Single</graphicClass>
+            <shaderType>CutoutComplex</shaderType>
+            <color>(61, 112, 117)</color>
+            <colorTwo>(220,220,220)</colorTwo>
+        </graphicData>
+        <statBases>
+            <MaxHitPoints>1500</MaxHitPoints>
+        </statBases>
+        <building>
+            <isResourceRock>true</isResourceRock>
+            <mineableThing>whtwl_RawDiamond</mineableThing>
+            <mineableYield>5</mineableYield>
+            <mineableScatterCommonality>0.3</mineableScatterCommonality>
+            <mineableScatterLumpSizeRange>8~16</mineableScatterLumpSizeRange>
+            <veinMineable>true</veinMineable>
+        </building>
+    </ThingDef>
+    <ThingDef ParentName="whtwl_SpecialMetalBase">
+        <defName>whtwl_RawCopper</defName>
+        <label>Raw Copper</label>
+        <description>Something about Copper.</description>
+        <graphicData>
+            <texPath>Things/Item/Spheres/RawDiamond</texPath>
+            <graphicClass>Graphic_Single</graphicClass>
+            <drawSize>1</drawSize>
+        </graphicData>
+        <stuffProps>
+            <commonality>0.00</commonality>
+            <appearance>Metal</appearance>  <!-- change -->
+            <color>(225,16,15)</color>
+            <constructEffect>ConstructMetal</constructEffect>
+            <statOffsets>
+                <Beauty>2</Beauty>
+            </statOffsets>
+        </stuffProps>
+    </ThingDef>
+
+
+    <!-- Zinc -->
+    <ThingDef ParentName="RockBase">
+        <defName>whtwl_MineableZinc</defName>
+        <label>Raw Zinc</label>
+        <description>Something about Zinc.</description>
+        <graphicData>
+            <texPath>Things/Building/Linked/RockFlecked_Atlas</texPath>
+            <graphicClass>Graphic_Single</graphicClass>
+            <shaderType>CutoutComplex</shaderType>
+            <color>(61, 112, 117)</color>
+            <colorTwo>(220,220,220)</colorTwo>
+        </graphicData>
+        <statBases>
+            <MaxHitPoints>1500</MaxHitPoints>
+        </statBases>
+        <building>
+            <isResourceRock>true</isResourceRock>
+            <mineableThing>whtwl_RawDiamond</mineableThing>
+            <mineableYield>5</mineableYield>
+            <mineableScatterCommonality>0.3</mineableScatterCommonality>
+            <mineableScatterLumpSizeRange>8~16</mineableScatterLumpSizeRange>
+            <veinMineable>true</veinMineable>
+        </building>
+    </ThingDef>
+    <ThingDef ParentName="whtwl_SpecialMetalBase">
+        <defName>whtwl_RawZinc</defName>
+        <label>Raw Zinc</label>
+        <description>Something about Zinc.</description>
+        <graphicData>
+            <texPath>Things/Item/Spheres/RawDiamond</texPath>
+            <graphicClass>Graphic_Single</graphicClass>
+            <drawSize>1</drawSize>
+        </graphicData>
+        <stuffProps>
+            <commonality>0.00</commonality>
+            <appearance>Metal</appearance>  <!-- change -->
+            <color>(225,16,15)</color>
+            <constructEffect>ConstructMetal</constructEffect>
+            <statOffsets>
+                <Beauty>2</Beauty>
+            </statOffsets>
+        </stuffProps>
+    </ThingDef>
+
+
+    <!-- Tin -->
+    <ThingDef ParentName="RockBase">
+        <defName>whtwl_MineableTin</defName>
+        <label>Raw Tin</label>
+        <description>Something about Tin.</description>
+        <graphicData>
+            <texPath>Things/Building/Linked/RockFlecked_Atlas</texPath>
+            <graphicClass>Graphic_Single</graphicClass>
+            <shaderType>CutoutComplex</shaderType>
+            <color>(61, 112, 117)</color>
+            <colorTwo>(220,220,220)</colorTwo>
+        </graphicData>
+        <statBases>
+            <MaxHitPoints>1500</MaxHitPoints>
+        </statBases>
+        <building>
+            <isResourceRock>true</isResourceRock>
+            <mineableThing>whtwl_RawDiamond</mineableThing>
+            <mineableYield>5</mineableYield>
+            <mineableScatterCommonality>0.3</mineableScatterCommonality>
+            <mineableScatterLumpSizeRange>8~16</mineableScatterLumpSizeRange>
+            <veinMineable>true</veinMineable>
+        </building>
+    </ThingDef>
+    <ThingDef ParentName="whtwl_SpecialMetalBase">
+        <defName>whtwl_RawTin</defName>
+        <label>Raw Tin</label>
+        <description>Something about Tin.</description>
+        <graphicData>
+            <texPath>Things/Item/Spheres/RawDiamond</texPath>
+            <graphicClass>Graphic_Single</graphicClass>
+            <drawSize>1</drawSize>
+        </graphicData>
+        <stuffProps>
+            <commonality>0.00</commonality>
+            <appearance>Metal</appearance>  <!-- change -->
+            <color>(225,16,15)</color>
+            <constructEffect>ConstructMetal</constructEffect>
+            <statOffsets>
+                <Beauty>2</Beauty>
+            </statOffsets>
+        </stuffProps>
+    </ThingDef>
+
+    <!-- Iron -->
+    <ThingDef ParentName="RockBase">
+        <defName>whtwl_MineableIron</defName>
+        <label>Raw Iron</label>
+        <description>Something about Iron.</description>
+        <graphicData>
+            <texPath>Things/Building/Linked/RockFlecked_Atlas</texPath>
+            <graphicClass>Graphic_Single</graphicClass>
+            <shaderType>CutoutComplex</shaderType>
+            <color>(61, 112, 117)</color>
+            <colorTwo>(220,220,220)</colorTwo>
+        </graphicData>
+        <statBases>
+            <MaxHitPoints>1500</MaxHitPoints>
+        </statBases>
+        <building>
+            <isResourceRock>true</isResourceRock>
+            <mineableThing>whtwl_RawDiamond</mineableThing>
+            <mineableYield>5</mineableYield>
+            <mineableScatterCommonality>0.3</mineableScatterCommonality>
+            <mineableScatterLumpSizeRange>8~16</mineableScatterLumpSizeRange>
+            <veinMineable>true</veinMineable>
+        </building>
+    </ThingDef>
+    <ThingDef ParentName="whtwl_SpecialMetalBase">
+        <defName>whtwl_RawIron</defName>
+        <label>Raw Iron</label>
+        <description>Something about Iron.</description>
+        <graphicData>
+            <texPath>Things/Item/Spheres/RawDiamond</texPath>
+            <graphicClass>Graphic_Single</graphicClass>
+            <drawSize>1</drawSize>
+        </graphicData>
+        <stuffProps>
+            <commonality>0.00</commonality>
+            <appearance>Metal</appearance>  <!-- change -->
+            <color>(225,16,15)</color>
+            <constructEffect>ConstructMetal</constructEffect>
+            <statOffsets>
+                <Beauty>2</Beauty>
+            </statOffsets>
+        </stuffProps>
+    </ThingDef>
+
+    <!-- Carbon -->
+    <ThingDef ParentName="RockBase">
+        <defName>whtwl_MineableCarbon</defName>
+        <label>Raw Carbon</label>
+        <description>Something about Carbon.</description>
+        <graphicData>
+            <texPath>Things/Building/Linked/RockFlecked_Atlas</texPath>
+            <graphicClass>Graphic_Single</graphicClass>
+            <shaderType>CutoutComplex</shaderType>
+            <color>(61, 112, 117)</color>
+            <colorTwo>(220,220,220)</colorTwo>
+        </graphicData>
+        <statBases>
+            <MaxHitPoints>1500</MaxHitPoints>
+        </statBases>
+        <building>
+            <isResourceRock>true</isResourceRock>
+            <mineableThing>whtwl_RawDiamond</mineableThing>
+            <mineableYield>5</mineableYield>
+            <mineableScatterCommonality>0.3</mineableScatterCommonality>
+            <mineableScatterLumpSizeRange>8~16</mineableScatterLumpSizeRange>
+            <veinMineable>true</veinMineable>
+        </building>
+    </ThingDef>
+    <ThingDef ParentName="whtwl_SpecialMetalBase">
+        <defName>whtwl_RawCarbon</defName>
+        <label>Raw Carbon</label>
+        <description>Something about Carbon.</description>
+        <graphicData>
+            <texPath>Things/Item/Spheres/RawDiamond</texPath>
+            <graphicClass>Graphic_Single</graphicClass>
+            <drawSize>1</drawSize>
+        </graphicData>
+        <stuffProps>
+            <commonality>0.00</commonality>
+            <appearance>Metal</appearance>  <!-- change -->
+            <color>(225,16,15)</color>
+            <constructEffect>ConstructMetal</constructEffect>
+            <statOffsets>
+                <Beauty>2</Beauty>
+            </statOffsets>
+        </stuffProps>
+    </ThingDef>
+
+
+    <!-- ALLOYS -->
+    <!-- Pewter -->
+    <RecipeDef ParentName="whtwl_MakeAlloyBase">
+        <defName>whtwl_Make_AlloyPewter</defName>
+        <label>make Pewter Alloy</label>
+        <description>make Pewter alloy out of antimony and copper.</description>
+        <ingredients>
+            <li>
+                <filter>
+                    <thingDefs>
+                        <li>whtwl_RawAntimony</li>
+                    </thingDefs>
+                </filter>
+                <count>1</count>
+            </li>
+            <li>
+                <filter>
+                    <thingDefs>
+                        <li>whtwl_RawCopper</li>
+                    </thingDefs>
+                </filter>
+                <count>1</count>
+            </li>
+        </ingredients>
+        <fixedIngredientFilter>
+            <thingDefs>
+                <li>whtwl_RawAntimony</li>
+                <li>whtwl_RawCopper</li>
+            </thingDefs>
+        </fixedIngredientFilter>
+        <products>
+            <whtwl_AlloyPewter>1</whtwl_AlloyPewter>
+        </products>
+        <researchPrerequisites>
+            <li>whtwl_Research_Alloys</li>
+        </researchPrerequisites>
+    </RecipeDef>
+    <ThingDef ParentName="whtwl_SpecialMetalBase">
+        <defName>whtwl_AlloyPewter</defName>
+        <label>Pewter Alloy</label>
+        <description>Alloy made out of antinomy and copper.</description>
+        <graphicData>
+            <texPath>Things/Item/Spheres/RawDiamond</texPath>
+            <graphicClass>Graphic_Single</graphicClass>
+            <drawSize>1</drawSize>
+        </graphicData>
+        <stuffProps>
+            <commonality>0.00</commonality>
+            <appearance>Metal</appearance>
+            <color>(225,16,15)</color>
+            <constructEffect>ConstructMetal</constructEffect>
+            <statOffsets>
+                <Beauty>2</Beauty>
+            </statOffsets>
+        </stuffProps>
+    </ThingDef>
+
+    <!-- GEMSTONE WORKBENCHES-->
+    <WorkGiverDef>
+        <defName>whtwl_DoBillsAlloy</defName>
+        <label>make alloys out of stuff</label>
+        <giverClass>WorkGiver_DoBill</giverClass>
+        <workType>Crafting</workType>
+        <priorityInType>90</priorityInType>
+        <fixedBillGiverDefs>
+            <li>whtwl_TableAlloys</li>
+        </fixedBillGiverDefs>
+        <verb>stonecut</verb>
+        <gerund>making alloys at</gerund>
+        <requiredCapacities>
+            <li>Manipulation</li>
+        </requiredCapacities>
+        <prioritizeSustains>true</prioritizeSustains>
+    </WorkGiverDef>
+
+    <ThingDef ParentName="BenchBase">
+        <defName>whtwl_TableAlloys</defName>
+        <label>alloy table</label>
+        <description>A work station to create alloys from raw materials.</description>
+        <thingClass>Building_WorkTable_HeatPush</thingClass>
+        <graphicData>
+            <texPath>Things/Workbench/whtwl_Gemcutter</texPath>
+            <graphicClass>Graphic_Multi</graphicClass>
+            <drawSize>(3.5,1.5)</drawSize>
+            <shaderType>CutoutComplex</shaderType>
+            <damageData>
+                <cornerTL>Damage/Corner</cornerTL>
+                <cornerTR>Damage/Corner</cornerTR>
+                <cornerBL>Damage/Corner</cornerBL>
+                <cornerBR>Damage/Corner</cornerBR>
+            </damageData>
+        </graphicData>
+        <castEdgeShadows>true</castEdgeShadows>
+        <staticSunShadowHeight>0.20</staticSunShadowHeight>
+        <costStuffCount>75</costStuffCount>
+        <costList>
+            <Steel>30</Steel>
+        </costList>
+        <stuffCategories>
+            <li>Metallic</li>
+            <li>Woody</li>
+        </stuffCategories>
+        <altitudeLayer>Building</altitudeLayer>
+        <fillPercent>0.5</fillPercent>
+        <useHitPoints>True</useHitPoints>
+        <statBases>
+            <WorkToBuild>2000</WorkToBuild>
+            <MaxHitPoints>180</MaxHitPoints>
+            <Flammability>1.0</Flammability>
+            <Cleanliness>-5</Cleanliness>
+        </statBases>
+        <size>(3,1)</size>
+        <designationCategory>Production</designationCategory>
+        <uiOrder>2300</uiOrder>
+        <passability>PassThroughOnly</passability>
+        <pathCost>50</pathCost>
+        <hasInteractionCell>True</hasInteractionCell>
+        <interactionCellOffset>(0,0,-1)</interactionCellOffset>
+        <surfaceType>Item</surfaceType>
+        <terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded>
+        <inspectorTabs>
+            <li>ITab_Bills</li>
+        </inspectorTabs>
+        <building>
+            <spawnedConceptLearnOpportunity>BillsTab</spawnedConceptLearnOpportunity>
+            <paintable>true</paintable>
+        </building>
+        <comps>
+            <li Class="CompProperties_AffectedByFacilities">
+                <linkableFacilities>
+                    <li>ToolCabinet</li>
+                </linkableFacilities>
+            </li>
+        </comps>
+        <researchPrerequisites>
+            <li>whtwl_Research_Alloys</li>
+        </researchPrerequisites>
+        <designationHotKey>Misc9</designationHotKey>
+        <placeWorkers>
+            <li>PlaceWorker_ShowFacilitiesConnections</li>
+            <li>PlaceWorker_PreventInteractionSpotOverlap</li>
+        </placeWorkers>
+    </ThingDef>
 </Defs>
+
+
+    

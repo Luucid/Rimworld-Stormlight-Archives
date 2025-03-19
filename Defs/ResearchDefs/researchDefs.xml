@@ -67,17 +67,6 @@
 
     <!-- SPRENOLOGY -->
     <ResearchProjectDef>
-        <defName>whtwl_Research_BasicSprenology</defName>
-        <label>Basic Sprenology</label>
-        <description>The study of spren.</description>
-        <tab>whtwl_StormlightArchives</tab>
-        <baseCost>350</baseCost>
-        <techLevel>Industrial</techLevel>
-        <researchViewX>4.00</researchViewX>
-        <researchViewY>1.80</researchViewY>
-    </ResearchProjectDef>
-
-    <ResearchProjectDef>
         <defName>whtwl_Research_SprenTrapping</defName>
         <label>Spren trapping</label>
         <description>The study of trapping spren in cut gems.</description>
@@ -85,7 +74,6 @@
         <baseCost>350</baseCost>
         <techLevel>Industrial</techLevel>
         <prerequisites>
-            <li>whtwl_Research_BasicSprenology</li>
             <li>whtwl_GemCutting</li>
         </prerequisites>
         <researchViewX>5.00</researchViewX>
@@ -95,6 +83,17 @@
 
     <!-- ARTIFABRIALS -->
     <ResearchProjectDef>
+        <defName>whtwl_Research_Alloys</defName>
+        <label>Metal Alloys</label>
+        <description>make alloys out of stuff.</description>
+        <tab>whtwl_StormlightArchives</tab>
+        <baseCost>350</baseCost>
+        <techLevel>Industrial</techLevel>
+        <researchViewX>0.00</researchViewX>
+        <researchViewY>0.00</researchViewY>
+    </ResearchProjectDef>
+
+    <ResearchProjectDef>
         <defName>whtwl_Research_BasicArtifabriary</defName>
         <label>Basic Fabrials</label>
         <description>Single metal fabrials.</description>
@@ -102,11 +101,13 @@
         <baseCost>350</baseCost>
         <techLevel>Industrial</techLevel>
         <prerequisites>
-              <li>whtwl_Research_SprenTrapping</li>
+            <li>whtwl_Research_SprenTrapping</li>
+            <li>whtwl_Research_Alloys</li>
         </prerequisites>
         <researchViewX>4.00</researchViewX>
         <researchViewY>3.80</researchViewY>
     </ResearchProjectDef>
+
 
     <ResearchProjectDef>
         <defName>whtwl_Research_AdvancedArtifabriary</defName>
@@ -122,5 +123,5 @@
         <researchViewY>1.80</researchViewY>
     </ResearchProjectDef>
 
-    
+
 </Defs>

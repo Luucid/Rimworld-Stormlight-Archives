@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Defs>
 
+  <DesignationCategoryDef>
+    <defName>whtwl_DesignationFabrials</defName>
+    <label>rimlight</label>
+    <order>1</order>
+    <specialDesignatorClasses>
+      <li>Designator_Cancel</li>
+      <li>Designator_Deconstruct</li>
+    </specialDesignatorClasses>
+    <preferredColumn>2</preferredColumn>
+    <!-- <researchPrerequisites>
+      <li>whtwl_Research_BasicArtifabriary</li>
+    </researchPrerequisites> -->
+  </DesignationCategoryDef>
+
   <ThingDef ParentName="BuildingBase">
     <defName>whtwl_Basic_Heatrial</defName>
     <label>Basic Heatrial</label>
@@ -60,7 +74,7 @@
         <compClass>StormlightMod.CompHeatrial</compClass>
       </li>
     </comps>
-    <designationCategory>Temperature</designationCategory>
+    <designationCategory>whtwl_DesignationFabrials</designationCategory>
     <designationHotKey>Misc3</designationHotKey>
     <researchPrerequisites>
       <li>whtwl_Research_BasicArtifabriary</li>
@@ -124,7 +138,7 @@
         <compClass>StormlightMod.CompSprenTrapper</compClass>
       </li>
     </comps>
-    <designationCategory>Temperature</designationCategory>
+    <designationCategory>whtwl_DesignationFabrials</designationCategory>
     <designationHotKey>Misc3</designationHotKey>
     <researchPrerequisites>
       <li>whtwl_Research_AdvancedArtifabriary</li>
@@ -134,20 +148,21 @@
 
   <ThingDef ParentName="BuildingBase">
     <defName>whtwl_BasicFabrial_Augmenter</defName>
-    <label>Basic Fabrial</label>
-    <description>A device that use a trapped spren in a gemstone encased in metal, the type of
-      metal, spren, and gemstone will alter the effect of this device.</description>
+    <label>Basic Augmenter</label>
+    <description>A device that use a trapped spren in a gemstone encased in a pewter cage.</description>
     <thingClass>StormlightMod.Building_Fabrial_Basic_Augmenter</thingClass>
     <graphicData>
       <texPath>Things/Item/Fabrials/Gemholder_without_gem</texPath>
       <graphicClass>Graphic_Single</graphicClass>
       <shaderType>CutoutComplex</shaderType>
       <drawSize>1.2</drawSize>
+      <colorTwo>(36, 54, 68)</colorTwo>
       <attachments>
         <li>
           <texPath>Things/Item/Fabrials/Gemholder_top_with_ruby</texPath>
           <graphicClass>Graphic_Single</graphicClass>
           <shaderType>CutoutComplex</shaderType>
+          <color>(36, 54, 68)</color>
           <drawSize>1.2</drawSize>
         </li>
       </attachments>
@@ -173,7 +188,7 @@
       <destroySound>BuildingDestroyed_Metal_Small</destroySound>
     </building>
     <costList>
-      <whtwl_FabrialCage>1</whtwl_FabrialCage>
+      <whtwl_FabrialCage_Pewter>1</whtwl_FabrialCage_Pewter>
     </costList>
     <costStuffCount>75</costStuffCount>
     <stuffCategories>
@@ -196,46 +211,11 @@
         <compClass>StormlightMod.CompBasicFabrialAugumenter</compClass>
       </li>
     </comps>
-    <designationCategory>Temperature</designationCategory>
+    <designationCategory>whtwl_DesignationFabrials</designationCategory>
     <designationHotKey>Misc3</designationHotKey>
     <researchPrerequisites>
       <li>whtwl_Research_BasicArtifabriary</li>
     </researchPrerequisites>
     <constructionSkillPrerequisite>5</constructionSkillPrerequisite>
   </ThingDef>
-
-
-  <ThingDef ParentName="ResourceBase">
-    <defName>whtwl_FabrialCage</defName>
-    <label>Fabrial cage</label>
-    <description>The part that holds the gemstone in a fabrial.</description>
-    <graphicData>
-      <texPath>Things/Item/Fabrials/Gemholder_top_without_ruby</texPath>
-      <graphicClass>Graphic_Multi</graphicClass>
-      <shaderType>Cutout</shaderType>
-      <drawSize>1</drawSize>
-    </graphicData>
-    <statBases>
-      <Mass>0.008</Mass>
-    </statBases>
-    <stuffProps>
-      <commonality>0.00</commonality>
-      <appearance>Metal</appearance>  <!-- change -->
-      <color>(214,224,16)</color>
-      <constructEffect>ConstructMetal</constructEffect>
-      <statOffsets>
-        <Beauty>5</Beauty>
-      </statOffsets>
-    </stuffProps>
-    <costStuffCount>75</costStuffCount>
-    <stuffCategories>
-      <li>whtwl_SpecialMetals</li>
-    </stuffCategories>
-    <comps>
-      <li Class="StormlightMod.CompProperties_FabrialCage">
-        <compClass>StormlightMod.CompFabrialCage</compClass>
-      </li>
-    </comps>
-  </ThingDef>
-
 </Defs>
