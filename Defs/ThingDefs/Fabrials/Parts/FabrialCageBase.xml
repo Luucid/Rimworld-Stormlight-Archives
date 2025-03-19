@@ -11,7 +11,7 @@
         <workSkill>Crafting</workSkill> <!-- custom skill -->
         <workSkillLearnFactor>0</workSkillLearnFactor>
         <recipeUsers>
-            <li>whtwl_TableGemcutting</li>  <!-- custom bench -->
+            <li>whtwl_TableFabrials</li>  
         </recipeUsers>
         <researchPrerequisites>
             <li>whtwl_Research_Alloys</li>

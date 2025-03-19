@@ -141,7 +141,7 @@
     <designationCategory>whtwl_DesignationFabrials</designationCategory>
     <designationHotKey>Misc3</designationHotKey>
     <researchPrerequisites>
-      <li>whtwl_Research_AdvancedArtifabriary</li>
+      <li>whtwl_Research_SprenTrapping</li>
     </researchPrerequisites>
     <constructionSkillPrerequisite>5</constructionSkillPrerequisite>
   </ThingDef>
