@@ -29,6 +29,9 @@ namespace StormlightMod {
         private void toggleGlow(bool on) {
             if (this.Map != null) {
                 if (on) {
+                    var stormlightComp = (compBasicFabrialAugumenter.insertedGemstone as ThingWithComps).GetComp<CompStormlight>();
+                    compGlower.GlowRadius = stormlightComp.MaximumGlowRadius; 
+                    compGlower.GlowColor = stormlightComp.GlowerComp.GlowColor; 
                     this.Map.glowGrid.RegisterGlower(compGlower);
                 }
                 else {
@@ -92,12 +95,15 @@ namespace StormlightMod {
             }
         }
 
+
         private void doFlameSprenPower() {
             if (PowerOn) {
-                float ambientTemperature = parent.AmbientTemperature; 
-                float num = ((ambientTemperature < 20f) ? 1f : ((!(ambientTemperature > 120f)) ? Mathf.InverseLerp(120f, 20f, ambientTemperature) : 0f));
-                float num2 = GenTemperature.ControlTemperatureTempChange(parent.Position, parent.Map, 15f, 18f); 
-                bool flag = !Mathf.Approximately(num2, 0f); 
+                float maxEnergy = insertedGemstone.TryGetComp<CompCutGemstone>().gemstoneSize * 3; //3, 15, 60
+                float targetTemp = insertedGemstone.TryGetComp<CompCutGemstone>().gemstoneSize; //3, 15, 60
+                if (targetTemp < 20f) targetTemp *= 3;
+                float ambientTemperature = parent.AmbientTemperature;
+                float num2 = GenTemperature.ControlTemperatureTempChange(parent.Position, parent.Map, maxEnergy, targetTemp); 
+                bool flag = !Mathf.Approximately(num2, 0f);
                 if (flag) {
                     parent.GetRoom().Temperature += num2;
                 }
@@ -140,11 +146,7 @@ namespace StormlightMod {
             var cutGemstone = GenClosest.ClosestThing_Global(
                    selPawn.Position,
                    selPawn.Map.listerThings.AllThings.Where(
-                       thing => (thing.def == StormlightModDefs.whtwl_CutRuby
-                     || thing.def == StormlightModDefs.whtwl_CutEmerald
-                     || thing.def == StormlightModDefs.whtwl_CutDiamond
-                     || thing.def == StormlightModDefs.whtwl_CutSapphire
-                     || thing.def == StormlightModDefs.whtwl_CutGarnet)), 500f);
+                       thing => (StormlightUtilities.isThingCutGemstone(thing)) && (thing.TryGetComp<CompCutGemstone>().HasSprenInside && thing.TryGetComp<CompStormlight>().HasStormlight)), 500f); 
 
             Action replaceGemAction = null;
             string replaceGemText = "No suitable gem available";
@@ -173,10 +175,6 @@ namespace StormlightMod {
                 };
             }
             yield return new FloatMenuOption(removeGemText, removeGemAction);
-
-
-
-
         }
     }
 

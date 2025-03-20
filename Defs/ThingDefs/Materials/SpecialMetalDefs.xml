@@ -3,19 +3,16 @@
     <!-- 
 	##
 ADD:
-	b_antimony
-	b_copper
-	a_pewter: antinomy + copper
+	b_antimony c
+	b_copper   c
+	a_pewter: tin88 + antinomy10 + copper2    c
 
 	b_zinc
-	a_brass: zinc + copper
+	a_brass: zinc + copper c
 
 	b_tin
-	a_bronze: copper+tin
+	a_bronze: copper+tin c
 
-	b_iron
-	b_carbon
-	a_steel:  iron+carbon
 
 	Alloy table.
 	
@@ -109,7 +106,7 @@ ADD:
         <label>Raw Antimony</label>
         <description>Something about antimony.</description>
         <graphicData>
-            <texPath>Things/Item/Spheres/RawDiamond</texPath>
+            <texPath>Things/Item/Metal/rawAntimonyOre</texPath>
             <graphicClass>Graphic_Single</graphicClass>
             <drawSize>1</drawSize>
         </graphicData>
@@ -153,7 +150,7 @@ ADD:
         <label>Raw Copper</label>
         <description>Something about Copper.</description>
         <graphicData>
-            <texPath>Things/Item/Spheres/RawDiamond</texPath>
+            <texPath>Things/Item/Metal/rawCopperOre</texPath>
             <graphicClass>Graphic_Single</graphicClass>
             <drawSize>1</drawSize>
         </graphicData>
@@ -198,7 +195,7 @@ ADD:
         <label>Raw Zinc</label>
         <description>Something about Zinc.</description>
         <graphicData>
-            <texPath>Things/Item/Spheres/RawDiamond</texPath>
+            <texPath>Things/Item/Metal/rawZincOre</texPath>
             <graphicClass>Graphic_Single</graphicClass>
             <drawSize>1</drawSize>
         </graphicData>
@@ -243,95 +240,7 @@ ADD:
         <label>Raw Tin</label>
         <description>Something about Tin.</description>
         <graphicData>
-            <texPath>Things/Item/Spheres/RawDiamond</texPath>
-            <graphicClass>Graphic_Single</graphicClass>
-            <drawSize>1</drawSize>
-        </graphicData>
-        <stuffProps>
-            <commonality>0.00</commonality>
-            <appearance>Metal</appearance>  <!-- change -->
-            <color>(225,16,15)</color>
-            <constructEffect>ConstructMetal</constructEffect>
-            <statOffsets>
-                <Beauty>2</Beauty>
-            </statOffsets>
-        </stuffProps>
-    </ThingDef>
-
-    <!-- Iron -->
-    <ThingDef ParentName="RockBase">
-        <defName>whtwl_MineableIron</defName>
-        <label>Raw Iron</label>
-        <description>Something about Iron.</description>
-        <graphicData>
-            <texPath>Things/Building/Linked/RockFlecked_Atlas</texPath>
-            <graphicClass>Graphic_Single</graphicClass>
-            <shaderType>CutoutComplex</shaderType>
-            <color>(61, 112, 117)</color>
-            <colorTwo>(220,220,220)</colorTwo>
-        </graphicData>
-        <statBases>
-            <MaxHitPoints>1500</MaxHitPoints>
-        </statBases>
-        <building>
-            <isResourceRock>true</isResourceRock>
-            <mineableThing>whtwl_RawDiamond</mineableThing>
-            <mineableYield>5</mineableYield>
-            <mineableScatterCommonality>0.3</mineableScatterCommonality>
-            <mineableScatterLumpSizeRange>8~16</mineableScatterLumpSizeRange>
-            <veinMineable>true</veinMineable>
-        </building>
-    </ThingDef>
-    <ThingDef ParentName="whtwl_SpecialMetalBase">
-        <defName>whtwl_RawIron</defName>
-        <label>Raw Iron</label>
-        <description>Something about Iron.</description>
-        <graphicData>
-            <texPath>Things/Item/Spheres/RawDiamond</texPath>
-            <graphicClass>Graphic_Single</graphicClass>
-            <drawSize>1</drawSize>
-        </graphicData>
-        <stuffProps>
-            <commonality>0.00</commonality>
-            <appearance>Metal</appearance>  <!-- change -->
-            <color>(225,16,15)</color>
-            <constructEffect>ConstructMetal</constructEffect>
-            <statOffsets>
-                <Beauty>2</Beauty>
-            </statOffsets>
-        </stuffProps>
-    </ThingDef>
-
-    <!-- Carbon -->
-    <ThingDef ParentName="RockBase">
-        <defName>whtwl_MineableCarbon</defName>
-        <label>Raw Carbon</label>
-        <description>Something about Carbon.</description>
-        <graphicData>
-            <texPath>Things/Building/Linked/RockFlecked_Atlas</texPath>
-            <graphicClass>Graphic_Single</graphicClass>
-            <shaderType>CutoutComplex</shaderType>
-            <color>(61, 112, 117)</color>
-            <colorTwo>(220,220,220)</colorTwo>
-        </graphicData>
-        <statBases>
-            <MaxHitPoints>1500</MaxHitPoints>
-        </statBases>
-        <building>
-            <isResourceRock>true</isResourceRock>
-            <mineableThing>whtwl_RawDiamond</mineableThing>
-            <mineableYield>5</mineableYield>
-            <mineableScatterCommonality>0.3</mineableScatterCommonality>
-            <mineableScatterLumpSizeRange>8~16</mineableScatterLumpSizeRange>
-            <veinMineable>true</veinMineable>
-        </building>
-    </ThingDef>
-    <ThingDef ParentName="whtwl_SpecialMetalBase">
-        <defName>whtwl_RawCarbon</defName>
-        <label>Raw Carbon</label>
-        <description>Something about Carbon.</description>
-        <graphicData>
-            <texPath>Things/Item/Spheres/RawDiamond</texPath>
+            <texPath>Things/Item/Metal/rawTinOre</texPath>
             <graphicClass>Graphic_Single</graphicClass>
             <drawSize>1</drawSize>
         </graphicData>
@@ -349,6 +258,7 @@ ADD:
 
     <!-- ALLOYS -->
     <!-- Pewter -->
+    <!-- 	a_pewter: tin88 + antinomy10 + copper2  -->
     <RecipeDef ParentName="whtwl_MakeAlloyBase">
         <defName>whtwl_Make_AlloyPewter</defName>
         <label>make Pewter Alloy</label>
@@ -357,10 +267,18 @@ ADD:
             <li>
                 <filter>
                     <thingDefs>
+                        <li>whtwl_RawTin</li>
+                    </thingDefs>
+                </filter>
+                <count>8</count>
+            </li>
+            <li>
+                <filter>
+                    <thingDefs>
                         <li>whtwl_RawAntimony</li>
                     </thingDefs>
                 </filter>
-                <count>1</count>
+                <count>2</count>
             </li>
             <li>
                 <filter>
@@ -375,10 +293,11 @@ ADD:
             <thingDefs>
                 <li>whtwl_RawAntimony</li>
                 <li>whtwl_RawCopper</li>
+                <li>whtwl_RawTin</li>
             </thingDefs>
         </fixedIngredientFilter>
         <products>
-            <whtwl_AlloyPewter>1</whtwl_AlloyPewter>
+            <whtwl_AlloyPewter>10</whtwl_AlloyPewter>
         </products>
         <researchPrerequisites>
             <li>whtwl_Research_Alloys</li>
@@ -389,7 +308,7 @@ ADD:
         <label>Pewter Alloy</label>
         <description>Alloy made out of antinomy and copper.</description>
         <graphicData>
-            <texPath>Things/Item/Spheres/RawDiamond</texPath>
+            <texPath>Things/Item/Metal/PewterBar</texPath>
             <graphicClass>Graphic_Single</graphicClass>
             <drawSize>1</drawSize>
         </graphicData>
@@ -404,7 +323,117 @@ ADD:
         </stuffProps>
     </ThingDef>
 
+    <!-- Bronze -->
+    <RecipeDef ParentName="whtwl_MakeAlloyBase">
+        <defName>whtwl_Make_AlloyBronze</defName>
+        <label>make Bronze Alloy</label>
+        <description>make Bronze alloy out of copper and tin.</description>
+        <ingredients>
+            <li>
+                <filter>
+                    <thingDefs>
+                        <li>whtwl_RawCopper</li>
+                    </thingDefs>
+                </filter>
+                <count>8</count>
+            </li>
+            <li>
+                <filter>
+                    <thingDefs>
+                        <li>whtwl_RawTin</li>
+                    </thingDefs>
+                </filter>
+                <count>2</count>
+            </li>
+        </ingredients>
+        <fixedIngredientFilter>
+            <thingDefs>
+                <li>whtwl_RawCopper</li>
+                <li>whtwl_RawTin</li>
+            </thingDefs>
+        </fixedIngredientFilter>
+        <products>
+            <whtwl_AlloyBronze>10</whtwl_AlloyBronze>
+        </products>
+        <researchPrerequisites>
+            <li>whtwl_Research_Alloys</li>
+        </researchPrerequisites>
+    </RecipeDef>
+    <ThingDef ParentName="whtwl_SpecialMetalBase">
+        <defName>whtwl_AlloyBronze</defName>
+        <label>Bronze Alloy</label>
+        <description>Alloy made out of copper and tin.</description>
+        <graphicData>
+            <texPath>Things/Item/Metal/BronzeBar</texPath>
+            <graphicClass>Graphic_Single</graphicClass>
+            <drawSize>1</drawSize>
+        </graphicData>
+        <stuffProps>
+            <commonality>0.00</commonality>
+            <appearance>Metal</appearance>
+            <color>(225,16,15)</color>
+            <constructEffect>ConstructMetal</constructEffect>
+            <statOffsets>
+                <Beauty>2</Beauty>
+            </statOffsets>
+        </stuffProps>
+    </ThingDef>
 
+    <!-- Brass -->
+    <RecipeDef ParentName="whtwl_MakeAlloyBase">
+        <defName>whtwl_Make_AlloyBrass</defName>
+        <label>make Brass Alloy</label>
+        <description>make Brass alloy out of antimony and copper.</description>
+        <ingredients>
+            <li>
+                <filter>
+                    <thingDefs>
+                        <li>whtwl_RawCopper</li>
+                    </thingDefs>
+                </filter>
+                <count>6</count>
+            </li>
+            <li>
+                <filter>
+                    <thingDefs>
+                        <li>whtwl_RawZinc</li>
+                    </thingDefs>
+                </filter>
+                <count>2</count>
+            </li>
+        </ingredients>
+        <fixedIngredientFilter>
+            <thingDefs>
+                <li>whtwl_RawCopper</li>
+                <li>whtwl_RawZinc</li>
+            </thingDefs>
+        </fixedIngredientFilter>
+        <products>
+            <whtwl_AlloyBrass>8</whtwl_AlloyBrass>
+        </products>
+        <researchPrerequisites>
+            <li>whtwl_Research_Alloys</li>
+        </researchPrerequisites>
+    </RecipeDef>
+    <ThingDef ParentName="whtwl_SpecialMetalBase">
+        <defName>whtwl_AlloyBrass</defName>
+        <label>Brass Alloy</label>
+        <description>Alloy made out of copper and zinc.</description>
+        <graphicData>
+            <texPath>Things/Item/Metal/BrassBar</texPath>
+            <graphicClass>Graphic_Single</graphicClass>
+            <drawSize>1</drawSize>
+        </graphicData>
+        <stuffProps>
+            <commonality>0.00</commonality>
+            <appearance>Metal</appearance>
+            <color>(225,16,15)</color>
+            <constructEffect>ConstructMetal</constructEffect>
+            <statOffsets>
+                <Beauty>2</Beauty>
+            </statOffsets>
+        </stuffProps>
+    </ThingDef>
 </Defs>
 
 

@@ -6,6 +6,7 @@ using System;
 using HarmonyLib;
 using UnityEngine;
 using Verse.AI;
+using Verse.Noise;
 
 namespace StormlightMod {
 
@@ -47,7 +48,7 @@ namespace StormlightMod {
         public CompProperties_SprenTrapper Props => (CompProperties_SprenTrapper)props;
         public Thing insertedGemstone = null;
         public bool sprenCaptured = false;
-        public Spren targetSpren = Spren.Flame;
+        public Spren targetSpren = Spren.None;
 
         public override void PostSpawnSetup(bool respawningAfterLoad) {
             base.PostSpawnSetup(respawningAfterLoad);
@@ -65,6 +66,9 @@ namespace StormlightMod {
                 case Spren.Flame:
                     tryCaptureFlameSpren();
                     break;
+                case Spren.Cold:
+                    tryCaptureColdSpren();
+                    break;
                 default:
                     break;
             }
@@ -81,14 +85,32 @@ namespace StormlightMod {
 
                     float probability = Mathf.Exp(-Mathf.Pow(normalizedStormlight - optimalStormlight, 2) / (2 * sigma * sigma));
 
-                    probability = Mathf.Clamp(probability, 0.01f, 0.40f);
+                    probability = Mathf.Clamp(probability, 0.001f, 0.20f);
 
                     if (Rand.Chance(probability)) {
                         Log.Message($"Captured FlameSpren! Probability was: {probability * 100}%");
                         insertedGemstone.TryGetComp<CompCutGemstone>().capturedSpren = Spren.Flame;
-                        // spawn or handle FlameSpren here
                     }
                     Log.Message("Fire nearby!");
+                }
+            }
+        }
+
+        private void tryCaptureColdSpren() {
+            float averageSuroundingTemperature = StormlightUtilities.GetAverageSuroundingTemperature(parent as Building, 3f);
+            if (averageSuroundingTemperature < 0f) { 
+                const float optimalStormlight = 0.7f;
+                const float sigma = 0.15f;
+                var stormlightcomp = insertedGemstone.TryGetComp<CompStormlight>();
+                if (stormlightcomp != null) {
+                    float normalizedStormlight = stormlightcomp.Stormlight / stormlightcomp.CurrentMaxStormlight;
+                    float probability = Mathf.Exp(-Mathf.Pow(normalizedStormlight - optimalStormlight, 2) / (2 * sigma * sigma));
+                    probability = Mathf.Clamp(probability, 0.01f, Mathf.Abs(averageSuroundingTemperature)/100f);
+                    if (Rand.Chance(probability)) {
+                        Log.Message($"Captured ColdSpren! Probability was: {probability * 100}%");
+                        insertedGemstone.TryGetComp<CompCutGemstone>().capturedSpren = Spren.Cold;
+                    }
+                    Log.Message($"Average Temperature: {averageSuroundingTemperature}, probability: {probability * 100}%"); 
                 }
             }
         }
@@ -110,6 +132,13 @@ namespace StormlightMod {
             var gemstoneComp = gemstone.GetComp<CompCutGemstone>();
             if (gemstoneComp != null) {
                 insertedGemstone = gemstoneComp.parent;
+                if (insertedGemstone.def == StormlightModDefs.whtwl_CutSapphire) 
+                {
+                    targetSpren = Spren.Cold;
+                }
+                else if (insertedGemstone.def == StormlightModDefs.whtwl_CutRuby || insertedGemstone.def == StormlightModDefs.whtwl_CutEmerald) {
+                    targetSpren = Spren.Flame; 
+                } 
             }
         }
 
@@ -118,8 +147,8 @@ namespace StormlightMod {
                 var gemstoneToDrop = insertedGemstone;
                 insertedGemstone = null;
                 IntVec3 dropPosition = parent.Position;
+                dropPosition.z -= 1;
                 GenPlace.TryPlaceThing(gemstoneToDrop, dropPosition, parent.Map, ThingPlaceMode.Near);
-
             }
         }
 
@@ -137,7 +166,8 @@ namespace StormlightMod {
         public override IEnumerable<FloatMenuOption> CompFloatMenuOptions(Pawn selPawn) {
             var cutGemstone = GenClosest.ClosestThing_Global(
                    selPawn.Position,
-                   selPawn.Map.listerThings.AllThings.Where(thing => thing.def == StormlightModDefs.whtwl_CutRuby), 500f);
+                   selPawn.Map.listerThings.AllThings.Where(thing => (StormlightUtilities.isThingCutGemstone(thing)) && (thing.TryGetComp<CompCutGemstone>().HasSprenInside == false) && (thing.TryGetComp<CompStormlight>().HasStormlight)), 500f);
+
 
             Action replaceGemAction = null;
             string replaceGemText = "No suitable gem available";
@@ -152,6 +182,20 @@ namespace StormlightMod {
                 replaceGemText = $"Replace with {cutGemstone.Label}";
             }
             yield return new FloatMenuOption(replaceGemText, replaceGemAction);
+
+
+            Action removeGemAction = null;
+            string removeGemText = "Remove Gemstone";
+            if (insertedGemstone != null) {
+
+                removeGemAction = () => {
+                    Job job = JobMaker.MakeJob(StormlightModDefs.whtwl_RemoveFromFabrial, parent);
+                    if (job.TryMakePreToilReservations(selPawn, errorOnFailed: true)) {
+                        selPawn.jobs.TryTakeOrderedJob(job);
+                    }
+                };
+            }
+            yield return new FloatMenuOption(removeGemText, removeGemAction);
         }
     }
 

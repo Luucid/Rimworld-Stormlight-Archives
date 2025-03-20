@@ -28,6 +28,24 @@ namespace StormlightMod {
             return false;
         }
 
+        public static float GetAverageSuroundingTemperature(Building building, float radius = 5f) {
+            IntVec3 position = building.Position;
+            Map map = building.Map;
+            List<float> temps = new List<float>();
+            var cells = GenRadial.RadialCellsAround(position, radius, true);
+            foreach (IntVec3 cell in cells) {
+                temps.Add(cell.GetTemperature(building.Map));
+            }
+            return temps.Average();
+        }
+
+        public static bool isThingCutGemstone(Thing thing) {
+            return thing.def == StormlightModDefs.whtwl_CutRuby
+                         || thing.def == StormlightModDefs.whtwl_CutEmerald
+                         || thing.def == StormlightModDefs.whtwl_CutDiamond
+                         || thing.def == StormlightModDefs.whtwl_CutSapphire
+                         || thing.def == StormlightModDefs.whtwl_CutGarnet;
+        }
 
         static public Trait GetRadiantTrait(Pawn pawn) {
             return pawn.story.traits.allTraits.FirstOrDefault(t => StormlightModUtilities.RadiantTraits.Contains(t.def));
@@ -45,9 +63,9 @@ namespace StormlightMod {
         private static readonly Random rng = new Random();
 
         public static ThingDef RollForRandomGemSpawn() {
-            foreach (var gem in gems) { 
+            foreach (var gem in gems) {
                 if (RollTheDice(0, (int)gem.GetCompProperties<CompProperties_RawGemstone>().spawnChance, 1)) {
-                    return gem;   
+                    return gem;
                 }
             }
             return null;
@@ -60,9 +78,9 @@ namespace StormlightMod {
         }
         public static string RollForRandomString(List<string> stringList) {
             int i = rng.Next(stringList.Count);
-            return stringList[i]; 
+            return stringList[i];
         }
-        public static int RollForRandomIntFromList(List<int> intList) { 
+        public static int RollForRandomIntFromList(List<int> intList) {
             int i = rng.Next(intList.Count);
             return intList[i];
         }

@@ -18,6 +18,7 @@ namespace StormlightMod {
         public CompProperties_CutGemstone GemstoneProps => (CompProperties_CutGemstone)props;
         public CompProperties_Stormlight StormlightProps => (CompProperties_Stormlight)props;
         private CompStormlight stormlightComp;
+        public bool HasSprenInside => capturedSpren != Spren.None;
         public int gemstoneQuality;
         public int gemstoneSize;
         public int maximumGemstoneSize = 20;
