@@ -25,9 +25,9 @@
   <description>The ancient weapon of kings, the longsword can be used for slashing or stabbing.</description>
   <possessionCount>1</possessionCount>
   <graphicData>
-    <texPath>Things/Weapon/shardblade2</texPath>
+    <texPath>Things/Weapon/shardblade_c</texPath>
     <graphicClass>Graphic_Single</graphicClass>
-    <drawSize>2.0</drawSize>
+    <drawSize>1.5</drawSize>
   </graphicData>
   <weaponTags>
     <li>whtwl_ShardBlade</li>
@@ -35,7 +35,7 @@
   <statBases>
    <Mass>0.5</Mass>
   </statBases>
-  <equippedAngleOffset>-150</equippedAngleOffset>
+  <equippedAngleOffset>50</equippedAngleOffset>
   <stuffCategories>
     <li>whtwl_ShardStuff</li>
   </stuffCategories>

@@ -12,7 +12,7 @@ namespace StormlightMod {
 
     }
 
-    public enum Spren { None, Flame, Cold, Smoke, Pain, Logic };
+    public enum Spren { None, Flame, Cold, Pain, Anger, Wind, Motion, Life, Cultivation, Rain, Glory, Light, Exhaustion, Logic };
 
     public class CompCutGemstone : ThingComp {
         public CompProperties_CutGemstone GemstoneProps => (CompProperties_CutGemstone)props;

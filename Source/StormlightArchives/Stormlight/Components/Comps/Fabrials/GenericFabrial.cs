@@ -30,8 +30,8 @@ namespace StormlightMod {
             if (this.Map != null) {
                 if (on) {
                     var stormlightComp = (compBasicFabrialAugumenter.insertedGemstone as ThingWithComps).GetComp<CompStormlight>();
-                    compGlower.GlowRadius = stormlightComp.MaximumGlowRadius; 
-                    compGlower.GlowColor = stormlightComp.GlowerComp.GlowColor; 
+                    compGlower.GlowRadius = stormlightComp.MaximumGlowRadius;
+                    compGlower.GlowColor = stormlightComp.GlowerComp.GlowColor;
                     this.Map.glowGrid.RegisterGlower(compGlower);
                 }
                 else {
@@ -43,10 +43,11 @@ namespace StormlightMod {
         public override void Print(SectionLayer layer) {
             base.Print(layer);
             if (compBasicFabrialAugumenter.HasGemstone) {
-                if (compBasicFabrialAugumenter.insertedGemstone.def == StormlightModDefs.whtwl_CutRuby) {
-                    this.def.graphicData.attachments[0].Graphic.Print(layer, this, 0f);
-                }
-                //else if(...)
+                if (compBasicFabrialAugumenter.insertedGemstone.def == StormlightModDefs.whtwl_CutRuby) { this.def.graphicData.attachments[0].Graphic.Print(layer, this, 0f); }
+                else if (compBasicFabrialAugumenter.insertedGemstone.def == StormlightModDefs.whtwl_CutDiamond) { this.def.graphicData.attachments[1].Graphic.Print(layer, this, 0f); }
+                else if (compBasicFabrialAugumenter.insertedGemstone.def == StormlightModDefs.whtwl_CutGarnet) { this.def.graphicData.attachments[2].Graphic.Print(layer, this, 0f); }
+                else if (compBasicFabrialAugumenter.insertedGemstone.def == StormlightModDefs.whtwl_CutEmerald) { this.def.graphicData.attachments[3].Graphic.Print(layer, this, 0f); }
+                else if (compBasicFabrialAugumenter.insertedGemstone.def == StormlightModDefs.whtwl_CutSapphire) { this.def.graphicData.attachments[4].Graphic.Print(layer, this, 0f); }
             }
         }
     }
@@ -64,7 +65,7 @@ namespace StormlightMod {
 
         public override void PostExposeData() {
             base.PostExposeData();
-            Scribe_References.Look(ref insertedGemstone, "insertedGemstone");
+            Scribe_References.Look(ref insertedGemstone, "insertedGemstone", true);
         }
 
         public void checkPower(bool flickeredOn) {
@@ -99,10 +100,10 @@ namespace StormlightMod {
         private void doFlameSprenPower() {
             if (PowerOn) {
                 float maxEnergy = insertedGemstone.TryGetComp<CompCutGemstone>().gemstoneSize * 3; //3, 15, 60
-                float targetTemp = insertedGemstone.TryGetComp<CompCutGemstone>().gemstoneSize; //3, 15, 60
-                if (targetTemp < 20f) targetTemp *= 3;
+                float targetTemp = insertedGemstone.TryGetComp<CompCutGemstone>().gemstoneSize; //1, 5, 20
+                if (targetTemp < 20f) targetTemp *= 1.25f;
                 float ambientTemperature = parent.AmbientTemperature;
-                float num2 = GenTemperature.ControlTemperatureTempChange(parent.Position, parent.Map, maxEnergy, targetTemp); 
+                float num2 = GenTemperature.ControlTemperatureTempChange(parent.Position, parent.Map, maxEnergy, targetTemp);
                 bool flag = !Mathf.Approximately(num2, 0f);
                 if (flag) {
                     parent.GetRoom().Temperature += num2;
@@ -111,7 +112,15 @@ namespace StormlightMod {
         }
 
         private void doColdSprenPower() {
-
+            if (PowerOn && parent.IsOutside() == false) {
+                int gemstoneSize = insertedGemstone.TryGetComp<CompCutGemstone>().gemstoneSize*3; //3, 15, 60
+                float targetTemp = -5f;
+                float currentTemp = parent.GetRoom().Temperature;
+                if (currentTemp > targetTemp) {
+                    GenTemperature.PushHeat(parent.Position, parent.Map, (0f - gemstoneSize));
+                    Log.Message($"Cooler target temp: {targetTemp}, pushing: {(0f - gemstoneSize)}");
+                }
+            }
         }
 
 
@@ -146,7 +155,7 @@ namespace StormlightMod {
             var cutGemstone = GenClosest.ClosestThing_Global(
                    selPawn.Position,
                    selPawn.Map.listerThings.AllThings.Where(
-                       thing => (StormlightUtilities.isThingCutGemstone(thing)) && (thing.TryGetComp<CompCutGemstone>().HasSprenInside && thing.TryGetComp<CompStormlight>().HasStormlight)), 500f); 
+                       thing => (StormlightUtilities.isThingCutGemstone(thing)) && (thing.TryGetComp<CompCutGemstone>().HasSprenInside && thing.TryGetComp<CompStormlight>().HasStormlight)), 500f);
 
             Action replaceGemAction = null;
             string replaceGemText = "No suitable gem available";

@@ -112,7 +112,7 @@
         <description>A work station to create alloys from raw materials.</description>
         <thingClass>Building_WorkTable_HeatPush</thingClass>
         <graphicData>
-            <texPath>Things/Workbench/whtwl_Gemcutter</texPath>
+            <texPath>Things/Workbench/whtwl_Alloymaker</texPath>
             <graphicClass>Graphic_Multi</graphicClass>
             <drawSize>(3.5,1.5)</drawSize>
             <shaderType>CutoutComplex</shaderType>

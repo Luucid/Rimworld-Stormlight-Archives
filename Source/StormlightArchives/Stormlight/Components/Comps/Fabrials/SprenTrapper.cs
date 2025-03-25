@@ -15,16 +15,21 @@ namespace StormlightMod {
     public class Building_SprenTrapper : Building {
         public CompSprenTrapper compTrapper;
         public CompGlower compGlower;
+        public Dictionary<string, List<Spren>> gemstonePossibleSprenDict = new Dictionary<string, List<Spren>>() { };
 
         public override void SpawnSetup(Map map, bool respawningAfterLoad) {
             base.SpawnSetup(map, respawningAfterLoad);
             compTrapper = GetComp<CompSprenTrapper>();
             compGlower = GetComp<CompGlower>();
+            gemstonePossibleSprenDict.Add(StormlightModDefs.whtwl_CutDiamond.defName, new List<Spren> { Spren.Logic, Spren.Light, Spren.Exhaustion });
+            gemstonePossibleSprenDict.Add(StormlightModDefs.whtwl_CutGarnet.defName, new List<Spren> { Spren.Rain, Spren.Exhaustion, Spren.Pain });
+            gemstonePossibleSprenDict.Add(StormlightModDefs.whtwl_CutSapphire.defName, new List<Spren> { Spren.Wind, Spren.Motion, Spren.Cold });
+            gemstonePossibleSprenDict.Add(StormlightModDefs.whtwl_CutRuby.defName, new List<Spren> { Spren.Flame, Spren.Anger });
+            gemstonePossibleSprenDict.Add(StormlightModDefs.whtwl_CutEmerald.defName, new List<Spren> { Spren.Flame, Spren.Life, Spren.Cultivation, Spren.Rain, Spren.Glory });
         }
 
         public override void TickRare() {
-            compTrapper.tryCaptureSpren();
-            compTrapper.checkTrapperState();
+            CaptureLoop();
             toggleGlow(compTrapper.sprenCaptured);
         }
 
@@ -39,6 +44,18 @@ namespace StormlightMod {
             }
         }
 
+        private void CaptureLoop() {
+            if (compTrapper.insertedGemstone != null && compTrapper.sprenCaptured == false) {
+                List<Spren> sprenList;
+                gemstonePossibleSprenDict.TryGetValue(compTrapper.insertedGemstone.def.defName, out sprenList);
+                foreach (Spren spren in sprenList) {
+                    compTrapper.tryCaptureSpren(spren);
+                    compTrapper.checkTrapperState();
+                    if (compTrapper.sprenCaptured) break;
+                }
+            }
+            compTrapper.checkTrapperState();
+        }
 
     }
 
@@ -48,7 +65,6 @@ namespace StormlightMod {
         public CompProperties_SprenTrapper Props => (CompProperties_SprenTrapper)props;
         public Thing insertedGemstone = null;
         public bool sprenCaptured = false;
-        public Spren targetSpren = Spren.None;
 
         public override void PostSpawnSetup(bool respawningAfterLoad) {
             base.PostSpawnSetup(respawningAfterLoad);
@@ -58,10 +74,9 @@ namespace StormlightMod {
             base.PostExposeData();
         }
 
-        public void tryCaptureSpren() {
+        public void tryCaptureSpren(Spren targetSpren) {
 
             if (insertedGemstone == null || targetSpren == Spren.None || sprenCaptured == true) return;
-
             switch (targetSpren) {
                 case Spren.Flame:
                     tryCaptureFlameSpren();
@@ -73,44 +88,51 @@ namespace StormlightMod {
                     break;
             }
         }
+        private void displayCaptureMessage(Spren spren) {
+            Messages.Message($"One of your traps captured a {spren.ToStringSafe()}spren!", parent, MessageTypeDefOf.PositiveEvent);
+        }
+
+        private float getProbability(CompStormlight stormlightComp, float probabilityFactor, float baseMaxNormalizedValue) {
+
+            float baseProbability = StormlightUtilities.SprenBaseCaptureProbability(stormlightComp.Stormlight, 0f, stormlightComp.CurrentMaxStormlight);
+            float probability = StormlightUtilities.Normalize(baseProbability, 0f, 100f, 0f, baseMaxNormalizedValue);
+            return probability * probabilityFactor;
+        }
 
         private void tryCaptureFlameSpren() {
-            if (StormlightUtilities.IsAnyFireNearby(parent as Building, 3f)) {
 
-                const float optimalStormlight = 0.7f;
-                const float sigma = 0.15f;
+            if (StormlightUtilities.IsAnyFireNearby(parent as Building, 3f)) {
                 var stormlightcomp = insertedGemstone.TryGetComp<CompStormlight>();
                 if (stormlightcomp != null) {
-                    float normalizedStormlight = stormlightcomp.Stormlight / stormlightcomp.CurrentMaxStormlight;
-
-                    float probability = Mathf.Exp(-Mathf.Pow(normalizedStormlight - optimalStormlight, 2) / (2 * sigma * sigma));
-
-                    probability = Mathf.Clamp(probability, 0.001f, 0.20f);
+                    float probabilityFactor = (float)StormlightUtilities.GetNumberOfFiresNearby(parent as Building, 3f);
+                    float probability = getProbability(stormlightcomp, probabilityFactor, 0.1f);
 
                     if (Rand.Chance(probability)) {
-                        Log.Message($"Captured FlameSpren! Probability was: {probability * 100}%");
                         insertedGemstone.TryGetComp<CompCutGemstone>().capturedSpren = Spren.Flame;
+                        stormlightcomp.RemoveAllStormlight(); 
+                        displayCaptureMessage(Spren.Flame);
                     }
-                    Log.Message("Fire nearby!");
+                    else {
+                        Log.Message($"FAILED CAPTURE flamespren Probability: {probability * 100}%");
+                    }
                 }
             }
+
         }
 
         private void tryCaptureColdSpren() {
             float averageSuroundingTemperature = StormlightUtilities.GetAverageSuroundingTemperature(parent as Building, 3f);
-            if (averageSuroundingTemperature < 0f) { 
-                const float optimalStormlight = 0.7f;
-                const float sigma = 0.15f;
+            if (averageSuroundingTemperature < 0f) {
                 var stormlightcomp = insertedGemstone.TryGetComp<CompStormlight>();
                 if (stormlightcomp != null) {
-                    float normalizedStormlight = stormlightcomp.Stormlight / stormlightcomp.CurrentMaxStormlight;
-                    float probability = Mathf.Exp(-Mathf.Pow(normalizedStormlight - optimalStormlight, 2) / (2 * sigma * sigma));
-                    probability = Mathf.Clamp(probability, 0.01f, Mathf.Abs(averageSuroundingTemperature)/100f);
+                    float probabilityFactor = Mathf.Abs(averageSuroundingTemperature);
+                    float probability = getProbability(stormlightcomp, probabilityFactor, 0.01f);
+
                     if (Rand.Chance(probability)) {
-                        Log.Message($"Captured ColdSpren! Probability was: {probability * 100}%");
                         insertedGemstone.TryGetComp<CompCutGemstone>().capturedSpren = Spren.Cold;
+                        displayCaptureMessage(Spren.Cold);
+                        stormlightcomp.RemoveAllStormlight();
                     }
-                    Log.Message($"Average Temperature: {averageSuroundingTemperature}, probability: {probability * 100}%"); 
                 }
             }
         }
@@ -132,13 +154,6 @@ namespace StormlightMod {
             var gemstoneComp = gemstone.GetComp<CompCutGemstone>();
             if (gemstoneComp != null) {
                 insertedGemstone = gemstoneComp.parent;
-                if (insertedGemstone.def == StormlightModDefs.whtwl_CutSapphire) 
-                {
-                    targetSpren = Spren.Cold;
-                }
-                else if (insertedGemstone.def == StormlightModDefs.whtwl_CutRuby || insertedGemstone.def == StormlightModDefs.whtwl_CutEmerald) {
-                    targetSpren = Spren.Flame; 
-                } 
             }
         }
 

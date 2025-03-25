@@ -11,6 +11,20 @@ namespace StormlightMod {
 
     static public class StormlightUtilities {
 
+        public static float Normalize(float value, float v_min, float v_max, float t_min, float t_max) {
+            return ((value - v_min) / (v_max - v_min)) * (t_max - t_min) + t_min;
+        }
+
+        public static float SprenBaseCaptureProbability(float currentStormlight, float minStormlight, float maxStormlight) {
+            float x = Normalize(currentStormlight, minStormlight, maxStormlight, 0f, 100f);
+            const float a = 1.1585f;
+            const float b = 1690.6f;
+            const float c = 100f;
+            const float d = 1f;
+
+            return -(a / b) * x * (x - c) * (x - d);
+        }
+
         public static bool IsAnyFireNearby(Building building, float radius = 5f) {
             IntVec3 position = building.Position;
             Map map = building.Map;
@@ -27,7 +41,22 @@ namespace StormlightMod {
             }
             return false;
         }
-
+        public static int GetNumberOfFiresNearby(Building building, float radius = 5f) {
+            IntVec3 position = building.Position;
+            Map map = building.Map;
+            int numberOfFires = 0;
+            foreach (IntVec3 cell in GenRadial.RadialCellsAround(position, radius, true)) {
+                foreach (Thing thing in cell.GetThingList(map)) {
+                    if (thing.def == ThingDefOf.Fire || thing.def.category == ThingCategory.Building && thing.TryGetComp<CompRefuelable>()?.Props.fuelConsumptionPerTickInRain > 0f) {
+                        numberOfFires++;
+                    }
+                    else if (thing.def.defName.Contains("Torch") || thing.def.defName.Contains("Campfire")) {
+                        numberOfFires++;
+                    }
+                }
+            }
+            return numberOfFires; 
+        }
         public static float GetAverageSuroundingTemperature(Building building, float radius = 5f) {
             IntVec3 position = building.Position;
             Map map = building.Map;

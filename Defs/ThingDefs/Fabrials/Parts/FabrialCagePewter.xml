@@ -34,6 +34,7 @@
             <texPath>Things/Item/Fabrials/Gemholder_top_without_ruby</texPath>
             <graphicClass>Graphic_Single</graphicClass>
             <shaderType>CutoutComplex</shaderType>
+            <colorTwo>(36, 54, 68)</colorTwo>
             <drawSize>1</drawSize>
         </graphicData>
         <statBases>

@@ -20,7 +20,6 @@ namespace StormlightMod {
     public class CompShardblade : ThingComp {
         public CompProperties_Shardblade Props => props as CompProperties_Shardblade;
         private Pawn swordOwner = null;
-
         public override void PostExposeData() {
             base.PostExposeData();
             Scribe_Values.Look(ref swordOwner, "swordOwner", null); 

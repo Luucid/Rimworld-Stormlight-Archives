@@ -156,13 +156,35 @@
       <graphicClass>Graphic_Single</graphicClass>
       <shaderType>CutoutComplex</shaderType>
       <drawSize>1.2</drawSize>
-      <colorTwo>(36, 54, 68)</colorTwo>
       <attachments>
         <li>
           <texPath>Things/Item/Fabrials/Gemholder_top_with_ruby</texPath>
           <graphicClass>Graphic_Single</graphicClass>
           <shaderType>CutoutComplex</shaderType>
-          <color>(36, 54, 68)</color>
+          <drawSize>1.2</drawSize>
+        </li>
+        <li>
+          <texPath>Things/Item/Fabrials/Gemholder_top_with_diamond</texPath>
+          <graphicClass>Graphic_Single</graphicClass>
+          <shaderType>CutoutComplex</shaderType>
+          <drawSize>1.2</drawSize>
+        </li>
+        <li>
+          <texPath>Things/Item/Fabrials/Gemholder_top_with_garnet</texPath>
+          <graphicClass>Graphic_Single</graphicClass>
+          <shaderType>CutoutComplex</shaderType>
+          <drawSize>1.2</drawSize>
+        </li>
+        <li>
+          <texPath>Things/Item/Fabrials/Gemholder_top_with_emerald</texPath>
+          <graphicClass>Graphic_Single</graphicClass>
+          <shaderType>CutoutComplex</shaderType>
+          <drawSize>1.2</drawSize>
+        </li>
+        <li>
+          <texPath>Things/Item/Fabrials/Gemholder_top_with_sapphire</texPath>
+          <graphicClass>Graphic_Single</graphicClass>
+          <shaderType>CutoutComplex</shaderType>
           <drawSize>1.2</drawSize>
         </li>
       </attachments>

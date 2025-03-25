@@ -19,6 +19,7 @@ namespace StormlightMod {
         public float CurrentMaxStormlight = 0f;
         public bool m_BreathStormlight = false;
 
+
         // Modifiers
         public float StormlightContainerSize = 1f;
         public float StormlightContainerQuality = 1f;
@@ -30,6 +31,8 @@ namespace StormlightMod {
         public void toggleBreathStormlight() {
             m_BreathStormlight = !m_BreathStormlight;
         }
+
+        public void RemoveAllStormlight() { m_CurrentStormlight = 0f; }
 
         // Called after loading or on spawn
         public override void PostExposeData() {
@@ -99,20 +102,18 @@ namespace StormlightMod {
                 }
 
                 bool glowEnabled = m_CurrentStormlight > 0f;
-                if (glowEnabled) 
-                { 
-                    GlowerComp.Props.glowRadius = MaximumGlowRadius; 
+                if (glowEnabled) {
+                    GlowerComp.Props.glowRadius = MaximumGlowRadius;
                 }
                 toggleGlow(glowEnabled);
             }
         }
 
-        public void calculateMaximumGlowRadius(int quality, int size) 
-            {
+        public void calculateMaximumGlowRadius(int quality, int size) {
             // Normalize size (1, 5, 20) to range 1-10
             float normalizedSize = (size - 1f) / (20.0f - 1f) * 9f + 1f;
 
-            MaximumGlowRadius =  (float)Math.Round(normalizedSize, 2) + (quality/5f);
+            MaximumGlowRadius = (float)Math.Round(normalizedSize, 2) + (quality / 5f);
 
             Log.Message($"Maximum glow radius for q({quality}) and s({size}) = {MaximumGlowRadius}");
         }
@@ -246,7 +247,7 @@ namespace StormlightMod {
 
         public void drainStormLight(float factor) {
             if (m_CurrentStormlight > 0) {
-                m_CurrentStormlight -= (Props.drainRate / StormlightContainerQuality)* factor;
+                m_CurrentStormlight -= (Props.drainRate / StormlightContainerQuality) * factor;
                 if (m_CurrentStormlight < 0)
                     m_CurrentStormlight = 0;
             }
