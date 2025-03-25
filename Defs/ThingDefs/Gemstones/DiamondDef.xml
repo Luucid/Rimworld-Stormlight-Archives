@@ -44,7 +44,7 @@
         </stuffProps>
         <comps>
             <li Class="StormlightMod.CompProperties_Stormlight">
-                <maxStormlight>1</maxStormlight>
+                <maxStormlight>5</maxStormlight>
                 <drainRate>0.5</drainRate>
             </li>
             <li Class="StormlightMod.CompProperties_RawGemstone">
@@ -103,15 +103,15 @@
         <costStuffCount>1</costStuffCount>
         <comps>
             <li Class="StormlightMod.CompProperties_Stormlight">
-                <maxStormlight>1</maxStormlight>
-                <drainRate>0.05</drainRate>
+                <maxStormlight>50</maxStormlight>
+                <drainRate>0.01</drainRate>
             </li>
             <li Class="StormlightMod.CompProperties_CutGemstone">
                 <compClass>StormlightMod.CompCutGemstone</compClass>
             </li>
             <li Class="CompProperties_Glower">
                 <glowRadius>0</glowRadius>
-                <glowColor>(217,112,33,0)</glowColor>
+                <glowColor>(220,220,220,0)</glowColor>
             </li>
         </comps>
     </ThingDef>
@@ -157,7 +157,7 @@
         </graphicData>
         <comps>
             <li Class="StormlightMod.CompProperties_Stormlight">
-                <maxStormlight>1</maxStormlight>
+                <maxStormlight>50</maxStormlight>
                 <drainRate>0.01</drainRate>
             </li>
             <li Class="StormlightMod.CompProperties_GemSphere">
@@ -165,7 +165,7 @@
             </li>
             <li Class="CompProperties_Glower">
                 <glowRadius>0</glowRadius>
-                <glowColor>(217,112,33,0)</glowColor>
+                <glowColor>(220,220,220,0)</glowColor>
             </li>
         </comps>
         <statBases>

@@ -23,7 +23,7 @@ namespace StormlightMod {
         public int gemstoneSize;
         public int maximumGemstoneSize = 20;
         public Spren capturedSpren = Spren.None;
-        public string GetFullLabel => TransformLabel(parent.Label);
+        public string GetFullLabel => parent.Label;
 
         public override void Initialize(CompProperties props) {
             base.Initialize(props);

@@ -70,10 +70,12 @@ namespace StormlightMod {
             base.PostSpawnSetup(respawningAfterLoad);
         }
 
+      
         public override void PostExposeData() {
             base.PostExposeData();
+            Scribe_Deep.Look(ref insertedGemstone, "insertedGemstone");
+            Scribe_Values.Look(ref sprenCaptured, "sprenCaptured");
         }
-
         public void tryCaptureSpren(Spren targetSpren) {
 
             if (insertedGemstone == null || targetSpren == Spren.None || sprenCaptured == true) return;
@@ -111,9 +113,6 @@ namespace StormlightMod {
                         insertedGemstone.TryGetComp<CompCutGemstone>().capturedSpren = Spren.Flame;
                         stormlightcomp.RemoveAllStormlight(); 
                         displayCaptureMessage(Spren.Flame);
-                    }
-                    else {
-                        Log.Message($"FAILED CAPTURE flamespren Probability: {probability * 100}%");
                     }
                 }
             }

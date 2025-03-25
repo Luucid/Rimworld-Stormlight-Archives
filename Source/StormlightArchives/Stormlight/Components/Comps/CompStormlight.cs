@@ -43,6 +43,7 @@ namespace StormlightMod {
             Scribe_Values.Look(ref CurrentMaxStormlight, "CurrentMaxStormlight", 0f);
             Scribe_Values.Look(ref StormlightContainerSize, "StormlightContainerSize", 1f);
             Scribe_Values.Look(ref StormlightContainerQuality, "StormlightContainerQuality", 1f);
+            Scribe_Values.Look(ref MaximumGlowRadius, "MaximumGlowRadius", 1f);
         }
 
         private void adjustMaximumStormlight() {

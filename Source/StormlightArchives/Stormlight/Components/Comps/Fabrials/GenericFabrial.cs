@@ -65,7 +65,8 @@ namespace StormlightMod {
 
         public override void PostExposeData() {
             base.PostExposeData();
-            Scribe_References.Look(ref insertedGemstone, "insertedGemstone", true);
+            Scribe_Deep.Look(ref insertedGemstone, "insertedGemstone");
+            Scribe_Values.Look(ref PowerOn, "PowerOn");
         }
 
         public void checkPower(bool flickeredOn) {
