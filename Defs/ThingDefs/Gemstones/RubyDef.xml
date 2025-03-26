@@ -104,7 +104,7 @@
         <comps>
             <li Class="StormlightMod.CompProperties_Stormlight">
                 <maxStormlight>50</maxStormlight>
-                <drainRate>0.01</drainRate>
+                <drainRate>0.5</drainRate>
             </li>
             <li Class="StormlightMod.CompProperties_CutGemstone">
                 <compClass>StormlightMod.CompCutGemstone</compClass>
@@ -156,7 +156,7 @@
         <comps>
             <li Class="StormlightMod.CompProperties_Stormlight">
                 <maxStormlight>50</maxStormlight>
-                <drainRate>0.01</drainRate>
+                <drainRate>0.5</drainRate>
             </li>
             <li Class="StormlightMod.CompProperties_GemSphere">
                 <compClass>StormlightMod.CompGemSphere</compClass>
