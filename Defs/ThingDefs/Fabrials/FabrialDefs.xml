@@ -222,7 +222,7 @@
     <placeWorkers>
       <li>PlaceWorker_Heater</li>
     </placeWorkers>
-    <drawPlaceWorkersWhileSelected>true</drawPlaceWorkersWhileSelected>
+    <drawPlaceWorkersWhileSelected>false</drawPlaceWorkersWhileSelected>
     <comps>
       <li Class="CompProperties_Flickable" />
       <li Class="CompProperties_Glower">

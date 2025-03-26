@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+    <HediffDef>
+        <defName>whtwl_painrial_agument</defName>
+        <label>painrial nearby</label>
+        <labelNoun>PainrialAugmenter</labelNoun>
+        <description>Pawn is close to painrial augmenter.</description>
+        <isBad>true</isBad>
+        <hediffClass>Hediff</hediffClass>
+        <stages>
+            <li>
+                <painOffset>0.5</painOffset>
+            </li>
+        </stages>
+    </HediffDef>
+</Defs>

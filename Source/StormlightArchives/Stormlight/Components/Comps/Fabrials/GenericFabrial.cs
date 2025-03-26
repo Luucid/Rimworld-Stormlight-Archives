@@ -6,6 +6,7 @@ using System;
 using HarmonyLib;
 using UnityEngine;
 using Verse.AI;
+using LudeonTK;
 
 namespace StormlightMod {
 
@@ -90,6 +91,9 @@ namespace StormlightMod {
                     case Spren.Cold:
                         doColdSprenPower();
                         break;
+                    case Spren.Pain:
+                        doPainSprenPower();
+                        break;
                     default:
                         break;
 
@@ -124,7 +128,19 @@ namespace StormlightMod {
             }
         }
 
-
+        private void doPainSprenPower() {
+            if (PowerOn) {
+                IntVec3 position = parent.Position;
+                Map map = parent.Map; 
+                var cells = GenRadial.RadialCellsAround(position, 5f, true);
+                foreach (IntVec3 cell in cells) {
+                    Pawn pawn = cell.GetFirstPawn(map);
+                    if (pawn != null && pawn.health.hediffSet.GetFirstHediffOfDef(StormlightModDefs.whtwl_painrial_agument) == null && ) { //distance between pawn and painrial remove or add hediff
+                        pawn.health.AddHediff(StormlightModDefs.whtwl_painrial_agument);
+                    }
+                }
+            }
+        }
         public void AddGemstone(ThingWithComps gemstone) {
             var gemstoneComp = gemstone.GetComp<CompCutGemstone>();
             if (gemstoneComp != null) {
@@ -147,10 +163,19 @@ namespace StormlightMod {
 
             if (insertedGemstone != null) {
                 ThingWithComps gemstone = insertedGemstone as ThingWithComps;
-                gemName = gemstone.GetComp<CompCutGemstone>().GetFullLabel + "(" + gemstone.GetComp<CompStormlight>().Stormlight.ToString("F0") + ")";
+                gemName = "Spren: "+gemstone.GetComp<CompCutGemstone>().capturedSpren.ToString() + "\nStormlight: " + gemstone.GetComp<CompStormlight>().Stormlight.ToString("F0");
             }
             return gemName;
         }
+
+        //public string getHoursRemaining() 
+        //    {
+        //    var stormlightComp = insertedGemstone.TryGetComp<CompStormlight>();
+        //    float stormlightPerHour = (50.0f * stormlightComp.GetDrainRate(2f));
+        //    int hoursLeft = (int)(stormlightComp.Stormlight / stormlightPerHour);
+        //    return hoursLeft.ToString();
+        //}
+
         public override IEnumerable<FloatMenuOption> CompFloatMenuOptions(Pawn selPawn) {
 
             var cutGemstone = GenClosest.ClosestThing_Global(

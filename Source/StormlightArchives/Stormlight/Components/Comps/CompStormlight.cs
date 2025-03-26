@@ -25,8 +25,9 @@ namespace StormlightMod {
         public float StormlightContainerQuality = 1f;
         public float MaximumGlowRadius = 8.0f;
 
+        private bool lightTurnedOn = false;
         private int tick = 0;
-
+        private bool thisGlows = false;
 
         public void toggleBreathStormlight() {
             m_BreathStormlight = !m_BreathStormlight;
@@ -82,11 +83,17 @@ namespace StormlightMod {
 
         private void toggleGlow(bool on) {
             if (parent.Map != null) {
-                if (on) {
-                    parent.Map.glowGrid.RegisterGlower(GlowerComp);
-                }
-                else {
+                if (on && thisGlows == false) {
+                    Log.Message("turn on the lights!");
                     parent.Map.glowGrid.DeRegisterGlower(GlowerComp);
+                    parent.Map.glowGrid.RegisterGlower(GlowerComp);
+                    GlowerComp.GlowRadius = MaximumGlowRadius;
+                    thisGlows = true;
+                }
+                else if (!on && thisGlows) {
+                    Log.Message("turn off the lights!");
+                    parent.Map.glowGrid.DeRegisterGlower(GlowerComp);
+                    thisGlows = false;
                 }
             }
         }
@@ -115,7 +122,7 @@ namespace StormlightMod {
             float normalizedSize = (size - 1f) / (20.0f - 1f) * 9f + 1f;
 
             MaximumGlowRadius = (float)Math.Round(normalizedSize, 2) + (quality / 5f);
-
+            handleGlow();
             Log.Message($"Maximum glow radius for q({quality}) and s({size}) = {MaximumGlowRadius}");
         }
 
@@ -244,6 +251,11 @@ namespace StormlightMod {
                 if (m_CurrentStormlight < 0)
                     m_CurrentStormlight = 0;
             }
+        }
+
+
+        public float GetDrainRate(float factor) {
+            return (Props.drainRate / StormlightContainerQuality) * factor;
         }
 
         public void drainStormLight(float factor) {

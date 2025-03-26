@@ -85,6 +85,9 @@ namespace StormlightMod {
                     break;
                 case Spren.Cold:
                     tryCaptureColdSpren();
+                    break;    
+                case Spren.Pain:
+                    tryCapturePainSpren();
                     break;
                 default:
                     break;
@@ -131,6 +134,25 @@ namespace StormlightMod {
                         insertedGemstone.TryGetComp<CompCutGemstone>().capturedSpren = Spren.Cold;
                         displayCaptureMessage(Spren.Cold);
                         stormlightcomp.RemoveAllStormlight();
+                    }
+                }
+            }
+        }
+
+
+
+        private void tryCapturePainSpren() {
+            float sumOfPain = StormlightUtilities.GetSuroundingPain(parent as Building, 3f);
+            if (sumOfPain > 0f) {
+                var stormlightcomp = insertedGemstone.TryGetComp<CompStormlight>();
+                if (stormlightcomp != null) {
+                    float probabilityFactor = sumOfPain*5;
+                    float probability = getProbability(stormlightcomp, probabilityFactor, 0.01f);
+
+                    if (Rand.Chance(probability)) {
+                        insertedGemstone.TryGetComp<CompCutGemstone>().capturedSpren = Spren.Pain; 
+                        displayCaptureMessage(Spren.Pain);
+                        stormlightcomp.RemoveAllStormlight(); 
                     }
                 }
             }

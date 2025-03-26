@@ -53,6 +53,9 @@ namespace StormlightMod {
         public static ThingDef whtwl_Sphere_Emerald;
 
 
+        public static HediffDef whtwl_painrial_agument;
+
+
         static StormlightModDefs() {
             DefOfHelper.EnsureInitializedInCtor(typeof(StormlightModDefs));
         }

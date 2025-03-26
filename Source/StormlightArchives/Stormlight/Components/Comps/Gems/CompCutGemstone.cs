@@ -39,11 +39,6 @@ namespace StormlightMod {
                 stormlightComp.StormlightContainerQuality = gemstoneQuality;
                 stormlightComp.StormlightContainerSize = gemstoneSize;
                 stormlightComp.calculateMaximumGlowRadius(gemstoneQuality, gemstoneSize);
-
-                Log.Message($"gemstoneQuality: {gemstoneQuality}, gemstoneSize: {gemstoneSize}");
-            }
-            else {
-                Log.Error("CompRawGemstone requires CompStormlight, but none was found on parent.");
             }
         }
 
@@ -145,6 +140,58 @@ namespace StormlightMod {
                         stormlightComp.infuseStormlight(stormlightComp.CurrentMaxStormlight);
                     }
                 };
+
+                yield return new Command_Action {
+                    defaultLabel = "remvoe all light",
+                    defaultDesc = "Debug/Dev feature.",
+                    icon = TexCommand.CannotShoot,
+                    action = () => {
+                        stormlightComp.RemoveAllStormlight();
+                    }
+                };
+
+                yield return new Command_Action {
+                    defaultLabel = "Set Quality",
+                    defaultDesc = "Debug/Dev feature.",
+                    icon = TexCommand.DesirePower,
+                    action = () => {
+                        this.gemstoneQuality = (this.gemstoneQuality % 5) + 1;
+                        stormlightComp.StormlightContainerQuality = gemstoneQuality;
+                        stormlightComp.StormlightContainerSize = gemstoneSize;
+                        stormlightComp.calculateMaximumGlowRadius(gemstoneQuality, gemstoneSize);
+                    }
+                };
+                yield return new Command_Action {
+                    defaultLabel = "Set size",
+                    defaultDesc = "Debug/Dev feature.",
+                    icon = TexCommand.DesirePower,
+                    action = () => {
+                        if (this.gemstoneSize == 1)
+                            this.gemstoneSize = 5;
+                        else if (this.gemstoneSize == 5)
+                            this.gemstoneSize = 20;
+                        else if (this.gemstoneSize == 20)
+                            this.gemstoneSize = 1;
+                        stormlightComp.StormlightContainerQuality = gemstoneQuality;
+                        stormlightComp.StormlightContainerSize = gemstoneSize;
+                        stormlightComp.calculateMaximumGlowRadius(gemstoneQuality, gemstoneSize);
+                    }
+                };
+
+                yield return new Command_Action {
+                    defaultLabel = "Set captured spren",
+                    defaultDesc = "Debug/Dev feature.",
+                    icon = TexCommand.SelectShelf,
+                    action = () => {
+                        if (capturedSpren == Spren.Logic)
+                            capturedSpren = Spren.None;
+                        else
+                            capturedSpren += 1;
+
+                    }
+                };
+
+
             }
             yield break;
         }

@@ -55,7 +55,7 @@ namespace StormlightMod {
                     }
                 }
             }
-            return numberOfFires; 
+            return numberOfFires;
         }
         public static float GetAverageSuroundingTemperature(Building building, float radius = 5f) {
             IntVec3 position = building.Position;
@@ -66,6 +66,20 @@ namespace StormlightMod {
                 temps.Add(cell.GetTemperature(building.Map));
             }
             return temps.Average();
+        }
+
+        public static float GetSuroundingPain(Building building, float radius = 5f) {
+            IntVec3 position = building.Position;
+            Map map = building.Map;
+            List<float> pains = new List<float>();
+            var cells = GenRadial.RadialCellsAround(position, radius, true);
+            foreach (IntVec3 cell in cells) {
+                Pawn pawn = cell.GetFirstPawn(map);
+                if (pawn != null) {
+                    pains.Add(pawn.health.hediffSet.PainTotal);
+                }
+            }
+            return pains.Sum();
         }
 
         public static bool isThingCutGemstone(Thing thing) {
