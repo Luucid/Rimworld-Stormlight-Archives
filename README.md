@@ -10,8 +10,14 @@
 * Will arrive every 8 days, with a warning system that alerts the player before the storm hits.
 
 # Gemstones
-Gemstone handling as a research field is under development.
-
+base drain: 25 per hour
+* chip_q_1  = 2h 
+* chip_q_5  = 10h
+* mark_q_1  = 10h
+* mark_q_5  = 2d+2h
+* broam_q_1 = 1d+16h
+* broam_q_5 = 8d+8h
+  
 ## Raw Gemstones
 * Raw gemstone clusters of 5 unique variants can be found as unique blocks, but this is rare.
 * When mining any kind of block, there is a small chance for a gemstone to drop
