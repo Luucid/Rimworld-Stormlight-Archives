@@ -22,7 +22,7 @@ namespace StormlightMod {
             compFlickerable = GetComp<CompFlickable>();
             compGlower = GetComp<CompGlower>();
         }
-        public override void TickRare() {
+        public override void Tick() {
             compBasicFabrialAugumenter.checkPower(compFlickerable.SwitchIsOn);
             toggleGlow(compBasicFabrialAugumenter.PowerOn);
             compBasicFabrialAugumenter.usePower();
@@ -60,6 +60,8 @@ namespace StormlightMod {
         public bool PowerOn = false;
         public bool HasGemstone => insertedGemstone != null;
 
+
+
         public override void PostSpawnSetup(bool respawningAfterLoad) {
             base.PostSpawnSetup(respawningAfterLoad);
         }
@@ -81,9 +83,20 @@ namespace StormlightMod {
             PowerOn = false;
         }
 
+        public Spren CurrentSpren {
+            get {
+                if (HasGemstone) 
+                {
+                    return insertedGemstone.TryGetComp<CompCutGemstone>().capturedSpren;
+                }
+                return Spren.None;
+            }
+        }
+
         public void usePower() {
             if (PowerOn && insertedGemstone != null && insertedGemstone.TryGetComp<CompStormlight>() is CompStormlight stormlightComp) {
-                stormlightComp.drainStormLight(2f);
+                stormlightComp.drainFactor = 2f;
+                stormlightComp.CompTick();
                 switch (insertedGemstone.TryGetComp<CompCutGemstone>().capturedSpren) {
                     case Spren.Flame:
                         doFlameSprenPower();
@@ -93,6 +106,12 @@ namespace StormlightMod {
                         break;
                     case Spren.Pain:
                         doPainSprenPower();
+                        break;
+                    case Spren.Logic:        //diamond
+                        doLogicSprenPower();
+                        break;
+                    case Spren.Cultivation:  //emerald
+                        //Handled by patch
                         break;
                     default:
                         break;
@@ -118,7 +137,7 @@ namespace StormlightMod {
 
         private void doColdSprenPower() {
             if (PowerOn && parent.IsOutside() == false) {
-                int gemstoneSize = insertedGemstone.TryGetComp<CompCutGemstone>().gemstoneSize*3; //3, 15, 60
+                int gemstoneSize = insertedGemstone.TryGetComp<CompCutGemstone>().gemstoneSize * 3; //3, 15, 60
                 float targetTemp = -5f;
                 float currentTemp = parent.GetRoom().Temperature;
                 if (currentTemp > targetTemp) {
@@ -131,12 +150,28 @@ namespace StormlightMod {
         private void doPainSprenPower() {
             if (PowerOn) {
                 IntVec3 position = parent.Position;
-                Map map = parent.Map; 
+                Map map = parent.Map;
                 var cells = GenRadial.RadialCellsAround(position, 5f, true);
                 foreach (IntVec3 cell in cells) {
                     Pawn pawn = cell.GetFirstPawn(map);
-                    if (pawn != null && pawn.health.hediffSet.GetFirstHediffOfDef(StormlightModDefs.whtwl_painrial_agument) == null && ) { //distance between pawn and painrial remove or add hediff
+                    if (pawn != null && pawn.health.hediffSet.GetFirstHediffOfDef(StormlightModDefs.whtwl_painrial_agument) == null && pawn.Position.InHorDistOf(position, 5f)) {
                         pawn.health.AddHediff(StormlightModDefs.whtwl_painrial_agument);
+                    }
+                }
+            }
+        }
+
+        private void doLogicSprenPower() {
+            if (PowerOn) {
+                IntVec3 position = parent.Position;
+                Map map = parent.Map;
+                var cells = GenRadial.RadialCellsAround(position, 5f, true);
+                foreach (IntVec3 cell in cells) {
+                    foreach (Thing thing in cell.GetThingList(map)) {
+                        Pawn pawn = cell.GetFirstPawn(map);
+                        if (pawn != null && pawn.health.hediffSet.GetFirstHediffOfDef(StormlightModDefs.whtwl_logirial_agument) == null && pawn.Position.InHorDistOf(position, 5f)) {
+                            pawn.health.AddHediff(StormlightModDefs.whtwl_logirial_agument);
+                        }
                     }
                 }
             }
@@ -163,7 +198,7 @@ namespace StormlightMod {
 
             if (insertedGemstone != null) {
                 ThingWithComps gemstone = insertedGemstone as ThingWithComps;
-                gemName = "Spren: "+gemstone.GetComp<CompCutGemstone>().capturedSpren.ToString() + "\nStormlight: " + gemstone.GetComp<CompStormlight>().Stormlight.ToString("F0");
+                gemName = "Spren: " + gemstone.GetComp<CompCutGemstone>().capturedSpren.ToString() + "\nStormlight: " + gemstone.GetComp<CompStormlight>().Stormlight.ToString("F0");
             }
             return gemName;
         }

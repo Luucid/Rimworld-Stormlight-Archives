@@ -121,7 +121,7 @@ namespace StormlightMod {
 
         public void usePower() {
             if (PowerOn && insertedGemstone != null && insertedGemstone.TryGetComp<CompStormlight>() is CompStormlight stormlightComp) {
-                stormlightComp.drainStormLight(7f);
+                //stormlightComp.drainStormLight(7f);
             }
         }
 

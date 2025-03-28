@@ -205,7 +205,7 @@
       <Mass>6</Mass>
       <Flammability>0.5</Flammability>
     </statBases>
-    <tickerType>Rare</tickerType>
+    <tickerType>Normal</tickerType>
     <building>
       <destroySound>BuildingDestroyed_Metal_Small</destroySound>
     </building>
@@ -226,7 +226,8 @@
     <comps>
       <li Class="CompProperties_Flickable" />
       <li Class="CompProperties_Glower">
-        <glowRadius>3</glowRadius>
+        <glowRadius>5</glowRadius>
+        <overlightRadius>5.0</overlightRadius>
         <glowColor>(255,150,100,0)</glowColor>
       </li>
       <li Class="StormlightMod.CompProperties_BasicFabrialAugmenter">
@@ -239,5 +240,6 @@
       <li>whtwl_Research_BasicArtifabriary</li>
     </researchPrerequisites>
     <constructionSkillPrerequisite>5</constructionSkillPrerequisite>
+     <specialDisplayRadius>5.0</specialDisplayRadius>
   </ThingDef>
 </Defs>

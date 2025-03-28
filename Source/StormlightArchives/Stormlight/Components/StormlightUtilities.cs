@@ -82,6 +82,35 @@ namespace StormlightMod {
             return pains.Sum();
         }
 
+        public static float GetSuroundingPlants(Building building, float radius = 5f) {
+            IntVec3 position = building.Position;
+            Map map = building.Map;
+            int plants = 0;
+            var cells = GenRadial.RadialCellsAround(position, radius, true);
+            foreach (IntVec3 cell in cells) {
+                if (cell.InBounds(map)) {
+                    foreach (Thing thing in cell.GetThingList(map)) {
+                        if (thing is Plant plant) {
+                            plants++;
+                        }
+                    }
+                }
+            }
+            return plants;
+        }
+        public static bool ResearchBeingDoneNearby(Building building, float radius = 5f) {
+            IntVec3 position = building.Position;
+            Map map = building.Map;
+            var cells = GenRadial.RadialCellsAround(position, radius, true);
+            foreach (IntVec3 cell in cells) {
+                Pawn pawn = cell.GetFirstPawn(map);
+                if (pawn != null && pawn.jobs?.curJob != null && pawn.jobs.curJob.def == JobDefOf.Research) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         public static bool isThingCutGemstone(Thing thing) {
             return thing.def == StormlightModDefs.whtwl_CutRuby
                          || thing.def == StormlightModDefs.whtwl_CutEmerald

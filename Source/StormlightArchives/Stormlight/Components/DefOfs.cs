@@ -30,6 +30,7 @@ namespace StormlightMod {
         public static ThingDef whtwl_Apparel_SpherePouch;
         public static ThingDef whtwl_SphereLamp;
         public static ThingDef whtwl_FabrialCage_Pewter;
+        public static ThingDef whtwl_BasicFabrial_Augmenter; 
 
         //RAW GEMS
         public static ThingDef whtwl_RawDiamond;
@@ -54,6 +55,7 @@ namespace StormlightMod {
 
 
         public static HediffDef whtwl_painrial_agument;
+        public static HediffDef whtwl_logirial_agument;
 
 
         static StormlightModDefs() {

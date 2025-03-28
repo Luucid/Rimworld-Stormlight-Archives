@@ -18,7 +18,7 @@ namespace StormlightMod {
         public float MaxStormlightPerItem => Props.maxStormlight;
         public float CurrentMaxStormlight = 0f;
         public bool m_BreathStormlight = false;
-
+        public float drainFactor = 1f;
 
         // Modifiers
         public float StormlightContainerSize = 1f;
@@ -245,22 +245,22 @@ namespace StormlightMod {
 
 
 
-        private void drainStormLight() {
-            if (m_CurrentStormlight > 0) {
-                m_CurrentStormlight -= (Props.drainRate / StormlightContainerQuality);
-                if (m_CurrentStormlight < 0)
-                    m_CurrentStormlight = 0;
-            }
-        }
+        //private void drainStormLight() {
+        //    if (m_CurrentStormlight > 0) {
+        //        m_CurrentStormlight -= (Props.drainRate / StormlightContainerQuality);
+        //        if (m_CurrentStormlight < 0)
+        //            m_CurrentStormlight = 0;
+        //    }
+        //}
 
 
         public float GetDrainRate(float factor) {
             return (Props.drainRate / StormlightContainerQuality) * factor;
         }
 
-        public void drainStormLight(float factor) {
+        public void drainStormLight() {
             if (m_CurrentStormlight > 0) {
-                m_CurrentStormlight -= (Props.drainRate / StormlightContainerQuality) * factor;
+                m_CurrentStormlight -= (Props.drainRate / StormlightContainerQuality) * drainFactor;
                 if (m_CurrentStormlight < 0)
                     m_CurrentStormlight = 0;
             }

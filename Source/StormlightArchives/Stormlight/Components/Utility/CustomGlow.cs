@@ -52,8 +52,20 @@ namespace StormlightMod {
             }
         }
 
+
+        public static void DrawCustomCircle(IntVec3 center, float radius, Color color) {
+
+            DrawCustomCircle(new Vector3(center.x, center.y, center.z), radius, color, 0.15f);
+        }
+
+
+
         public static void DrawCustomCircle(Vector3 center, float radius, Color color) {
-            color.a = 0.15f;
+            DrawCustomCircle(center, radius, color, 0.15f);
+        }
+
+        public static void DrawCustomCircle(Vector3 center, float radius, Color color, float alpha) {
+            color.a = alpha;
             center.y = AltitudeLayer.MetaOverlays.AltitudeFor();
 
             Material mat = SolidColorMaterials.SimpleSolidColorMaterial(color);

@@ -70,7 +70,7 @@ namespace StormlightMod {
             base.PostSpawnSetup(respawningAfterLoad);
         }
 
-      
+
         public override void PostExposeData() {
             base.PostExposeData();
             Scribe_Deep.Look(ref insertedGemstone, "insertedGemstone");
@@ -85,9 +85,15 @@ namespace StormlightMod {
                     break;
                 case Spren.Cold:
                     tryCaptureColdSpren();
-                    break;    
+                    break;
                 case Spren.Pain:
                     tryCapturePainSpren();
+                    break;
+                case Spren.Cultivation:
+                    tryCaptureCultivationSpren();
+                    break;
+                case Spren.Logic:
+                    tryCaptureLogicSpren();
                     break;
                 default:
                     break;
@@ -106,7 +112,7 @@ namespace StormlightMod {
 
         private void tryCaptureFlameSpren() {
 
-            if (StormlightUtilities.IsAnyFireNearby(parent as Building, 3f)) {
+            if (StormlightUtilities.IsAnyFireNearby(parent as Building, 5f)) {
                 var stormlightcomp = insertedGemstone.TryGetComp<CompStormlight>();
                 if (stormlightcomp != null) {
                     float probabilityFactor = (float)StormlightUtilities.GetNumberOfFiresNearby(parent as Building, 3f);
@@ -114,7 +120,7 @@ namespace StormlightMod {
 
                     if (Rand.Chance(probability)) {
                         insertedGemstone.TryGetComp<CompCutGemstone>().capturedSpren = Spren.Flame;
-                        stormlightcomp.RemoveAllStormlight(); 
+                        stormlightcomp.RemoveAllStormlight();
                         displayCaptureMessage(Spren.Flame);
                     }
                 }
@@ -123,7 +129,7 @@ namespace StormlightMod {
         }
 
         private void tryCaptureColdSpren() {
-            float averageSuroundingTemperature = StormlightUtilities.GetAverageSuroundingTemperature(parent as Building, 3f);
+            float averageSuroundingTemperature = StormlightUtilities.GetAverageSuroundingTemperature(parent as Building, 5f);
             if (averageSuroundingTemperature < 0f) {
                 var stormlightcomp = insertedGemstone.TryGetComp<CompStormlight>();
                 if (stormlightcomp != null) {
@@ -142,21 +148,57 @@ namespace StormlightMod {
 
 
         private void tryCapturePainSpren() {
-            float sumOfPain = StormlightUtilities.GetSuroundingPain(parent as Building, 3f);
+            float sumOfPain = StormlightUtilities.GetSuroundingPain(parent as Building, 5f);
             if (sumOfPain > 0f) {
                 var stormlightcomp = insertedGemstone.TryGetComp<CompStormlight>();
                 if (stormlightcomp != null) {
-                    float probabilityFactor = sumOfPain*5;
+                    float probabilityFactor = sumOfPain * 5;
                     float probability = getProbability(stormlightcomp, probabilityFactor, 0.01f);
 
                     if (Rand.Chance(probability)) {
-                        insertedGemstone.TryGetComp<CompCutGemstone>().capturedSpren = Spren.Pain; 
+                        insertedGemstone.TryGetComp<CompCutGemstone>().capturedSpren = Spren.Pain;
                         displayCaptureMessage(Spren.Pain);
-                        stormlightcomp.RemoveAllStormlight(); 
+                        stormlightcomp.RemoveAllStormlight();
                     }
                 }
             }
         }
+
+        private void tryCaptureCultivationSpren() {
+            float sumOfPlants = StormlightUtilities.GetSuroundingPlants(parent as Building, 5f);
+            if (sumOfPlants > 0) {
+                var stormlightcomp = insertedGemstone.TryGetComp<CompStormlight>();
+                if (stormlightcomp != null) {
+                    float probabilityFactor = sumOfPlants;
+                    float probability = getProbability(stormlightcomp, probabilityFactor, 0.01f);
+
+                    if (Rand.Chance(probability)) {
+                        insertedGemstone.TryGetComp<CompCutGemstone>().capturedSpren = Spren.Cultivation;
+                        displayCaptureMessage(Spren.Cultivation);
+                        stormlightcomp.RemoveAllStormlight();
+                    }
+                }
+            }
+        }
+
+        private void tryCaptureLogicSpren() {
+            bool researchDoneNearby = StormlightUtilities.ResearchBeingDoneNearby(parent as Building, 5f);
+            if (researchDoneNearby) {
+                var stormlightcomp = insertedGemstone.TryGetComp<CompStormlight>();
+                if (stormlightcomp != null) {
+                    float probabilityFactor = 2f;
+                    float probability = getProbability(stormlightcomp, probabilityFactor, 0.0005f);
+                    Log.Message("Tryng here");
+                    if (Rand.Chance(probability)) {
+                        insertedGemstone.TryGetComp<CompCutGemstone>().capturedSpren = Spren.Logic;
+                        displayCaptureMessage(Spren.Logic);
+                        stormlightcomp.RemoveAllStormlight();
+                    }
+                    else { Log.Message($"Failed at {probability * 100}%"); }
+                }
+            }
+        }
+
 
         public void checkTrapperState() {
             if (insertedGemstone != null && insertedGemstone.TryGetComp<CompCutGemstone>() is CompCutGemstone compCutGemstone) {
