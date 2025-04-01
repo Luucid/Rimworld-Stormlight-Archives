@@ -82,7 +82,6 @@
     <Compile Include="Components\Comps\Gems\CompRawGemstone.cs" />
     <Compile Include="Components\Comps\Hediffs\Hediff_Painrial.cs" />
     <Compile Include="Components\Comps\WeaponsAndArmor\CompShardblade.cs" />
-    <Compile Include="Components\Comps\CompSphere.cs" />
     <Compile Include="Components\Comps\CompStormlight.cs" />
     <Compile Include="Components\Comps\Apparel\CompSpherePouch.cs" />
     <Compile Include="Components\Combat\Weapon\DamageWorker_SoulDamage.cs" />

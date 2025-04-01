@@ -6,10 +6,18 @@ using RimWorld;
 using Verse;
 using Verse.AI;
 using Verse.Noise;
+using UnityEngine;
 
 namespace StormlightMod {
 
     static public class StormlightUtilities {
+
+        public static int GetGraphicId(Thing thing) {
+            if (thing == null) return 0;
+            CompShardblade comp = thing.TryGetComp<CompShardblade>();
+            if(comp == null) return 0;
+            return comp.graphicId;
+        }
 
         public static float Normalize(float value, float v_min, float v_max, float t_min, float t_max) {
             return ((value - v_min) / (v_max - v_min)) * (t_max - t_min) + t_min;
@@ -132,7 +140,7 @@ namespace StormlightMod {
         StormlightModDefs. whtwl_RawEmerald
       };
 
-        private static readonly Random rng = new Random();
+        private static readonly System.Random rng = new System.Random();
 
         public static ThingDef RollForRandomGemSpawn() {
             foreach (var gem in gems) {
@@ -155,6 +163,24 @@ namespace StormlightMod {
         public static int RollForRandomIntFromList(List<int> intList) {
             int i = rng.Next(intList.Count);
             return intList[i];
+        }
+
+
+        public static void SetThingGraphic(Thing thing, string texPath, float drawSize = 1.5f) {
+            if (thing == null || thing.def == null) return;
+
+            Graphic newGraphic = GraphicDatabase.Get<Graphic_Single>(
+                texPath,
+                ShaderDatabase.Cutout,
+                new Vector2(drawSize, drawSize),
+                Color.white
+            );
+
+            // Set internal field directly
+            AccessTools.Field(typeof(Thing), "graphicInt").SetValue(thing, newGraphic);
+
+            // Force refresh
+            thing.Notify_ColorChanged();
         }
     }
 

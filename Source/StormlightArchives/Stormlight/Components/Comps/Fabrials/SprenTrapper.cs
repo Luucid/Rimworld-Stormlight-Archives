@@ -89,8 +89,8 @@ namespace StormlightMod {
                 case Spren.Pain:
                     tryCapturePainSpren();
                     break;
-                case Spren.Cultivation:
-                    tryCaptureCultivationSpren();
+                case Spren.Life:
+                    tryCaptureLifeSpren();
                     break;
                 case Spren.Logic:
                     tryCaptureLogicSpren();
@@ -164,7 +164,7 @@ namespace StormlightMod {
             }
         }
 
-        private void tryCaptureCultivationSpren() {
+        private void tryCaptureLifeSpren() {
             float sumOfPlants = StormlightUtilities.GetSuroundingPlants(parent as Building, 5f);
             if (sumOfPlants > 0) {
                 var stormlightcomp = insertedGemstone.TryGetComp<CompStormlight>();
@@ -173,8 +173,8 @@ namespace StormlightMod {
                     float probability = getProbability(stormlightcomp, probabilityFactor, 0.01f);
 
                     if (Rand.Chance(probability)) {
-                        insertedGemstone.TryGetComp<CompCutGemstone>().capturedSpren = Spren.Cultivation;
-                        displayCaptureMessage(Spren.Cultivation);
+                        insertedGemstone.TryGetComp<CompCutGemstone>().capturedSpren = Spren.Life;
+                        displayCaptureMessage(Spren.Life);
                         stormlightcomp.RemoveAllStormlight();
                     }
                 }

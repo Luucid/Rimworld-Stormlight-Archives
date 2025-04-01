@@ -9,7 +9,7 @@ namespace StormlightMod {
     public static class CultivationSprenPatch {
 
         public static void Postfix(Plant __instance, ref float __result) {
-            if (__instance.Spawned && IsNearCultivationSprenBuilding(__instance)) {
+            if (__instance.Spawned && IsNearLifeSprenBuilding(__instance)) {
                 bool resting = true;
                 if (!(GenLocalDate.DayPercent(__instance) < 0.25f)) {
                     resting = GenLocalDate.DayPercent(__instance) > 0.8f;
@@ -23,17 +23,17 @@ namespace StormlightMod {
             }
         }
 
-        private static bool IsNearCultivationSprenBuilding(Plant plant) {
+        private static bool IsNearLifeSprenBuilding(Plant plant) {
             var map = plant.Map;
             var position = plant.Position;
-
+            if (map == null) return false;
             foreach (var cell in GenRadial.RadialCellsAround(position, 5f, true)) {
                 foreach (var thing in cell.GetThingList(map)) {
                     if (thing.def == StormlightModDefs.whtwl_BasicFabrial_Augmenter &&
                         thing is Building_Fabrial_Basic_Augmenter building
                        ) {
                         CompBasicFabrialAugumenter comp = building.GetComp<CompBasicFabrialAugumenter>();
-                        if (comp != null && comp.PowerOn == true && comp.CurrentSpren == Spren.Cultivation) {
+                        if (comp != null && comp.PowerOn == true && comp.CurrentSpren == Spren.Life) {
                             return true;
                         }
                     }

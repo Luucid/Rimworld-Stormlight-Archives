@@ -15,73 +15,6 @@
     </researchPrerequisites> -->
   </DesignationCategoryDef>
 
-  <ThingDef ParentName="BuildingBase">
-    <defName>whtwl_Basic_Heatrial</defName>
-    <label>Basic Heatrial</label>
-    <description>A device that use a trapped spren in a ruby encased in metal to produce heat.</description>
-    <thingClass>StormlightMod.Building_Heatrial_Basic</thingClass>
-    <graphicData>
-      <texPath>Things/Building/Misc/TempControl/Heater</texPath>
-      <graphicClass>Graphic_Single</graphicClass>
-      <shadowData>
-        <volume>(0.5,0.3,0.7)</volume>
-        <offset>(0,0,-0.15)</offset>
-      </shadowData>
-      <damageData>
-        <rect>(0.234375,0,0.515625,0.984375)</rect>
-        <cornerTL>Damage/Corner</cornerTL>
-        <cornerTR>Damage/Corner</cornerTR>
-        <cornerBL>Damage/Corner</cornerBL>
-        <cornerBR>Damage/Corner</cornerBR>
-      </damageData>
-    </graphicData>
-    <minifiedDef>MinifiedThing</minifiedDef>
-    <altitudeLayer>Building</altitudeLayer>
-    <passability>PassThroughOnly</passability>
-    <pathCost>30</pathCost>
-    <blockWind>true</blockWind>
-    <rotatable>false</rotatable>
-    <fillPercent>0.4</fillPercent>
-    <thingCategories>
-      <li>BuildingsTemperature</li>
-    </thingCategories>
-    <statBases>
-      <WorkToBuild>1000</WorkToBuild>
-      <MaxHitPoints>100</MaxHitPoints>
-      <Mass>6</Mass>
-      <Flammability>0.5</Flammability>
-    </statBases>
-    <tickerType>Rare</tickerType>
-    <building>
-      <destroySound>BuildingDestroyed_Metal_Small</destroySound>
-    </building>
-    <costList>
-      <Steel>50</Steel>
-      <ComponentIndustrial>1</ComponentIndustrial>
-    </costList>
-    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
-    <placeWorkers>
-      <li>PlaceWorker_Heater</li>
-    </placeWorkers>
-    <drawPlaceWorkersWhileSelected>true</drawPlaceWorkersWhileSelected>
-    <comps>
-      <li Class="CompProperties_Flickable" />
-      <li Class="CompProperties_Glower">
-        <glowRadius>3</glowRadius>
-        <glowColor>(255,150,100,0)</glowColor>
-      </li>
-      <li Class="StormlightMod.CompProperties_Heatrial">
-        <compClass>StormlightMod.CompHeatrial</compClass>
-      </li>
-    </comps>
-    <designationCategory>whtwl_DesignationFabrials</designationCategory>
-    <designationHotKey>Misc3</designationHotKey>
-    <researchPrerequisites>
-      <li>whtwl_Research_BasicArtifabriary</li>
-    </researchPrerequisites>
-    <constructionSkillPrerequisite>5</constructionSkillPrerequisite>
-  </ThingDef>
-
 
   <ThingDef ParentName="BuildingBase">
     <defName>whtwl_SprenTrapper</defName>
@@ -89,7 +22,7 @@
     <description>A device that has a chance to trapped spren in a the gemstone placed inside.</description>
     <thingClass>StormlightMod.Building_SprenTrapper</thingClass>
     <graphicData>
-      <texPath>Things/Building/Misc/TempControl/Heater</texPath>
+      <texPath>Things/Item/Fabrials/Trapper</texPath>
       <graphicClass>Graphic_Single</graphicClass>
       <shadowData>
         <volume>(0.5,0.3,0.7)</volume>

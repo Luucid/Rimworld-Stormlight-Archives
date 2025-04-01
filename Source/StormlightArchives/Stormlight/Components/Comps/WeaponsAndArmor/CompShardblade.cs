@@ -5,8 +5,36 @@ using UnityEngine;
 using System.Reflection;
 using RimWorld.QuestGen;
 using System.Linq;
+using System;
 
 namespace StormlightMod {
+
+
+    public class Graphic_ShardBladeVariants : Graphic_Collection {
+        public override Graphic GetColoredVersion(Shader newShader, Color newColor, Color newColorTwo) {
+            return GraphicDatabase.Get<Graphic_ShardBladeVariants>(path, newShader, drawSize, newColor, newColorTwo, data);
+        }
+
+        public override Material MatAt(Rot4 rot, Thing thing = null) {
+            return MatSingleFor(thing);
+        }
+
+        public override Material MatSingleFor(Thing thing) {
+            int id = StormlightUtilities.GetGraphicId(thing);
+            return subGraphics[id].MatSingle;
+        }
+
+
+        public override void DrawWorker(Vector3 loc, Rot4 rot, ThingDef thingDef, Thing thing, float extraRotation) {
+            int id = StormlightUtilities.GetGraphicId(thing);
+            Graphic graphic = subGraphics[id];
+            graphic.DrawWorker(loc, rot, thingDef, thing, extraRotation);
+        }
+
+        public override string ToString() {
+            return "StackCount(path=" + path + ", count=" + subGraphics.Length + ")";
+        }
+    }
 
     public static class AbilityExtensions {
         public static T GetAbilityComp<T>(this Pawn pawn, string abilityDefName) where T : CompAbilityEffect {
@@ -19,13 +47,26 @@ namespace StormlightMod {
 
     public class CompShardblade : ThingComp {
         public CompProperties_Shardblade Props => props as CompProperties_Shardblade;
-        private Pawn swordOwner = null;
+        public Pawn swordOwner = null;
+        public int graphicId = -1;
+        private bool isSpawned = false;
+
+
+        public override void Initialize(CompProperties props) {
+            this.props = props;
+            if (graphicId == -1) {
+                graphicId = (Props.bladesInExistence % 4) + 1;
+                Log.Message($"Graphic ID: {graphicId}");
+                Props.bladesInExistence++;
+            }
+        }
         public override void PostExposeData() {
             base.PostExposeData();
-            Scribe_Values.Look(ref swordOwner, "swordOwner", null); 
+            Scribe_References.Look(ref swordOwner, "swordOwner", saveDestroyedThings: false);
+            Scribe_Values.Look(ref isSpawned, "isSpawned", false);
+            Scribe_Values.Look(ref graphicId, "graphicId", -1);
         }
 
-        private bool isSpawned = false;
         public bool isBonded(Pawn pawn) {
             return swordOwner == pawn;
         }
@@ -33,10 +74,7 @@ namespace StormlightMod {
         private void handleSwordAbility(Pawn pawn, CompAbilityEffect_SpawnEquipment abilityComp) {
             if (abilityComp == null) {
                 pawn.abilities.GainAbility(StormlightModDefs.whtwl_SummonShardblade);
-                //ThisFilterList.Find(def => selPawn.Map.listerThings.ThingsOfDef(def).Any());
-                //Trait trait = pawn.story.traits.allTraits.Find(t => StormlightModDefs.whtwl_Radiant_Traits.Any()); 
-                //Trait trait = pawn.story.traits.allTraits.FirstOrDefault(t => StormlightModUtilities.RadiantTraits.Contains(t.def));
-                Trait trait = StormlightUtilities.GetRadiantTrait(pawn); 
+                Trait trait = StormlightUtilities.GetRadiantTrait(pawn);
 
                 if (trait == null) { //radiants does not get this ability
                     pawn.abilities.GainAbility(StormlightModDefs.whtwl_UnbondBlade);
@@ -63,12 +101,7 @@ namespace StormlightMod {
                 Log.Error("[stormlight mod] Pawn has no traits system!");
                 return;
             }
-
-            //Trait trait = pawn.story.traits.allTraits.FirstOrDefault(t => t.def == StormlightModDefs.whtwl_Radiant);
-            //Trait trait = pawn.story.traits.allTraits.Find(t => StormlightModDefs.whtwl_Radiant_Traits.Any());
-            //Trait trait = pawn.story.traits.allTraits.FirstOrDefault(t => StormlightModUtilities.RadiantTraits.Contains(t.def));
             Trait trait = StormlightUtilities.GetRadiantTrait(pawn);
-
             if (trait != null) {
                 pawn.story.traits.allTraits.Remove(trait);
                 Log.Message($"[stormlight mod] {pawn.Name} broke an oath and lost its Radiant trait.");
@@ -84,7 +117,7 @@ namespace StormlightMod {
                 }
             }
             pawn.abilities.RemoveAbility(StormlightModDefs.whtwl_SummonShardblade);
-            pawn.abilities.RemoveAbility(StormlightModDefs.whtwl_UnbondBlade); 
+            pawn.abilities.RemoveAbility(StormlightModDefs.whtwl_UnbondBlade);
         }
 
 
@@ -128,6 +161,7 @@ namespace StormlightMod {
 }
 namespace StormlightMod {
     public class CompProperties_Shardblade : CompProperties {
+        public int bladesInExistence = 0;
         public CompProperties_Shardblade() {
             this.compClass = typeof(CompShardblade);
         }

@@ -8,7 +8,7 @@ namespace StormlightMod {
     public static class ShardbladePatchDrop {
         static void Postfix(Pawn ___pawn, ThingWithComps eq, ThingWithComps resultingEq, IntVec3 pos) {
             if (eq != null) {
-                if (eq.def.defName == "whtwl_MeleeWeapon_Shardblade") {
+                if (eq.def == StormlightModDefs.whtwl_MeleeWeapon_Shardblade) {
                     CompShardblade blade = eq.GetComp<CompShardblade>();
                     if (blade != null) {
                         if (blade.isBonded(___pawn)) { eq.DeSpawn(); }
@@ -21,7 +21,7 @@ namespace StormlightMod {
     public static class ShardbladePatchePickup {
         static void Postfix(Pawn ___pawn, ThingWithComps newEq) {
             if (newEq != null) {
-                if (newEq.def.defName == "whtwl_MeleeWeapon_Shardblade") {
+                if (newEq.def == StormlightModDefs.whtwl_MeleeWeapon_Shardblade) {
                     CompShardblade blade = newEq.GetComp<CompShardblade>();
                     if (blade != null) {
                         if (blade.isBonded(null)) {
@@ -42,7 +42,7 @@ namespace StormlightMod {
             if (map != null) {
                 ThingDef sphereThing = StormlightUtilities.RollForRandomGemSpawn();
                 if (sphereThing != null) {
-                    Thing sphere = ThingMaker.MakeThing(sphereThing);  
+                    Thing sphere = ThingMaker.MakeThing(sphereThing);
                     IntVec3 dropPosition = pawn.Position;
                     GenPlace.TryPlaceThing(sphere, dropPosition, map, ThingPlaceMode.Direct);
                 }

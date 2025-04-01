@@ -53,6 +53,10 @@ namespace StormlightMod {
         public static ThingDef whtwl_Sphere_Sapphire;
         public static ThingDef whtwl_Sphere_Emerald;
 
+        // WEAPONS
+        public static ThingDef whtwl_MeleeWeapon_Shardblade;
+
+
 
         public static HediffDef whtwl_painrial_agument;
         public static HediffDef whtwl_logirial_agument;

@@ -21,6 +21,12 @@ namespace StormlightMod {
 
         public ThingWithComps bladeObject = null;
 
+
+        public override void PostExposeData() {
+            base.PostExposeData();
+            Scribe_Deep.Look(ref bladeObject, "bladeObject", null);
+
+        }
         public override void Apply(LocalTargetInfo target, LocalTargetInfo dest) {
             if (target == null || target.Cell == null) {
                 Log.Warning("[StormlightMod] SpawnEquipment target is null, defaulting to caster.");
@@ -33,12 +39,12 @@ namespace StormlightMod {
             }
 
             Pawn pawn = parent.pawn;
-
             checkAndDropWeapon(ref pawn);
             toggleBlade(ref pawn);
         }
 
         private void checkAndDropWeapon(ref Pawn pawn) {
+            if (pawn == null) return;
             if (pawn.equipment.Primary != null) {
 
                 if (pawn.equipment.Primary.def.defName.Equals(Props.thingDef.ToString())) return;
@@ -53,7 +59,16 @@ namespace StormlightMod {
         private void toggleBlade(ref Pawn pawn) {
             CompAbilityEffect_SpawnEquipment abilityComp = pawn.GetAbilityComp<CompAbilityEffect_SpawnEquipment>(StormlightModDefs.whtwl_SummonShardblade.defName);
             if (abilityComp == null) return;
+            if (abilityComp.bladeObject == null) {
+                Log.Warning("[StormlightMod] toggleBlade: bladeObject is null, attempting recovery from equipment...");
+                abilityComp.bladeObject = pawn.equipment?.AllEquipmentListForReading
+                    .FirstOrDefault(e => e.def.defName == StormlightModDefs.whtwl_MeleeWeapon_Shardblade.defName);
 
+                if (abilityComp.bladeObject == null) {
+                    Log.Error("[StormlightMod] toggleBlade: Failed to recover bladeObject, aborting toggle.");
+                    return;
+                }
+            }
             CompShardblade blade = abilityComp.bladeObject.GetComp<CompShardblade>();
             if (blade == null) return;
 

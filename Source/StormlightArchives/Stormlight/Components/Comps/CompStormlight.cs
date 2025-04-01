@@ -216,6 +216,14 @@ namespace StormlightMod {
                         if (infuseStormlight(drawnLight)) return;
                     }
                 }
+                else if ((thing.def.defName.StartsWith("whtwl_Cut") || thing.def.defName.StartsWith("whtwl_Raw")) && !thing.Position.Roofed(thing.Map)) {
+                    var stormlightComp = thing.TryGetComp<CompStormlight>();
+                    if (stormlightComp != null) {
+                        float drawnLight = stormlightComp.drawStormlight(absorbAmount);
+                        RadiantUtility.GiveRadiantXP(pawn, 0.1f);
+                        if (infuseStormlight(drawnLight)) return;
+                    }
+                }
                 else if (thing.def == StormlightModDefs.whtwl_Apparel_SpherePouch && !thing.Position.Roofed(thing.Map)) {
                     var pouch = thing.TryGetComp<CompSpherePouch>();
                     if (pouch != null && pouch.GetTotalStoredStormlight() > 0f) {

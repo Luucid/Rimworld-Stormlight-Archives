@@ -9,10 +9,25 @@ using static HarmonyLib.Code;
 
 namespace StormlightMod {
 
-    public class Radiant_Requirements {
+    public class Radiant_Requirements : IExposable {
         public bool IsSatisfied = false;
         public float Value = 0f;
         public int Count = 0;
+
+        public void ExposeData() {
+            Scribe_Values.Look(ref IsSatisfied, "IsSatisfied");
+            Scribe_Values.Look(ref Value, "Value");
+            Scribe_Values.Look(ref Count, "Count");
+        }
+    }
+    public class RequirementMapEntry : IExposable {
+        public string outerKey;
+        public Dictionary<string, Radiant_Requirements> innerDict;
+
+        public void ExposeData() {
+            Scribe_Values.Look(ref outerKey, "outerKey");
+            Scribe_Collections.Look(ref innerDict, "innerDict", LookMode.Value, LookMode.Deep);
+        }
     }
 
     public class CompProperties_PawnStats : CompProperties {
@@ -30,13 +45,47 @@ namespace StormlightMod {
     public class PawnStats : ThingComp {
         public new CompProperties_PawnStats Props => this.props as CompProperties_PawnStats;
         public Dictionary<string, Dictionary<string, Radiant_Requirements>> requirementMap = new Dictionary<string, Dictionary<string, Radiant_Requirements>>();
-
+        private List<RequirementMapEntry> requirementMapSerialized = new List<RequirementMapEntry>();
         public List<Pawn> PatientList = new List<Pawn>();
         public bool PatientDied = false;
         public bool PatientSaved = false;
         public bool EnemyPatientDied = false;
         public bool EnemyPatientSaved = false;
         public bool hasFormedBond = false;
+
+
+        public override void PostExposeData() 
+        {
+            Scribe_Collections.Look(ref PatientList, "PatientList", LookMode.Reference);  
+            Scribe_Values.Look(ref PatientDied, "PatientDied", false);
+            Scribe_Values.Look(ref PatientSaved, "PatientSaved", false);
+            Scribe_Values.Look(ref EnemyPatientDied, "EnemyPatientDied", false);
+            Scribe_Values.Look(ref EnemyPatientSaved, "EnemyPatientSaved", false);
+            Scribe_Values.Look(ref hasFormedBond, "hasFormedBond", false);
+            if (Scribe.mode == LoadSaveMode.Saving) {
+                requirementMapSerialized.Clear();
+                foreach (var outerPair in requirementMap) {
+                    requirementMapSerialized.Add(new RequirementMapEntry {
+                        outerKey = outerPair.Key,
+                        innerDict = outerPair.Value
+                    });
+                }
+            }
+
+            Scribe_Collections.Look(ref requirementMapSerialized, "requirementMapSerialized", LookMode.Deep);
+
+            if (Scribe.mode == LoadSaveMode.LoadingVars) {
+                requirementMap.Clear();
+                if (requirementMapSerialized != null) {
+                    foreach (var entry in requirementMapSerialized) {
+                        if (entry != null && entry.outerKey != null) {
+                            requirementMap[entry.outerKey] = entry.innerDict;
+                        }
+                    }
+                }
+            }
+        }
+
 
         public override void Initialize(CompProperties props) {
             base.Initialize(props);

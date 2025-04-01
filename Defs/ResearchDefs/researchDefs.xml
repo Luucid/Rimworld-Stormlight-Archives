@@ -37,8 +37,8 @@
         <prerequisites>
             <li>whtwl_GemCutting</li>
         </prerequisites>
-        <researchViewX>4.00</researchViewX>
-        <researchViewY>4.00</researchViewY>
+        <researchViewX>2.00</researchViewX>
+        <researchViewY>3.00</researchViewY>
         <generalRules>
             <rulesStrings>
                 <li>subject->sphere crafting</li>
@@ -73,7 +73,7 @@
         <prerequisites>
             <li>whtwl_GemCutting</li>
         </prerequisites>
-        <researchViewX>8.00</researchViewX>
+        <researchViewX>4.00</researchViewX>
         <researchViewY>4.00</researchViewY>
     </ResearchProjectDef>
 
@@ -101,12 +101,12 @@
             <li>whtwl_Research_SprenTrapping</li>
             <li>whtwl_Research_Alloys</li>
         </prerequisites>
-        <researchViewX>12.00</researchViewX>
+        <researchViewX>6.00</researchViewX>
         <researchViewY>4.00</researchViewY>
     </ResearchProjectDef>
 
 
-    <ResearchProjectDef>
+    <!-- <ResearchProjectDef>
         <defName>whtwl_Research_AdvancedArtifabriary</defName>
         <label>Advanced Fabrials</label>
         <description>Combine multiple types of metals to make more advanced fabrials.</description>
@@ -118,7 +118,5 @@
         </prerequisites>
         <researchViewX>16.00</researchViewX>
         <researchViewY>4.00</researchViewY>
-    </ResearchProjectDef>
-
-
+    </ResearchProjectDef> -->
 </Defs>

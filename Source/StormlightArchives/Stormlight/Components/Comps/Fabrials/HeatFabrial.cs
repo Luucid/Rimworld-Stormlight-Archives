@@ -8,51 +8,10 @@ using UnityEngine;
 using Verse.AI;
 
 namespace StormlightMod {
-
-
     public interface IGemstoneHandler {
         void RemoveGemstone();
         void AddGemstone(ThingWithComps gemstone);
     }
-
-    //Add super advanced that can be used with two kinds of metals, to switch between heat/cold
-    public class Building_Heatrial_Basic : Building {
-        public CompHeatrial compHeatrial;
-        public CompFlickable compFlickerable;
-        public CompGlower compGlower;
-
-        public override void SpawnSetup(Map map, bool respawningAfterLoad) {
-            base.SpawnSetup(map, respawningAfterLoad);
-            compHeatrial = GetComp<CompHeatrial>();
-            compFlickerable = GetComp<CompFlickable>();
-            compGlower = GetComp<CompGlower>();
-        }
-        public override void TickRare() {
-            compHeatrial.checkPower(compFlickerable.SwitchIsOn);
-            if (compHeatrial.PowerOn) {
-                float ambientTemperature = base.AmbientTemperature;
-                float num = ((ambientTemperature < 20f) ? 1f : ((!(ambientTemperature > 120f)) ? Mathf.InverseLerp(120f, 20f, ambientTemperature) : 0f));
-                float num2 = GenTemperature.ControlTemperatureTempChange(this.Position, this.Map, 15f, 18f);
-                bool flag = !Mathf.Approximately(num2, 0f);
-                if (flag) {
-                    this.GetRoom().Temperature += num2;
-                }
-            }
-            toggleGlow(compHeatrial.PowerOn);
-            compHeatrial.usePower();
-        }
-        private void toggleGlow(bool on) {
-            if (this.Map != null) {
-                if (on) {
-                    this.Map.glowGrid.RegisterGlower(compGlower);
-                }
-                else {
-                    this.Map.glowGrid.DeRegisterGlower(compGlower);
-                }
-            }
-        }
-    }
-
 
     public class Building_Heatrial_Advanced : Building {
         public CompHeatrial compHeatrial;
@@ -90,7 +49,6 @@ namespace StormlightMod {
             }
         }
     }
-
 
 
 
