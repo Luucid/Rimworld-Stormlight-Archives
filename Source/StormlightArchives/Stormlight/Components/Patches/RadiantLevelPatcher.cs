@@ -54,9 +54,8 @@ namespace StormlightMod {
         public bool hasFormedBond = false;
 
 
-        public override void PostExposeData() 
-        {
-            Scribe_Collections.Look(ref PatientList, "PatientList", LookMode.Reference);  
+        public override void PostExposeData() {
+            Scribe_Collections.Look(ref PatientList, "PatientList", LookMode.Reference);
             Scribe_Values.Look(ref PatientDied, "PatientDied", false);
             Scribe_Values.Look(ref PatientSaved, "PatientSaved", false);
             Scribe_Values.Look(ref EnemyPatientDied, "EnemyPatientDied", false);
@@ -127,8 +126,8 @@ namespace StormlightMod {
             if (windrunnerRequirement.Count >= 1 && pawnStats.PatientSaved) {
                 windrunnerRequirement.IsSatisfied = true;
             }
-             
-            var truthwatcherRequirement = pawnStats.requirementMap[StormlightModDefs.whtwl_Radiant_Truthwatcher.defName][pawnStats.Props.Req_1_2]; 
+
+            var truthwatcherRequirement = pawnStats.requirementMap[StormlightModDefs.whtwl_Radiant_Truthwatcher.defName][pawnStats.Props.Req_1_2];
             if (windrunnerRequirement.Count >= 1 && pawnStats.PatientSaved) {
                 windrunnerRequirement.IsSatisfied = true;
             }
@@ -138,7 +137,7 @@ namespace StormlightMod {
             if (windrunnerRequirement.Count >= 1 && pawnStats.EnemyPatientSaved) {
                 windrunnerRequirement.IsSatisfied = true;
             }
-      
+
         }
         public static void UpdateIsSatisfiedReq3_4(PawnStats pawnStats) { //ally with bond died even tho tried to save
             var windrunnerRequirement = pawnStats.requirementMap[StormlightModDefs.whtwl_Radiant_Windrunner.defName][pawnStats.Props.Req_3_4_wr];
@@ -150,18 +149,29 @@ namespace StormlightMod {
     //Initial requirements, must have suffered crisis
     [HarmonyPatch(typeof(MentalBreaker), nameof(MentalBreaker.MentalBreakerTick))]
     public static class Whtwl_MentalBreakExperiences {
+        private static int tickCounter = 0;
+
         static void Postfix(MentalBreaker __instance, Pawn ___pawn) {
-            if (___pawn.NonHumanlikeOrWildMan()) { return; }
+            tickCounter = (tickCounter + 1) % 100;
+            if (tickCounter != 0) return;
+            if (___pawn.NonHumanlikeOrWildMan()) return;
             PawnStats pawnStats = ___pawn.GetComp<PawnStats>();
 
-            if (pawnStats != null) {
+            if (pawnStats != null && pawnStats.hasFormedBond == false) {
+                float increment = 0f;
                 if (__instance.BreakExtremeIsImminent) {
-                    pawnStats.requirementMap[StormlightModDefs.whtwl_Radiant_Truthwatcher.defName][pawnStats.Props.Req_0_1].Value += 0.05f * StormlightMod.settings.bondChanceMultiplier;
-                    pawnStats.requirementMap[StormlightModDefs.whtwl_Radiant_Truthwatcher.defName][pawnStats.Props.Req_0_1].Value += 0.05f * StormlightMod.settings.bondChanceMultiplier;
+                    increment = 0.09f * StormlightMod.settings.bondChanceMultiplier;
                 }
                 else if (__instance.BreakMajorIsImminent) {
-                    pawnStats.requirementMap[StormlightModDefs.whtwl_Radiant_Windrunner.defName][pawnStats.Props.Req_0_1].Value += 0.025f * StormlightMod.settings.bondChanceMultiplier;
-                    pawnStats.requirementMap[StormlightModDefs.whtwl_Radiant_Windrunner.defName][pawnStats.Props.Req_0_1].Value += 0.025f * StormlightMod.settings.bondChanceMultiplier;
+                    increment = 0.05f * StormlightMod.settings.bondChanceMultiplier;
+                }
+                else if (__instance.BreakMinorIsImminent) {
+                    increment = 0.01f * StormlightMod.settings.bondChanceMultiplier;
+                }
+                if (increment > 0f) {
+                    pawnStats.requirementMap[StormlightModDefs.whtwl_Radiant_Truthwatcher.defName][pawnStats.Props.Req_0_1].Value += increment;
+                    pawnStats.requirementMap[StormlightModDefs.whtwl_Radiant_Windrunner.defName][pawnStats.Props.Req_0_1].Value += increment;
+                    //Log.Message($"{___pawn.NameShortColored}s bondchance: {pawnStats.requirementMap[StormlightModDefs.whtwl_Radiant_Windrunner.defName][pawnStats.Props.Req_0_1].Value}");
                 }
             }
         }

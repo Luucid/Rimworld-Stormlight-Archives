@@ -64,6 +64,9 @@ namespace StormlightMod {
 
         public override void PostSpawnSetup(bool respawningAfterLoad) {
             base.PostSpawnSetup(respawningAfterLoad);
+            if (insertedGemstone != null) {
+                CultivationSprenPatch.RegisterBuilding(this.parent as Building_Fabrial_Basic_Augmenter);
+            }
         }
 
         public override void PostExposeData() {
@@ -85,8 +88,7 @@ namespace StormlightMod {
 
         public Spren CurrentSpren {
             get {
-                if (HasGemstone) 
-                {
+                if (HasGemstone) {
                     return insertedGemstone.TryGetComp<CompCutGemstone>().capturedSpren;
                 }
                 return Spren.None;
@@ -110,7 +112,7 @@ namespace StormlightMod {
                     case Spren.Logic:        //diamond
                         doLogicSprenPower();
                         break;
-                    case Spren.Cultivation:  //emerald
+                    case Spren.Life:  //emerald
                         //Handled by patch
                         break;
                     default:
@@ -180,6 +182,7 @@ namespace StormlightMod {
             var gemstoneComp = gemstone.GetComp<CompCutGemstone>();
             if (gemstoneComp != null) {
                 insertedGemstone = gemstoneComp.parent;
+                CultivationSprenPatch.RegisterBuilding(this.parent as Building_Fabrial_Basic_Augmenter);
             }
         }
 
@@ -190,7 +193,7 @@ namespace StormlightMod {
                 IntVec3 dropPosition = parent.Position;
                 dropPosition.z -= 1;
                 GenPlace.TryPlaceThing(gemstoneToDrop, dropPosition, parent.Map, ThingPlaceMode.Near);
-
+                CultivationSprenPatch.UnregisterBuilding(this.parent as Building_Fabrial_Basic_Augmenter);
             }
         }
         public override string CompInspectStringExtra() {
