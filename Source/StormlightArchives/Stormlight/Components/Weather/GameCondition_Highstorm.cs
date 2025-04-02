@@ -32,8 +32,9 @@ namespace StormlightMod {
 
             if (Find.TickManager.TicksGame % 8 == 0) {
                 tryToInfuseThings();
-                if (StormlightMod.settings.enableHighstormPushing)
+                if (StormlightMod.settings.enableHighstormPushing) {
                     moveItem();
+                }
             }
         }
 
@@ -52,7 +53,7 @@ namespace StormlightMod {
                         pouch.InfuseStormlight(5f);
                     }
                 }
-                else if (thing.def == StormlightModDefs.whtwl_SphereLamp && !thing.Position.Roofed(thing.Map)) {
+                else if (thing.def == StormlightModDefs.whtwl_SphereLamp_Wall && !thing.Position.Roofed(thing.Map)) {
                     var lamp = thing.TryGetComp<StormlightLamps>();
                     if (lamp != null) {
                         lamp.InfuseStormlight(5f);

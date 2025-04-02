@@ -18,6 +18,7 @@
       <li>WeaponMelee</li>
     </tradeTags>
   </ThingDef>
+  
   <ThingDef ParentName="BaseWeaponShard">
     <defName>whtwl_MeleeWeapon_Shardblade</defName>
     <label>shardblade</label>
@@ -34,7 +35,7 @@
     <statBases>
       <Mass>0.5</Mass>
     </statBases>
-    <equippedAngleOffset>50</equippedAngleOffset>
+    <equippedAngleOffset>-35</equippedAngleOffset>
     <stuffCategories>
       <li>whtwl_ShardStuff</li>
     </stuffCategories>

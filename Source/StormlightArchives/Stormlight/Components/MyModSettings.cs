@@ -13,14 +13,16 @@ namespace StormlightMod {
     public class StormlightModSettings : ModSettings {
         public bool enableHighstormPushing;
         public bool enablePawnGlow;
+        public bool enableHighstormDamage;
         public bool devOptionAutofillSpheres;
         public float bondChanceMultiplier;
         public string bondChanceMultiplierBuffer;
 
         public override void ExposeData() {
             Scribe_Values.Look(ref enableHighstormPushing, "enableHighstormPushing", true); 
-            Scribe_Values.Look(ref enablePawnGlow, "enablePawnGlow", true); 
+            Scribe_Values.Look(ref enablePawnGlow, "enablePawnGlow", false); 
             Scribe_Values.Look(ref devOptionAutofillSpheres, "devOptionAutofillSpheres", false); 
+            Scribe_Values.Look(ref enableHighstormDamage, "enableHighstormDamage", true);  
             Scribe_Values.Look(ref bondChanceMultiplier, "bondChanceMultiplier", 1);
             base.ExposeData();
         }
@@ -38,7 +40,8 @@ namespace StormlightMod {
             Listing_Standard listingStandard = new Listing_Standard();
             listingStandard.Begin(inRect);
             listingStandard.CheckboxLabeled("Highstorms will move items and pawns", ref settings.enableHighstormPushing, "expensive stuff");
-            listingStandard.CheckboxLabeled("Pawns will glow when infused with stormlight", ref settings.enablePawnGlow, "expensive stuff");
+            listingStandard.CheckboxLabeled("Highstorms will damage visitors and animals", ref settings.enableHighstormDamage, "turn off if you dont want all your wildlife to die, and visitors to hate you");
+            listingStandard.CheckboxLabeled("Pawns will glow when infused with stormlight", ref settings.enablePawnGlow, "currently broken");
             listingStandard.CheckboxLabeled("DEV OPTION: enable dev features", ref settings.devOptionAutofillSpheres, "Will enable various dev features, like filling spheres");
             listingStandard.TextFieldNumericLabeled<float>("bond chance multiplier", ref settings.bondChanceMultiplier, ref settings.bondChanceMultiplierBuffer, 1, 100);
             listingStandard.End();

@@ -11,9 +11,7 @@ public class DamageWorker_SoulDamage : DamageWorker_AddInjury {
     }
 
     protected override void ApplySpecialEffectsToPart(Pawn pawn, float totalDamage, DamageInfo dinfo, DamageResult result) {
-        // Instantly destroy the target part
         if (dinfo.HitPart != null && !pawn.health.hediffSet.PartIsMissing(dinfo.HitPart)) {
-            // Create a hediff to destroy the part
             Hediff hediff = HediffMaker.MakeHediff(HediffDefOf.MissingBodyPart, pawn, dinfo.HitPart);
             hediff.Severity = dinfo.HitPart.def.GetMaxHealth(pawn) + 1; // Set severity beyond max health to ensure removal
             pawn.health.AddHediff(hediff);
@@ -25,15 +23,13 @@ public class DamageWorker_SoulDamage : DamageWorker_AddInjury {
             }
         }
 
-        // Optionally apply additional effects to parent or child parts
         List<BodyPartRecord> adjacentParts = dinfo.HitPart.GetDirectChildParts()
             .Concat(dinfo.HitPart.parent != null ? new[] { dinfo.HitPart.parent } : Enumerable.Empty<BodyPartRecord>())
             .ToList();
 
         foreach (BodyPartRecord part in adjacentParts) {
-            // Prevent bleeding for adjacent parts (optional, depending on logic)
             if (!pawn.health.hediffSet.PartIsMissing(part)) {
-                FinalizeAndAddInjury(pawn, totalDamage / 2, dinfo, result); // Reduce damage for adjacent parts
+                FinalizeAndAddInjury(pawn, totalDamage / 2, dinfo, result); 
             }
         }
     }

@@ -28,7 +28,7 @@ namespace StormlightMod {
 
         //ThingDef
         public static ThingDef whtwl_Apparel_SpherePouch;
-        public static ThingDef whtwl_SphereLamp;
+        public static ThingDef whtwl_SphereLamp_Wall;
         public static ThingDef whtwl_FabrialCage_Pewter;
         public static ThingDef whtwl_BasicFabrial_Augmenter; 
 
@@ -52,6 +52,15 @@ namespace StormlightMod {
         public static ThingDef whtwl_Sphere_Ruby;
         public static ThingDef whtwl_Sphere_Sapphire;
         public static ThingDef whtwl_Sphere_Emerald;
+
+        // METALS
+        public static ThingDef whtwl_AlloyPewter;
+        public static ThingDef whtwl_AlloyBrass;
+        public static ThingDef whtwl_AlloyBronze;
+        public static ThingDef whtwl_RawTin;
+        public static ThingDef whtwl_RawZinc;
+        public static ThingDef whtwl_RawCopper;
+        public static ThingDef whtwl_RawAntimony;
 
         // WEAPONS
         public static ThingDef whtwl_MeleeWeapon_Shardblade;

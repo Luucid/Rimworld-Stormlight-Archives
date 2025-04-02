@@ -233,7 +233,7 @@ namespace StormlightMod {
                         if (infuseStormlight(drawnLight)) return;
                     }
                 }
-                else if (thing.def == StormlightModDefs.whtwl_SphereLamp && !thing.Position.Roofed(thing.Map)) {
+                else if (thing.def == StormlightModDefs.whtwl_SphereLamp_Wall && !thing.Position.Roofed(thing.Map)) {
                     var lamp = thing.TryGetComp<StormlightLamps>();
                     if (lamp != null && lamp.m_CurrentStormlight > 0f) {
                         float drawnLight = lamp.DrawStormlight(absorbAmount);

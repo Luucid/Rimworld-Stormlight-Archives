@@ -20,13 +20,13 @@ namespace StormlightMod {
             if (IsHighstormActive(__instance.Map)) {
 
                 damageAndMovePawn(__instance);
-                if (Find.TickManager.TicksGame % 100 == 0) {  
+                if (Find.TickManager.TicksGame % 100 == 0) {
                     tryToBondPawn(__instance, StormlightModDefs.whtwl_Radiant_Windrunner);
                 }
                 return;
             }
             if (__instance.Map.weatherManager.curWeather.defName == "Fog") {
-                if (Find.TickManager.TicksGame % 100 == 0) {  
+                if (Find.TickManager.TicksGame % 100 == 0) {
                     tryToBondPawn(__instance, StormlightModDefs.whtwl_Radiant_Truthwatcher);
                 }
             }
@@ -112,12 +112,13 @@ namespace StormlightMod {
             bool isRadiant = false;
             if (__instance.story != null && __instance.RaceProps.Humanlike) {
                 foreach (Trait t in __instance.story.traits.allTraits) {
-                    //if (t.def.defName.StartsWith("Radiant")) { isRadiant = true; }
                     if (t.def == StormlightModDefs.whtwl_Radiant_Windrunner || t.def == StormlightModDefs.whtwl_Radiant_Truthwatcher) { isRadiant = true; }
                 }
             }
 
-            __instance.TakeDamage(new DamageInfo(DamageDefOf.Blunt, 1));
+            if (StormlightMod.settings.enableHighstormDamage || (__instance.RaceProps.Humanlike && __instance.Faction.IsPlayer)) {
+                __instance.TakeDamage(new DamageInfo(DamageDefOf.Blunt, 1));
+            }
             if (isRadiant == false) {
 
                 __instance.Position = newPos;
