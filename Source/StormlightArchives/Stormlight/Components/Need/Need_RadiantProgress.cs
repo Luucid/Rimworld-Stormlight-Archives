@@ -78,6 +78,8 @@ namespace StormlightMod {
                     }
                     else if (trait.def == StormlightModDefs.whtwl_Radiant_Truthwatcher) {
                         eligible = pawnStats.GetRequirements(trait.def, pawnStats.Props.Req_2_3_tw).IsSatisfied;
+                    }else if (trait.def == StormlightModDefs.whtwl_Radiant_Edgedancer) {
+                        eligible = pawnStats.GetRequirements(trait.def, pawnStats.Props.Req_2_3_ed).IsSatisfied;
                     }
                     break;
                 case 3:
@@ -87,6 +89,9 @@ namespace StormlightMod {
                     }
                     else if (trait.def == StormlightModDefs.whtwl_Radiant_Truthwatcher) {
                         eligible = pawnStats.GetRequirements(trait.def, pawnStats.Props.Req_3_4_tw).IsSatisfied;
+                    } 
+                    else if (trait.def == StormlightModDefs.whtwl_Radiant_Edgedancer) {
+                        eligible = pawnStats.GetRequirements(trait.def, pawnStats.Props.Req_3_4_ed).IsSatisfied;
                     }
                     break;
                 default:
@@ -132,11 +137,17 @@ namespace StormlightMod {
             }
             else if (nd == StormlightModDefs.whtwl_RadiantProgress && ___pawn.story?.traits?.HasTrait(StormlightModDefs.whtwl_Radiant_Truthwatcher) == true) {
                 __result = true;
+            }  
+            else if (nd == StormlightModDefs.whtwl_RadiantProgress && ___pawn.story?.traits?.HasTrait(StormlightModDefs.whtwl_Radiant_Edgedancer) == true) {
+                __result = true;
             }
             else if (nd == StormlightModDefs.whtwl_RadiantProgress && ___pawn.story?.traits?.HasTrait(StormlightModDefs.whtwl_Radiant_Windrunner) == false) {
                 __result = false;
             }
             else if (nd == StormlightModDefs.whtwl_RadiantProgress && ___pawn.story?.traits?.HasTrait(StormlightModDefs.whtwl_Radiant_Truthwatcher) == false) {
+                __result = false;
+            } 
+            else if (nd == StormlightModDefs.whtwl_RadiantProgress && ___pawn.story?.traits?.HasTrait(StormlightModDefs.whtwl_Radiant_Edgedancer) == false) {
                 __result = false;
             }
         }

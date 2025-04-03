@@ -68,6 +68,7 @@
   <ItemGroup>
     <Compile Include="Components\Combat\Abilities\CustomPawnFlyer.cs" />
     <Compile Include="Components\Combat\Abilities\Implementations\SummonBlade.cs" />
+    <Compile Include="Components\Combat\Abilities\Implementations\SurgeAbrasion.cs" />
     <Compile Include="Components\Combat\Abilities\Implementations\SurgeFlight.cs" />
     <Compile Include="Components\Combat\Abilities\Implementations\SurgeHeal.cs" />
     <Compile Include="Components\Combat\Abilities\Implementations\SurgePlantGrowth.cs" />

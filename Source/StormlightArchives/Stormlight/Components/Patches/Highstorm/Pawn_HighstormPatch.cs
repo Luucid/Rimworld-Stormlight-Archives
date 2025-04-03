@@ -25,7 +25,7 @@ namespace StormlightMod {
                 }
                 return;
             }
-            if (__instance.Map.weatherManager.curWeather.defName == "Fog") {
+            if (__instance.Map.weatherManager.curWeather.defName == "Fog") { //make for EdgeDancer also
                 if (Find.TickManager.TicksGame % 100 == 0) {
                     tryToBondPawn(__instance, StormlightModDefs.whtwl_Radiant_Truthwatcher);
                 }
@@ -98,29 +98,23 @@ namespace StormlightMod {
 
 
         private static void damageAndMovePawn(Pawn __instance) {
-
-            // Storm always blows from east → pushes pawns west
-            IntVec3 newPos = __instance.Position + IntVec3.West;
-
-            // Check new position validity
-            if (!newPos.IsValid || !newPos.InBounds(__instance.Map) || !newPos.Walkable(__instance.Map))
-                return;
-
             if (checkIfSheltered(__instance))
                 return;
 
             bool isRadiant = false;
             if (__instance.story != null && __instance.RaceProps.Humanlike) {
                 foreach (Trait t in __instance.story.traits.allTraits) {
-                    if (t.def == StormlightModDefs.whtwl_Radiant_Windrunner || t.def == StormlightModDefs.whtwl_Radiant_Truthwatcher) { isRadiant = true; }
+                    if (t.def == StormlightModDefs.whtwl_Radiant_Windrunner || t.def == StormlightModDefs.whtwl_Radiant_Truthwatcher || t.def == StormlightModDefs.whtwl_Radiant_Edgedancer) { isRadiant = true; }
                 }
             }
 
-            if (StormlightMod.settings.enableHighstormDamage || (__instance.RaceProps.Humanlike && __instance.Faction.IsPlayer)) {
+            if (StormlightMod.settings.enableHighstormDamage || (__instance.RaceProps.Humanlike && __instance.Faction.IsPlayer) ) {
                 __instance.TakeDamage(new DamageInfo(DamageDefOf.Blunt, 1));
             }
-            if (isRadiant == false) {
 
+            // Storm always blows from east -> pushes pawns west
+            IntVec3 newPos = __instance.Position + IntVec3.West;
+            if (isRadiant == false && newPos.Walkable(__instance.Map) && newPos.IsValid && newPos.InBounds(__instance.Map)) {
                 __instance.Position = newPos;
             }
             else {

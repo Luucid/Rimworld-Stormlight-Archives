@@ -13,11 +13,14 @@ namespace StormlightMod {
 
         public static TraitDef whtwl_Radiant_Windrunner;
         public static TraitDef whtwl_Radiant_Truthwatcher;
+        public static TraitDef whtwl_Radiant_Edgedancer;
+
         public static AbilityDef whtwl_SummonShardblade;
         public static AbilityDef whtwl_UnbondBlade;
         public static AbilityDef whtwl_BreathStormlight;
         public static AbilityDef whtwl_SurgeOfHealing;
         public static AbilityDef whtwl_SurgeOfGrowth;
+        public static AbilityDef whtwl_SurgeOfAbrasion;
         public static AbilityDef whtwl_LashingUpward;
         public static AbilityDef whtwl_WindRunnerFlight;
 
@@ -67,8 +70,10 @@ namespace StormlightMod {
 
 
 
+        // HEDIFF
         public static HediffDef whtwl_painrial_agument;
         public static HediffDef whtwl_logirial_agument;
+        public static HediffDef whtwl_surge_abrasion;
 
 
         static StormlightModDefs() {
@@ -82,7 +87,8 @@ namespace StormlightMod {
                 return new List<TraitDef>
                 {
                 StormlightModDefs.whtwl_Radiant_Windrunner,
-                StormlightModDefs.whtwl_Radiant_Truthwatcher
+                StormlightModDefs.whtwl_Radiant_Truthwatcher,
+                StormlightModDefs.whtwl_Radiant_Edgedancer
             };
             }
         }

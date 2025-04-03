@@ -20,6 +20,9 @@ namespace StormlightMod {
         public bool m_BreathStormlight = false;
         public float drainFactor = 1f;
 
+        // Surges
+        private bool m_AbrasionActive = false;
+
         // Modifiers
         public float StormlightContainerSize = 1f;
         public float StormlightContainerQuality = 1f;
@@ -33,11 +36,16 @@ namespace StormlightMod {
             m_BreathStormlight = !m_BreathStormlight;
         }
 
+        public void toggleAbrasion() {
+            m_AbrasionActive = !m_AbrasionActive;
+        }
+
         public void RemoveAllStormlight() { m_CurrentStormlight = 0f; }
 
         // Called after loading or on spawn
         public override void PostExposeData() {
             base.PostExposeData();
+            Scribe_Values.Look(ref m_AbrasionActive, "abrasionActive", false);
             Scribe_Values.Look(ref m_CurrentStormlight, "currentStormlight", 0f);
             Scribe_Values.Look(ref m_BreathStormlight, StormlightModDefs.whtwl_BreathStormlight.defName, false);
             Scribe_Values.Look(ref isActivatedOnPawn, "isActivatedOnPawn", false);
@@ -45,6 +53,7 @@ namespace StormlightMod {
             Scribe_Values.Look(ref StormlightContainerSize, "StormlightContainerSize", 1f);
             Scribe_Values.Look(ref StormlightContainerQuality, "StormlightContainerQuality", 1f);
             Scribe_Values.Look(ref MaximumGlowRadius, "MaximumGlowRadius", 1f);
+            Scribe_Values.Look(ref drainFactor, "drainFactor", 1f);
         }
 
         private void adjustMaximumStormlight() {
@@ -249,17 +258,25 @@ namespace StormlightMod {
         private void handleRadiantStuff(Pawn pawn) {
             radiantHeal(pawn);
             radiantAbsorbStormlight(pawn);
+            handleSurges(pawn);
         }
 
 
 
-        //private void drainStormLight() {
-        //    if (m_CurrentStormlight > 0) {
-        //        m_CurrentStormlight -= (Props.drainRate / StormlightContainerQuality);
-        //        if (m_CurrentStormlight < 0)
-        //            m_CurrentStormlight = 0;
-        //    }
-        //}
+        private void handleSurges(Pawn pawn) {
+            if (m_AbrasionActive) {
+                if (pawn != null && pawn.health.hediffSet.GetFirstHediffOfDef(StormlightModDefs.whtwl_surge_abrasion) == null) {
+                    pawn.health.AddHediff(StormlightModDefs.whtwl_surge_abrasion);
+                    drainFactor += 500f;
+                }
+            }
+            else {
+                if (pawn != null && pawn.health.hediffSet.GetFirstHediffOfDef(StormlightModDefs.whtwl_surge_abrasion) is Hediff hediff) {
+                    pawn.health.RemoveHediff(hediff);
+                }
+                drainFactor = 1f;
+            }
+        }
 
 
         public float GetDrainRate(float factor) {

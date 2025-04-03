@@ -11,6 +11,8 @@
                 <Req_3_4_wr>StrongBondedPawnDied</Req_3_4_wr>
                 <Req_2_3_tw>somethingA</Req_2_3_tw>
                 <Req_3_4_tw>somethingB</Req_3_4_tw>
+                <Req_2_3_ed>somethingA</Req_2_3_ed>
+                <Req_3_4_ed>somethingB</Req_3_4_ed>
             </li>
             <li Class="StormlightMod.CompProperties_Stormlight">
                 <maxStormlight>3000</maxStormlight>

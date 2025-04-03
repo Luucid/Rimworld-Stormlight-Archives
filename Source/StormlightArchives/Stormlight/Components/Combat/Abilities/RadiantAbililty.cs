@@ -88,7 +88,9 @@ namespace StormlightMod {
 
         public override void ProcessInput(Event ev) {
             base.ProcessInput(ev);
-            bool hasRadiantTrait = pawn.story.traits.HasTrait(StormlightModDefs.whtwl_Radiant_Windrunner) || pawn.story.traits.HasTrait(StormlightModDefs.whtwl_Radiant_Truthwatcher);
+            bool hasRadiantTrait = pawn.story.traits.HasTrait(StormlightModDefs.whtwl_Radiant_Windrunner) 
+                || pawn.story.traits.HasTrait(StormlightModDefs.whtwl_Radiant_Truthwatcher) 
+                || pawn.story.traits.HasTrait(StormlightModDefs.whtwl_Radiant_Edgedancer);
 
             if (pawn.Drafted && (hasRadiantTrait || pawn.GetAbilityComp<CompAbilityEffect_SpawnEquipment>(StormlightModDefs.whtwl_SummonShardblade.defName) != null)) {
                 if (abilityToggleStormlight())
@@ -102,6 +104,8 @@ namespace StormlightMod {
                 if (abilityHealSurge())
                     return;
                 if (abilityPlantGrowSurge())
+                    return;  
+                if (abilityAbrasionSurge())
                     return;
             }
         }
@@ -129,6 +133,13 @@ namespace StormlightMod {
             return false;
         }
 
+        private bool abilityAbrasionSurge() {
+            if (ability.def == StormlightModDefs.whtwl_SurgeOfAbrasion) {
+                ability.Activate(pawn, pawn);
+                return true;
+            }
+            return false;
+        }
         private bool abilityHealSurge() {
             if (ability.def == StormlightModDefs.whtwl_SurgeOfHealing) {
                 TargetingParameters tp = new TargetingParameters {
@@ -319,10 +330,9 @@ namespace StormlightMod {
             Action<LocalTargetInfo> onUpdateAction = (LocalTargetInfo info) => {
                 Vector3 mousePos = UI.MouseMapPosition();
                 double distance = Math.Sqrt(Math.Pow(mousePos.x - caster.Position.x, 2) + Math.Pow(mousePos.z - caster.Position.z, 2));
-                if (distance-0.5f > maxDistance)
+                if (distance - 0.5f > maxDistance)
                     color = Color.red;
-                else 
-                {
+                else {
                     color = Color.green;
                 }
                 GlowCircleRenderer.DrawCustomCircle(UI.MouseMapPosition(), maxDistance, color);

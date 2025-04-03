@@ -6,17 +6,15 @@ namespace StormlightMod {
     [HarmonyPatch(typeof(TraitSet), "GainTrait")]
     public static class RadiantGainTraitPatch {
         static void Postfix(Pawn ___pawn, Trait trait) {
-            if (trait.def == StormlightModDefs.whtwl_Radiant_Windrunner || trait.def == StormlightModDefs.whtwl_Radiant_Truthwatcher) {
-                //Pawn pawn = Traverse.Create(__instance).Field("pawn").GetValue<Pawn>();
+            if (trait.def == StormlightModDefs.whtwl_Radiant_Windrunner 
+                || trait.def == StormlightModDefs.whtwl_Radiant_Truthwatcher 
+                || trait.def == StormlightModDefs.whtwl_Radiant_Edgedancer) {
 
                 if (___pawn != null && ___pawn.RaceProps.Humanlike) {
                     Log.Message($"{___pawn.Name} has become Radiant!");
-
-
                     givePawnStormlight(___pawn);
-                    givePawnGlow(___pawn);
-                    if (trait.Degree >= 3) {
-
+                    //givePawnGlow(___pawn);
+                    if (trait.Degree >= 2) {
                         givePawnShardbladeComp(___pawn);
                     }
                     if (trait.Degree == 0) {
@@ -49,13 +47,6 @@ namespace StormlightMod {
         static private void givePawnStormlight(Pawn pawn) {
             CompStormlight stormlightComp = pawn.GetComp<CompStormlight>();
             if (stormlightComp != null && stormlightComp.isActivatedOnPawn == false) {
-                //CompStormlight stormlightComp = new CompStormlight();
-                //pawn.AllComps.Add(stormlightComp);
-                //stormlightComp.parent = pawn;
-                //stormlightComp.Initialize(new CompProperties_Stormlight {
-                //    maxStormlight = 3000f,
-                //    drainRate = 1.0f
-                //});
                 stormlightComp.isActivatedOnPawn = true;
                 stormlightComp.CompInspectStringExtra(); 
                 Log.Message($"{pawn.Name} gained Stormlight storage!");

@@ -254,4 +254,28 @@
         </li>
     </comps>
 </AbilityDef>
+
+<!-- ABRASION -->
+<AbilityDef ParentName="RadiantBase">
+    <defName>whtwl_SurgeOfAbrasion</defName>
+    <label>abrasion</label>
+    <description>Focus stormlight to your feet, increasing friction, greatly increasing movement speed and dodge abilities.</description>
+    <level>1</level>
+    <iconPath>Things/Ability/lucid_abrasion</iconPath> 
+    <hotKey>Misc4</hotKey>
+    <hostile>false</hostile>
+    <casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>
+    <verbProperties>
+        <warmupTime>0.5</warmupTime>
+        <range>1</range> 
+        <targetParams>
+            <canTargetSelf>true</canTargetSelf>
+        </targetParams>
+    </verbProperties>
+    <comps>
+        <li Class="StormlightMod.CompProperties_AbilitySurgeAbrasion">
+            <compClass>StormlightMod.CompAbilityEffect_SurgeAbrasion</compClass>
+        </li>
+    </comps>
+</AbilityDef>
 </Defs>

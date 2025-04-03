@@ -36,7 +36,9 @@ namespace StormlightMod {
         public string Req_2_3_wr;
         public string Req_3_4_wr;
         public string Req_2_3_tw;
-        public string Req_3_4_tw;
+        public string Req_3_4_tw;     
+        public string Req_2_3_ed;
+        public string Req_3_4_ed;
 
         public CompProperties_PawnStats() {
             this.compClass = typeof(PawnStats);
@@ -105,10 +107,19 @@ namespace StormlightMod {
             requirementMap[truthwatcherDefName].Add(Props.Req_1_2, new Radiant_Requirements());
             requirementMap[truthwatcherDefName].Add(Props.Req_2_3_tw, new Radiant_Requirements());
             requirementMap[truthwatcherDefName].Add(Props.Req_3_4_tw, new Radiant_Requirements());
+            
+            //TRUTHWATCHER
+            var edgedancerDefName = StormlightModDefs.whtwl_Radiant_Edgedancer.defName;
+            requirementMap.Add(edgedancerDefName, new Dictionary<string, Radiant_Requirements>());
+            requirementMap[edgedancerDefName].Add(Props.Req_0_1, new Radiant_Requirements());
+            requirementMap[edgedancerDefName].Add(Props.Req_1_2, new Radiant_Requirements());
+            requirementMap[edgedancerDefName].Add(Props.Req_2_3_ed, new Radiant_Requirements());
+            requirementMap[edgedancerDefName].Add(Props.Req_3_4_ed, new Radiant_Requirements());
 
 
-            requirementMap[truthwatcherDefName][Props.Req_2_3_tw].IsSatisfied = true;       // for now it is true default
-            requirementMap[truthwatcherDefName][Props.Req_3_4_tw].IsSatisfied = true;       // for now it is true default
+            requirementMap[edgedancerDefName][Props.Req_1_2].IsSatisfied = true;       // for now it is true default
+            requirementMap[edgedancerDefName][Props.Req_2_3_ed].IsSatisfied = true;       // for now it is true default
+            requirementMap[edgedancerDefName][Props.Req_3_4_ed].IsSatisfied = true;       // for now it is true default
         }
 
         public Radiant_Requirements GetRequirements(TraitDef trait, string req) {
@@ -171,7 +182,7 @@ namespace StormlightMod {
                 if (increment > 0f) {
                     pawnStats.requirementMap[StormlightModDefs.whtwl_Radiant_Truthwatcher.defName][pawnStats.Props.Req_0_1].Value += increment;
                     pawnStats.requirementMap[StormlightModDefs.whtwl_Radiant_Windrunner.defName][pawnStats.Props.Req_0_1].Value += increment;
-                    //Log.Message($"{___pawn.NameShortColored}s bondchance: {pawnStats.requirementMap[StormlightModDefs.whtwl_Radiant_Windrunner.defName][pawnStats.Props.Req_0_1].Value}");
+                    pawnStats.requirementMap[StormlightModDefs.whtwl_Radiant_Edgedancer.defName][pawnStats.Props.Req_0_1].Value += increment;
                 }
             }
         }
