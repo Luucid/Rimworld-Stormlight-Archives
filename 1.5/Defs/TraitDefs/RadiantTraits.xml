@@ -177,7 +177,7 @@
         <commonality>0</commonality>
         <abilities>
           <li>whtwl_BreathStormlight</li>
-          <li>whtwl_SurgeOfHealing</li>
+          <li>whtwl_WindRunnerFlight</li>
         </abilities>
       </li>
       <li>
@@ -192,6 +192,85 @@
           <li>whtwl_SurgeOfHealing</li>
           <li>whtwl_SurgeOfAbrasion</li>
           <li>whtwl_SummonShardblade</li>
+        </abilities>
+      </li>
+    </degreeDatas>
+    <commonality>0.0</commonality>
+  </TraitDef>
+
+  <!-- SKY BREAKER -->
+  <TraitDef>
+    <defName>whtwl_Radiant_Skybreaker</defName>
+    <label>Radiant</label>
+    <description>{PAWN_nameDef} has been chosen by ancient forces and gifted with mystical
+      abilities.</description>
+
+    <degreeDatas>
+      <li>
+        <label>Initiate of Justice</label>
+        <description>{PAWN_nameDef} has taken their first step down a path of order. Though they
+          cannot yet draw Stormlight, they have committed themselves to the pursuit of justice and
+          stand ready to be judged by the law they seek to uphold.</description>
+        <degree>0</degree>
+        <commonality>0</commonality> <!-- Ensures it is not assigned randomly -->
+        <abilities>
+        </abilities>
+      </li>
+      <li>
+        <label>Seeker of the Law</label>
+        <description>{PAWN_nameDef} has sworn the Second Ideal: "I swear to seek justice, to let it
+          guide me, until I find a more perfect Ideal." They can now draw Stormlight and wield the
+          Surge of Gravitation, hunting the unjust with righteous purpose.</description>
+        <degree>1</degree>
+        <commonality>0</commonality>
+        <abilities>
+          <li>whtwl_BreathStormlight</li>
+          <li>whtwl_SurgeOfHealing</li>
+        </abilities>
+      </li>
+      <li>
+        <label>Sworn Enforcer</label>
+        <description>{PAWN_nameDef} has sworn the Third Ideal, binding themselves to a code or
+          person they believe represents justice. As a full Skybreaker, they now wield both
+          Gravitation and the destructive power of Division.</description>
+        <degree>2</degree>
+        <commonality>0</commonality>
+        <abilities>
+          <li>whtwl_BreathStormlight</li>
+          <li>whtwl_SurgeOfGravitation</li>
+          <li>whtwl_SurgeOfDivision</li>
+        </abilities>
+      </li>
+      <li>
+        <label>Master of Crusade</label>
+        <description>{PAWN_nameDef} has completed their personal crusade and sworn the Fourth Ideal.
+          As a master Skybreaker.</description> <!-- , they may now take squires of their own,
+        bearing the full weight of
+          law and judgment in their hand-->
+        <degree>3</degree>
+        <commonality>0</commonality>
+        <abilities>
+          <li>whtwl_BreathStormlight</li>
+          <li>whtwl_SurgeOfGravitation</li>
+          <li>whtwl_SurgeOfDivision</li>
+          <li>whtwl_SummonShardblade</li>
+          <!-- <li>whtwl_SkybreakerSquireBonding</li> -->
+        </abilities>
+      </li>
+      <li>
+        <label>Embodiment of Law</label>
+        <description>{PAWN_nameDef} has sworn the Fifth Ideal: "I. Am. The Law." No longer bound by
+          external codes, they *are* the law itself—an autonomous judge, jury, and executioner.
+          Their presence alone bends lesser wills to order.</description>
+        <degree>4</degree>
+        <commonality>0</commonality>
+        <abilities>
+          <li>whtwl_BreathStormlight</li>
+          <li>whtwl_SurgeOfGravitation</li>
+          <li>whtwl_SurgeOfDivision</li>
+          <li>whtwl_SummonShardblade</li>
+          <!-- <li>whtwl_SkybreakerSquireBonding</li>
+      <li>whtwl_AbsoluteAuthority</li> hypothetical ultimate ability -->
         </abilities>
       </li>
     </degreeDatas>

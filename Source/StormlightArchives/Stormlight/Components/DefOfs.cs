@@ -14,6 +14,7 @@ namespace StormlightMod {
         public static TraitDef whtwl_Radiant_Windrunner;
         public static TraitDef whtwl_Radiant_Truthwatcher;
         public static TraitDef whtwl_Radiant_Edgedancer;
+        public static TraitDef whtwl_Radiant_Skybreaker;
 
         public static AbilityDef whtwl_SummonShardblade;
         public static AbilityDef whtwl_UnbondBlade;

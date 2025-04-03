@@ -12,21 +12,16 @@
             <li>
                 <label>Abrasion</label>
                 <statOffsets>
-                    <InjuryHealingFactor>3.5</InjuryHealingFactor>
-                    <JumpRange>1.5</JumpRange>
-                    <MeleeWeapon_DamageMultiplier>5.0</MeleeWeapon_DamageMultiplier>
-                    <IncomingDamageFactor>-3.5</IncomingDamageFactor>
-                    <MeleeDodgeChance>1.75</MeleeDodgeChance>
-                    <MeleeHitChance>1.75</MeleeHitChance>
-                    <GeneralLaborSpeed>1.5</GeneralLaborSpeed>
-                    <MiningSpeed>1.5</MiningSpeed>
-                    <MeleeDPS>6.0</MeleeDPS>
-                    <MoveSpeed>8.0</MoveSpeed>
+                    <JumpRange>2.5</JumpRange>
+                    <MeleeWeapon_DamageMultiplier>2.0</MeleeWeapon_DamageMultiplier>
+                    <IncomingDamageFactor>-0.75</IncomingDamageFactor>
+                    <MeleeDodgeChance>0.75</MeleeDodgeChance>
+                    <MeleeHitChance>0.75</MeleeHitChance>
                 </statOffsets>
                 <capMods>
                     <li>
                         <capacity>Moving</capacity>
-                        <offset>+0.15</offset>
+                        <offset>+0.25</offset>
                     </li>
                     <li>
                         <capacity>Manipulation</capacity>

@@ -278,4 +278,28 @@
         </li>
     </comps>
 </AbilityDef>
+
+<!-- DIVISION -->
+<AbilityDef ParentName="RadiantBase">
+    <defName>whtwl_SurgeOfDivision</defName>
+    <label>division</label>
+    <description>power over destruction and decay, use carefully</description>
+    <level>1</level>
+    <iconPath>Things/Ability/lucid_abrasion</iconPath> 
+    <hotKey>Misc4</hotKey>
+    <hostile>true</hostile>
+    <casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>
+    <verbProperties>
+        <warmupTime>0.5</warmupTime>
+        <range>1</range> 
+        <targetParams>
+            <canTargetSelf>false</canTargetSelf>
+        </targetParams>
+    </verbProperties>
+    <comps>
+        <li Class="StormlightMod.CompProperties_AbilitySurgeDivision">
+            <compClass>StormlightMod.CompAbilityEffect_SurgeDivision</compClass>
+        </li>
+    </comps>
+</AbilityDef>
 </Defs>

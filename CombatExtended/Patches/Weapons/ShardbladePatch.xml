@@ -41,8 +41,8 @@
         <value>
             <equippedStatOffsets>
                 <MeleeCritChance>50.0</MeleeCritChance>
-                <MeleeParryChance>5.0</MeleeParryChance>
-                <MeleeDodgeChance>5.0</MeleeDodgeChance>
+                <MeleeParryChance>0.75</MeleeParryChance>
+                <MeleeDodgeChance>0.75</MeleeDodgeChance>
             </equippedStatOffsets>
         </value>
     </Operation>

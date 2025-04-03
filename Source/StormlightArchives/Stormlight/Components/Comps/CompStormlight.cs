@@ -264,6 +264,9 @@ namespace StormlightMod {
 
 
         private void handleSurges(Pawn pawn) {
+            if (m_CurrentStormlight <= 0f) {
+                m_AbrasionActive = false;
+            }
             if (m_AbrasionActive) {
                 if (pawn != null && pawn.health.hediffSet.GetFirstHediffOfDef(StormlightModDefs.whtwl_surge_abrasion) == null) {
                     pawn.health.AddHediff(StormlightModDefs.whtwl_surge_abrasion);
