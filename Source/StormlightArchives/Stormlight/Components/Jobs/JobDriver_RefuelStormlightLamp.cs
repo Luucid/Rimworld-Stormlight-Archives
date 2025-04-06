@@ -100,37 +100,8 @@ namespace StormlightMod {
 
 
         public override bool TryMakePreToilReservations(bool errorOnFailed) {
-            Log.Message("TryMakePreToilReservations");
             return pawn.Reserve(Lamp, job, 1, -1, null, errorOnFailed) && pawn.Reserve(Sphere, job, 1, -1, null, errorOnFailed);
         }
-
-        //protected override IEnumerable<Toil> MakeNewToils() {
-        //    this.FailOnDespawnedNullOrForbidden(LampIndex);
-
-        //    AddFailCondition(() => Sphere == null);
-        //    AddFailCondition(() => Lamp == null);
-
-        //    yield return Toils_General.DoAtomic(delegate {
-        //        job.count = LampComp.GetDunSphereCount();
-        //    });
-        //    CompSpherePouch spherePouch = CompSpherePouch.GetWornSpherePouch(pawn);
-        //    if (spherePouch == null || (spherePouch != null && spherePouch.Empty)) { //pawn has no pouch or it is empty
-        //        Toil reserveFuel = Toils_Reserve.Reserve(SphereIndex);
-        //        yield return reserveFuel;
-
-        //        yield return Toils_Goto.GotoThing(SphereIndex, PathEndMode.ClosestTouch).FailOnDespawnedNullOrForbidden(SphereIndex).FailOnSomeonePhysicallyInteracting(SphereIndex);
-        //        yield return Toils_Haul.StartCarryThing(SphereIndex, putRemainderInQueue: false, subtractNumTakenFromJobCount: true).FailOnDestroyedNullOrForbidden(SphereIndex);
-        //        yield return Toils_Haul.CheckForGetOpportunityDuplicate(reserveFuel, SphereIndex, TargetIndex.None, takeFromValidStorage: true);
-        //    }
-
-        //    yield return Toils_Goto.GotoThing(LampIndex, PathEndMode.Touch);
-        //    yield return Toils_General.Wait(RespheringDuration).FailOnDestroyedNullOrForbidden(SphereIndex).FailOnDestroyedNullOrForbidden(LampIndex)
-        //        .FailOnCannotTouch(LampIndex, PathEndMode.Touch)
-        //        .WithProgressBarToilDelay(LampIndex);
-        //    yield return Toils_Resphere_Lamp.SwapInNewSpheres(pawn, Lamp, Sphere);  //custom toil
-        //    Log.Message("Post-SwapInNewSpheres");
-
-        //}
 
         protected override IEnumerable<Toil> MakeNewToils() {
             this.FailOnDespawnedNullOrForbidden(LampIndex);

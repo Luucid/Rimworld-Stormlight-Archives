@@ -8,6 +8,7 @@ using static UnityEngine.GraphicsBuffer;
 using System.Security.Cryptography;
 using static HarmonyLib.Code;
 using Verse.Noise;
+using Verse.Sound;
 
 namespace StormlightMod {
     public class RadiantAbility : Ability {
@@ -86,11 +87,109 @@ namespace StormlightMod {
             icon = ability.def.uiIcon;
         }
 
+        private bool AbriasionCheck() {
+            if (ability.def == StormlightModDefs.whtwl_SurgeOfAbrasion) {
+                var comp = pawn.GetComp<CompStormlight>();
+                if (comp != null && comp.AbrasionActive) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private bool BreathStormlightCheck() {
+            if (ability.def == StormlightModDefs.whtwl_BreathStormlight) {
+                var comp = pawn.GetComp<CompStormlight>();
+                if (comp != null && comp.m_BreathStormlight) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        protected override GizmoResult GizmoOnGUIInt(Rect butRect, GizmoRenderParms parms) {
+            Text.Font = GameFont.Tiny;
+
+            bool mouseOver = Mouse.IsOver(butRect);
+            bool interacting = false;
+
+            Color bgColor = Color.white;
+
+            if (AbriasionCheck() || BreathStormlightCheck()) {
+
+                bgColor = new Color(0.2f, 0.9f, 0.4f); // Green when active
+            }
+            if (mouseOver && !disabled) {
+                bgColor = GenUI.MouseoverColor;
+            }
+
+            if (parms.highLight) {
+                Widgets.DrawStrongHighlight(butRect.ExpandedBy(4f));
+            }
+
+            Material mat = (disabled || parms.lowLight) ? TexUI.GrayscaleGUI : null;
+
+            GUI.color = parms.lowLight ? LowLightBgColor : bgColor;
+            GenUI.DrawTextureWithMaterial(butRect, parms.shrunk ? BGTextureShrunk : BGTexture, mat);
+
+            GUI.color = Color.white;
+            DrawIcon(butRect, mat, parms);
+
+            // Hotkey / label logic
+            Vector2 keyLabelOffset = parms.shrunk ? new Vector2(3f, 0f) : new Vector2(5f, 3f);
+            Rect keyRect = new Rect(butRect.x + keyLabelOffset.x, butRect.y + keyLabelOffset.y, butRect.width - 10f, Text.LineHeight);
+
+            if (hotKey?.KeyDownEvent ?? false) {
+                interacting = true;
+                Event.current.Use();
+            }
+
+            if (Widgets.ButtonInvisible(butRect)) {
+                interacting = true;
+            }
+
+            // Label
+            if (!parms.shrunk && !LabelCap.NullOrEmpty()) {
+                float labelHeight = Text.CalcHeight(LabelCap, butRect.width);
+                Rect labelRect = new Rect(butRect.x, butRect.yMax - labelHeight + 12f, butRect.width, labelHeight);
+                GUI.DrawTexture(labelRect, TexUI.GrayTextBG);
+                Text.Anchor = TextAnchor.UpperCenter;
+                Widgets.Label(labelRect, LabelCap);
+                Text.Anchor = TextAnchor.UpperLeft;
+            }
+
+            // Tooltip
+            if (Mouse.IsOver(butRect)) {
+                TipSignal tip = Desc;
+                if (disabled && !disabledReason.NullOrEmpty()) {
+                    tip.text += $"\n\n{"DisabledCommand".Translate()}: {disabledReason}".Colorize(ColorLibrary.RedReadable);
+                }
+                tip.text += DescPostfix;
+                TooltipHandler.TipRegion(butRect, tip);
+            }
+
+            // Return result
+            if (interacting) {
+                if (disabled) {
+                    if (!disabledReason.NullOrEmpty())
+                        Messages.Message(disabledReason, MessageTypeDefOf.RejectInput, historical: false);
+
+                    return new GizmoResult(GizmoState.Mouseover, null);
+                }
+
+                return new GizmoResult(Event.current.button == 1 ? GizmoState.OpenedFloatMenu : GizmoState.Interacted, Event.current);
+            }
+
+            return mouseOver ? new GizmoResult(GizmoState.Mouseover) : new GizmoResult(GizmoState.Clear);
+        }
+
+
         public override void ProcessInput(Event ev) {
             base.ProcessInput(ev);
-            bool hasRadiantTrait = pawn.story.traits.HasTrait(StormlightModDefs.whtwl_Radiant_Windrunner) 
-                || pawn.story.traits.HasTrait(StormlightModDefs.whtwl_Radiant_Truthwatcher) 
-                || pawn.story.traits.HasTrait(StormlightModDefs.whtwl_Radiant_Edgedancer);
+            bool hasRadiantTrait = pawn.story.traits.HasTrait(StormlightModDefs.whtwl_Radiant_Windrunner)
+                || pawn.story.traits.HasTrait(StormlightModDefs.whtwl_Radiant_Truthwatcher)
+                || pawn.story.traits.HasTrait(StormlightModDefs.whtwl_Radiant_Edgedancer)
+                || pawn.story.traits.HasTrait(StormlightModDefs.whtwl_Radiant_Skybreaker);
 
             if (pawn.Drafted && (hasRadiantTrait || pawn.GetAbilityComp<CompAbilityEffect_SpawnEquipment>(StormlightModDefs.whtwl_SummonShardblade.defName) != null)) {
                 if (abilityToggleStormlight())
@@ -104,8 +203,10 @@ namespace StormlightMod {
                 if (abilityHealSurge())
                     return;
                 if (abilityPlantGrowSurge())
-                    return;  
+                    return;
                 if (abilityAbrasionSurge())
+                    return;
+                if (abilityDivisionSurge())
                     return;
             }
         }
@@ -140,6 +241,27 @@ namespace StormlightMod {
             }
             return false;
         }
+
+        private bool abilityDivisionSurge() {
+            if (ability.def == StormlightModDefs.whtwl_SurgeOfDivision) {
+                TargetingParameters tp = new TargetingParameters {
+                    canTargetPawns = true,
+                    canTargetAnimals = true,
+                    canTargetItems = false,
+                    canTargetBuildings = false,
+                    canTargetLocations = false,
+                    validator = (TargetInfo info) => {
+                        return info.IsValid &&
+                               pawn != null &&
+                               pawn.Spawned;
+                    }
+                };
+                StartCustomTargeting(pawn, ability.verb.EffectiveRange, tp);
+                return true;
+            }
+            return false;
+        }
+
         private bool abilityHealSurge() {
             if (ability.def == StormlightModDefs.whtwl_SurgeOfHealing) {
                 TargetingParameters tp = new TargetingParameters {
@@ -151,8 +273,7 @@ namespace StormlightMod {
                     validator = (TargetInfo info) => {
                         return info.IsValid &&
                                pawn != null &&
-                               pawn.Spawned &&
-                               pawn.Position.InHorDistOf(info.Cell, ability.verb.EffectiveRange);
+                               pawn.Spawned;
                     }
                 };
                 StartCustomTargeting(pawn, ability.verb.EffectiveRange, tp);
@@ -216,26 +337,24 @@ namespace StormlightMod {
                                pawn.Position.InHorDistOf(info.Cell, distance);
                     }
                 };
-                StartCustomTargeting(pawn, distance, tp);
+                StartCustomTargeting(pawn, distance, tp, triggerAsJob: false);
                 return true;
             }
             return false;
         }
 
 
-        public void StartCustomTargeting(Pawn caster, float maxDistance, TargetingParameters tp) {
-
-            //var tp = new TargetingParameters {
-            //    canTargetPawns = true,
-            //    canTargetItems = true,
-            //    canTargetLocations = true,
-            //    validator = null // passing a separate 'targetValidator' argument below
-            //};
+        public void StartCustomTargeting(Pawn caster, float maxDistance, TargetingParameters tp, bool triggerAsJob = true) {
 
             // The main action to do once a valid target is chosen
             Action<LocalTargetInfo> mainAction = (LocalTargetInfo chosenTarget) => {
-                ability.Activate(chosenTarget, chosenTarget);
-
+                Job job = new Job_CastAbilityOnTarget(StormlightModDefs.whtwl_CastAbilityOnTarget, chosenTarget, ability);
+                if (triggerAsJob) {
+                    pawn.jobs.TryTakeOrderedJob(job);
+                }
+                else {
+                    ability.Activate(chosenTarget, chosenTarget);
+                }
             };
 
             // This runs each frame to highlight the hovered cell/thing
@@ -250,8 +369,7 @@ namespace StormlightMod {
             Func<LocalTargetInfo, bool> targetValidator = (LocalTargetInfo info) => {
                 // Must be valid and within maxDistance
                 return info.IsValid &&
-                       caster.Spawned &&
-                       caster.Position.InHorDistOf(info.Cell, maxDistance);
+                       caster.Spawned;
             };
 
             // Called each GUI frame after the default crosshair is drawn

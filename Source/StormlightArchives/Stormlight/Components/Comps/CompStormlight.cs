@@ -22,6 +22,7 @@ namespace StormlightMod {
 
         // Surges
         private bool m_AbrasionActive = false;
+        public bool AbrasionActive => m_AbrasionActive;
 
         // Modifiers
         public float StormlightContainerSize = 1f;
@@ -31,6 +32,8 @@ namespace StormlightMod {
         private bool lightTurnedOn = false;
         private int tick = 0;
         private bool thisGlows = false;
+
+
 
         public void toggleBreathStormlight() {
             m_BreathStormlight = !m_BreathStormlight;
@@ -93,14 +96,12 @@ namespace StormlightMod {
         private void toggleGlow(bool on) {
             if (parent.Map != null) {
                 if (on && thisGlows == false) {
-                    Log.Message("turn on the lights!");
                     parent.Map.glowGrid.DeRegisterGlower(GlowerComp);
                     parent.Map.glowGrid.RegisterGlower(GlowerComp);
                     GlowerComp.GlowRadius = MaximumGlowRadius;
                     thisGlows = true;
                 }
                 else if (!on && thisGlows) {
-                    Log.Message("turn off the lights!");
                     parent.Map.glowGrid.DeRegisterGlower(GlowerComp);
                     thisGlows = false;
                 }
@@ -132,7 +133,6 @@ namespace StormlightMod {
 
             MaximumGlowRadius = (float)Math.Round(normalizedSize, 2) + (quality / 5f);
             handleGlow();
-            Log.Message($"Maximum glow radius for q({quality}) and s({size}) = {MaximumGlowRadius}");
         }
 
         private void radiantHeal(Pawn pawn) {

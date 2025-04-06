@@ -12,7 +12,7 @@ namespace StormLight.Patches {
     public static class Patch_Pawn_Kill {
         static void Prefix(Pawn __instance, DamageInfo? dinfo) {
             if (__instance != null && __instance.RaceProps.Humanlike) {
-                Log.Message($"[DEBUG] {__instance.Name} is dying!");
+                //Log.Message($"[DEBUG] {__instance.Name} is dying!");
                 CompAbilityEffect_SpawnEquipment abilityComp = __instance.GetAbilityComp<CompAbilityEffect_SpawnEquipment>(StormlightModDefs.whtwl_SummonShardblade.defName);
                 if (abilityComp == null) return;
                 if (abilityComp.bladeObject != null) {
@@ -25,6 +25,7 @@ namespace StormLight.Patches {
                             shardBladeComp.severBond(__instance);
                             Log.Message("drop it");
                             shardBladeComp.dismissBlade(__instance);
+                            //Fix this so it always drops when pawn is killed.
                         }
                     }
                 }

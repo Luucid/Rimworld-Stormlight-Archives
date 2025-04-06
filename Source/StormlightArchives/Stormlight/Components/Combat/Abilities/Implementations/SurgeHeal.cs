@@ -65,9 +65,6 @@ namespace StormlightMod {
                     RadiantUtility.GiveRadiantXP(caster, 20f);
                 }
             }
-            else {
-                Log.Message("Too low ideal level for heal missing parts");
-            }
         }
 
         private void healInjuries(Pawn pawn, Need_RadiantProgress radiantNeed, CompStormlight casterComp, Pawn caster) {
@@ -80,7 +77,7 @@ namespace StormlightMod {
                     if (casterComp.Stormlight < cost)
                         break;
 
-                    float healAmount = (0.008f) + ((float)radiantNeed.IdealLevel * 2f)/10f;
+                    float healAmount = (0.008f) + ((float)radiantNeed.IdealLevel * 2f) / 10f;
                     injury.Heal(healAmount);
                     casterComp.drawStormlight(cost);
                     RadiantUtility.GiveRadiantXP(caster, 5f);

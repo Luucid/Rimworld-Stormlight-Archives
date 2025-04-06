@@ -22,6 +22,7 @@ namespace StormlightMod {
         public static AbilityDef whtwl_SurgeOfHealing;
         public static AbilityDef whtwl_SurgeOfGrowth;
         public static AbilityDef whtwl_SurgeOfAbrasion;
+        public static AbilityDef whtwl_SurgeOfDivision;
         public static AbilityDef whtwl_LashingUpward;
         public static AbilityDef whtwl_WindRunnerFlight;
 
@@ -29,6 +30,7 @@ namespace StormlightMod {
         public static JobDef whtwl_RefuelSphereLamp;
         public static JobDef whtwl_RefuelFabrial;
         public static JobDef whtwl_RemoveFromFabrial;
+        public static JobDef whtwl_CastAbilityOnTarget;
 
         //ThingDef
         public static ThingDef whtwl_Apparel_SpherePouch;
@@ -89,7 +91,9 @@ namespace StormlightMod {
                 {
                 StormlightModDefs.whtwl_Radiant_Windrunner,
                 StormlightModDefs.whtwl_Radiant_Truthwatcher,
-                StormlightModDefs.whtwl_Radiant_Edgedancer
+                StormlightModDefs.whtwl_Radiant_Edgedancer,
+                StormlightModDefs.whtwl_Radiant_Skybreaker
+
             };
             }
         }

@@ -188,13 +188,11 @@ namespace StormlightMod {
                 if (stormlightcomp != null) {
                     float probabilityFactor = 2f;
                     float probability = getProbability(stormlightcomp, probabilityFactor, 0.0005f);
-                    Log.Message("Tryng here");
                     if (Rand.Chance(probability)) {
                         insertedGemstone.TryGetComp<CompCutGemstone>().capturedSpren = Spren.Logic;
                         displayCaptureMessage(Spren.Logic);
                         stormlightcomp.RemoveAllStormlight();
                     }
-                    else { Log.Message($"Failed at {probability * 100}%"); }
                 }
             }
         }

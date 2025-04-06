@@ -19,7 +19,7 @@ namespace StormlightMod {
             base.End();
 
             if (SingleMap != null) {
-                Log.Message("Highstorm ended. Forcing weather to clear.");
+                //Log.Message("Highstorm ended. Forcing weather to clear.");
                 SingleMap.weatherManager.TransitionTo(WeatherDefOf.Clear);
             }
         }
@@ -79,7 +79,7 @@ namespace StormlightMod {
                 else if (thing is Building building) {
 
                     if (building.Stuff != null && building.Stuff.stuffProps.categories?.Contains(StuffCategoryDefOf.Woody) == true) {
-                        Log.Message($"Damaging wooden wall: {building.def.defName}");
+                        //Log.Message($"Damaging wooden wall: {building.def.defName}");
                         building.TakeDamage(new DamageInfo(DamageDefOf.Blunt,
                                                            10, // amount
                                                            0, // armorPenetration

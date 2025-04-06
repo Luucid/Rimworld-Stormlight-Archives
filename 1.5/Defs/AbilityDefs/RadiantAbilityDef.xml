@@ -118,7 +118,7 @@
       <flightDurationMin>0.5</flightDurationMin>
 
       <!-- Speed (cells per second) -->
-      <flightSpeed>1</flightSpeed>
+      <flightSpeed>7</flightSpeed>
 
       <!-- Forward offset factor if you want a 3D effect (set to 0 if not) -->
       <heightFactor>2</heightFactor>
@@ -150,8 +150,8 @@
     <comps>
         <li Class="StormlightMod.CompProperties_AbilityLashUpward">
             <compClass>StormlightMod.CompAbilityEffect_AbilityLashUpward</compClass>
-            <thingDef>whtwl_lashingUp</thingDef> <!-- Ensure this matches your XML weapon defName -->
-            <stormLightCost>150</stormLightCost>
+            <thingDef>whtwl_lashingUp</thingDef> 
+            <stormLightCost>500</stormLightCost>
         </li>
     </comps>
 </AbilityDef>
@@ -285,7 +285,7 @@
     <label>division</label>
     <description>power over destruction and decay, use carefully</description>
     <level>1</level>
-    <iconPath>Things/Ability/lucid_abrasion</iconPath> 
+    <iconPath>Things/Ability/lucid_division</iconPath> 
     <hotKey>Misc4</hotKey>
     <hostile>true</hostile>
     <casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>
@@ -299,6 +299,7 @@
     <comps>
         <li Class="StormlightMod.CompProperties_AbilitySurgeDivision">
             <compClass>StormlightMod.CompAbilityEffect_SurgeDivision</compClass>
+             <stormLightCost>500</stormLightCost>
         </li>
     </comps>
 </AbilityDef>

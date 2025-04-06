@@ -33,12 +33,10 @@ namespace StormlightMod {
     public class CompProperties_PawnStats : CompProperties {
         public string Req_0_1;
         public string Req_1_2;
-        public string Req_2_3_wr;
-        public string Req_3_4_wr;
-        public string Req_2_3_tw;
-        public string Req_3_4_tw;     
-        public string Req_2_3_ed;
-        public string Req_3_4_ed;
+        public string Req_2_3;
+        public string Req_3_4;
+        public string Req_4_5;
+
 
         public CompProperties_PawnStats() {
             this.compClass = typeof(PawnStats);
@@ -54,6 +52,7 @@ namespace StormlightMod {
         public bool EnemyPatientDied = false;
         public bool EnemyPatientSaved = false;
         public bool hasFormedBond = false;
+        public int doCheckWhenThisIsZero = 0;
 
 
         public override void PostExposeData() {
@@ -96,8 +95,8 @@ namespace StormlightMod {
             requirementMap.Add(windrunnerDefName, new Dictionary<string, Radiant_Requirements>());
             requirementMap[windrunnerDefName].Add(Props.Req_0_1, new Radiant_Requirements());
             requirementMap[windrunnerDefName].Add(Props.Req_1_2, new Radiant_Requirements());
-            requirementMap[windrunnerDefName].Add(Props.Req_2_3_wr, new Radiant_Requirements());
-            requirementMap[windrunnerDefName].Add(Props.Req_3_4_wr, new Radiant_Requirements());
+            requirementMap[windrunnerDefName].Add(Props.Req_2_3, new Radiant_Requirements());
+            requirementMap[windrunnerDefName].Add(Props.Req_3_4, new Radiant_Requirements());
 
 
             //TRUTHWATCHER
@@ -105,25 +104,38 @@ namespace StormlightMod {
             requirementMap.Add(truthwatcherDefName, new Dictionary<string, Radiant_Requirements>());
             requirementMap[truthwatcherDefName].Add(Props.Req_0_1, new Radiant_Requirements());
             requirementMap[truthwatcherDefName].Add(Props.Req_1_2, new Radiant_Requirements());
-            requirementMap[truthwatcherDefName].Add(Props.Req_2_3_tw, new Radiant_Requirements());
-            requirementMap[truthwatcherDefName].Add(Props.Req_3_4_tw, new Radiant_Requirements());
-            
-            //TRUTHWATCHER
+            requirementMap[truthwatcherDefName].Add(Props.Req_2_3, new Radiant_Requirements());
+            requirementMap[truthwatcherDefName].Add(Props.Req_3_4, new Radiant_Requirements());
+            requirementMap[truthwatcherDefName][Props.Req_2_3].IsSatisfied = true;              // for now it is true default
+            requirementMap[truthwatcherDefName][Props.Req_3_4].IsSatisfied = true;              // for now it is true default
+
+
+            //EDGEDANCER
             var edgedancerDefName = StormlightModDefs.whtwl_Radiant_Edgedancer.defName;
             requirementMap.Add(edgedancerDefName, new Dictionary<string, Radiant_Requirements>());
             requirementMap[edgedancerDefName].Add(Props.Req_0_1, new Radiant_Requirements());
             requirementMap[edgedancerDefName].Add(Props.Req_1_2, new Radiant_Requirements());
-            requirementMap[edgedancerDefName].Add(Props.Req_2_3_ed, new Radiant_Requirements());
-            requirementMap[edgedancerDefName].Add(Props.Req_3_4_ed, new Radiant_Requirements());
+            requirementMap[edgedancerDefName][Props.Req_1_2].IsSatisfied = true;              // for now it is true default
 
+            //SKYBREAKER
+            var skybreakerDefName = StormlightModDefs.whtwl_Radiant_Skybreaker.defName;
+            requirementMap.Add(skybreakerDefName, new Dictionary<string, Radiant_Requirements>());
+            requirementMap[skybreakerDefName].Add(Props.Req_0_1, new Radiant_Requirements());
+            requirementMap[skybreakerDefName].Add(Props.Req_1_2, new Radiant_Requirements());
+            requirementMap[skybreakerDefName].Add(Props.Req_2_3, new Radiant_Requirements());
+            requirementMap[skybreakerDefName].Add(Props.Req_3_4, new Radiant_Requirements());
+            requirementMap[skybreakerDefName][Props.Req_0_1].IsSatisfied = true;              // for now it is true default
+            requirementMap[skybreakerDefName][Props.Req_1_2].IsSatisfied = true;              // for now it is true default
+            requirementMap[skybreakerDefName][Props.Req_2_3].IsSatisfied = true;              // for now it is true default
+            requirementMap[skybreakerDefName][Props.Req_3_4].IsSatisfied = true;              // for now it is true default
 
-            requirementMap[edgedancerDefName][Props.Req_1_2].IsSatisfied = true;       // for now it is true default
-            requirementMap[edgedancerDefName][Props.Req_2_3_ed].IsSatisfied = true;       // for now it is true default
-            requirementMap[edgedancerDefName][Props.Req_3_4_ed].IsSatisfied = true;       // for now it is true default
         }
 
         public Radiant_Requirements GetRequirements(TraitDef trait, string req) {
-            return requirementMap?[trait.defName]?[req];
+            if (requirementMap[trait.defName].ContainsKey(req)) {
+                return requirementMap?[trait.defName]?[req];
+            }
+            return requirementMap[trait.defName][Props.Req_0_1];
         }
     }
 }
@@ -139,20 +151,23 @@ namespace StormlightMod {
             }
 
             var truthwatcherRequirement = pawnStats.requirementMap[StormlightModDefs.whtwl_Radiant_Truthwatcher.defName][pawnStats.Props.Req_1_2];
-            if (windrunnerRequirement.Count >= 1 && pawnStats.PatientSaved) {
-                windrunnerRequirement.IsSatisfied = true;
+            if (truthwatcherRequirement.Count >= 1 && pawnStats.PatientSaved) {
+                truthwatcherRequirement.IsSatisfied = true;
             }
         }
         public static void UpdateIsSatisfiedReq2_3(PawnStats pawnStats) {//helped enemy in need
-            var windrunnerRequirement = pawnStats.requirementMap[StormlightModDefs.whtwl_Radiant_Windrunner.defName][pawnStats.Props.Req_2_3_wr];
+            var windrunnerRequirement = pawnStats.requirementMap[StormlightModDefs.whtwl_Radiant_Windrunner.defName][pawnStats.Props.Req_2_3];
             if (windrunnerRequirement.Count >= 1 && pawnStats.EnemyPatientSaved) {
                 windrunnerRequirement.IsSatisfied = true;
             }
 
         }
         public static void UpdateIsSatisfiedReq3_4(PawnStats pawnStats) { //ally with bond died even tho tried to save
-            var windrunnerRequirement = pawnStats.requirementMap[StormlightModDefs.whtwl_Radiant_Windrunner.defName][pawnStats.Props.Req_3_4_wr];
+            var windrunnerRequirement = pawnStats.requirementMap[StormlightModDefs.whtwl_Radiant_Windrunner.defName][pawnStats.Props.Req_3_4];
             windrunnerRequirement.IsSatisfied = true;
+        }
+        public static void UpdateIsSatisfiedReq4_5(PawnStats pawnStats) { //??
+
         }
     }
 
@@ -160,30 +175,36 @@ namespace StormlightMod {
     //Initial requirements, must have suffered crisis
     [HarmonyPatch(typeof(MentalBreaker), nameof(MentalBreaker.MentalBreakerTick))]
     public static class Whtwl_MentalBreakExperiences {
-        private static int tickCounter = 0;
+        private static bool colonistFound = false;
 
         static void Postfix(MentalBreaker __instance, Pawn ___pawn) {
-            tickCounter = (tickCounter + 1) % 100;
-            if (tickCounter != 0) return;
             if (___pawn.NonHumanlikeOrWildMan()) return;
+            if (___pawn.IsColonist == false) return;
             PawnStats pawnStats = ___pawn.GetComp<PawnStats>();
 
-            if (pawnStats != null && pawnStats.hasFormedBond == false) {
+            if (pawnStats != null && pawnStats.hasFormedBond == false && pawnStats.doCheckWhenThisIsZero == 0) {
+
                 float increment = 0f;
                 if (__instance.BreakExtremeIsImminent) {
-                    increment = 0.09f * StormlightMod.settings.bondChanceMultiplier;
+                    increment = 1.0f * StormlightMod.settings.bondChanceMultiplier;
                 }
                 else if (__instance.BreakMajorIsImminent) {
-                    increment = 0.05f * StormlightMod.settings.bondChanceMultiplier;
+                    increment = 0.5f * StormlightMod.settings.bondChanceMultiplier;
                 }
                 else if (__instance.BreakMinorIsImminent) {
-                    increment = 0.01f * StormlightMod.settings.bondChanceMultiplier;
+                    increment = 0.1f * StormlightMod.settings.bondChanceMultiplier;
                 }
                 if (increment > 0f) {
                     pawnStats.requirementMap[StormlightModDefs.whtwl_Radiant_Truthwatcher.defName][pawnStats.Props.Req_0_1].Value += increment;
                     pawnStats.requirementMap[StormlightModDefs.whtwl_Radiant_Windrunner.defName][pawnStats.Props.Req_0_1].Value += increment;
                     pawnStats.requirementMap[StormlightModDefs.whtwl_Radiant_Edgedancer.defName][pawnStats.Props.Req_0_1].Value += increment;
+                    pawnStats.requirementMap[StormlightModDefs.whtwl_Radiant_Skybreaker.defName][pawnStats.Props.Req_0_1].Value += increment;
+                    //Log.Message($"{___pawn.NameShortColored} value: {pawnStats.requirementMap[StormlightModDefs.whtwl_Radiant_Skybreaker.defName][pawnStats.Props.Req_0_1].Value}");
                 }
+                pawnStats.doCheckWhenThisIsZero = (pawnStats.doCheckWhenThisIsZero + 1) % 100;
+            }
+            else if (pawnStats != null) {
+                pawnStats.doCheckWhenThisIsZero = (pawnStats.doCheckWhenThisIsZero + 1) % 100;
             }
         }
     }
@@ -202,13 +223,12 @@ namespace StormlightMod {
                 var windrunnerRequirement1_2 = pawnStats.requirementMap[StormlightModDefs.whtwl_Radiant_Windrunner.defName][pawnStats.Props.Req_1_2];
                 if (!pawnStats.PatientList.Contains(patient)) {
                     pawnStats.PatientList.Add(patient);
-                    Log.Message("Patient added to list");
                 }
                 windrunnerRequirement1_2.Count += 1;
 
                 //2_3
                 if (patient.IsPrisoner) {
-                    var windrunnerRequirement2_3 = pawnStats.requirementMap[StormlightModDefs.whtwl_Radiant_Windrunner.defName][pawnStats.Props.Req_2_3_wr];
+                    var windrunnerRequirement2_3 = pawnStats.requirementMap[StormlightModDefs.whtwl_Radiant_Windrunner.defName][pawnStats.Props.Req_2_3];
                     windrunnerRequirement2_3.Count += 1;
                 }
 
@@ -234,9 +254,8 @@ namespace StormlightMod {
             foreach (Pawn patient in pawnStats.PatientList) {
                 if (patient.health.Dead && patient.IsPrisoner == false) {
                     pawnStats.PatientDied = true;
-                    pawnStats.requirementMap[StormlightModDefs.whtwl_Radiant_Windrunner.defName][pawnStats.Props.Req_3_4_wr].IsSatisfied = true;
+                    pawnStats.requirementMap[StormlightModDefs.whtwl_Radiant_Windrunner.defName][pawnStats.Props.Req_3_4].IsSatisfied = true;
                     patientsToRemove.Add(patient);
-                    Log.Message("Patient died..");
                 }
                 else if (NeedsNoTending(patient)) {
                     pawnStats.PatientSaved = true;

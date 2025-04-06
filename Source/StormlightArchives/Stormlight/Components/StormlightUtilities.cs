@@ -7,15 +7,54 @@ using Verse;
 using Verse.AI;
 using Verse.Noise;
 using UnityEngine;
+using System.Net;
 
 namespace StormlightMod {
 
     static public class StormlightUtilities {
 
+        public static void SpeakOaths(Pawn pawn, PawnStats pawnStats, TraitDef traitDef, string mainText, string titleText, string acceptText = "Speak the words", string declineText = "Say nothing") {
+            Find.WindowStack.Add(new Dialog_MessageBox(
+                          text: mainText,
+                          buttonAText: acceptText,
+                          buttonAAction: () => {
+                              pawn.story.traits.GainTrait(new Trait(traitDef, 0));
+                              pawnStats.hasFormedBond = true;
+                              pawnStats.requirementMap[traitDef.defName][pawnStats.Props.Req_0_1].IsSatisfied = true;
+                          },
+                          buttonBText: declineText,
+                          buttonBAction: () => {
+                          },
+                          title: titleText
+                      ));
+        }
+
+        public static bool IsRadiant(Trait trait) {
+            return (trait.def == StormlightModDefs.whtwl_Radiant_Windrunner
+                || trait.def == StormlightModDefs.whtwl_Radiant_Truthwatcher
+                || trait.def == StormlightModDefs.whtwl_Radiant_Edgedancer
+                || trait.def == StormlightModDefs.whtwl_Radiant_Skybreaker);
+        }
+
+        public static bool IsRadiant(Pawn pawn) {
+            if (pawn.NonHumanlikeOrWildMan()) return false;
+            if (pawn.AnimalOrWildMan()) return false;
+            if (pawn == null) return false;
+
+            Trait trait = pawn.story.traits.allTraits.FirstOrDefault(t => StormlightModUtilities.RadiantTraits.Contains(t.def));
+            if (trait != null) {
+                return (trait.def == StormlightModDefs.whtwl_Radiant_Windrunner
+                    || trait.def == StormlightModDefs.whtwl_Radiant_Truthwatcher
+                    || trait.def == StormlightModDefs.whtwl_Radiant_Edgedancer
+                    || trait.def == StormlightModDefs.whtwl_Radiant_Skybreaker);
+            }
+            return false;
+        }
+
         public static int GetGraphicId(Thing thing) {
             if (thing == null) return 0;
             CompShardblade comp = thing.TryGetComp<CompShardblade>();
-            if(comp == null) return 0;
+            if (comp == null) return 0;
             return comp.graphicId;
         }
 
@@ -182,6 +221,35 @@ namespace StormlightMod {
             // Force refresh
             thing.Notify_ColorChanged();
         }
+
+
+        public static bool IsNearGrowingPlants(Pawn pawn, float radius = 3f) {
+            IntVec3 position = pawn.Position;
+            Map map = pawn.Map;
+            var cells = GenRadial.RadialCellsAround(position, radius, true);
+
+            foreach (IntVec3 cell in cells) {
+                if (cell.InBounds(map)) {
+                    foreach (Thing thing in cell.GetThingList(map)) {
+                        if (thing is Plant plant && plant.Growth > 0.05f && plant.Growth < 1.0f && plant.GrowthRate > 0f) {
+                            return true;
+                        }
+                    }
+                }
+            }
+            return false;
+        }
+
+        public static bool IsPawnEligibleForDoctoring(Pawn pawn) {
+            if (pawn == null || pawn.Dead || pawn.AnimalOrWildMan() || pawn.NonHumanlikeOrWildMan())
+                return false;
+            return !pawn.skills.GetSkill(SkillDefOf.Medicine).TotallyDisabled;
+        }
+
+
+
+        //bottom//
+
     }
 
 }

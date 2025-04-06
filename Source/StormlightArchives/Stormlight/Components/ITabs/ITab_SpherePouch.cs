@@ -59,7 +59,6 @@ namespace StormlightMod {
                 Rect buttonRect = new Rect(rowRect.width - 30f, y + 4f, 24f, 24f);
 
                 if (Widgets.ButtonImage(buttonRect, TexCommand.RemoveRoutePlannerWaypoint)) {  //change icon later to something better
-                    Log.Message($"[StormlightMod] Button clicked for sphere: {item.LabelCap}");
                     PouchSpheres.RemoveSphereFromPouch(i, SelPawn);
                     break;
                 }

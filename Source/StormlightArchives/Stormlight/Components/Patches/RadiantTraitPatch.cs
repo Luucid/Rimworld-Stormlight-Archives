@@ -6,10 +6,7 @@ namespace StormlightMod {
     [HarmonyPatch(typeof(TraitSet), "GainTrait")]
     public static class RadiantGainTraitPatch {
         static void Postfix(Pawn ___pawn, Trait trait) {
-            if (trait.def == StormlightModDefs.whtwl_Radiant_Windrunner 
-                || trait.def == StormlightModDefs.whtwl_Radiant_Truthwatcher 
-                || trait.def == StormlightModDefs.whtwl_Radiant_Edgedancer) {
-
+            if (StormlightUtilities.IsRadiant(trait)) {
                 if (___pawn != null && ___pawn.RaceProps.Humanlike) {
                     Log.Message($"{___pawn.Name} has become Radiant!");
                     givePawnStormlight(___pawn);
@@ -21,7 +18,6 @@ namespace StormlightMod {
                         ___pawn.needs.AddOrRemoveNeedsAsAppropriate();
                         Need_RadiantProgress progress = ___pawn.needs?.TryGetNeed<Need_RadiantProgress>();
                         if (progress != null) {
-                            Log.Message("init xp");
                             progress.GainXP(0);
                         }
                     }

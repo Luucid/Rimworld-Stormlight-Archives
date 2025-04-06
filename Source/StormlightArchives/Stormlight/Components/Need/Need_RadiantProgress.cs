@@ -39,8 +39,10 @@ namespace StormlightMod {
         }
 
         public void GainXP(float amount) {
-            currentXp += amount;
+            currentXp += amount*5f;
             CurLevel = Mathf.Max(0f, Mathf.Min(1f, (currentXp / MAX_XP)));
+
+            //Log.Message($"CurrentXP: {currentXp}, CurLevel: {CurLevel}");
         }
 
         public void UpdateRadiantTrait(Pawn pawn) {
@@ -73,27 +75,16 @@ namespace StormlightMod {
                     break;
                 case 2:
                     Whtwl_RadiantNeedLevelupChecker.UpdateIsSatisfiedReq2_3(pawnStats);
-                    if (trait.def == StormlightModDefs.whtwl_Radiant_Windrunner) {
-                        eligible = pawnStats.GetRequirements(trait.def, pawnStats.Props.Req_2_3_wr).IsSatisfied;
-                    }
-                    else if (trait.def == StormlightModDefs.whtwl_Radiant_Truthwatcher) {
-                        eligible = pawnStats.GetRequirements(trait.def, pawnStats.Props.Req_2_3_tw).IsSatisfied;
-                    }else if (trait.def == StormlightModDefs.whtwl_Radiant_Edgedancer) {
-                        eligible = pawnStats.GetRequirements(trait.def, pawnStats.Props.Req_2_3_ed).IsSatisfied;
-                    }
+                    eligible = pawnStats.GetRequirements(trait.def, pawnStats.Props.Req_2_3).IsSatisfied;
                     break;
                 case 3:
                     Whtwl_RadiantNeedLevelupChecker.UpdateIsSatisfiedReq3_4(pawnStats);
-                    if (trait.def == StormlightModDefs.whtwl_Radiant_Windrunner) {
-                        eligible = pawnStats.GetRequirements(trait.def, pawnStats.Props.Req_3_4_wr).IsSatisfied;
-                    }
-                    else if (trait.def == StormlightModDefs.whtwl_Radiant_Truthwatcher) {
-                        eligible = pawnStats.GetRequirements(trait.def, pawnStats.Props.Req_3_4_tw).IsSatisfied;
-                    } 
-                    else if (trait.def == StormlightModDefs.whtwl_Radiant_Edgedancer) {
-                        eligible = pawnStats.GetRequirements(trait.def, pawnStats.Props.Req_3_4_ed).IsSatisfied;
-                    }
+                    eligible = pawnStats.GetRequirements(trait.def, pawnStats.Props.Req_3_4).IsSatisfied;
                     break;
+                //case 4:
+                //    Whtwl_RadiantNeedLevelupChecker.UpdateIsSatisfiedReq4_5(pawnStats);
+                //    eligible = pawnStats.GetRequirements(trait.def, pawnStats.Props.Req_4_5).IsSatisfied; 
+                //    break;
                 default:
                     eligible = true;
                     break;
@@ -137,8 +128,11 @@ namespace StormlightMod {
             }
             else if (nd == StormlightModDefs.whtwl_RadiantProgress && ___pawn.story?.traits?.HasTrait(StormlightModDefs.whtwl_Radiant_Truthwatcher) == true) {
                 __result = true;
-            }  
+            }
             else if (nd == StormlightModDefs.whtwl_RadiantProgress && ___pawn.story?.traits?.HasTrait(StormlightModDefs.whtwl_Radiant_Edgedancer) == true) {
+                __result = true;
+            }   
+            else if (nd == StormlightModDefs.whtwl_RadiantProgress && ___pawn.story?.traits?.HasTrait(StormlightModDefs.whtwl_Radiant_Skybreaker) == true) {
                 __result = true;
             }
             else if (nd == StormlightModDefs.whtwl_RadiantProgress && ___pawn.story?.traits?.HasTrait(StormlightModDefs.whtwl_Radiant_Windrunner) == false) {
@@ -146,8 +140,11 @@ namespace StormlightMod {
             }
             else if (nd == StormlightModDefs.whtwl_RadiantProgress && ___pawn.story?.traits?.HasTrait(StormlightModDefs.whtwl_Radiant_Truthwatcher) == false) {
                 __result = false;
-            } 
+            }
             else if (nd == StormlightModDefs.whtwl_RadiantProgress && ___pawn.story?.traits?.HasTrait(StormlightModDefs.whtwl_Radiant_Edgedancer) == false) {
+                __result = false;
+            }
+            else if (nd == StormlightModDefs.whtwl_RadiantProgress && ___pawn.story?.traits?.HasTrait(StormlightModDefs.whtwl_Radiant_Skybreaker) == false) {
                 __result = false;
             }
         }

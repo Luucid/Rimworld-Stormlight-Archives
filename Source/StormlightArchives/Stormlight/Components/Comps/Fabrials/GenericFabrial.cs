@@ -144,7 +144,6 @@ namespace StormlightMod {
                 float currentTemp = parent.GetRoom().Temperature;
                 if (currentTemp > targetTemp) {
                     GenTemperature.PushHeat(parent.Position, parent.Map, (0f - gemstoneSize));
-                    Log.Message($"Cooler target temp: {targetTemp}, pushing: {(0f - gemstoneSize)}");
                 }
             }
         }

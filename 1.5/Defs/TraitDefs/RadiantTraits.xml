@@ -208,24 +208,25 @@
     <degreeDatas>
       <li>
         <label>Initiate of Justice</label>
-        <description>{PAWN_nameDef} has taken their first step down a path of order. Though they
-          cannot yet draw Stormlight, they have committed themselves to the pursuit of justice and
-          stand ready to be judged by the law they seek to uphold.</description>
+        <description>{PAWN_nameDef} has taken their first step down a path of order. They have
+          committed themselves to the pursuit of justice and stand ready to be judged by the law
+          they seek to uphold.</description>
         <degree>0</degree>
         <commonality>0</commonality> <!-- Ensures it is not assigned randomly -->
         <abilities>
+          <li>whtwl_BreathStormlight</li>
         </abilities>
       </li>
       <li>
         <label>Seeker of the Law</label>
         <description>{PAWN_nameDef} has sworn the Second Ideal: "I swear to seek justice, to let it
-          guide me, until I find a more perfect Ideal." They can now draw Stormlight and wield the
+          guide me, until I find a more perfect Ideal." They can now wield the
           Surge of Gravitation, hunting the unjust with righteous purpose.</description>
         <degree>1</degree>
         <commonality>0</commonality>
         <abilities>
           <li>whtwl_BreathStormlight</li>
-          <li>whtwl_SurgeOfHealing</li>
+          <li>whtwl_SurgeOfDivision</li>
         </abilities>
       </li>
       <li>
@@ -237,7 +238,7 @@
         <commonality>0</commonality>
         <abilities>
           <li>whtwl_BreathStormlight</li>
-          <li>whtwl_SurgeOfGravitation</li>
+          <li>whtwl_WindRunnerFlight</li>
           <li>whtwl_SurgeOfDivision</li>
         </abilities>
       </li>
@@ -251,7 +252,7 @@
         <commonality>0</commonality>
         <abilities>
           <li>whtwl_BreathStormlight</li>
-          <li>whtwl_SurgeOfGravitation</li>
+          <li>whtwl_WindRunnerFlight</li>
           <li>whtwl_SurgeOfDivision</li>
           <li>whtwl_SummonShardblade</li>
           <!-- <li>whtwl_SkybreakerSquireBonding</li> -->
@@ -266,7 +267,7 @@
         <commonality>0</commonality>
         <abilities>
           <li>whtwl_BreathStormlight</li>
-          <li>whtwl_SurgeOfGravitation</li>
+          <li>whtwl_WindRunnerFlight</li>
           <li>whtwl_SurgeOfDivision</li>
           <li>whtwl_SummonShardblade</li>
           <!-- <li>whtwl_SkybreakerSquireBonding</li>

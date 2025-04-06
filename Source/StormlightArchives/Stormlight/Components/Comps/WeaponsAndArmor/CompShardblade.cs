@@ -56,7 +56,6 @@ namespace StormlightMod {
             this.props = props;
             if (graphicId == -1) {
                 graphicId = (Props.bladesInExistence % 4) + 1;
-                Log.Message($"Graphic ID: {graphicId}");
                 Props.bladesInExistence++;
             }
         }
@@ -88,7 +87,6 @@ namespace StormlightMod {
             CompAbilityEffect_SpawnEquipment abilityComp = pawn.GetAbilityComp<CompAbilityEffect_SpawnEquipment>(StormlightModDefs.whtwl_SummonShardblade.defName);
             handleSwordAbility(pawn, abilityComp);
             if (abilityComp == null) {
-                Log.Message("Abilitycomp still null!");
                 abilityComp = pawn.GetAbilityComp<CompAbilityEffect_SpawnEquipment>(StormlightModDefs.whtwl_SummonShardblade.defName);
             }
             abilityComp.bladeObject = blade;
@@ -132,7 +130,6 @@ namespace StormlightMod {
         }
         public void summon() {
             if (swordOwner == null || isSpawned == true) {
-                Log.Message("sword owner was null or blade was already summoned");
                 return;
             }
             CompAbilityEffect_SpawnEquipment abilityComp = swordOwner.GetAbilityComp<CompAbilityEffect_SpawnEquipment>(StormlightModDefs.whtwl_SummonShardblade.defName);
@@ -140,19 +137,11 @@ namespace StormlightMod {
                 swordOwner.equipment.AddEquipment(abilityComp.bladeObject);
                 isSpawned = true;
             }
-            else {
-                if (abilityComp == null)
-                    Log.Message("abilityComp is null");
-                else {
-                    Log.Message("abilityComp.bladeObject is null");
-                }
-
-            }
         }
 
         public void dismissBlade(Pawn pawn) {
             ThingWithComps droppedWeapon;
-            pawn.equipment.TryDropEquipment(pawn.equipment.Primary, out droppedWeapon, pawn.Position, forbid: false);
+            bool success = pawn.equipment.TryDropEquipment(pawn.equipment.Primary, out droppedWeapon, pawn.Position, forbid: false);
             isSpawned = false;
             //dismissal vs dropping is handled by harmony patch in ShardbladePatches.cs
         }

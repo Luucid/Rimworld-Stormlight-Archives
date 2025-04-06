@@ -69,6 +69,7 @@
     <Compile Include="Components\Combat\Abilities\CustomPawnFlyer.cs" />
     <Compile Include="Components\Combat\Abilities\Implementations\SummonBlade.cs" />
     <Compile Include="Components\Combat\Abilities\Implementations\SurgeAbrasion.cs" />
+    <Compile Include="Components\Combat\Abilities\Implementations\SurgeDivision.cs" />
     <Compile Include="Components\Combat\Abilities\Implementations\SurgeFlight.cs" />
     <Compile Include="Components\Combat\Abilities\Implementations\SurgeHeal.cs" />
     <Compile Include="Components\Combat\Abilities\Implementations\SurgePlantGrowth.cs" />
@@ -92,6 +93,7 @@
     <Compile Include="Components\ITabs\Sphere_filter_Dialog.cs" />
     <Compile Include="Components\Jobs\JobDriver_RefuelFabrial.cs" />
     <Compile Include="Components\Jobs\JobDriver_RefuelStormlightLamp.cs" />
+    <Compile Include="Components\Jobs\JobDriver_WalkToAndCastAbility.cs" />
     <Compile Include="Components\MyModSettings.cs" />
     <Compile Include="Components\Need\Need_RadiantProgress.cs" />
     <Compile Include="Components\Patches\Fabrials\FabrialPatches.cs" />

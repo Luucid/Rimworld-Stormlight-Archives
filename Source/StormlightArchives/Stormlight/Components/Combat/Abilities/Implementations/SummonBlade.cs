@@ -118,7 +118,6 @@ namespace StormlightMod {
 
                 if (pawn.equipment.Primary.def.defName.Equals(Props.thingDef.ToString())) {
                     CompShardblade blade = pawn.equipment.Primary.GetComp<CompShardblade>();
-                    Log.Message($"[StormlightMod] {pawn.Name} unbonded its shardblade {blade.GetHashCode()}");
                     blade.severBond(pawn);
                 }
                 else {

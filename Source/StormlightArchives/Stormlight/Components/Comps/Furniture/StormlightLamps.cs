@@ -117,9 +117,6 @@ namespace StormlightMod {
                         if (job.TryMakePreToilReservations(selPawn, errorOnFailed: true)) {
                             selPawn.jobs.TryTakeOrderedJob(job);
                         }
-                        else {
-                            Log.Message("It failed");
-                        }
                     };
                     replaceSphereText = $"Replace with {sphere.Label}";
                 }
@@ -234,7 +231,6 @@ namespace StormlightMod {
 
             storedSpheres.RemoveAt(index);
 
-            Log.Message($"removed sphere, size of lamp content: {storedSpheres.Count}");
             if (dropOnGround && sphere != null && parent.Map != null) {
                 IntVec3 dropPosition = parent.Position;
                 GenPlace.TryPlaceThing(sphere, dropPosition, parent.Map, ThingPlaceMode.Near);
@@ -243,7 +239,6 @@ namespace StormlightMod {
         }
         private void toggleGlow(bool toggleOn) {
             if (parent.Map != null && lightEnabled != toggleOn) {
-                Log.Message($"toggle glow: {toggleOn}");
                 lightEnabled = toggleOn;
                 if (toggleOn) {
                     parent.Map.glowGrid.RegisterGlower(GlowerComp);

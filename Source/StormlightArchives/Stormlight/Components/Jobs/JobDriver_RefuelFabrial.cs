@@ -112,7 +112,6 @@ namespace StormlightMod {
 
 
         public override bool TryMakePreToilReservations(bool errorOnFailed) {
-            Log.Message("TryMakePreToilReservations");
             return pawn.Reserve(Fabrial, job, 1, -1, null, errorOnFailed) && pawn.Reserve(Gemstone, job, 1, -1, null, errorOnFailed);
         }
 
@@ -150,7 +149,6 @@ namespace StormlightMod {
 
 
         public override bool TryMakePreToilReservations(bool errorOnFailed) {
-            Log.Message("TryMakePreToilReservations");
             return pawn.Reserve(Fabrial, job, 1, -1, null, errorOnFailed);
         }
 

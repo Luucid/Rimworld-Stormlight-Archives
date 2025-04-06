@@ -37,8 +37,7 @@ namespace StormlightMod {
             
             //parent.def.BaseMarketValue = (parent.def.BaseMarketValue * gemstoneSize) + gemstoneQuality * 5;
 
-
-            Log.Message($"Base Value {parent.def.BaseMarketValue}");
+            //Log.Message($"Base Value {parent.def.BaseMarketValue}");
             if (stormlightComp != null) {
                 stormlightComp.StormlightContainerQuality = gemstoneQuality;
                 stormlightComp.StormlightContainerSize = gemstoneSize;

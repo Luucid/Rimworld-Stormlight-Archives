@@ -11,18 +11,17 @@ namespace StormlightMod {
             harmony.PatchAll();
         }
 
-        //for debugging purposes
-        [HarmonyPatch(typeof(ThingWithComps), "PostMake")]
-        public static class Patch_SpherePouch_SpawnWithSpheres {
-            public static void Postfix(ThingWithComps __instance) {
-                if (__instance.TryGetComp<CompSpherePouch>() is CompSpherePouch pouchComp) {
-                    Log.Message("[StormlightMod] Debug: Populating newly spawned Sphere Pouch with spheres.");
-                    Thing sphere = ThingMaker.MakeThing(ThingDef.Named("whtwl_Sphere_Garnet"));
-                    pouchComp.storedSpheres.Add(sphere); 
-                    pouchComp.InfuseStormlight(500f);
-                }
-            }
-        }
+        ////for debugging purposes
+        //[HarmonyPatch(typeof(ThingWithComps), "PostMake")]
+        //public static class Patch_SpherePouch_SpawnWithSpheres {
+        //    public static void Postfix(ThingWithComps __instance) {
+        //        if (__instance.TryGetComp<CompSpherePouch>() is CompSpherePouch pouchComp) {
+        //            Thing sphere = ThingMaker.MakeThing(ThingDef.Named("whtwl_Sphere_Garnet"));
+        //            pouchComp.storedSpheres.Add(sphere); 
+        //            pouchComp.InfuseStormlight(500f);
+        //        }
+        //    }
+        //}
     }
 
 
@@ -65,7 +64,7 @@ namespace StormlightMod {
             bool success = Find.Storyteller.incidentQueue.Add(DefDatabase<IncidentDef>.GetNamed("whtwl_HighstormIncident"), Find.TickManager.TicksGame, parms);
 
             if (success) {
-                Log.Message("[StormlightMod] Highstorm triggered every 8 days!");
+                Log.Message("[StormlightMod] Highstorm triggered!");
             }
         }
 

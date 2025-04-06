@@ -11,23 +11,40 @@ namespace StormlightMod {
     [HarmonyPatch("Tick")]
     public static class Pawn_HighstormPushPatch {
         private static Random m_Rand = new Random();
+        private static string WindrunnerBondText = $"pauses. A presence lingers at the edge of their awareness—watching, waiting. It has seen their struggles, their moments of strength, their failures. And yet, it remains.\r\n\r\nA faint whisper echoes in the back of their mind, words unbidden yet undeniable:\r\n\"Life before death. Strength before weakness. Journey before destination.\"";
+        private static string TruthwatcherBondText = $"pauses. The world seems to blur at the edges, as if reality itself hesitates to be fully known. In the shifting mist, a quiet presence lingers—watching, not with eyes, but with understanding. It has seen their doubts, their curiosity, their silent strength.\r\n\r\nA whisper, clear and certain, forms within their thoughts:\r\n\"Life before death.Strength before weakness.Journey before destination.\"";
+        private static string EdgedancerBondText = $"pauses. The scent of blooming life drifts on the air, and something warm brushes against their soul—a presence both nurturing and ancient. It remembers who they are, even when the world does not. It has seen their compassion, their small kindnesses, their quiet resolve.\r\n\r\nFrom somewhere deep within, words rise like new growth:\r\n\"Life before death.Strength before weakness.Journey before destination.\"";
+        private static string SkybreakerBondText = $"pauses. The air grows heavy, still with judgment. A presence watches from afar, cold and unyielding—but not without purpose. It has measured their choices, their discipline, their will to obey or defy.\r\n\r\nThen, without emotion or mercy, the words arrive—etched like a sentence passed:\r\n\"Life before death.Strength before weakness.Journey before destination.\"";
+
         static void Postfix(Pawn __instance) {
             if (Find.TickManager.TicksGame % 20 != 0) return;
 
             if (!IsPawnValidForStorm(__instance))
                 return;
-
             if (IsHighstormActive(__instance.Map)) {
 
                 damageAndMovePawn(__instance);
-                if (Find.TickManager.TicksGame % 100 == 0) {
+                if (StormlightUtilities.IsRadiant(__instance)) {
+                    return;
+                }
+                if (Find.TickManager.TicksGame % 100 == 0 && StormlightUtilities.IsPawnEligibleForDoctoring(__instance)) {
                     tryToBondPawn(__instance, StormlightModDefs.whtwl_Radiant_Windrunner);
                 }
+
                 return;
             }
-            if (__instance.Map.weatherManager.curWeather.defName == "Fog") { //make for EdgeDancer also
-                if (Find.TickManager.TicksGame % 100 == 0) {
+            if (StormlightUtilities.IsRadiant(__instance)) {
+                return;
+            }
+            if (Find.TickManager.TicksGame % 100 == 0) {
+                if ((__instance.Map.weatherManager.curWeather.defName == "Fog" || __instance.Map.weatherManager.curWeather.defName == "FoggyRain") && StormlightUtilities.IsPawnEligibleForDoctoring(__instance)) {
                     tryToBondPawn(__instance, StormlightModDefs.whtwl_Radiant_Truthwatcher);
+                }
+                else if ((__instance.Map.weatherManager.curWeather.defName == "Rain" || __instance.Map.weatherManager.curWeather.defName == "Clear") && StormlightUtilities.IsNearGrowingPlants(__instance) && StormlightUtilities.IsPawnEligibleForDoctoring(__instance)) {
+                    tryToBondPawn(__instance, StormlightModDefs.whtwl_Radiant_Edgedancer);
+                }
+                else if (__instance.Map.weatherManager.curWeather.defName == "DryThunderstorm" || __instance.Map.weatherManager.curWeather.defName == "RainyThunderstorm") {
+                    tryToBondPawn(__instance, StormlightModDefs.whtwl_Radiant_Skybreaker);
                 }
             }
         }
@@ -38,24 +55,28 @@ namespace StormlightMod {
                 if (StormlightUtilities.GetRadiantTrait(pawn) != null) return;
 
                 PawnStats pawnStats = pawn.GetComp<PawnStats>();
+                if (pawnStats == null) return;
+
                 float crisisValue = pawnStats.GetRequirements(traitDef, pawnStats.Props.Req_0_1).Value;
                 int upperNumber = 10000 - (int)crisisValue;
                 if (upperNumber <= 1) upperNumber = 2;
                 int number = m_Rand.Next(1, upperNumber);
                 if (number == 1) {
-                    Find.WindowStack.Add(new Dialog_MessageBox(
-                        text: $"{pawn.NameShortColored} pauses. A presence lingers at the edge of their awareness—watching, waiting. It has seen their struggles, their moments of strength, their failures. And yet, it remains.\r\n\r\nA faint whisper echoes in the back of their mind, words unbidden yet undeniable:\r\n\"Life before death. Strength before weakness. Journey before destination.\"",
-                        buttonAText: "Speak the words",
-                        buttonAAction: () => {
-                            pawn.story.traits.GainTrait(new Trait(traitDef, 0));
-                            pawnStats.hasFormedBond = true;
-                        },
-                        buttonBText: $"Say nothing",
-                        buttonBAction: () => {
-                        },
-                        title: "A Whisper in the Mind.."
-                    ));
+                    if (traitDef == StormlightModDefs.whtwl_Radiant_Windrunner) {
+                        StormlightUtilities.SpeakOaths(pawn, pawnStats, traitDef, $"{pawn.NameShortColored} " + WindrunnerBondText, "A Whisper in the Mind..");
+                    }
+                    else if (traitDef == StormlightModDefs.whtwl_Radiant_Truthwatcher) {
+                        StormlightUtilities.SpeakOaths(pawn, pawnStats, traitDef, $"{pawn.NameShortColored} " + TruthwatcherBondText, "A Whisper in the Mind..");
+                    }
+                    else if (traitDef == StormlightModDefs.whtwl_Radiant_Edgedancer) {
+                        StormlightUtilities.SpeakOaths(pawn, pawnStats, traitDef, $"{pawn.NameShortColored} " + EdgedancerBondText, "A Whisper in the Mind..");
+                    }
+                    else if (traitDef == StormlightModDefs.whtwl_Radiant_Skybreaker) {
+                        StormlightUtilities.SpeakOaths(pawn, pawnStats, traitDef, $"{pawn.NameShortColored} " + SkybreakerBondText, "A Whisper in the Mind..");
+                    }
+
                 }
+                else { Log.Message($"tried to bond, failed with number: {number} of {upperNumber}"); }
             }
         }
 
@@ -104,11 +125,14 @@ namespace StormlightMod {
             bool isRadiant = false;
             if (__instance.story != null && __instance.RaceProps.Humanlike) {
                 foreach (Trait t in __instance.story.traits.allTraits) {
-                    if (t.def == StormlightModDefs.whtwl_Radiant_Windrunner || t.def == StormlightModDefs.whtwl_Radiant_Truthwatcher || t.def == StormlightModDefs.whtwl_Radiant_Edgedancer) { isRadiant = true; }
+                    if (StormlightUtilities.IsRadiant(t)) {
+                        isRadiant = true;
+                        continue;
+                    }
                 }
             }
 
-            if (StormlightMod.settings.enableHighstormDamage || (__instance.RaceProps.Humanlike && __instance.Faction.IsPlayer) ) {
+            if (StormlightMod.settings.enableHighstormDamage || (__instance.RaceProps.Humanlike && __instance.Faction.IsPlayer)) {
                 __instance.TakeDamage(new DamageInfo(DamageDefOf.Blunt, 1));
             }
 

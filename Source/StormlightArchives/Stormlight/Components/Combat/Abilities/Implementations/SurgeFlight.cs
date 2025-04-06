@@ -42,7 +42,6 @@ namespace StormlightMod {
             float totalCost = (float)(Props.stormLightCost * distance);
 
             if (caster.GetComp<CompStormlight>() == null || caster.GetComp<CompStormlight>().Stormlight < totalCost) {
-                Log.Message($"[flight] not enough stormlight!");
                 return;
             }
             caster.GetComp<CompStormlight>().drawStormlight(totalCost);

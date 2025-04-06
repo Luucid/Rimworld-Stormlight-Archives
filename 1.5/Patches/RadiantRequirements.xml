@@ -5,19 +5,11 @@
         <value>
             <li Class="StormlightMod.CompProperties_PawnStats">
                 <compClass>StormlightMod.PawnStats</compClass>
-                <Req_0_1>ExperiencedPersonalCrisis</Req_0_1>
-                <Req_1_2>ProtectedSomeoneInNeed</Req_1_2>
-                <Req_2_3>FourthIdeal</Req_2_3>
-                <Req_3_4>FifthIdeal</Req_3_4>
-                
-                <Req_2_3_wr>SparedEnemyLife</Req_2_3_wr>
-                <Req_3_4_wr>StrongBondedPawnDied</Req_3_4_wr>
-                <Req_2_3_tw>somethingA</Req_2_3_tw>
-                <Req_3_4_tw>somethingB</Req_3_4_tw>
-                <Req_2_3_ed>somethingA</Req_2_3_ed>
-                <Req_3_4_ed>somethingB</Req_3_4_ed>
-                <Req_2_3_sb>somethingA</Req_2_3_sb>
-                <Req_3_4_sb>somethingB</Req_3_4_sb>
+                <Req_0_1>FirstIdeal</Req_0_1>
+                <Req_1_2>SecondIdeal</Req_1_2>
+                <Req_2_3>ThirdIdeal</Req_2_3>
+                <Req_3_4>FourthIdeal</Req_3_4>
+                <Req_4_5>FifthIdeal</Req_4_5>
             </li>
             <li Class="StormlightMod.CompProperties_Stormlight">
                 <maxStormlight>3000</maxStormlight>
