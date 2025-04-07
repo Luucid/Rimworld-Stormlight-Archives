@@ -25,8 +25,10 @@ namespace StormlightMod {
                     CompShardblade blade = newEq.GetComp<CompShardblade>();
                     if (blade != null) {
                         if (blade.isBonded(null)) {
-                            Log.Message($"[stormlight mod] {___pawn.Name} picked up an unbounded shardblade!");
-                            blade.bondWithPawn(___pawn, true);
+                            if (!StormlightUtilities.PawnHasAbility(___pawn, StormlightModDefs.whtwl_SummonShardblade)) {
+                                Log.Message($"[stormlight mod] {___pawn.Name} picked up an unbounded shardblade!");
+                                blade.bondWithPawn(___pawn, true);
+                            }
                         }
                     }
                 }

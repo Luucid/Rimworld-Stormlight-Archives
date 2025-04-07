@@ -29,6 +29,11 @@ namespace StormlightMod {
                       ));
         }
 
+
+        public static bool PawnHasAbility(Pawn pawn, AbilityDef def) {
+            return pawn.abilities?.abilities?.Any(ab => ab.def == def) == true;
+        }
+
         public static bool IsRadiant(Trait trait) {
             return (trait.def == StormlightModDefs.whtwl_Radiant_Windrunner
                 || trait.def == StormlightModDefs.whtwl_Radiant_Truthwatcher
