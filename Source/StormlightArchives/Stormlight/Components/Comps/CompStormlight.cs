@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System;
 using HarmonyLib;
+using System.Security.Cryptography;
 
 namespace StormlightMod {
     public class CompStormlight : ThingComp {
@@ -136,6 +137,20 @@ namespace StormlightMod {
         }
 
         private void radiantHeal(Pawn pawn) {
+
+            // HEDDIFS THAT ATTACK LUNGS
+            //if (pawn != null) {
+            //    var hediffs = pawn.health.hediffSet.hediffs;
+            //    for (int i = 0; i < hediffs.Count; i++) {
+            //        if (hediffs[i] != null && hediffs[i].Part.def.tags?.Contains(BodyPartTagDefOf.BreathingSource) == true && hediffs[i] is Hediff_Injury) {
+            //            pawn.health.RemoveHediff(hediffs[i]);
+            //            Log.Message("Removed lung hediff");
+            //        }
+            //    }
+            //}
+            //THE CODE ABOVE CAUSES ERRORS^^^^
+
+
             // HEAL MISSING PARTS
             var missingParts = pawn.health.hediffSet.hediffs.OfType<Hediff_MissingPart>().OrderByDescending(h => h.Severity).ToList();
             foreach (var injury in missingParts) {

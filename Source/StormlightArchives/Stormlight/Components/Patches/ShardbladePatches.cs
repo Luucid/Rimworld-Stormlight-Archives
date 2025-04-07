@@ -7,11 +7,11 @@ namespace StormlightMod {
     [HarmonyPatch(typeof(Pawn_EquipmentTracker), nameof(Pawn_EquipmentTracker.TryDropEquipment))]
     public static class ShardbladePatchDrop {
         static void Postfix(Pawn ___pawn, ThingWithComps eq, ThingWithComps resultingEq, IntVec3 pos) {
-            if (eq != null) {
+            if (eq != null && ___pawn != null) {
                 if (eq.def == StormlightModDefs.whtwl_MeleeWeapon_Shardblade) {
                     CompShardblade blade = eq.GetComp<CompShardblade>();
                     if (blade != null) {
-                        if (blade.isBonded(___pawn)) { eq.DeSpawn(); }
+                        if (blade.isBonded(___pawn)) { eq.DeSpawn(); Log.Message($"Despawning blade bonded with {___pawn.NameShortColored}"); }
                     }
                 }
             }

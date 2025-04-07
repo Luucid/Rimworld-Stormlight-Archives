@@ -9,32 +9,29 @@ using UnityEngine;
 using Verse;
 using Verse.AI;
 
-namespace StormLight.Patches {
+namespace StormlightMod {
     [HarmonyPatch(typeof(Pawn), "Kill")]
     public static class Patch_Pawn_Kill {
         static void Prefix(Pawn __instance, DamageInfo? dinfo) {
             if (__instance != null && __instance.RaceProps.Humanlike) {
-                //Log.Message($"[DEBUG] {__instance.Name} is dying!");
                 CompAbilityEffect_SpawnEquipment abilityComp = __instance.GetAbilityComp<CompAbilityEffect_SpawnEquipment>(StormlightModDefs.whtwl_SummonShardblade.defName);
                 if (abilityComp == null) return;
                 if (abilityComp.bladeObject != null) {
                     {
                         CompShardblade shardBladeComp = abilityComp.bladeObject.GetComp<CompShardblade>();
                         if (shardBladeComp != null) {
-                            Log.Message("summon blade");
                             shardBladeComp.summon();
-                            Log.Message("sever bond to blade");
-                            shardBladeComp.severBond(__instance);
-                            Log.Message("drop it");
                             shardBladeComp.dismissBlade(__instance);
-                            //Fix this so it always drops when pawn is killed.
+                            shardBladeComp.summon();
+                            shardBladeComp.dismissBlade(__instance);
+                            shardBladeComp.summon();
+                            shardBladeComp.severBond(__instance);
+                            shardBladeComp.dismissBlade(__instance);
+
                         }
                     }
                 }
             }
         }
     }
-
-   
-
 }
