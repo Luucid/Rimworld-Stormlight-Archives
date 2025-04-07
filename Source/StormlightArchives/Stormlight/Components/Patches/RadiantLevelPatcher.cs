@@ -186,13 +186,13 @@ namespace StormlightMod {
 
                 float increment = 0f;
                 if (__instance.BreakExtremeIsImminent) {
-                    increment = 1.0f * StormlightMod.settings.bondChanceMultiplier;
+                    increment = 2.5f * StormlightMod.settings.bondChanceMultiplier;
                 }
                 else if (__instance.BreakMajorIsImminent) {
-                    increment = 0.5f * StormlightMod.settings.bondChanceMultiplier;
+                    increment = 0.9f * StormlightMod.settings.bondChanceMultiplier;
                 }
                 else if (__instance.BreakMinorIsImminent) {
-                    increment = 0.1f * StormlightMod.settings.bondChanceMultiplier;
+                    increment = 0.5f * StormlightMod.settings.bondChanceMultiplier;
                 }
                 if (increment > 0f) {
                     pawnStats.requirementMap[StormlightModDefs.whtwl_Radiant_Truthwatcher.defName][pawnStats.Props.Req_0_1].Value += increment;

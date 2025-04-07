@@ -65,6 +65,7 @@ namespace StormlightMod {
                     RadiantUtility.GiveRadiantXP(caster, 20f);
                 }
             }
+            else { Log.Message("Ideal level to low to heal missing part"); }
         }
 
         private void healInjuries(Pawn pawn, Need_RadiantProgress radiantNeed, CompStormlight casterComp, Pawn caster) {

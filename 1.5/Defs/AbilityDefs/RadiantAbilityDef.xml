@@ -250,7 +250,7 @@
     <comps>
         <li Class="StormlightMod.CompProperties_AbilitySurgeHeal">
             <compClass>StormlightMod.CompAbilityEffect_SurgeHeal</compClass>
-            <stormLightCost>100</stormLightCost>
+            <stormLightCost>50</stormLightCost>
         </li>
     </comps>
 </AbilityDef>

@@ -76,7 +76,7 @@ namespace StormlightMod {
                     }
 
                 }
-                else { Log.Message($"tried to bond, failed with number: {number} of {upperNumber}"); }
+                //else { Log.Message($"tried to bond, failed with number: {number} of {upperNumber}"); }
             }
         }
 

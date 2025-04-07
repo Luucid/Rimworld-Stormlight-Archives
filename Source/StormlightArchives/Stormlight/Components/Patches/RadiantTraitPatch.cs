@@ -1,6 +1,8 @@
 ﻿using HarmonyLib;
 using RimWorld;
 using Verse;
+using Verse.AI;
+using System;
 
 namespace StormlightMod {
     [HarmonyPatch(typeof(TraitSet), "GainTrait")]
@@ -69,4 +71,18 @@ namespace StormlightMod {
         }
     }
 
+
+
+    [HarmonyPatch(typeof(Pawn_PathFollower), "CostToMoveIntoCell")]
+    [HarmonyPatch(new Type[] { typeof(Pawn), typeof(IntVec3) })]
+    public static class Patch_Pawn_Movement {
+        static void Postfix(Pawn pawn, IntVec3 c, ref float __result) {
+            if (pawn == null || pawn.health?.hediffSet == null) return;
+            if (pawn.health.hediffSet.HasHediff(StormlightModDefs.whtwl_surge_abrasion)) {
+                __result = (c.x != pawn.Position.x && c.z != pawn.Position.z)
+                  ? pawn.TicksPerMoveDiagonal
+                  : pawn.TicksPerMoveCardinal;
+            }
+        }
+    }
 }

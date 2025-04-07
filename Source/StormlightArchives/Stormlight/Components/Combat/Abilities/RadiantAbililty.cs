@@ -309,8 +309,7 @@ namespace StormlightMod {
                     validator = (TargetInfo info) => {
                         return info.IsValid &&
                                pawn != null &&
-                               pawn.Spawned &&
-                               pawn.Position.InHorDistOf(info.Cell, ability.verb.EffectiveRange);
+                               pawn.Spawned;
                     }
                 };
                 StartCustomTargeting(pawn, ability.verb.EffectiveRange, tp);
