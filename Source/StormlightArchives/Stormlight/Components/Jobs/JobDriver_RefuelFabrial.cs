@@ -28,7 +28,10 @@ namespace StormlightMod {
                     doRemoveToil(fabrial.TryGetComp<CompBasicFabrialAugumenter>());
                     doReplaceToil(fabrial.TryGetComp<CompBasicFabrialAugumenter>(), gemstone);
                 }
-
+                else if (isBasicDiminisherFabrial(fabrial)) {
+                    doRemoveToil(fabrial.TryGetComp<CompBasicFabrialDiminisher>());
+                    doReplaceToil(fabrial.TryGetComp<CompBasicFabrialDiminisher>(), gemstone);
+                }
             };
 
             toil.AddFinishAction(delegate {
@@ -59,6 +62,9 @@ namespace StormlightMod {
                 }
                 else if (isBasicAugmenterFabrial(fabrial)) {
                     doRemoveToil(fabrial.TryGetComp<CompBasicFabrialAugumenter>());
+                }
+                else if (isBasicDiminisherFabrial(fabrial)) {
+                    doRemoveToil(fabrial.TryGetComp<CompBasicFabrialDiminisher>());
                 }
 
             };
@@ -96,6 +102,10 @@ namespace StormlightMod {
         }
         static bool isBasicAugmenterFabrial(Thing fabrial) {
             CompBasicFabrialAugumenter fabComp = fabrial.TryGetComp<CompBasicFabrialAugumenter>();
+            return fabComp != null;
+        }
+        static bool isBasicDiminisherFabrial(Thing fabrial) {
+            CompBasicFabrialDiminisher fabComp = fabrial.TryGetComp<CompBasicFabrialDiminisher>();
             return fabComp != null;
         }
     }

@@ -175,4 +175,102 @@
     <constructionSkillPrerequisite>5</constructionSkillPrerequisite>
      <specialDisplayRadius>5.0</specialDisplayRadius>
   </ThingDef>
+
+
+  <ThingDef ParentName="BuildingBase">
+    <defName>whtwl_BasicFabrial_Diminisher</defName>
+    <label>Basic Diminisher</label>
+    <description>A device that use a trapped spren in a gemstone encased in a tin cage.</description>
+    <thingClass>StormlightMod.Building_Fabrial_Basic_Diminisher</thingClass>
+    <graphicData>
+      <texPath>Things/Item/Fabrials/Gemholder_without_gem</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>CutoutComplex</shaderType>
+      <drawSize>1.2</drawSize>
+      <attachments>
+        <li>
+          <texPath>Things/Item/Fabrials/Gemholder_top_with_ruby</texPath>
+          <graphicClass>Graphic_Single</graphicClass>
+          <shaderType>CutoutComplex</shaderType>
+          <drawSize>1.2</drawSize>
+        </li>
+        <li>
+          <texPath>Things/Item/Fabrials/Gemholder_top_with_diamond</texPath>
+          <graphicClass>Graphic_Single</graphicClass>
+          <shaderType>CutoutComplex</shaderType>
+          <drawSize>1.2</drawSize>
+        </li>
+        <li>
+          <texPath>Things/Item/Fabrials/Gemholder_top_with_garnet</texPath>
+          <graphicClass>Graphic_Single</graphicClass>
+          <shaderType>CutoutComplex</shaderType>
+          <drawSize>1.2</drawSize>
+        </li>
+        <li>
+          <texPath>Things/Item/Fabrials/Gemholder_top_with_emerald</texPath>
+          <graphicClass>Graphic_Single</graphicClass>
+          <shaderType>CutoutComplex</shaderType>
+          <drawSize>1.2</drawSize>
+        </li>
+        <li>
+          <texPath>Things/Item/Fabrials/Gemholder_top_with_sapphire</texPath>
+          <graphicClass>Graphic_Single</graphicClass>
+          <shaderType>CutoutComplex</shaderType>
+          <drawSize>1.2</drawSize>
+        </li>
+      </attachments>
+    </graphicData>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>30</pathCost>
+    <blockWind>true</blockWind>
+    <rotatable>false</rotatable>
+    <fillPercent>0.4</fillPercent>
+    <thingCategories>
+      <li>BuildingsTemperature</li>
+    </thingCategories>
+    <statBases>
+      <WorkToBuild>1000</WorkToBuild>
+      <MaxHitPoints>100</MaxHitPoints>
+      <Mass>6</Mass>
+      <Flammability>0.5</Flammability>
+    </statBases>
+    <tickerType>Normal</tickerType>
+    <building>
+      <destroySound>BuildingDestroyed_Metal_Small</destroySound>
+    </building>
+    <costList>
+      <whtwl_FabrialCage_Tin>1</whtwl_FabrialCage_Tin>
+    </costList>
+    <costStuffCount>75</costStuffCount>
+    <stuffCategories>
+      <li>Metallic</li>
+      <li>Woody</li>
+      <li>Stony</li>
+    </stuffCategories>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <placeWorkers>
+      <li>PlaceWorker_Heater</li>
+    </placeWorkers>
+    <drawPlaceWorkersWhileSelected>false</drawPlaceWorkersWhileSelected>
+    <comps>
+      <li Class="CompProperties_Flickable" />
+      <li Class="CompProperties_Glower">
+        <glowRadius>5</glowRadius>
+        <overlightRadius>5.0</overlightRadius>
+        <glowColor>(255,150,100,0)</glowColor>
+      </li>
+      <li Class="StormlightMod.CompProperties_BasicFabrialDiminisher">
+        <compClass>StormlightMod.CompBasicFabrialDiminisher</compClass>
+      </li>
+    </comps>
+    <designationCategory>whtwl_DesignationFabrials</designationCategory>
+    <designationHotKey>Misc3</designationHotKey>
+    <researchPrerequisites>
+      <li>whtwl_Research_BasicArtifabriary</li>
+    </researchPrerequisites>
+    <constructionSkillPrerequisite>5</constructionSkillPrerequisite>
+     <specialDisplayRadius>5.0</specialDisplayRadius>
+  </ThingDef>
 </Defs>

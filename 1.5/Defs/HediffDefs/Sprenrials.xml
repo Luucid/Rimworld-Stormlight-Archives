@@ -20,7 +20,26 @@
             </li>
         </comps>
     </HediffDef>
-
+    <HediffDef>
+        <defName>whtwl_painrial_diminisher</defName>
+        <label>painrial nearby</label>
+        <labelNoun>PainrialDiminisher</labelNoun>
+        <description>Pawn is close to painrial diminisher.</description>
+        <isBad>false</isBad>
+        <hediffClass>HediffWithComps</hediffClass>
+        <stages>
+            <li>
+                <painOffset>-0.5</painOffset>
+            </li>
+        </stages>
+        <comps>
+            <li Class="HediffCompProperties_Disappears">
+                <disappearsAfterTicks>500</disappearsAfterTicks>
+                <showRemainingTime>false</showRemainingTime>
+                <canUseDecimalsShortForm>true</canUseDecimalsShortForm>
+            </li>
+        </comps>
+    </HediffDef>
     <HediffDef>
         <defName>whtwl_logirial_agument</defName>
         <label>logirial nearby</label>
@@ -32,6 +51,28 @@
             <li>
                 <statOffsets>
                     <ResearchSpeed>2.0</ResearchSpeed>
+                </statOffsets>
+            </li>
+        </stages>
+        <comps>
+            <li Class="HediffCompProperties_Disappears">
+                <disappearsAfterTicks>500</disappearsAfterTicks>
+                <showRemainingTime>false</showRemainingTime>
+                <canUseDecimalsShortForm>true</canUseDecimalsShortForm>
+            </li>
+        </comps>
+    </HediffDef>
+        <HediffDef>
+        <defName>whtwl_logirial_diminisher</defName>
+        <label>logirial nearby</label>
+        <labelNoun>LogirialDiminisher</labelNoun>
+        <description>Pawn is close to logirial diminisher.</description>
+        <isBad>false</isBad>
+        <hediffClass>HediffWithComps</hediffClass>
+        <stages>
+            <li>
+                <statOffsets>
+                    <ResearchSpeed>-0.5</ResearchSpeed>
                 </statOffsets>
             </li>
         </stages>

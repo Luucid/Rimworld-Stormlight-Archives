@@ -75,7 +75,11 @@ namespace StormlightMod {
 
         // HEDIFF
         public static HediffDef whtwl_painrial_agument;
+        public static HediffDef whtwl_painrial_diminisher;
+
         public static HediffDef whtwl_logirial_agument;
+        public static HediffDef whtwl_logirial_diminisher;
+
         public static HediffDef whtwl_surge_abrasion;
 
 

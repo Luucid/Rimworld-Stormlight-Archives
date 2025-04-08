@@ -65,7 +65,7 @@ namespace StormlightMod {
         public override void PostSpawnSetup(bool respawningAfterLoad) {
             base.PostSpawnSetup(respawningAfterLoad);
             if (insertedGemstone != null) {
-                CultivationSprenPatch.RegisterBuilding(this.parent as Building_Fabrial_Basic_Augmenter);
+                CultivationSprenPatch.RegisterBuilding(this.parent as Building); 
             }
         }
 

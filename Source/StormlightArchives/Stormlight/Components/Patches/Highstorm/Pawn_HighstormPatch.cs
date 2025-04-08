@@ -76,7 +76,7 @@ namespace StormlightMod {
                     }
 
                 }
-                else { Log.Message($"{pawn.NameShortColored} tried to bond, failed with number: {number} of {upperNumber}"); }
+                //else { Log.Message($"{pawn.NameShortColored} tried to bond, failed with number: {number} of {upperNumber}"); }
             }
         }
 

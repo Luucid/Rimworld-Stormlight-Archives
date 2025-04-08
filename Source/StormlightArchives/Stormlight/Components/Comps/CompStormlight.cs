@@ -150,7 +150,6 @@ namespace StormlightMod {
             //}
             //THE CODE ABOVE CAUSES ERRORS^^^^
 
-            RadiantUtility.GiveRadiantXP(pawn, 150f);
             // HEAL MISSING PARTS
             var missingParts = pawn.health.hediffSet.hediffs.OfType<Hediff_MissingPart>().OrderByDescending(h => h.Severity).ToList();
             foreach (var injury in missingParts) {
