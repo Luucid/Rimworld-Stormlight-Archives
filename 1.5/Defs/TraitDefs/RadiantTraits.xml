@@ -194,6 +194,34 @@
           <li>whtwl_SummonShardblade</li>
         </abilities>
       </li>
+      <li>
+        <label>Voice of the Ignored</label>
+        <description>{PAWN_nameDef} has sworn the Third Ideal: "I will listen to those who have been
+          ignored." With quick feet and deeper healing, they dance through the world unseen,
+          becoming a guardian of the voiceless.</description>
+        <degree>3</degree>
+        <commonality>0</commonality>
+        <abilities>
+          <li>whtwl_BreathStormlight</li>
+          <li>whtwl_SurgeOfHealing</li>
+          <li>whtwl_SurgeOfAbrasion</li>
+          <li>whtwl_SummonShardblade</li>
+        </abilities>
+      </li>
+      <li>
+        <label>Voice of the Ignored</label>
+        <description>{PAWN_nameDef} has sworn the Third Ideal: "I will listen to those who have been
+          ignored." With quick feet and deeper healing, they dance through the world unseen,
+          becoming a guardian of the voiceless.</description>
+        <degree>4</degree>
+        <commonality>0</commonality>
+        <abilities>
+          <li>whtwl_BreathStormlight</li>
+          <li>whtwl_SurgeOfHealing</li>
+          <li>whtwl_SurgeOfAbrasion</li>
+          <li>whtwl_SummonShardblade</li>
+        </abilities>
+      </li>
     </degreeDatas>
     <commonality>0.0</commonality>
   </TraitDef>

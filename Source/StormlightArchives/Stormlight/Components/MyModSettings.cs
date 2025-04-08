@@ -43,7 +43,7 @@ namespace StormlightMod {
             listingStandard.CheckboxLabeled("Highstorms will damage visitors and animals", ref settings.enableHighstormDamage, "turn off if you dont want all your wildlife to die, and visitors to hate you");
             listingStandard.CheckboxLabeled("Pawns will glow when infused with stormlight", ref settings.enablePawnGlow, "currently broken");
             listingStandard.CheckboxLabeled("DEV OPTION: enable dev features", ref settings.devOptionAutofillSpheres, "Will enable various dev features, like filling spheres");
-            listingStandard.TextFieldNumericLabeled<float>("bond chance multiplier", ref settings.bondChanceMultiplier, ref settings.bondChanceMultiplierBuffer, 1, 100);
+            listingStandard.TextFieldNumericLabeled<float>("bond chance multiplier", ref settings.bondChanceMultiplier, ref settings.bondChanceMultiplierBuffer, 1, 10000);
             listingStandard.End();
             base.DoSettingsWindowContents(inRect);
         }

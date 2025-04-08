@@ -57,7 +57,7 @@ namespace StormlightMod {
                 PawnStats pawnStats = pawn.GetComp<PawnStats>();
                 if (pawnStats == null) return;
 
-                float crisisValue = pawnStats.GetRequirements(traitDef, pawnStats.Props.Req_0_1).Value;
+                float crisisValue = pawnStats.GetRequirementsEntry().Value;
                 int upperNumber = 10000 - (int)crisisValue;
                 if (upperNumber <= 1) upperNumber = 2;
                 int number = m_Rand.Next(1, upperNumber);
@@ -76,7 +76,7 @@ namespace StormlightMod {
                     }
 
                 }
-                //else { Log.Message($"tried to bond, failed with number: {number} of {upperNumber}"); }
+                else { Log.Message($"{pawn.NameShortColored} tried to bond, failed with number: {number} of {upperNumber}"); }
             }
         }
 

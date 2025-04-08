@@ -137,6 +137,9 @@ namespace StormlightMod {
             }
             return requirementMap[trait.defName][Props.Req_0_1];
         }
+        public Radiant_Requirements GetRequirementsEntry() {
+            return requirementMap[StormlightModDefs.whtwl_Radiant_Windrunner.defName][Props.Req_0_1];
+        }
     }
 }
 
@@ -178,33 +181,27 @@ namespace StormlightMod {
         private static bool colonistFound = false;
 
         static void Postfix(MentalBreaker __instance, Pawn ___pawn) {
-            if (___pawn.NonHumanlikeOrWildMan()) return;
-            if (___pawn.IsColonist == false) return;
-            PawnStats pawnStats = ___pawn.GetComp<PawnStats>();
+            if (___pawn.IsHashIntervalTick(100)) {
+                if (___pawn.NonHumanlikeOrWildMan()) return;
+                if (___pawn.IsColonist == false) return;
+                PawnStats pawnStats = ___pawn.GetComp<PawnStats>();
+                if (pawnStats != null && pawnStats.hasFormedBond == false) {
 
-            if (pawnStats != null && pawnStats.hasFormedBond == false && pawnStats.doCheckWhenThisIsZero == 0) {
-
-                float increment = 0f;
-                if (__instance.BreakExtremeIsImminent) {
-                    increment = 2.5f * StormlightMod.settings.bondChanceMultiplier;
+                    float increment = 0f;
+                    if (__instance.BreakExtremeIsImminent) {
+                        increment = 2.5f * StormlightMod.settings.bondChanceMultiplier;
+                    }
+                    else if (__instance.BreakMajorIsImminent) {
+                        increment = 0.9f * StormlightMod.settings.bondChanceMultiplier;
+                    }
+                    else if (__instance.BreakMinorIsImminent) {
+                        increment = 0.5f * StormlightMod.settings.bondChanceMultiplier;
+                    }
+                    if (increment > 0f) {
+                        pawnStats.requirementMap[StormlightModDefs.whtwl_Radiant_Windrunner.defName][pawnStats.Props.Req_0_1].Value += increment;
+                    }
+                    pawnStats.doCheckWhenThisIsZero = (pawnStats.doCheckWhenThisIsZero + 1) % 100;
                 }
-                else if (__instance.BreakMajorIsImminent) {
-                    increment = 0.9f * StormlightMod.settings.bondChanceMultiplier;
-                }
-                else if (__instance.BreakMinorIsImminent) {
-                    increment = 0.5f * StormlightMod.settings.bondChanceMultiplier;
-                }
-                if (increment > 0f) {
-                    pawnStats.requirementMap[StormlightModDefs.whtwl_Radiant_Truthwatcher.defName][pawnStats.Props.Req_0_1].Value += increment;
-                    pawnStats.requirementMap[StormlightModDefs.whtwl_Radiant_Windrunner.defName][pawnStats.Props.Req_0_1].Value += increment;
-                    pawnStats.requirementMap[StormlightModDefs.whtwl_Radiant_Edgedancer.defName][pawnStats.Props.Req_0_1].Value += increment;
-                    pawnStats.requirementMap[StormlightModDefs.whtwl_Radiant_Skybreaker.defName][pawnStats.Props.Req_0_1].Value += increment;
-                    //Log.Message($"{___pawn.NameShortColored} value: {pawnStats.requirementMap[StormlightModDefs.whtwl_Radiant_Skybreaker.defName][pawnStats.Props.Req_0_1].Value}");
-                }
-                pawnStats.doCheckWhenThisIsZero = (pawnStats.doCheckWhenThisIsZero + 1) % 100;
-            }
-            else if (pawnStats != null) {
-                pawnStats.doCheckWhenThisIsZero = (pawnStats.doCheckWhenThisIsZero + 1) % 100;
             }
         }
     }
@@ -247,26 +244,29 @@ namespace StormlightMod {
     [HarmonyPatch("HealthTick")]
     public static class Patch_Pawn_HealthTracker_HealthTick {
         static void Postfix(Pawn_HealthTracker __instance, Pawn ___pawn) {
-            if (___pawn == null || ___pawn.NonHumanlikeOrWildMan()) { return; }
-            PawnStats pawnStats = ___pawn.GetComp<PawnStats>();
+            if (___pawn.IsHashIntervalTick(100)) {
 
-            List<Pawn> patientsToRemove = new List<Pawn>();
-            foreach (Pawn patient in pawnStats.PatientList) {
-                if (patient.health.Dead && patient.IsPrisoner == false) {
-                    pawnStats.PatientDied = true;
-                    pawnStats.requirementMap[StormlightModDefs.whtwl_Radiant_Windrunner.defName][pawnStats.Props.Req_3_4].IsSatisfied = true;
-                    patientsToRemove.Add(patient);
-                }
-                else if (NeedsNoTending(patient)) {
-                    pawnStats.PatientSaved = true;
-                    if (patient.IsPrisoner) {
-                        pawnStats.EnemyPatientSaved = true;
+                if (___pawn == null || ___pawn.NonHumanlikeOrWildMan()) { return; }
+                PawnStats pawnStats = ___pawn.GetComp<PawnStats>();
+
+                List<Pawn> patientsToRemove = new List<Pawn>();
+                foreach (Pawn patient in pawnStats.PatientList) {
+                    if (patient.health.Dead && patient.IsPrisoner == false) {
+                        pawnStats.PatientDied = true;
+                        pawnStats.requirementMap[StormlightModDefs.whtwl_Radiant_Windrunner.defName][pawnStats.Props.Req_3_4].IsSatisfied = true;
+                        patientsToRemove.Add(patient);
                     }
-                    patientsToRemove.Add(patient);
+                    else if (NeedsNoTending(patient)) {
+                        pawnStats.PatientSaved = true;
+                        if (patient.IsPrisoner) {
+                            pawnStats.EnemyPatientSaved = true;
+                        }
+                        patientsToRemove.Add(patient);
+                    }
                 }
-            }
-            foreach (var patient in patientsToRemove) {
-                pawnStats.PatientList.Remove(patient);
+                foreach (var patient in patientsToRemove) {
+                    pawnStats.PatientList.Remove(patient);
+                }
             }
         }
 
@@ -279,4 +279,3 @@ namespace StormlightMod {
 
 }
 
-//Messages.Message("MessageFullyHealed".Translate(pawn.LabelCap, pawn), pawn, MessageTypeDefOf.PositiveEvent);
