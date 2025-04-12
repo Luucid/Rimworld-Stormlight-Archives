@@ -3,40 +3,56 @@
   "WorkspaceRootPath": "F:\\SteamLibrary\\steamapps\\common\\RimWorld\\Mods\\StormlightArchives\\Source\\StormlightArchives\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{645FE176-5967-4E2B-AD1D-1906C4F6C50F}|Stormlight\\Stormlight.csproj|f:\\steamlibrary\\steamapps\\common\\rimworld\\mods\\stormlightarchives\\source\\stormlightarchives\\stormlight\\components\\comps\\fabrials\\genericfabrialdiminisher.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{645FE176-5967-4E2B-AD1D-1906C4F6C50F}|Stormlight\\Stormlight.csproj|solutionrelative:stormlight\\components\\comps\\fabrials\\genericfabrialdiminisher.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{645FE176-5967-4E2B-AD1D-1906C4F6C50F}|Stormlight\\Stormlight.csproj|f:\\steamlibrary\\steamapps\\common\\rimworld\\mods\\stormlightarchives\\source\\stormlightarchives\\stormlight\\components\\weather\\gamecondition_highstorm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{645FE176-5967-4E2B-AD1D-1906C4F6C50F}|Stormlight\\Stormlight.csproj|solutionrelative:stormlight\\components\\weather\\gamecondition_highstorm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{645FE176-5967-4E2B-AD1D-1906C4F6C50F}|Stormlight\\Stormlight.csproj|f:\\steamlibrary\\steamapps\\common\\rimworld\\mods\\stormlightarchives\\source\\stormlightarchives\\stormlight\\components\\patches\\fabrials\\fabrialpatches.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{645FE176-5967-4E2B-AD1D-1906C4F6C50F}|Stormlight\\Stormlight.csproj|solutionrelative:stormlight\\components\\patches\\fabrials\\fabrialpatches.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{645FE176-5967-4E2B-AD1D-1906C4F6C50F}|Stormlight\\Stormlight.csproj|f:\\steamlibrary\\steamapps\\common\\rimworld\\mods\\stormlightarchives\\source\\stormlightarchives\\stormlight\\components\\comps\\fabrials\\apparelfabrialdiminisherpainrial.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{645FE176-5967-4E2B-AD1D-1906C4F6C50F}|Stormlight\\Stormlight.csproj|solutionrelative:stormlight\\components\\comps\\fabrials\\apparelfabrialdiminisherpainrial.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{645FE176-5967-4E2B-AD1D-1906C4F6C50F}|Stormlight\\Stormlight.csproj|F:\\SteamLibrary\\steamapps\\common\\RimWorld\\Mods\\StormlightArchives\\Source\\StormlightArchives\\stormlight\\components\\comps\\compstormlight.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{645FE176-5967-4E2B-AD1D-1906C4F6C50F}|Stormlight\\Stormlight.csproj|solutionrelative:stormlight\\components\\comps\\compstormlight.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{645FE176-5967-4E2B-AD1D-1906C4F6C50F}|Stormlight\\Stormlight.csproj|f:\\steamlibrary\\steamapps\\common\\rimworld\\mods\\stormlightarchives\\source\\stormlightarchives\\stormlight\\components\\defofs.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{645FE176-5967-4E2B-AD1D-1906C4F6C50F}|Stormlight\\Stormlight.csproj|solutionrelative:stormlight\\components\\defofs.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{645FE176-5967-4E2B-AD1D-1906C4F6C50F}|Stormlight\\Stormlight.csproj|f:\\steamlibrary\\steamapps\\common\\rimworld\\mods\\stormlightarchives\\source\\stormlightarchives\\stormlight\\components\\comps\\fabrials\\genericfabrialaugmenter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{645FE176-5967-4E2B-AD1D-1906C4F6C50F}|Stormlight\\Stormlight.csproj|solutionrelative:stormlight\\components\\comps\\fabrials\\genericfabrialaugmenter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{645FE176-5967-4E2B-AD1D-1906C4F6C50F}|Stormlight\\Stormlight.csproj|f:\\steamlibrary\\steamapps\\common\\rimworld\\mods\\stormlightarchives\\source\\stormlightarchives\\stormlight\\components\\patches\\highstorm\\pawn_highstormpatch.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{645FE176-5967-4E2B-AD1D-1906C4F6C50F}|Stormlight\\Stormlight.csproj|solutionrelative:stormlight\\components\\patches\\highstorm\\pawn_highstormpatch.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{645FE176-5967-4E2B-AD1D-1906C4F6C50F}|Stormlight\\Stormlight.csproj|F:\\SteamLibrary\\steamapps\\common\\RimWorld\\Mods\\StormlightArchives\\Source\\StormlightArchives\\stormlight\\components\\stormlightutilities.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{645FE176-5967-4E2B-AD1D-1906C4F6C50F}|Stormlight\\Stormlight.csproj|solutionrelative:stormlight\\components\\stormlightutilities.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{645FE176-5967-4E2B-AD1D-1906C4F6C50F}|Stormlight\\Stormlight.csproj|f:\\steamlibrary\\steamapps\\common\\rimworld\\mods\\stormlightarchives\\source\\stormlightarchives\\stormlight\\components\\patches\\harmonypatcher.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{645FE176-5967-4E2B-AD1D-1906C4F6C50F}|Stormlight\\Stormlight.csproj|solutionrelative:stormlight\\components\\patches\\harmonypatcher.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{645FE176-5967-4E2B-AD1D-1906C4F6C50F}|Stormlight\\Stormlight.csproj|F:\\SteamLibrary\\steamapps\\common\\RimWorld\\Mods\\StormlightArchives\\Source\\StormlightArchives\\stormlight\\components\\patches\\fabrials\\fabrialpatches.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{645FE176-5967-4E2B-AD1D-1906C4F6C50F}|Stormlight\\Stormlight.csproj|solutionrelative:stormlight\\components\\patches\\fabrials\\fabrialpatches.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{645FE176-5967-4E2B-AD1D-1906C4F6C50F}|Stormlight\\Stormlight.csproj|f:\\steamlibrary\\steamapps\\common\\rimworld\\mods\\stormlightarchives\\source\\stormlightarchives\\stormlight\\components\\comps\\fabrials\\genericfabrialdiminisher.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{645FE176-5967-4E2B-AD1D-1906C4F6C50F}|Stormlight\\Stormlight.csproj|solutionrelative:stormlight\\components\\comps\\fabrials\\genericfabrialdiminisher.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{645FE176-5967-4E2B-AD1D-1906C4F6C50F}|Stormlight\\Stormlight.csproj|F:\\SteamLibrary\\steamapps\\common\\RimWorld\\Mods\\StormlightArchives\\Source\\StormlightArchives\\stormlight\\components\\comps\\fabrials\\sprentrapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{645FE176-5967-4E2B-AD1D-1906C4F6C50F}|Stormlight\\Stormlight.csproj|solutionrelative:stormlight\\components\\comps\\fabrials\\sprentrapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{645FE176-5967-4E2B-AD1D-1906C4F6C50F}|Stormlight\\Stormlight.csproj|f:\\steamlibrary\\steamapps\\common\\rimworld\\mods\\stormlightarchives\\source\\stormlightarchives\\stormlight\\components\\comps\\fabrials\\fabrialcage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{645FE176-5967-4E2B-AD1D-1906C4F6C50F}|Stormlight\\Stormlight.csproj|solutionrelative:stormlight\\components\\comps\\fabrials\\fabrialcage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{645FE176-5967-4E2B-AD1D-1906C4F6C50F}|Stormlight\\Stormlight.csproj|F:\\SteamLibrary\\steamapps\\common\\RimWorld\\Mods\\StormlightArchives\\Source\\StormlightArchives\\stormlight\\components\\comps\\fabrials\\genericfabrialaugmenter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{645FE176-5967-4E2B-AD1D-1906C4F6C50F}|Stormlight\\Stormlight.csproj|solutionrelative:stormlight\\components\\comps\\fabrials\\genericfabrialaugmenter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{645FE176-5967-4E2B-AD1D-1906C4F6C50F}|Stormlight\\Stormlight.csproj|f:\\steamlibrary\\steamapps\\common\\rimworld\\mods\\stormlightarchives\\source\\stormlightarchives\\stormlight\\components\\comps\\compstormlight.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{645FE176-5967-4E2B-AD1D-1906C4F6C50F}|Stormlight\\Stormlight.csproj|solutionrelative:stormlight\\components\\comps\\compstormlight.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{645FE176-5967-4E2B-AD1D-1906C4F6C50F}|Stormlight\\Stormlight.csproj|F:\\SteamLibrary\\steamapps\\common\\RimWorld\\Mods\\StormlightArchives\\Source\\StormlightArchives\\stormlight\\components\\comps\\fabrials\\fabrialcage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{645FE176-5967-4E2B-AD1D-1906C4F6C50F}|Stormlight\\Stormlight.csproj|solutionrelative:stormlight\\components\\comps\\fabrials\\fabrialcage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{645FE176-5967-4E2B-AD1D-1906C4F6C50F}|Stormlight\\Stormlight.csproj|F:\\SteamLibrary\\steamapps\\common\\RimWorld\\Mods\\StormlightArchives\\Source\\StormlightArchives\\stormlight\\components\\patches\\radianttraitpatch.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{645FE176-5967-4E2B-AD1D-1906C4F6C50F}|Stormlight\\Stormlight.csproj|solutionrelative:stormlight\\components\\patches\\radianttraitpatch.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{645FE176-5967-4E2B-AD1D-1906C4F6C50F}|Stormlight\\Stormlight.csproj|F:\\SteamLibrary\\steamapps\\common\\RimWorld\\Mods\\StormlightArchives\\Source\\StormlightArchives\\stormlight\\components\\stormlightutilities.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{645FE176-5967-4E2B-AD1D-1906C4F6C50F}|Stormlight\\Stormlight.csproj|solutionrelative:stormlight\\components\\stormlightutilities.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{645FE176-5967-4E2B-AD1D-1906C4F6C50F}|Stormlight\\Stormlight.csproj|F:\\SteamLibrary\\steamapps\\common\\RimWorld\\Mods\\StormlightArchives\\Source\\StormlightArchives\\stormlight\\components\\combat\\abilities\\implementations\\surgeabrasion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -62,28 +78,54 @@
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "FabrialPatches.cs",
-              "DocumentMoniker": "F:\\SteamLibrary\\steamapps\\common\\RimWorld\\Mods\\StormlightArchives\\Source\\StormlightArchives\\Stormlight\\Components\\Patches\\Fabrials\\FabrialPatches.cs",
-              "RelativeDocumentMoniker": "Stormlight\\Components\\Patches\\Fabrials\\FabrialPatches.cs",
-              "ToolTip": "F:\\SteamLibrary\\steamapps\\common\\RimWorld\\Mods\\StormlightArchives\\Source\\StormlightArchives\\Stormlight\\Components\\Patches\\Fabrials\\FabrialPatches.cs",
-              "RelativeToolTip": "Stormlight\\Components\\Patches\\Fabrials\\FabrialPatches.cs",
-              "ViewState": "AgIAAA8AAAAAAAAAAAAAADsAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 6,
+              "Title": "HarmonyPatcher.cs",
+              "DocumentMoniker": "F:\\SteamLibrary\\steamapps\\common\\RimWorld\\Mods\\StormlightArchives\\Source\\StormlightArchives\\Stormlight\\Components\\Patches\\HarmonyPatcher.cs",
+              "RelativeDocumentMoniker": "Stormlight\\Components\\Patches\\HarmonyPatcher.cs",
+              "ToolTip": "F:\\SteamLibrary\\steamapps\\common\\RimWorld\\Mods\\StormlightArchives\\Source\\StormlightArchives\\Stormlight\\Components\\Patches\\HarmonyPatcher.cs",
+              "RelativeToolTip": "Stormlight\\Components\\Patches\\HarmonyPatcher.cs",
+              "ViewState": "AgIAABcAAAAAAAAAAAArwEIAAAAPAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-08T10:19:44.49Z",
+              "WhenOpened": "2025-04-10T19:28:52.327Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "GenericFabrialDiminisher.cs",
-              "DocumentMoniker": "F:\\SteamLibrary\\steamapps\\common\\RimWorld\\Mods\\StormlightArchives\\Source\\StormlightArchives\\Stormlight\\Components\\Comps\\Fabrials\\GenericFabrialDiminisher.cs",
-              "RelativeDocumentMoniker": "Stormlight\\Components\\Comps\\Fabrials\\GenericFabrialDiminisher.cs",
-              "ToolTip": "F:\\SteamLibrary\\steamapps\\common\\RimWorld\\Mods\\StormlightArchives\\Source\\StormlightArchives\\Stormlight\\Components\\Comps\\Fabrials\\GenericFabrialDiminisher.cs",
-              "RelativeToolTip": "Stormlight\\Components\\Comps\\Fabrials\\GenericFabrialDiminisher.cs",
-              "ViewState": "AgIAACcAAAAAAAAAAAAEwFUAAAAVAAAAAAAAAA==",
+              "Title": "GameCondition_Highstorm.cs",
+              "DocumentMoniker": "F:\\SteamLibrary\\steamapps\\common\\RimWorld\\Mods\\StormlightArchives\\Source\\StormlightArchives\\Stormlight\\Components\\Weather\\GameCondition_Highstorm.cs",
+              "RelativeDocumentMoniker": "Stormlight\\Components\\Weather\\GameCondition_Highstorm.cs",
+              "ToolTip": "F:\\SteamLibrary\\steamapps\\common\\RimWorld\\Mods\\StormlightArchives\\Source\\StormlightArchives\\Stormlight\\Components\\Weather\\GameCondition_Highstorm.cs",
+              "RelativeToolTip": "Stormlight\\Components\\Weather\\GameCondition_Highstorm.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACUAAAAxAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-08T09:33:40.424Z",
+              "WhenOpened": "2025-04-10T08:11:22.137Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Pawn_HighstormPatch.cs",
+              "DocumentMoniker": "F:\\SteamLibrary\\steamapps\\common\\RimWorld\\Mods\\StormlightArchives\\Source\\StormlightArchives\\Stormlight\\Components\\Patches\\Highstorm\\Pawn_HighstormPatch.cs",
+              "RelativeDocumentMoniker": "Stormlight\\Components\\Patches\\Highstorm\\Pawn_HighstormPatch.cs",
+              "ToolTip": "F:\\SteamLibrary\\steamapps\\common\\RimWorld\\Mods\\StormlightArchives\\Source\\StormlightArchives\\Stormlight\\Components\\Patches\\Highstorm\\Pawn_HighstormPatch.cs",
+              "RelativeToolTip": "Stormlight\\Components\\Patches\\Highstorm\\Pawn_HighstormPatch.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAACcAAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-10T08:01:43.707Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ApparelFabrialDiminisherPainrial.cs",
+              "DocumentMoniker": "F:\\SteamLibrary\\steamapps\\common\\RimWorld\\Mods\\StormlightArchives\\Source\\StormlightArchives\\Stormlight\\Components\\Comps\\Fabrials\\ApparelFabrialDiminisherPainrial.cs",
+              "RelativeDocumentMoniker": "Stormlight\\Components\\Comps\\Fabrials\\ApparelFabrialDiminisherPainrial.cs",
+              "ToolTip": "F:\\SteamLibrary\\steamapps\\common\\RimWorld\\Mods\\StormlightArchives\\Source\\StormlightArchives\\Stormlight\\Components\\Comps\\Fabrials\\ApparelFabrialDiminisherPainrial.cs",
+              "RelativeToolTip": "Stormlight\\Components\\Comps\\Fabrials\\ApparelFabrialDiminisherPainrial.cs",
+              "ViewState": "AgIAAEUAAAAAAAAAAAArwGUAAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-09T08:55:45.581Z",
               "EditorCaption": ""
             },
             {
@@ -116,7 +158,46 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 7,
+              "Title": "FabrialPatches.cs",
+              "DocumentMoniker": "F:\\SteamLibrary\\steamapps\\common\\RimWorld\\Mods\\StormlightArchives\\Source\\StormlightArchives\\Stormlight\\Components\\Patches\\Fabrials\\FabrialPatches.cs",
+              "RelativeDocumentMoniker": "Stormlight\\Components\\Patches\\Fabrials\\FabrialPatches.cs",
+              "ToolTip": "F:\\SteamLibrary\\steamapps\\common\\RimWorld\\Mods\\StormlightArchives\\Source\\StormlightArchives\\Stormlight\\Components\\Patches\\Fabrials\\FabrialPatches.cs",
+              "RelativeToolTip": "Stormlight\\Components\\Patches\\Fabrials\\FabrialPatches.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-08T10:19:44.49Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "GenericFabrialDiminisher.cs",
+              "DocumentMoniker": "F:\\SteamLibrary\\steamapps\\common\\RimWorld\\Mods\\StormlightArchives\\Source\\StormlightArchives\\Stormlight\\Components\\Comps\\Fabrials\\GenericFabrialDiminisher.cs",
+              "RelativeDocumentMoniker": "Stormlight\\Components\\Comps\\Fabrials\\GenericFabrialDiminisher.cs",
+              "ToolTip": "F:\\SteamLibrary\\steamapps\\common\\RimWorld\\Mods\\StormlightArchives\\Source\\StormlightArchives\\Stormlight\\Components\\Comps\\Fabrials\\GenericFabrialDiminisher.cs",
+              "RelativeToolTip": "Stormlight\\Components\\Comps\\Fabrials\\GenericFabrialDiminisher.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABkAAAAHAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-08T09:33:40.424Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "StormlightUtilities.cs",
+              "DocumentMoniker": "F:\\SteamLibrary\\steamapps\\common\\RimWorld\\Mods\\StormlightArchives\\Source\\StormlightArchives\\Stormlight\\Components\\StormlightUtilities.cs",
+              "RelativeDocumentMoniker": "Stormlight\\Components\\StormlightUtilities.cs",
+              "ToolTip": "F:\\SteamLibrary\\steamapps\\common\\RimWorld\\Mods\\StormlightArchives\\Source\\StormlightArchives\\Stormlight\\Components\\StormlightUtilities.cs",
+              "RelativeToolTip": "Stormlight\\Components\\StormlightUtilities.cs",
+              "ViewState": "AgIAAEEBAAAAAAAAAAArwGoBAAAvAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-16T12:05:31.81Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
               "Title": "GenericFabrialAugmenter.cs",
               "DocumentMoniker": "F:\\SteamLibrary\\steamapps\\common\\RimWorld\\Mods\\StormlightArchives\\Source\\StormlightArchives\\Stormlight\\Components\\Comps\\Fabrials\\GenericFabrialAugmenter.cs",
               "RelativeDocumentMoniker": "Stormlight\\Components\\Comps\\Fabrials\\GenericFabrialAugmenter.cs",
@@ -124,12 +205,11 @@
               "RelativeToolTip": "Stormlight\\Components\\Comps\\Fabrials\\GenericFabrialAugmenter.cs",
               "ViewState": "AgIAAAYAAAAAAAAAAAAAAB0AAAAqAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-17T17:32:04.479Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-17T17:32:04.479Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 9,
               "Title": "SprenTrapper.cs",
               "DocumentMoniker": "F:\\SteamLibrary\\steamapps\\common\\RimWorld\\Mods\\StormlightArchives\\Source\\StormlightArchives\\Stormlight\\Components\\Comps\\Fabrials\\SprenTrapper.cs",
               "RelativeDocumentMoniker": "Stormlight\\Components\\Comps\\Fabrials\\SprenTrapper.cs",
@@ -142,7 +222,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 11,
               "Title": "FabrialCage.cs",
               "DocumentMoniker": "F:\\SteamLibrary\\steamapps\\common\\RimWorld\\Mods\\StormlightArchives\\Source\\StormlightArchives\\Stormlight\\Components\\Comps\\Fabrials\\FabrialCage.cs",
               "RelativeDocumentMoniker": "Stormlight\\Components\\Comps\\Fabrials\\FabrialCage.cs",
@@ -150,38 +230,24 @@
               "RelativeToolTip": "Stormlight\\Components\\Comps\\Fabrials\\FabrialCage.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABwAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-08T09:30:54.021Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-08T09:30:54.021Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 2,
               "Title": "CompStormlight.cs",
               "DocumentMoniker": "F:\\SteamLibrary\\steamapps\\common\\RimWorld\\Mods\\StormlightArchives\\Source\\StormlightArchives\\Stormlight\\Components\\Comps\\CompStormlight.cs",
               "RelativeDocumentMoniker": "Stormlight\\Components\\Comps\\CompStormlight.cs",
               "ToolTip": "F:\\SteamLibrary\\steamapps\\common\\RimWorld\\Mods\\StormlightArchives\\Source\\StormlightArchives\\Stormlight\\Components\\Comps\\CompStormlight.cs",
               "RelativeToolTip": "Stormlight\\Components\\Comps\\CompStormlight.cs",
-              "ViewState": "AgIAAGkAAAAAAAAAAAAAAJYAAAAuAAAAAAAAAA==",
+              "ViewState": "AgIAAHUAAAAAAAAAAAArwJIAAAAdAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-08T09:25:00.752Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "StormlightUtilities.cs",
-              "DocumentMoniker": "F:\\SteamLibrary\\steamapps\\common\\RimWorld\\Mods\\StormlightArchives\\Source\\StormlightArchives\\Stormlight\\Components\\StormlightUtilities.cs",
-              "RelativeDocumentMoniker": "Stormlight\\Components\\StormlightUtilities.cs",
-              "ToolTip": "F:\\SteamLibrary\\steamapps\\common\\RimWorld\\Mods\\StormlightArchives\\Source\\StormlightArchives\\Stormlight\\Components\\StormlightUtilities.cs",
-              "RelativeToolTip": "Stormlight\\Components\\StormlightUtilities.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAwA0AAAArAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-16T12:05:31.81Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 12,
               "Title": "RadiantTraitPatch.cs",
               "DocumentMoniker": "F:\\SteamLibrary\\steamapps\\common\\RimWorld\\Mods\\StormlightArchives\\Source\\StormlightArchives\\Stormlight\\Components\\Patches\\RadiantTraitPatch.cs",
               "RelativeDocumentMoniker": "Stormlight\\Components\\Patches\\RadiantTraitPatch.cs",
@@ -189,12 +255,11 @@
               "RelativeToolTip": "Stormlight\\Components\\Patches\\RadiantTraitPatch.cs",
               "ViewState": "AgIAAA0AAAAAAAAAAAAYwCQAAAAfAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-16T12:32:43.961Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-16T12:32:43.961Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 13,
               "Title": "SurgeAbrasion.cs",
               "DocumentMoniker": "F:\\SteamLibrary\\steamapps\\common\\RimWorld\\Mods\\StormlightArchives\\Source\\StormlightArchives\\Stormlight\\Components\\Combat\\Abilities\\Implementations\\SurgeAbrasion.cs",
               "RelativeDocumentMoniker": "Stormlight\\Components\\Combat\\Abilities\\Implementations\\SurgeAbrasion.cs",
@@ -202,12 +267,11 @@
               "RelativeToolTip": "Stormlight\\Components\\Combat\\Abilities\\Implementations\\SurgeAbrasion.cs",
               "ViewState": "AgIAAAIAAAAAAAAAAAAAACQAAAA2AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-02T15:06:45.795Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-02T15:06:45.795Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 15,
               "Title": "SurgeHeal.cs",
               "DocumentMoniker": "F:\\SteamLibrary\\steamapps\\common\\RimWorld\\Mods\\StormlightArchives\\Source\\StormlightArchives\\Stormlight\\Components\\Combat\\Abilities\\Implementations\\SurgeHeal.cs",
               "RelativeDocumentMoniker": "Stormlight\\Components\\Combat\\Abilities\\Implementations\\SurgeHeal.cs",
@@ -215,12 +279,11 @@
               "RelativeToolTip": "Stormlight\\Components\\Combat\\Abilities\\Implementations\\SurgeHeal.cs",
               "ViewState": "AgIAADcAAAAAAAAAAAAQwEMAAABKAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-07T21:46:01.418Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-07T21:46:01.418Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 14,
               "Title": "SummonBlade.cs",
               "DocumentMoniker": "F:\\SteamLibrary\\steamapps\\common\\RimWorld\\Mods\\StormlightArchives\\Source\\StormlightArchives\\Stormlight\\Components\\Combat\\Abilities\\Implementations\\SummonBlade.cs",
               "RelativeDocumentMoniker": "Stormlight\\Components\\Combat\\Abilities\\Implementations\\SummonBlade.cs",
@@ -228,26 +291,11 @@
               "RelativeToolTip": "Stormlight\\Components\\Combat\\Abilities\\Implementations\\SummonBlade.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABkAAAAiAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-18T18:17:14.155Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-18T18:17:14.155Z"
             }
           ]
         }
       ]
-    },
-    {
-      "Orientation": 0,
-      "VerticalTabListWidth": 256,
-      "FloatingWindowState": {
-        "Id": "88848195-dccc-4eac-8f62-ee0d06ca0ab3",
-        "Display": 1,
-        "X": -5,
-        "Y": 10,
-        "Width": 1930,
-        "Height": 1027,
-        "WindowState": 2
-      },
-      "DocumentGroups": []
     },
     {
       "Orientation": 0,
@@ -268,13 +316,13 @@
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "DefOfs.cs",
               "DocumentMoniker": "F:\\SteamLibrary\\steamapps\\common\\RimWorld\\Mods\\StormlightArchives\\Source\\StormlightArchives\\Stormlight\\Components\\DefOfs.cs",
               "RelativeDocumentMoniker": "Stormlight\\Components\\DefOfs.cs",
               "ToolTip": "F:\\SteamLibrary\\steamapps\\common\\RimWorld\\Mods\\StormlightArchives\\Source\\StormlightArchives\\Stormlight\\Components\\DefOfs.cs",
               "RelativeToolTip": "Stormlight\\Components\\DefOfs.cs",
-              "ViewState": "AgIAADEAAAAAAAAAAAAawFEAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAACsAAAAAAAAAAAAawEcAAABIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-08T12:13:47.969Z",
               "EditorCaption": ""

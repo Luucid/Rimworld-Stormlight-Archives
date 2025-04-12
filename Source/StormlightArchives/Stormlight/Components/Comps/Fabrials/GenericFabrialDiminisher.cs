@@ -7,6 +7,7 @@ using HarmonyLib;
 using UnityEngine;
 using Verse.AI;
 using LudeonTK;
+using Verse.Noise;
 
 namespace StormlightMod {
 

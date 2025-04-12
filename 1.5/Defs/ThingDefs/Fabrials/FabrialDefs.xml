@@ -16,7 +16,8 @@
   </DesignationCategoryDef>
 
 
-  <ThingDef ParentName="BuildingBase">
+  <ThingDef
+    ParentName="BuildingBase">
     <defName>whtwl_SprenTrapper</defName>
     <label>Spren trapper</label>
     <description>A device that has a chance to trapped spren in a the gemstone placed inside.</description>
@@ -79,7 +80,8 @@
     <constructionSkillPrerequisite>5</constructionSkillPrerequisite>
   </ThingDef>
 
-  <ThingDef ParentName="BuildingBase">
+  <ThingDef
+    ParentName="BuildingBase">
     <defName>whtwl_BasicFabrial_Augmenter</defName>
     <label>Basic Augmenter</label>
     <description>A device that use a trapped spren in a gemstone encased in a pewter cage.</description>
@@ -173,7 +175,7 @@
       <li>whtwl_Research_BasicArtifabriary</li>
     </researchPrerequisites>
     <constructionSkillPrerequisite>5</constructionSkillPrerequisite>
-     <specialDisplayRadius>5.0</specialDisplayRadius>
+    <specialDisplayRadius>5.0</specialDisplayRadius>
   </ThingDef>
 
 
@@ -271,6 +273,113 @@
       <li>whtwl_Research_BasicArtifabriary</li>
     </researchPrerequisites>
     <constructionSkillPrerequisite>5</constructionSkillPrerequisite>
-     <specialDisplayRadius>5.0</specialDisplayRadius>
+    <specialDisplayRadius>5.0</specialDisplayRadius>
   </ThingDef>
+
+
+  <!-- WEARABLES -->
+  <ThingDef ParentName="ApparelBase">
+    <defName>whtwl_Apparel_Fabrial_Painrial_Diminisher</defName>
+    <label>Wearable Painrial Diminisher</label>
+    <description>A small device worn on the wrist to block pain</description>
+    <tickerType>Normal</tickerType>
+    <graphicData>
+      <texPath>Things/Apparel/WearablePainrial</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>0.5</drawSize>
+    </graphicData>
+    <smeltable>false</smeltable>
+    <thingCategories>
+      <li>ApparelMisc</li>
+    </thingCategories>
+    <statBases>
+      <MaxHitPoints>100</MaxHitPoints>
+      <WorkToMake>1600</WorkToMake>
+      <Mass>0.05</Mass>
+      <EquipDelay>2</EquipDelay>
+      <MarketValue>5000</MarketValue>
+    </statBases>
+    <apparel>
+      <bodyPartGroups>
+        <li>Arms</li>
+      </bodyPartGroups>
+      <layers>
+        <li>whtwl_FabrialLayer</li> 
+      </layers>
+      <tags>
+        <li>FabrialsAdvanced</li>
+      </tags>
+      <defaultOutfitTags>
+        <li>Worker</li>
+        <li>Soldier</li>
+      </defaultOutfitTags>
+    </apparel>
+    <tradeTags>
+      <li>Armor</li>
+    </tradeTags>
+    <comps>
+      <li Class="StormlightMod.CompProperties_ApparelFabrialDiminisher" />
+    </comps>
+  </ThingDef>
+
+  <RecipeDef
+    Name="whtwl_MakeApparelFabrialBase" Abstract="True">
+    <jobString>making fabrial.</jobString>
+    <workAmount>1600</workAmount>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <effectWorking>CutStone</effectWorking>
+    <soundWorking>Recipe_MakeStoneBlocks</soundWorking>
+    <targetCountAdjustment>1</targetCountAdjustment>
+    <workSkill>Crafting</workSkill>
+    <workSkillLearnFactor>0</workSkillLearnFactor>
+    <recipeUsers>
+      <li>whtwl_TableFabrials</li>
+    </recipeUsers>
+  </RecipeDef>
+
+
+  <RecipeDef ParentName="whtwl_MakeApparelFabrialBase">
+    <defName>whtwl_Make_Apparel_Fabrial_Painrial_Diminisher</defName>
+    <label>make wearable Painrial Diminisher</label>
+    <description>Crafts a Painrial Diminisher using tin and a gemstone holding a Pain spren.</description>
+    <products>
+      <whtwl_Apparel_Fabrial_Painrial_Diminisher>1</whtwl_Apparel_Fabrial_Painrial_Diminisher>
+    </products>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>whtwl_CutEmerald</li>
+          </thingDefs>
+        </filter>
+        <count>1</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>whtwl_RawTin</li>
+          </thingDefs>
+        </filter>
+        <count>1</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>whtwl_CutEmerald</li>
+        <li>whtwl_RawTin</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <researchPrerequisites>
+      <li>whtwl_Research_AdvancedArtifabriary</li>
+    </researchPrerequisites>
+    <recipeUsers>
+      <li>whtwl_TableFabrials</li>
+    </recipeUsers>
+  </RecipeDef>
+
+  <ApparelLayerDef>
+    <defName>whtwl_FabrialLayer</defName>
+    <label>fabrial</label>
+    <drawOrder>550</drawOrder>
+  </ApparelLayerDef>
 </Defs>

@@ -24,6 +24,7 @@ namespace StormlightMod {
                 if (compCutGemstone != null) {
                     foreach (var product in __result) {
                         setSphereGemStats(product.TryGetComp<CompGemSphere>(), compCutGemstone);
+                        setGemInFabrial(product.TryGetComp<CompApparelFabrialDiminisher>(), compCutGemstone);
                         yield return product;
                     }
                 }
@@ -48,6 +49,11 @@ namespace StormlightMod {
             }
         }
 
+        private static void setGemInFabrial(CompApparelFabrialDiminisher productComp, CompCutGemstone ingredientComp) {
+            if (productComp != null) {
+                productComp.insertedGemstone = ingredientComp.parent;
+            }
+        }
     }
 }
 

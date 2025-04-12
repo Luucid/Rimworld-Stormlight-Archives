@@ -34,6 +34,7 @@
     </weaponTags>
     <statBases>
       <Mass>0.5</Mass>
+      <MarketValue>25000</MarketValue>
     </statBases>
     <equippedAngleOffset>-35</equippedAngleOffset>
     <stuffCategories>

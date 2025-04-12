@@ -4,8 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System;
 using static HarmonyLib.Code;
+using Verse.Noise;
+using static Verse.DamageWorker;
 
 namespace StormlightMod {
+
+
+
     public class HighstormExtension : DefModExtension {
         public float windStrength;
         public string windDirection;
@@ -17,7 +22,7 @@ namespace StormlightMod {
         private Random m_Rand = new Random();
         public override void End() {
             base.End();
-
+            StormShelterManager.ClearCache();
             if (SingleMap != null) {
                 //Log.Message("Highstorm ended. Forcing weather to clear.");
                 SingleMap.weatherManager.TransitionTo(WeatherDefOf.Clear);
@@ -29,7 +34,13 @@ namespace StormlightMod {
             base.GameConditionTick();
             var ext = def.GetModExtension<HighstormExtension>();
             if (ext == null) return;
-
+            if (StormlightMod.settings.enableHighstormPushing && StormShelterManager.FirstTickOfHighstorm) {
+                Map currentMap = Find.CurrentMap;
+                if (currentMap != null) {
+                    StormShelterManager.RebuildShelterCache(currentMap);
+                }
+                StormShelterManager.FirstTickOfHighstorm = false;
+            }
             if (Find.TickManager.TicksGame % 8 == 0) {
                 tryToInfuseThings();
                 if (StormlightMod.settings.enableHighstormPushing) {
@@ -59,12 +70,18 @@ namespace StormlightMod {
                         lamp.InfuseStormlight(5f);
                     }
                 }
+                else if (thing.def == StormlightModDefs.whtwl_Apparel_Fabrial_Painrial_Diminisher && !thing.Position.Roofed(thing.Map)) {
+                    var comp = thing.TryGetComp<CompApparelFabrialDiminisher>();
+                    if (comp != null) {
+                        comp.InfuseStormlight(5f);
+                    }
+                }
             }
         }
         public void destoyIfCollide(Thing item, Map itemMap, IntVec3 newPos) {
             List<Thing> thingsHere = itemMap.thingGrid.ThingsListAtFast(newPos).ListFullCopy();
             foreach (Thing thing in thingsHere) {
-                if (thing is Plant plant && plant.def.plant.harvestedThingDef != null) {
+                if (thing is Plant plant && plant.def.plant != null && plant.def.plant.harvestedThingDef != null) {
                     // Harvest yield
                     int woodCount = 5;
                     Thing wood = ThingMaker.MakeThing(plant.def.plant.harvestedThingDef);
@@ -78,7 +95,7 @@ namespace StormlightMod {
                 }
                 else if (thing is Building building) {
 
-                    if (building.Stuff != null && building.Stuff.stuffProps.categories?.Contains(StuffCategoryDefOf.Woody) == true) {
+                    if (building.def.MadeFromStuff && building.Stuff?.stuffProps?.categories?.Contains(StuffCategoryDefOf.Woody) == true) {
                         //Log.Message($"Damaging wooden wall: {building.def.defName}");
                         building.TakeDamage(new DamageInfo(DamageDefOf.Blunt,
                                                            10, // amount
@@ -88,6 +105,9 @@ namespace StormlightMod {
                                                            null, // hitPart
                                                            null, // weapon
                                                            DamageInfo.SourceCategory.ThingOrUnknown));
+                        if (StormlightMod.settings.enableHighstormPushing && building.Destroyed) {
+                            StormShelterManager.RebuildShelterCache(itemMap);
+                        }
                     }
                 }
                 else if (thing is Pawn pawn) {
@@ -111,8 +131,9 @@ namespace StormlightMod {
 
             }
         }
-        public void moveItem() {
 
+
+        public void moveItem() {
 
             // Copy the list to avoid modifying during enumeration
             List<Thing> items = this.SingleMap.listerThings
@@ -120,18 +141,21 @@ namespace StormlightMod {
                 .ListFullCopy();
 
             foreach (Thing item in items) {
-                if (!item.Spawned) continue;
 
                 Map itemMap = item.Map;
-                // if itemMap == null, skip
                 if (itemMap == null) continue;
+                //if (item.Position.Roofed(itemMap)) continue;
+
+                if (!StormlightUtilities.ShouldBeMovedByStorm(item)) {
+                    continue;
+                }
 
                 // push logic
-                IntVec3 newPos = item.Position + (IntVec3.West * m_Rand.Next(1, 2));
+                IntVec3 newPos = item.Position + IntVec3.West;
                 destoyIfCollide(item, itemMap, newPos);
-
                 if (!newPos.Walkable(itemMap))
                     continue;
+
 
                 if (newPos.DistanceToEdge(itemMap) == 0) {
                     item.DeSpawn(DestroyMode.Vanish);
@@ -142,4 +166,6 @@ namespace StormlightMod {
             }
         }
     }
+
+
 }

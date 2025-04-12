@@ -11,7 +11,7 @@
         <description>By refining raw gemstones, colonists can increase their value and prepare them
             for use in trade or magical applications.</description>
         <tab>whtwl_StormlightArchives</tab>
-        <baseCost>1200</baseCost>
+        <baseCost>900</baseCost>
         <techLevel>Medieval</techLevel>
         <researchViewX>0.00</researchViewX>
         <researchViewY>4.00</researchViewY>
@@ -32,7 +32,7 @@
         <description>By encasing refined gemstones in glass, colonists can produce spheres used for
             trade, currency, and magical energy storage.</description>
         <tab>whtwl_StormlightArchives</tab>
-        <baseCost>1500</baseCost>
+        <baseCost>900</baseCost>
         <techLevel>Industrial</techLevel>
         <prerequisites>
             <li>whtwl_GemCutting</li>
@@ -55,7 +55,7 @@
         <label>Sphere Lamps</label>
         <description>Custom lamps powered by refuelable by spheres.</description>
         <tab>whtwl_StormlightArchives</tab>
-        <baseCost>700</baseCost>
+        <baseCost>450</baseCost>
         <techLevel>Industrial</techLevel>
         <researchViewX>0.00</researchViewX>
         <researchViewY>2.00</researchViewY>
@@ -84,7 +84,7 @@
         <label>Metal Alloys</label>
         <description>make alloys out of stuff.</description>
         <tab>whtwl_StormlightArchives</tab>
-        <baseCost>350</baseCost>
+        <baseCost>450</baseCost>
         <techLevel>Industrial</techLevel>
         <researchViewX>0.00</researchViewX>
         <researchViewY>0.00</researchViewY>
@@ -95,7 +95,7 @@
         <label>Basic Fabrials</label>
         <description>Single metal fabrials.</description>
         <tab>whtwl_StormlightArchives</tab>
-        <baseCost>350</baseCost>
+        <baseCost>750</baseCost>
         <techLevel>Industrial</techLevel>
         <prerequisites>
             <li>whtwl_Research_SprenTrapping</li>
@@ -106,17 +106,17 @@
     </ResearchProjectDef>
 
 
-    <!-- <ResearchProjectDef>
+    <ResearchProjectDef>
         <defName>whtwl_Research_AdvancedArtifabriary</defName>
         <label>Advanced Fabrials</label>
         <description>Combine multiple types of metals to make more advanced fabrials.</description>
         <tab>whtwl_StormlightArchives</tab>
-        <baseCost>350</baseCost>
+        <baseCost>1850</baseCost>
         <techLevel>Industrial</techLevel>
         <prerequisites>
             <li>whtwl_Research_BasicArtifabriary</li>
         </prerequisites>
-        <researchViewX>16.00</researchViewX>
-        <researchViewY>4.00</researchViewY>
-    </ResearchProjectDef> -->
+        <researchViewX>6.00</researchViewX>
+        <researchViewY>6.00</researchViewY>
+    </ResearchProjectDef>
 </Defs>

@@ -64,7 +64,7 @@ namespace StormlightMod {
             float qualityFactor = 25f;
             CurrentMaxStormlight = (MaxStormlightPerItem * StormlightContainerSize) - qualityFactor;
             CurrentMaxStormlight += StormlightContainerQuality * qualityFactor;
-            CurrentMaxStormlight *= StackCount;
+            CurrentMaxStormlight *= Math.Max(StackCount,1);
         }
 
         public override void CompTick() {
@@ -323,6 +323,7 @@ namespace StormlightMod {
 
         // Infuse from code when highstorm is active
         public bool infuseStormlight(float amount) {
+            if (CurrentMaxStormlight <= 0f) { adjustMaximumStormlight(); }
             m_CurrentStormlight += amount;
             if (m_CurrentStormlight >= CurrentMaxStormlight) {
                 m_CurrentStormlight = CurrentMaxStormlight;

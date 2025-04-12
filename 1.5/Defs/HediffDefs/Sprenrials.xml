@@ -40,6 +40,25 @@
             </li>
         </comps>
     </HediffDef>
+
+    <HediffDef>
+        <defName>whtwl_apparel_painrial_diminisher_hediff</defName>
+        <label>wearing painrial</label>
+        <labelNoun>PainrialDiminisherApparel</labelNoun>
+        <description>Pawn is wearing a painrial diminisher.</description>
+        <isBad>false</isBad>
+         <defaultLabelColor>(0.6, 0.6, 1.0)</defaultLabelColor>
+        <hediffClass>HediffWithComps</hediffClass>
+        <stages>
+            <li>
+                <painOffset>-0.5</painOffset>
+            </li>
+        </stages>
+        <comps>
+            <li Class="StormlightMod.HediffCompProperties_FabrialPainDiminisher">
+            </li>
+        </comps>
+    </HediffDef>
     <HediffDef>
         <defName>whtwl_logirial_agument</defName>
         <label>logirial nearby</label>

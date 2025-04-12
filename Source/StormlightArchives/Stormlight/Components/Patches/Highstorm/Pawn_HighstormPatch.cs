@@ -12,10 +12,10 @@ namespace StormlightMod {
     public static class Pawn_HighstormPushPatch {
         private static Random m_Rand = new Random();
         private static string WindrunnerBondText = $"pauses. A presence lingers at the edge of their awareness—watching, waiting. It has seen their struggles, their moments of strength, their failures. And yet, it remains.\r\n\r\nA faint whisper echoes in the back of their mind, words unbidden yet undeniable:\r\n\"Life before death. Strength before weakness. Journey before destination.\"";
-        private static string TruthwatcherBondText = $"pauses. The world seems to blur at the edges, as if reality itself hesitates to be fully known. In the shifting mist, a quiet presence lingers—watching, not with eyes, but with understanding. It has seen their doubts, their curiosity, their silent strength.\r\n\r\nA whisper, clear and certain, forms within their thoughts:\r\n\"Life before death.Strength before weakness.Journey before destination.\"";
-        private static string EdgedancerBondText = $"pauses. The scent of blooming life drifts on the air, and something warm brushes against their soul—a presence both nurturing and ancient. It remembers who they are, even when the world does not. It has seen their compassion, their small kindnesses, their quiet resolve.\r\n\r\nFrom somewhere deep within, words rise like new growth:\r\n\"Life before death.Strength before weakness.Journey before destination.\"";
-        private static string SkybreakerBondText = $"pauses. The air grows heavy, still with judgment. A presence watches from afar, cold and unyielding—but not without purpose. It has measured their choices, their discipline, their will to obey or defy.\r\n\r\nThen, without emotion or mercy, the words arrive—etched like a sentence passed:\r\n\"Life before death.Strength before weakness.Journey before destination.\"";
-
+        private static string TruthwatcherBondText = $"pauses. The world seems to blur at the edges, as if reality itself hesitates to be fully known. In the shifting mist, a quiet presence lingers—watching, not with eyes, but with understanding. It has seen their doubts, their curiosity, their silent strength.\r\n\r\nA whisper, clear and certain, forms within their thoughts:\r\n\"Life before death. Strength before weakness. Journey before destination.\"";
+        private static string EdgedancerBondText = $"pauses. The scent of blooming life drifts on the air, and something warm brushes against their soul—a presence both nurturing and ancient. It remembers who they are, even when the world does not. It has seen their compassion, their small kindnesses, their quiet resolve.\r\n\r\nFrom somewhere deep within, words rise like new growth:\r\n\"Life before death. Strength before weakness. Journey before destination.\"";
+        private static string SkybreakerBondText = $"pauses. The air grows heavy, still with judgment. A presence watches from afar, cold and unyielding—but not without purpose. It has measured their choices, their discipline, their will to obey or defy.\r\n\r\nThen, without emotion or mercy, the words arrive—etched like a sentence passed:\r\n\"Life before death. Strength before weakness. Journey before destination.\"";
+        private static float InitialBondMaxNumber = 100000f;
         static void Postfix(Pawn __instance) {
             if (Find.TickManager.TicksGame % 20 != 0) return;
 
@@ -33,6 +33,9 @@ namespace StormlightMod {
 
                 return;
             }
+            else {
+                StormShelterManager.FirstTickOfHighstorm = true;
+            }
             if (StormlightUtilities.IsRadiant(__instance)) {
                 return;
             }
@@ -48,17 +51,18 @@ namespace StormlightMod {
                 }
             }
         }
-
+        private static int getUpperNumber(float crisisValue) {
+            return (int)(InitialBondMaxNumber - ((crisisValue * crisisValue) * 0.01f));
+        }
         private static void tryToBondPawn(Pawn pawn, TraitDef traitDef) {
-
             if (pawn != null && pawn.RaceProps.Humanlike) {
                 if (StormlightUtilities.GetRadiantTrait(pawn) != null) return;
 
                 PawnStats pawnStats = pawn.GetComp<PawnStats>();
                 if (pawnStats == null) return;
 
-                float crisisValue = pawnStats.GetRequirementsEntry().Value;
-                int upperNumber = 10000 - (int)crisisValue;
+                int upperNumber = getUpperNumber(pawnStats.GetRequirementsEntry().Value);
+
                 if (upperNumber <= 1) upperNumber = 2;
                 int number = m_Rand.Next(1, upperNumber);
                 if (number == 1) {
@@ -76,7 +80,7 @@ namespace StormlightMod {
                     }
 
                 }
-                //else { Log.Message($"{pawn.NameShortColored} tried to bond, failed with number: {number} of {upperNumber}"); }
+                //else { Log.Message($"{pawn.NameShortColored} tried to bond, failed with number: {number} of {upperNumber}, crisis value: {pawnStats.GetRequirementsEntry().Value}"); }
             }
         }
 
@@ -103,17 +107,7 @@ namespace StormlightMod {
         }
 
         private static bool checkIfSheltered(Pawn pawn) {
-            for (int i = 1; i <= 3; i++) {
-                IntVec3 shelterPos = pawn.Position + (IntVec3.East * i);
-                if (shelterPos.IsValid == false) {
-                    return false;
-                }
-                Building blockingBuilding = shelterPos.GetEdifice(pawn.Map);
-                if (blockingBuilding != null && blockingBuilding.def != null) {
-                    return true;
-                }
-            }
-            return false;
+            return !StormlightUtilities.ShouldBeMovedByStorm(pawn);
         }
 
 
@@ -138,7 +132,7 @@ namespace StormlightMod {
 
             // Storm always blows from east -> pushes pawns west
             IntVec3 newPos = __instance.Position + IntVec3.West;
-            if (isRadiant == false && newPos.Walkable(__instance.Map) && newPos.IsValid && newPos.InBounds(__instance.Map)) {
+            if (isRadiant == false && __instance.Map != null && newPos.Walkable(__instance.Map) && newPos.IsValid && newPos.InBounds(__instance.Map)) {
                 __instance.Position = newPos;
             }
             else {

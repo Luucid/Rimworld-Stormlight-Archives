@@ -8,6 +8,7 @@ using Verse.AI;
 using Verse.Noise;
 using UnityEngine;
 using System.Net;
+using System.ComponentModel;
 
 namespace StormlightMod {
 
@@ -251,10 +252,174 @@ namespace StormlightMod {
             return !pawn.skills.GetSkill(SkillDefOf.Medicine).TotallyDisabled;
         }
 
+        public static bool ShouldBeMovedByStorm(this Thing thing) {
+            if (!thing.Spawned || thing.Map == null)
+                return false;
 
+            Room room = thing.GetRoom();
 
+            if (StormShelterManager.IsInsideShelter(thing.Position)) return false;
+            if (room == null) return true;
+            if (room.PsychologicallyOutdoors) return true;
+            if (!thing.Position.Roofed(thing.Map)) return true;
+
+            return false;
+        }
         //bottom//
 
     }
+    public static class StormShelterManager {
+        // For each cell, store which region index it belongs to. 
+        // If it doesn't belong to any region, it won't be in this dictionary.
+        private static Dictionary<IntVec3, int> cellToRegionIndex
+            = new Dictionary<IntVec3, int>();
+        public static bool FirstTickOfHighstorm = true;
 
+        private static List<RegionInfo> regions
+            = new List<RegionInfo>();
+
+
+        public static void RebuildShelterCache(Map map) {
+            // Clear old data
+            cellToRegionIndex.Clear();
+            regions.Clear();
+
+            // Loop through each cell in the map
+            foreach (IntVec3 cell in map.AllCells) {
+                // We only care about roofed cells
+                if (!cell.Roofed(map))
+                    continue;
+
+                // If this cell is already assigned to a region, skip
+                if (cellToRegionIndex.ContainsKey(cell))
+                    continue;
+
+                Building b = cell.GetEdifice(map);
+                if (IsWallOrClosedDoor(b))
+                    continue; // Don't BFS from a wall tile
+
+                // Not visited yet -> BFS to form a new region
+                HashSet<IntVec3> newRegionCells = FloodFillRoofedArea(cell, map);
+
+                // Check if this region is a c-shelter
+                bool isShelter = IsCShelter(newRegionCells, map);
+                // Store the region
+                RegionInfo newRegion = new RegionInfo {
+                    cells = newRegionCells,
+                    isShelter = isShelter
+                };
+                regions.Add(newRegion);
+
+                // For each cell in this region, record its region index
+                int regionIndex = regions.Count - 1;
+                foreach (var c in newRegionCells) {
+                    cellToRegionIndex[c] = regionIndex;
+                }
+            }
+
+        }
+
+        public static bool IsInsideShelter(IntVec3 pos) {
+            if (!cellToRegionIndex.TryGetValue(pos, out int idx)) {
+                // Not in any known roofed region
+                return false;
+            }
+            return regions[idx].isShelter;
+        }
+
+        public static void ClearCache() {
+            cellToRegionIndex.Clear();
+            regions.Clear();
+        }
+
+        private static HashSet<IntVec3> FloodFillRoofedArea(IntVec3 start, Map map) {
+            HashSet<IntVec3> visited = new HashSet<IntVec3>();
+            Queue<IntVec3> queue = new Queue<IntVec3>();
+
+            // 1) Must be in bounds & roofed
+            if (!start.InBounds(map) || !start.Roofed(map))
+                return visited;
+
+            // 2) Check that the start cell is not a wall/closed door
+            if (IsWallOrClosedDoor(start.GetEdifice(map))) {
+                return visited;
+            }
+
+            // Start BFS
+            visited.Add(start);
+            queue.Enqueue(start);
+
+            while (queue.Count > 0) {
+                IntVec3 current = queue.Dequeue();
+
+                // Check the 4 cardinal directions
+                foreach (IntVec3 dir in GenAdj.CardinalDirections) {
+                    IntVec3 next = current + dir;
+
+                    // a) Must be in bounds
+                    if (!next.InBounds(map))
+                        continue;
+
+                    // b) Already visited? skip
+                    if (visited.Contains(next))
+                        continue;
+
+                    // c) Must be roofed
+                    if (!next.Roofed(map))
+                        continue;
+
+                    // d) Must NOT be a wall or closed door
+                    Building b = next.GetEdifice(map);
+                    if (IsWallOrClosedDoor(b))
+                        continue;
+
+                    // If we get here, 'next' is a valid floor/inside cell
+                    visited.Add(next);
+                    queue.Enqueue(next);
+                }
+            }
+
+            return visited;
+        }
+
+        private static bool IsWallOrClosedDoor(Building b) {
+            if (b == null) return false;
+
+            // If it's a solid wall
+            if (b.def.passability == Traversability.Impassable)
+                return true;
+
+            // If it's a door that's closed
+            if (b.def.IsDoor && b is Building_Door door && !door.Open)
+                return true;
+
+            return false;
+        }
+
+
+        private static bool IsCShelter(HashSet<IntVec3> area, Map map) {
+            if (area == null || area.Count == 0)
+                return false;
+
+            int maxX = area.Max(p => p.x);
+            foreach (IntVec3 pos in area) {
+                if (pos.x != maxX)
+                    continue;
+
+                IntVec3 east = pos + IntVec3.East;
+                if (!east.InBounds(map))
+                    continue;
+                Building eastWall = east.GetEdifice(map);
+                if (eastWall == null || eastWall.def.passability != Traversability.Impassable) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        private struct RegionInfo {
+            public HashSet<IntVec3> cells;
+            public bool isShelter;
+        }
+    }
 }

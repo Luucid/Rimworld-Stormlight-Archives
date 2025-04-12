@@ -68,6 +68,9 @@ namespace StormlightMod {
         public static ThingDef whtwl_RawCopper;
         public static ThingDef whtwl_RawAntimony;
 
+        // FABRIALS
+        public static ThingDef whtwl_Apparel_Fabrial_Painrial_Diminisher;
+
         // WEAPONS
         public static ThingDef whtwl_MeleeWeapon_Shardblade;
 
@@ -76,6 +79,7 @@ namespace StormlightMod {
         // HEDIFF
         public static HediffDef whtwl_painrial_agument;
         public static HediffDef whtwl_painrial_diminisher;
+        public static HediffDef whtwl_apparel_painrial_diminisher_hediff;
 
         public static HediffDef whtwl_logirial_agument;
         public static HediffDef whtwl_logirial_diminisher;

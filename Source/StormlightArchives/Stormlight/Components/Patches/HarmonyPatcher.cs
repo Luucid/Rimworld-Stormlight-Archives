@@ -42,7 +42,7 @@ namespace StormlightMod {
 
         private static void StorytellerTick_Postfix(Storyteller __instance) {
             int currentTick = Find.TickManager.TicksGame;
-
+            
             if ((currentTick % intervalTicks) == (intervalTicks - warningOffsetTicks)) {
                 ShowWarning();
             }
