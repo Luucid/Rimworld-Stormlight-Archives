@@ -8,6 +8,7 @@ using System.Security.Cryptography;
 using Verse.AI;
 
 namespace StormlightMod {
+    public enum GemSize { None, Chip, Mark, Broam };
     public class CompGemSphere : ThingComp {
         public CompProperties_GemSphere GemstoneProps => (CompProperties_GemSphere)props;
         public CompProperties_Stormlight StormlightProps => (CompProperties_Stormlight)props;
@@ -18,7 +19,6 @@ namespace StormlightMod {
         public int inheritGemstoneQuality = 1;
         public int inheritGemstoneSize = 1;
         public string GetFullLabel => TransformLabel(parent.Label);
-        public enum GemSize { None, Chip, Mark, Broam };
         public override void Initialize(CompProperties props) {
             base.Initialize(props);
 
@@ -34,7 +34,7 @@ namespace StormlightMod {
                 gemstoneQuality = inheritGemstoneQuality;
                 gemstoneSize = inheritGemstoneSize;
             }
-            
+
             //parent.def.BaseMarketValue = (parent.def.BaseMarketValue * gemstoneSize) + gemstoneQuality * 5;
 
             //Log.Message($"Base Value {parent.def.BaseMarketValue}");

@@ -8,18 +8,34 @@ using Unity.Jobs;
 using UnityEngine;
 
 namespace StormlightMod {
-    public class StormlightLamps : ThingComp {
+    public class StormlightLamps : ThingComp, IFilterableComp {
+     
         public CompProperties_SphereLamp Props => (CompProperties_SphereLamp)props;
         public CompGlower GlowerComp => parent.GetComp<CompGlower>();
-        public List<Thing> storedSpheres = new List<Thing>(); //  List of sphere stacks inside the pouch
-        public List<ThingDef> ThisFilterList;
-        public List<CompGemSphere.GemSize> SizeFilterList = new List<CompGemSphere.GemSize>() { CompGemSphere.GemSize.Chip, CompGemSphere.GemSize.Mark, CompGemSphere.GemSize.Broam }; 
-        static private List<CompGemSphere.GemSize> possibleSizes = new List<CompGemSphere.GemSize>() { CompGemSphere.GemSize.Chip, CompGemSphere.GemSize.Mark, CompGemSphere.GemSize.Broam };
+        public List<Thing> storedSpheres = new List<Thing>(); // List of sphere stacks inside the pouch
+
+        private List<ThingDef> filterList = new List<ThingDef>();
+        public List<ThingDef> FilterList => filterList; 
+        public List<ThingDef> AllowedSpheres => Props.allowedSpheres;
+
+        private List<GemSize> sizeFilterList = new List<GemSize>()
+        {
+            GemSize.Chip,
+            GemSize.Mark,
+            GemSize.Broam
+        };
+        public List<GemSize> SizeFilterList => sizeFilterList;
+
+      
+        private float stormlightThresholdForRefuel = 0f; 
+        public float StormlightThresholdForRefuel {
+            get { return stormlightThresholdForRefuel; }
+            set { stormlightThresholdForRefuel = value; }
+        }
 
 
         bool lightEnabled = true;
         bool initSphereAdded = false;
-        public float stormlightThresholdForRefuel = 0f;
         public bool Empty => storedSpheres.Count == 0;
         public float m_CurrentStormlight = 0f;
         private bool deregisterAfterNewSphere = true;
@@ -27,15 +43,14 @@ namespace StormlightMod {
 
         public override void PostSpawnSetup(bool respawningAfterLoad) {
             base.PostSpawnSetup(respawningAfterLoad);
-            // Initialize ThisFilterList only after props is guaranteed to be available.
-            if (ThisFilterList == null && Props.allowedSpheres != null) {
-                ThisFilterList = Props.allowedSpheres.ToList();
+            if (filterList == null && Props.allowedSpheres != null) {
+                filterList = Props.allowedSpheres.ToList();
             }
         }
         public override void PostExposeData() {
             base.PostExposeData();
             Scribe_Collections.Look(ref storedSpheres, "storedSpheres", LookMode.Deep);
-            Scribe_Collections.Look(ref SizeFilterList, "SizeFilterList", LookMode.Deep);
+            Scribe_Collections.Look(ref sizeFilterList, "SizeFilterList", LookMode.Deep);
         }
 
         public bool IsFull() {
@@ -64,14 +79,16 @@ namespace StormlightMod {
                 //icon = ContentFinder<Texture2D>.Get("UI/Icons/SomeIcon"), 
                 icon = TexCommand.DesirePower,
                 action = () => {
-                    Find.WindowStack.Add(new Dialog_SphereFilter(this));
+                    Find.WindowStack.Add(new Dialog_SphereFilter<StormlightLamps>(this));
                 }
             };
         }
 
 
         public override IEnumerable<FloatMenuOption> CompFloatMenuOptions(Pawn selPawn) {
-
+            foreach(var element in FilterList) { Log.Message($"{element.defName}"); }
+            foreach(var element in sizeFilterList) { Log.Message($"{element.ToStringSafe()}"); }
+            
             Action removeSphereAction = null;
 
             if (storedSpheres.Count() > 0) {
@@ -84,13 +101,13 @@ namespace StormlightMod {
 
             Thing sphere = null;
             CompSpherePouch spherePouch = CompSpherePouch.GetWornSpherePouch(selPawn);
-            ThingDef matchingSphereDef = ThisFilterList.Find(def => selPawn.Map.listerThings.ThingsOfDef(def).Any());
+            ThingDef matchingSphereDef = filterList.Find(def => selPawn.Map.listerThings.ThingsOfDef(def).Any());
             var closestSphere = GenClosest.ClosestThing_Global(
                    selPawn.Position,
                    selPawn.Map.listerThings.AllThings
                        .Where(thing =>
-                           ThisFilterList.Contains(thing.def) &&  
-                           SizeFilterList.Contains(thing.TryGetComp<CompGemSphere>()?.GetGemSize() ?? CompGemSphere.GemSize.None) 
+                           FilterList.Contains(thing.def) &&  
+                           SizeFilterList.Contains(thing.TryGetComp<CompGemSphere>()?.GetGemSize() ?? GemSize.None) 
                        ),
                    500f);
             if (spherePouch != null && !spherePouch.Empty) {
@@ -108,7 +125,7 @@ namespace StormlightMod {
                 if (sphereComp.Stormlight < stormlightThresholdForRefuel) {
                     replaceSphereText = $"Your available spheres is below the minimum stormlight threshold";
                 }
-                else if (ThisFilterList.Count == 0) {
+                else if (FilterList.Count == 0) {
                     replaceSphereText = $"No available spheres in list filter";
                 }
                 else {

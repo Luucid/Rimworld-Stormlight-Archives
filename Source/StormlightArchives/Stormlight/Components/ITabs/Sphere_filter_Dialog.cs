@@ -4,24 +4,33 @@ using System.Collections.Generic;
 using System.Linq;
 
 namespace StormlightMod {
-    public class Dialog_SphereFilter : Window {
-        private StormlightLamps lamp;
+    public interface IFilterableComp {
+
+        List<ThingDef> AllowedSpheres { get; }
+        List<ThingDef> FilterList { get; }
+        List<GemSize> SizeFilterList { get; }
+    }
+
+
+    public class Dialog_SphereFilter<T> : Window where T : ThingComp, IFilterableComp {
+        private T thing;
+
         private Vector2 scrollPosition;
         // You can adjust the size of the window as needed.
         public override Vector2 InitialSize => new Vector2(400f, 500f);
 
-        public Dialog_SphereFilter(StormlightLamps lamp) {
-            this.lamp = lamp;
+        public Dialog_SphereFilter(T comp) {
+            thing = comp;
             forcePause = false;
             //absorbInputAroundWindow = true;
         }
 
         private void addCheckboxSpheres(int i, Rect viewRect) {
-            ThingDef sphereDef = lamp.Props.allowedSpheres[i];
+            ThingDef sphereDef = thing.AllowedSpheres[i];
             Rect checkboxRect = new Rect(0, i * 30, viewRect.width, 30);
 
             // Determine if this sphere is currently enabled in the filter.
-            bool currentlyAllowed = lamp.ThisFilterList.Contains(sphereDef);
+            bool currentlyAllowed = thing.FilterList.Contains(sphereDef);
 
             // Copy the state into a local variable.
             bool flag = currentlyAllowed;
@@ -32,17 +41,17 @@ namespace StormlightMod {
             // If the checkbox value has changed, update the filter list accordingly.
             if (flag != currentlyAllowed) {
                 if (flag) {
-                    lamp.ThisFilterList.Add(sphereDef);
+                    thing.FilterList.Add(sphereDef);
                 }
                 else {
-                    lamp.ThisFilterList.Remove(sphereDef);
+                    thing.FilterList.Remove(sphereDef);
                 }
             }
         }
-        private void addCheckboxGemSize(int i, Rect viewRect, CompGemSphere.GemSize size) {
+        private void addCheckboxGemSize(int i, Rect viewRect, GemSize size) {
             Rect checkboxRect = new Rect(0, i * 30, viewRect.width, 30);
             // Determine if this sphere is currently enabled in the filter.
-            bool currentlyAllowed = lamp.SizeFilterList.Contains(size);
+            bool currentlyAllowed = thing.SizeFilterList.Contains(size);
 
             // Copy the state into a local variable.
             bool flag = currentlyAllowed;
@@ -53,17 +62,17 @@ namespace StormlightMod {
             // If the checkbox value has changed, update the filter list accordingly.
             if (flag != currentlyAllowed) {
                 if (flag) {
-                    lamp.SizeFilterList.Add(size);
+                    thing.SizeFilterList.Add(size);
                 }
                 else {
-                    lamp.SizeFilterList.Remove(size);
+                    thing.SizeFilterList.Remove(size);
                 }
             }
         }
 
         public override void DoWindowContents(Rect inRect) {
             // Draw a label for instructions.
-            Widgets.Label(new Rect(inRect.x, inRect.y, inRect.width, 30), "Select allowed sphere types:");
+            Widgets.Label(new Rect(inRect.x, inRect.y, inRect.width, 30), "Select allowed types:");
 
             // Define a scrollable area.
             Rect outRect = new Rect(inRect.x, inRect.y + 30, inRect.width, inRect.height + 165);
@@ -71,15 +80,14 @@ namespace StormlightMod {
             Widgets.BeginScrollView(outRect, ref scrollPosition, viewRect);
 
             // Iterate through all allowed spheres from Props and create a checkbox for each.
-            for (int i = 0; i < lamp.Props.allowedSpheres.Count; i++) {
-                addCheckboxSpheres(i, viewRect); 
+            for (int i = 0; i < thing.AllowedSpheres.Count; i++) {
+                addCheckboxSpheres(i, viewRect);
             }
-            addCheckboxGemSize(6, viewRect, CompGemSphere.GemSize.Chip);
-            addCheckboxGemSize(7, viewRect, CompGemSphere.GemSize.Mark);
-            addCheckboxGemSize(8, viewRect, CompGemSphere.GemSize.Broam);
+            addCheckboxGemSize(6, viewRect, GemSize.Chip);
+            addCheckboxGemSize(7, viewRect, GemSize.Mark);
+            addCheckboxGemSize(8, viewRect, GemSize.Broam);
 
-            Rect sliderRect = new Rect(0, lamp.Props.allowedSpheres.Count * 30, viewRect.width, 30);
-            Widgets.HorizontalSlider(sliderRect, ref this.lamp.stormlightThresholdForRefuel, new FloatRange(0f, 1000f), label: $"Minimum Stormlight threshold: {this.lamp.stormlightThresholdForRefuel}", roundTo: 1);
+            Rect sliderRect = new Rect(0, thing.AllowedSpheres.Count * 30, viewRect.width, 30);
             Widgets.EndScrollView();
 
             // Optionally, add a close button.

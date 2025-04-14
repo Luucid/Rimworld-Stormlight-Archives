@@ -22,7 +22,7 @@
     <label>Spren trapper</label>
     <description>A device that has a chance to trapped spren in a the gemstone placed inside.</description>
     <thingClass>StormlightMod.Building_SprenTrapper</thingClass>
-    <graphicData>
+    <!-- <graphicData>
       <texPath>Things/Item/Fabrials/Trapper</texPath>
       <graphicClass>Graphic_Single</graphicClass>
       <shadowData>
@@ -36,6 +36,28 @@
         <cornerBL>Damage/Corner</cornerBL>
         <cornerBR>Damage/Corner</cornerBR>
       </damageData>
+    </graphicData> -->
+    <graphicData>
+      <texPath>Things/Item/Fabrials/Trapper</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>CutoutComplex</shaderType>
+      <attachments>
+        <li>
+          <texPath>Things/Item/Fabrials/Trapper_Red</texPath>
+          <graphicClass>Graphic_Single</graphicClass>
+          <shaderType>CutoutComplex</shaderType>
+        </li>
+        <li>
+          <texPath>Things/Item/Fabrials/Trapper_Blue</texPath>
+          <graphicClass>Graphic_Single</graphicClass>
+          <shaderType>CutoutComplex</shaderType>
+        </li>
+        <li>
+          <texPath>Things/Item/Fabrials/Trapper_Green</texPath>
+          <graphicClass>Graphic_Single</graphicClass>
+          <shaderType>CutoutComplex</shaderType>
+        </li>
+      </attachments>
     </graphicData>
     <thingCategories>
       <li>BuildingsTemperature</li>

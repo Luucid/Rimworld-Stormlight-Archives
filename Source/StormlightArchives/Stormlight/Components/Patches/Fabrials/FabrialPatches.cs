@@ -33,7 +33,7 @@ namespace StormlightMod {
                     __result *= 1f;
                 }
                 else {
-                    __result *= 1.75f;
+                    __result *= 1.25f;
                 }
             }
             else if (__instance.Spawned && IsNearLifeSprenBuilding(__instance) == 2) {

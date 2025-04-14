@@ -25,6 +25,13 @@ namespace StormlightMod {
         public Spren capturedSpren = Spren.None;
         public string GetFullLabel => parent.Label;
 
+        public GemSize GetGemSize() 
+            {
+            if (gemstoneSize == 1) return GemSize.Chip;
+            if (gemstoneSize == 5) return GemSize.Mark;
+            if (gemstoneSize == 20) return GemSize.Broam;
+            return GemSize.None;
+        }
         public override void Initialize(CompProperties props) {
             base.Initialize(props);
             stormlightComp = parent.GetComp<CompStormlight>();

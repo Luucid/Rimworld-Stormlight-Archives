@@ -16,6 +16,15 @@ namespace StormlightMod {
         public CompSprenTrapper compTrapper;
         public CompGlower compGlower;
         public Dictionary<string, List<Spren>> gemstonePossibleSprenDict = new Dictionary<string, List<Spren>>() { };
+        SectionLayer layerTest = null;
+
+
+        public override void Destroy(DestroyMode mode = DestroyMode.Vanish) {
+            base.Destroy(mode);
+            if (compTrapper != null) {
+                compTrapper.RemoveGemstone();
+            }
+        }
 
         public override void SpawnSetup(Map map, bool respawningAfterLoad) {
             base.SpawnSetup(map, respawningAfterLoad);
@@ -30,12 +39,17 @@ namespace StormlightMod {
 
         public override void TickRare() {
             CaptureLoop();
-            toggleGlow(compTrapper.sprenCaptured);
+            toggleGlow();
+            TriggerPrint();
+            compTrapper.DrainStormlight();
         }
 
-        private void toggleGlow(bool on) {
+        private void toggleGlow() {
             if (this.Map != null) {
-                if (on) {
+                if (compTrapper.HasGemstone) {
+                    if (!compTrapper.sprenCaptured && !compTrapper.insertedGemstone.TryGetComp<CompStormlight>().HasStormlight) { compGlower.GlowColor = ColorInt.FromHdrColor(Color.red); }
+                    else if (compTrapper.sprenCaptured) { compGlower.GlowColor = ColorInt.FromHdrColor(Color.green); }
+                    else  { compGlower.GlowColor = ColorInt.FromHdrColor(Color.blue); }
                     this.Map.glowGrid.RegisterGlower(compGlower);
                 }
                 else {
@@ -57,14 +71,58 @@ namespace StormlightMod {
             compTrapper.checkTrapperState();
         }
 
+        //Add light system for trapped, empty, e.g.
+        public override void Print(SectionLayer layer) {
+            layerTest = layer;
+            if (compTrapper.HasGemstone) {
+                if (!compTrapper.sprenCaptured && !compTrapper.insertedGemstone.TryGetComp<CompStormlight>().HasStormlight) { this.def.graphicData.attachments[0].Graphic.Print(layer, this, 0f); }
+                else if (!compTrapper.sprenCaptured) { this.def.graphicData.attachments[1].Graphic.Print(layer, this, 0f); }
+                else { this.def.graphicData.attachments[2].Graphic.Print(layer, this, 0f); }
+            }
+            else { base.Print(layer); }
+        }
+
+        public void TriggerPrint() { if (layerTest != null) Print(layerTest); else { Log.Message("Layer was null"); } }
+
     }
 
 
 
-    public class CompSprenTrapper : ThingComp, IGemstoneHandler {
+    public class CompSprenTrapper : ThingComp, IGemstoneHandler, IFilterableComp {
         public CompProperties_SprenTrapper Props => (CompProperties_SprenTrapper)props;
         public Thing insertedGemstone = null;
+        public bool HasGemstone => insertedGemstone != null;
         public bool sprenCaptured = false;
+
+        private List<ThingDef> filterList = new List<ThingDef>();
+        public List<ThingDef> FilterList => filterList;
+        private List<ThingDef> allowedGems = new List<ThingDef>() {
+            StormlightModDefs.whtwl_CutDiamond,
+            StormlightModDefs.whtwl_CutGarnet,
+            StormlightModDefs.whtwl_CutRuby,
+            StormlightModDefs.whtwl_CutSapphire,
+            StormlightModDefs.whtwl_CutEmerald
+        };
+        public List<ThingDef> AllowedSpheres => this.allowedGems;
+
+        private List<GemSize> sizeFilterList = new List<GemSize>()
+        {
+            GemSize.Chip,
+            GemSize.Mark,
+            GemSize.Broam
+        };
+        public List<GemSize> SizeFilterList => sizeFilterList;
+
+
+        private float stormlightThresholdForRefuel = 0f;
+        public float StormlightThresholdForRefuel {
+            get { return stormlightThresholdForRefuel; }
+            set { stormlightThresholdForRefuel = value; }
+        }
+
+
+
+
 
         public override void PostSpawnSetup(bool respawningAfterLoad) {
             base.PostSpawnSetup(respawningAfterLoad);
@@ -75,6 +133,8 @@ namespace StormlightMod {
             base.PostExposeData();
             Scribe_Deep.Look(ref insertedGemstone, "insertedGemstone");
             Scribe_Values.Look(ref sprenCaptured, "sprenCaptured");
+            Scribe_Collections.Look(ref sizeFilterList, "sizeFilterList", LookMode.Value);
+            Scribe_Collections.Look(ref filterList, "filterList", LookMode.Def);
         }
         public void tryCaptureSpren(Spren targetSpren) {
 
@@ -100,6 +160,7 @@ namespace StormlightMod {
             }
         }
         private void displayCaptureMessage(Spren spren) {
+            (parent as Building_SprenTrapper).TriggerPrint();
             Messages.Message($"One of your traps captured a {spren.ToStringSafe()}spren!", parent, MessageTypeDefOf.PositiveEvent);
         }
 
@@ -208,6 +269,18 @@ namespace StormlightMod {
             sprenCaptured = false;
         }
 
+        public void DrainStormlight() {
+            if (insertedGemstone != null) {
+                var stormlightcomp = insertedGemstone.TryGetComp<CompStormlight>();
+                if (stormlightcomp != null) {
+                    stormlightcomp.drainStormLight(); 
+                    stormlightcomp.drainStormLight(); 
+                    stormlightcomp.drainStormLight(); 
+                    stormlightcomp.drainStormLight(); 
+                    stormlightcomp.drainStormLight(); 
+                }
+            }
+        }
         public void InstallCage(ThingWithComps cage) {
         }
 
@@ -224,7 +297,14 @@ namespace StormlightMod {
                 insertedGemstone = null;
                 IntVec3 dropPosition = parent.Position;
                 dropPosition.z -= 1;
-                GenPlace.TryPlaceThing(gemstoneToDrop, dropPosition, parent.Map, ThingPlaceMode.Near);
+                var map = parent.Map;
+
+                if (map == null) {
+                    map = Find.CurrentMap;
+                }
+                if (map != null) {
+                    GenPlace.TryPlaceThing(gemstoneToDrop, dropPosition, map, ThingPlaceMode.Near);
+                }
             }
         }
 
@@ -240,9 +320,15 @@ namespace StormlightMod {
             return gemName;
         }
         public override IEnumerable<FloatMenuOption> CompFloatMenuOptions(Pawn selPawn) {
+
             var cutGemstone = GenClosest.ClosestThing_Global(
                    selPawn.Position,
-                   selPawn.Map.listerThings.AllThings.Where(thing => (StormlightUtilities.isThingCutGemstone(thing)) && (thing.TryGetComp<CompCutGemstone>().HasSprenInside == false) && (thing.TryGetComp<CompStormlight>().HasStormlight)), 500f);
+                   selPawn.Map.listerThings.AllThings.Where(thing => (StormlightUtilities.isThingCutGemstone(thing))
+                   && (thing.TryGetComp<CompCutGemstone>().HasSprenInside == false)
+                   && (thing.TryGetComp<CompStormlight>().HasStormlight)
+                   && FilterList.Contains(thing.def)
+                   && SizeFilterList.Contains(thing.TryGetComp<CompCutGemstone>()?.GetGemSize() ?? GemSize.None)
+                   ), 500f);
 
 
             Action replaceGemAction = null;
@@ -272,6 +358,23 @@ namespace StormlightMod {
                 };
             }
             yield return new FloatMenuOption(removeGemText, removeGemAction);
+        }
+
+
+        public override IEnumerable<Gizmo> CompGetGizmosExtra() {
+            foreach (Gizmo gizmo in base.CompGetGizmosExtra()) {
+                yield return gizmo;
+            }
+
+            yield return new Command_Action {
+                defaultLabel = "Set Sphere Filters",
+                defaultDesc = "Click to choose which spheres are allowed in this lamp.",
+                //icon = ContentFinder<Texture2D>.Get("UI/Icons/SomeIcon"), 
+                icon = TexCommand.DesirePower,
+                action = () => {
+                    Find.WindowStack.Add(new Dialog_SphereFilter<CompSprenTrapper>(this));
+                }
+            };
         }
     }
 
