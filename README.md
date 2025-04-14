@@ -1,5 +1,5 @@
 # Current features
-
+(outdated readme. Will update soon)
 ## Highstorm
 * Powerful wind that always blows from East to West
 * Can move heavy items like boulders
