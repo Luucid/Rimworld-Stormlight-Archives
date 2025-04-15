@@ -65,7 +65,7 @@ namespace StormlightMod {
         public override void PostSpawnSetup(bool respawningAfterLoad) {
             base.PostSpawnSetup(respawningAfterLoad);
             if (insertedGemstone != null) {
-                CultivationSprenPatch.RegisterBuilding(this.parent as Building); 
+                CultivationSprenPatch.RegisterBuilding(this.parent as Building);
             }
         }
 
@@ -200,18 +200,25 @@ namespace StormlightMod {
 
             if (insertedGemstone != null) {
                 ThingWithComps gemstone = insertedGemstone as ThingWithComps;
-                gemName = "Spren: " + gemstone.GetComp<CompCutGemstone>().capturedSpren.ToString() + "\nStormlight: " + gemstone.GetComp<CompStormlight>().Stormlight.ToString("F0");
+                gemName = "Spren: " + gemstone.GetComp<CompCutGemstone>().capturedSpren.ToString() + "\nStormlight: " + gemstone.GetComp<CompStormlight>().Stormlight.ToString("F0") + "\ntime remaining: " + getTimeRemaining();
             }
             return gemName;
         }
 
-        //public string getHoursRemaining() 
-        //    {
-        //    var stormlightComp = insertedGemstone.TryGetComp<CompStormlight>();
-        //    float stormlightPerHour = (50.0f * stormlightComp.GetDrainRate(2f));
-        //    int hoursLeft = (int)(stormlightComp.Stormlight / stormlightPerHour);
-        //    return hoursLeft.ToString();
-        //}
+        public string getTimeRemaining() {
+            var stormlightComp = insertedGemstone.TryGetComp<CompStormlight>();
+            float stormlightPerHour = (50.0f * stormlightComp.GetDrainRate(2f));
+            if (Mathf.Approximately(stormlightPerHour, 0f)) {
+                return "∞";
+            }
+            int hoursLeft = (int)(stormlightComp.Stormlight / stormlightPerHour);
+            int daysLeft = 0;
+            if (hoursLeft > 24) {
+                daysLeft = hoursLeft / 24;
+            }
+            hoursLeft %= 24;
+            return daysLeft.ToString() + "d " + hoursLeft.ToString() + "h";
+        }
 
         public override IEnumerable<FloatMenuOption> CompFloatMenuOptions(Pawn selPawn) {
 
