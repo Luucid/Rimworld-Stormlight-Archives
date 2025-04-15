@@ -53,14 +53,31 @@ namespace StormlightMod {
         }
     }
 
-    public class CompBasicFabrialAugumenter : ThingComp, IGemstoneHandler {
+    public class CompBasicFabrialAugumenter : ThingComp, IGemstoneHandler, IFilterableComp {
         public CompProperties_BasicFabrialAugmenter Props => (CompProperties_BasicFabrialAugmenter)props;
         public CompGlower GlowerComp => parent.GetComp<CompGlower>();
         public Thing insertedGemstone = null;
         public bool PowerOn = false;
         public bool HasGemstone => insertedGemstone != null;
 
+        private List<ThingDef> filterList = new List<ThingDef>();
+        public List<ThingDef> FilterList => filterList;
+        private List<ThingDef> allowedGems = new List<ThingDef>() {
+            StormlightModDefs.whtwl_CutDiamond,
+            StormlightModDefs.whtwl_CutGarnet,
+            StormlightModDefs.whtwl_CutRuby,
+            StormlightModDefs.whtwl_CutSapphire,
+            StormlightModDefs.whtwl_CutEmerald
+        };
+        public List<ThingDef> AllowedSpheres => this.allowedGems;
 
+        private List<GemSize> sizeFilterList = new List<GemSize>()
+        {
+            GemSize.Chip,
+            GemSize.Mark,
+            GemSize.Broam
+        };
+        public List<GemSize> SizeFilterList => sizeFilterList;
 
         public override void PostSpawnSetup(bool respawningAfterLoad) {
             base.PostSpawnSetup(respawningAfterLoad);
@@ -73,6 +90,8 @@ namespace StormlightMod {
             base.PostExposeData();
             Scribe_Deep.Look(ref insertedGemstone, "insertedGemstone");
             Scribe_Values.Look(ref PowerOn, "PowerOn");
+            Scribe_Collections.Look(ref sizeFilterList, "sizeFilterList", LookMode.Value);
+            Scribe_Collections.Look(ref filterList, "filterList", LookMode.Def);
         }
 
         public void checkPower(bool flickeredOn) {
@@ -223,9 +242,19 @@ namespace StormlightMod {
         public override IEnumerable<FloatMenuOption> CompFloatMenuOptions(Pawn selPawn) {
 
             var cutGemstone = GenClosest.ClosestThing_Global(
-                   selPawn.Position,
-                   selPawn.Map.listerThings.AllThings.Where(
-                       thing => (StormlightUtilities.isThingCutGemstone(thing)) && (thing.TryGetComp<CompCutGemstone>().HasSprenInside && thing.TryGetComp<CompStormlight>().HasStormlight)), 500f);
+                  selPawn.Position,
+                  selPawn.Map.listerThings.AllThings.Where(thing => (StormlightUtilities.isThingCutGemstone(thing))
+                  && (thing.TryGetComp<CompCutGemstone>().HasSprenInside)
+                  && (thing.TryGetComp<CompStormlight>().HasStormlight)
+                  && FilterList.Contains(thing.def)
+                  && SizeFilterList.Contains(thing.TryGetComp<CompCutGemstone>()?.GetGemSize() ?? GemSize.None)
+                  ), 500f);
+
+
+            //var cutGemstone = GenClosest.ClosestThing_Global(
+            //       selPawn.Position,
+            //       selPawn.Map.listerThings.AllThings.Where(
+            //           thing => (StormlightUtilities.isThingCutGemstone(thing)) && (thing.TryGetComp<CompCutGemstone>().HasSprenInside && thing.TryGetComp<CompStormlight>().HasStormlight)), 500f);
 
             Action replaceGemAction = null;
             string replaceGemText = "No suitable gem available";
@@ -255,6 +284,23 @@ namespace StormlightMod {
             }
             yield return new FloatMenuOption(removeGemText, removeGemAction);
         }
+
+        public override IEnumerable<Gizmo> CompGetGizmosExtra() {
+            foreach (Gizmo gizmo in base.CompGetGizmosExtra()) {
+                yield return gizmo;
+            }
+
+            yield return new Command_Action {
+                defaultLabel = "Set Gem Filters",
+                defaultDesc = "Click to choose which gems are allowed in this fabrial.",
+                //icon = ContentFinder<Texture2D>.Get("UI/Icons/SomeIcon"), 
+                icon = TexCommand.SelectShelf,
+                action = () => {
+                    Find.WindowStack.Add(new Dialog_SphereFilter<CompBasicFabrialAugumenter>(this));
+                }
+            };
+        }
+
     }
 
     public class CompProperties_BasicFabrialAugmenter : CompProperties {

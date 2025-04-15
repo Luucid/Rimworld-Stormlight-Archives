@@ -368,9 +368,9 @@ namespace StormlightMod {
 
             yield return new Command_Action {
                 defaultLabel = "Set Sphere Filters",
-                defaultDesc = "Click to choose which spheres are allowed in this lamp.",
+                defaultDesc = "Click to choose which gems are allowed in this trap.",
                 //icon = ContentFinder<Texture2D>.Get("UI/Icons/SomeIcon"), 
-                icon = TexCommand.DesirePower,
+                icon = TexCommand.SelectShelf,
                 action = () => {
                     Find.WindowStack.Add(new Dialog_SphereFilter<CompSprenTrapper>(this));
                 }
