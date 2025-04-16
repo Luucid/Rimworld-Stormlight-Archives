@@ -40,15 +40,20 @@ base drain: 25 per hour
 * Obtained through highstorm exposure
 
 ## Radiant
-* Two orders is implemented right now
+* Four orders is implemented right now
 * Can draw in stormlight, which is the fuel for their powers
 * radiants have a custom xp system with ability unlocks throught the journey towards knight radiant
-* 
+
+
 ### abilities
 * passive healing
+* active healing
+* boost plant growth
 * shardblade summon and dismissal
-* lashing other pawns(damage not yet implemented)
-* flight
+* lashing other pawns
+* flight 
+* abrasion (movement buff, no penalty when active)
+* division (close range attack, set enemies on fire)
 * custom range circle drawn around caster
 
 ## Weapons
